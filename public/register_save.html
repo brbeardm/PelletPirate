@@ -1,0 +1,56 @@
+<html>
+
+<head>
+    <!-- Material Design Lite
+	<link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css"> -->
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.orange-indigo.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css"> -->
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <form action="registerMe" method="post" name="register" id="register">
+        <div class="mdl-card-square mdl-card mdl-shadow--2dp ng-controller=" RegisterController as RegCtrl ">
+            <div class="mdl-card__title ">
+                <h2 class="mdl-card__title-text ">Register your Pellet Pirate Controller</h2>
+            </div>
+            <div class="mdl-card__supporting-text ">
+
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label ">
+                        <input class="mdl-textfield__input " type="text " id="name ">
+                        <label class="mdl-textfield__label " for="name ">Full Name</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label ">
+                        <input class="mdl-textfield__input " type="email " id="email ">
+                        <label class="mdl-textfield__label " for="email ">Email</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label ">
+                        <input class="mdl-textfield__input " type="phone " id="phone ">
+                        <label class="mdl-textfield__label " for="phone ">SMS Phone</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label ">
+                        <input class="mdl-textfield__input " type="text " id="ParticleID ">
+                        <label class="mdl-textfield__label " for="ParticleID ">Particle ID</label>
+                    </div>
+                    <span class="mdl-title ">IFTTT email/text notifications : </span>
+                    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect " for="email ">
+                    <input type="checkbox " id="email " class="mdl-checkbox__button " name="email-options " value="email ">
+                    <span class="mdl-radio__label ">email?</span>
+                    </label>
+                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect " for="sms ">
+                    <input type="checkbox " id="sms " class="mdl-radio__button " name="sms-options " value="sms ">
+                    <span class="mdl-radio__label ">SMS Message?</span>
+                    </label>
+            </div>
+            <div class="mdl-card__actions mdl-card--border ">
+                <button type="submit " class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored ">
+          Save
+          </button>
+                </form>
+            </div>
+        </div>
+    </body>
+
+</html>
