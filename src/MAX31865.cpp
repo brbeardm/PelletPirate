@@ -128,39 +128,45 @@ float MAX31865::get_Temp(int CS)
 //Fault(byte) function requires the contents of the fault bit to be provided. It checks for the bits that are set and provides the faulty bit information on the serial console.
 void MAX31865::Fault(byte fault)
 {
-    Particle.publish("Error MAX31865 in FAULT procedure", String(fault), PRIVATE);
+    if (unpluggedProbe ==0)
     {
-        Serial.println(fault, BIN);
-        byte temp = 0;       //temporary variable created: Purpose is to find out which error bit is set in the fault register
-        temp = fault & 0x80; //Logic Anding fault register contents with 0b10000000 to detect for D7 error bit
-        if (temp > 0)
+        Particle.publish("Error MAX31865 in FAULT procedure", String(fault), PRIVATE);
         {
-            Serial.println("Bit D7 is Set. It's Possible your RTD device is disconnected from RTD+ or RTD-. Please verify your connection and High Fault Threshold Value");
-        }
-        temp = fault & 0x40;
-        if (temp > 0)
-        {
-            Serial.println("Bit D6 is Set. It's Possible your RTD+ and RTD- is shorted. Please verify your connection and your Low Fault Threshold Value.");
-        }
-        temp = fault & 0x20;
-        if (temp > 0)
-        {
-            Serial.println("Bit D5 is Set. Vref- is greater than 0.85 * Vbias");
-        }
-        temp = fault & 0x10;
-        if (temp > 0)
-        {
-            Serial.println("Bit D4 is Set. Please refer to data sheet for more information");
-        }
-        temp = fault & 0x08;
-        if (temp > 0)
-        {
-            Serial.println("Bit D3 is Set. Please refer to data sheet for more information");
-        }
-        temp = fault & 0x04;
-        if (temp > 0)
-        {
-            Serial.println("Bit D2 is Set. Please refer to data sheet for more information");
+            Serial.println(fault, BIN);
+            byte temp = 0;       //temporary variable created: Purpose is to find out which error bit is set in the fault register
+            temp = fault & 0x80; //Logic Anding fault register contents with 0b10000000 to detect for D7 error bit
+            if (temp > 0)
+            {
+                Serial.println("Bit D7 is Set. It's Possible your RTD device is disconnected from RTD+ or RTD-. Please verify your connection and High Fault Threshold Value");
+            }
+            temp = fault & 0x40;
+            if (temp > 0)
+            {
+                Serial.println("Bit D6 is Set. It's Possible your RTD+ and RTD- is shorted. Please verify your connection and your Low Fault Threshold Value.");
+            }
+            temp = fault & 0x20;
+            if (temp > 0)
+            {
+                Serial.println("Bit D5 is Set. Vref- is greater than 0.85 * Vbias");
+            }
+            temp = fault & 0x10;
+            if (temp > 0)
+            {
+                Serial.println("Bit D4 is Set. Please refer to data sheet for more information");
+            }
+            temp = fault & 0x08;
+            if (temp > 0)
+            {
+                Serial.println("Bit D3 is Set. Please refer to data sheet for more information");
+            }
+            temp = fault & 0x04;
+            if (temp > 0)
+            {
+                Serial.println("Bit D2 is Set. Please refer to data sheet for more information");
+            }
         }
     }
+
+    unpluggedProbe=1;
+    
 }

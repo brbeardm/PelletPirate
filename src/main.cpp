@@ -2,14 +2,10 @@
 #include <ITEADLIB_Nextion.h>
 //#include "Nextion.h"
 
-
-
 #include "Particle.h"
 #include "math.h"
 #include <SparkJson.h>
 #include "MAX31865.h"
-//#include "MAX31865.h"
-#include "OLED.h"
 #include "pid2.h"
 
 // Forward declarations
@@ -22,25 +18,24 @@ void ReadParameters(void);
 void DoMode(void);
 void UpdateParameters(void);
 void WriteParameters(void);
-void setState(int, bool);
-bool getState(int);
+void setState(int, int); // changed 2nd variable from bool to int on 7/29/17 -- testing
+int  getState(int);
 void checkIgniter(void);
 void DoAugerControl(void);
 void DoControl(void);
-
-
+void sendToLCD(uint8_t type,String index, String cmd);
 
 /* Nextion Forward Declarations */
 void t0PopCallback(void *ptr);
 void b0PopCallback(void *ptr);
 void b1PopCallback(void *ptr);
+void t10PopCallback(void *ptr);
+void t1PopCallback(void);
 /* END of Nextion Forward Declarations*/
 
-
-
-#define augerPin A7
-#define fanPin A6
-#define igniterPin D7
+//#define fanPin D4
+//#define augerPin D5
+//#define igniterPin D6
 
 #define TIMENOW Time.now() + 0.1;
 
@@ -51,42 +46,50 @@ const char *CHECK_EVENT_NAME = "ParametersRead";
 const char *DELETE_TEMPS = "TempsDELETE";
 const char *PUBLISH_TEMPS = "4TempsHookBody";
 
-
-
 /* Nextion variable **************/
-USARTSerial& nexSerial = Serial1;
-/*
- * Declare a text object [page id:0,component id:1, component name: "t0"]. 
- */
-NexText t0 = NexText(1, 11, "t0");
-/*
- * Declare a button object [page id:0,component id:2, component name: "b0"]. 
- */
-NexButton b0 = NexButton(1, 2, "b0");
+USARTSerial& nexSerial = Serial1;       
 
-/*
- * Declare a button object [page id:0,component id:3, component name: "b1"]. 
- */
-NexButton b1 = NexButton(1, 3, "b1");
+
+NexButton bt0 = NexButton(1, 7, "bt0");  // Fan light
+NexButton bt1 = NexButton(1, 11, "bt1"); // Igniter light
+NexButton bt2 = NexButton(1, 10, "bt2"); // Auger light
+
+NexButton bt3 = NexButton(1, 13, "bt3"); // Off - Start button
+NexButton bt4 = NexButton(1, 14, "bt4"); // Mode - Smoke button
+NexButton bt5 = NexButton(1, 15, "bt5"); // Mode - Ignite button
+NexButton bt6 = NexButton(1, 16, "bt6"); // Mode - Hold button
+NexButton bt7 = NexButton(1, 17, "bt7"); // Mode - Shutdown button
+
+NexText t0 = NexText(1, 8, "t0");      /* Declare a text object for Target temp of the grill [page id:1, component id:8, component name: "t0"]. */
+NexButton b0 = NexButton(1, 12, "b0"); /* Up ++ target temp */
+NexButton b1 = NexButton(1, 9, "b1");  /* Down -- target temp */
+
+NexText t10 = NexText(1, 6, "t10");     /* Declare a text object for Mode of the grill, default is OFF [pagid:1, component id:6, component name: "t10"]. */
+
+NexText t1 = NexText(1, 3, "t1");       /* Grill Temp object on Nextion display */
+NexText t2 = NexText(1, 4, "t2");       /* Meat 1 Temp object on Nextion display */
+NexText t3 = NexText(1, 5, "t3");       /* Grill Temp object on Nextion display */
 
 char buffer[100] = {0};
-/*
- * Register object t0, b0, b1, to the touch event list.  
- */
+char buffer1[100] = {0};
+
+/* Register object t0, b0, b1, to the Nextion touch event list. */
 NexTouch *nex_listen_list[] = 
 {
     &t0,
     &b0,
     &b1,
+    &t10,
+    &t1,
+    &t2,
+    &t3,
     NULL
 };
 /* Nextion variable end **********/
 
-
-
-/*******************/
+/********************************************************************************/
 int debug = 0; /* set to 1 to get more debug information to the Serial port */
-/******************/
+/********************************************************************************/
 
 char text[256];
 
@@ -95,6 +98,10 @@ String deviceName;
 int READY = 0;
 int ResetFIREBASE = 0;
 int kount = 0; // used for testing
+
+int fanPin = D4;
+int augerPin = D5;
+int igniterPin = D6;
 
 int cs = A2;
 int csm1 = A1;
@@ -107,7 +114,7 @@ int PIDCycleTime = 20;           //#Frequency to update control loop - usually 2
 int ReadParametersInterval = 10; //  #Frequency to poll web for new parameters
 int ReadProgramInterval = 60;    // #Freqnency to poll web for new program
 double u_min = 0.15, u_max = 1.0;
-int igniterTemperature = 78;
+int igniterTemperature = 70;
 int On, Off;
 int ShutdownTime = 10 * 60;
 
@@ -125,10 +132,10 @@ double TT; //Target Temp at the time the temps were taken
 int modeState = 0;
 
 //Parameter Variables
-bool aug = false;
+bool aug = 0;
 int Cycle = 20.0;
-bool fan = false;
-bool ign = false;
+bool fan = 0;
+bool ign = 0;
 double LReadPgm;
 double LReadWeb;
 double LWritten;
@@ -137,17 +144,17 @@ int PB = 60.0;
 int PMode = 2.0;
 bool pgm = false;
 double PToggle;
-int target = 90; // normally initially set to 225
+int target = 70; // normally initially set to 225
 int Td = 45.0;
 int Ti = 180;
 float u = 0.15;
 //double uPID = 0.15;
 
 //New Parameter Variables
-bool newaug = false;
+bool newaug = 0;
 int newCycle = 20.0;
-bool newfan = false;
-bool newign = false;
+bool newfan = 0;
+bool newign = 0;
 double newLReadPgm;
 double newLReadWeb;
 double newLWritten;
@@ -156,7 +163,7 @@ int newPB = 60.0;
 int newPMode = 2.0;
 bool newpgm = false;
 double newPToggle;
-int newtarget = 90;
+int newtarget = 70;
 int newTd = 45.0;
 int newTi = 180;
 float newu = 0.15;
@@ -178,12 +185,6 @@ pid myPID(PB, Ti, Td);
 //initialize MAX31865
 MAX31865 myMAX31865(cs);
 
-//initialze OLED
-OLED myOLED;
-
-/*#################################################################################################
-S E T U P
-#################################################################################################*/
 void setup()
 {
     Particle.subscribe("spark/", handler);
@@ -197,40 +198,43 @@ void setup()
     Particle.syncTime();
     Time.zone(-5); //set to CST
 
-    //pinMode (drdy, INPUT);
+    pinMode(fanPin, OUTPUT);
+    pinMode(augerPin, OUTPUT);
+    pinMode(igniterPin, OUTPUT);
+
     pinMode(cs, OUTPUT);
     pinMode(csm1, OUTPUT);
 
     delay(3000);
-    Serial.println("\r\n\r\n\r\n******************************************* P R O G R A M    B E G I N ****************************************************");
+    Serial.println("\r\n\r\n\r\n*************************************** P R O G R A M    B E G I N ************************************************");
     Serial.println(Time.timeStr());
     Serial.println(Time.format(TIME_FORMAT_ISO8601_FULL));
 
     //initialize hopper assembly
-    hopperInit();
+    //   hopperInit();
 
     //Parameters initialization
-    LReadPgm = TIMENOW;
-    LReadWeb = TIMENOW;
-    LWritten = TIMENOW;
-    LCalcula = TIMENOW;
+    //    LReadPgm = TIMENOW;
+    //    LReadWeb = TIMENOW;
+    //    LWritten = TIMENOW;
+    //    LCalcula = TIMENOW;
     //TT = Time.now();
 
     //PiSmoker PID
-    myPID.setTarget(target);
+    //    myPID.setTarget(target);
 
     //initialize OLED
-    myOLED.OLED_init();
-    myOLED.targetTemp = target;
-    strcpy(myOLED.MODE, mode);
+    //    myOLED.OLED_init();
+    //    myOLED.targetTemp = target;
+    //    strcpy(myOLED.MODE, mode);
 
     //Set mode
-    SetMode();
+    //    SetMode();
     //myOLED.update_OLED_mode(mode, modeState);
 
 
 
-/* Nextion Display code ********************************************************************************************************/
+    /* Nextion Display code ********************************************************************************************************/
     /* Set the baudrate which is for debug and communicate with Nextion screen. */
     nexInit();
     /* Register the pop event callback function of the current text component. */
@@ -239,31 +243,32 @@ void setup()
     b0.attachPop(b0PopCallback);
     /* Register the pop event callback function of the current button1 component. */
     b1.attachPop(b1PopCallback);
-    dbSerialPrintln("setup done");
-/* END Nextion Display code ****************************************************************************************************/
+    /* Register the pop event callback function of the current Mode component. */
+    t10.attachPop(t10PopCallback);
+    //    /* Register the pop event callback function of the current Grill Temp component. */
+    //   t1.attachPop(t1PopCallback);
 
-    delay(500); // just 1/2 a second to chill...
+    dbSerialPrintln("setup done");
+    /* END Nextion Display code ****************************************************************************************************/
+
+    delay(1000); // just 1 second to chill...
+    Serial.println("Finishing SETUP in 1 second, awaiting command from the Pellet Pirate!");
     READY = 1; // now we are ready for the LOOP to start churning... all setup has run
 
 }
 
-/*#################################################################################################
-M A I N   L O O P
-#################################################################################################*/
-
-/* executes continuously after setup() runs */
 void loop()
 {
     //Read buttons
-    myOLED.buttonPress();
-    strcpy(newmode, myOLED.MODE);
-    modeState = myOLED.ModeState;
+    //myOLED.buttonPress();
+    //strcpy(newmode, myOLED.MODE);
+    //modeState = myOLED.ModeState;
 
 
 
     /* Nextion Code -- When a pop or push event occured every time, the corresponding component[right page id and component id] in touch event list will be asked. */
     nexLoop(nex_listen_list);
-    /* END Nextion Code */
+     /* END Nextion Code */
 
 
 
@@ -272,50 +277,64 @@ void loop()
 
         //Record Temperatures
         ReadTemperatures();
+        nexLoop(nex_listen_list);
 
-        newtarget = myOLED.targetTemp; // get any new target temp changes from the OLED button menu
+        //Display Grill Temperature
+        t1PopCallback();
+        nexLoop(nex_listen_list);
 
-        //Check for new parameters that may have been written from the LCD or Web Program into Firebase
+        //Check for new parameters that may have been written from the Nextion Touch Display or Web Program into Firebase
         ReadParameters();
-
-        // code Check for new program
+        nexLoop(nex_listen_list);
 
         // Do Mode
         DoMode();
+        nexLoop(nex_listen_list);
     }
 }
 
 void ReadTemperatures()
 {
     double time;
+
+    //if ((Time.now() - toggleTimeTemps > TempInterval) && ResetFIREBASE == 1)
+    //{
+ 
+    // Read Temperatures
+    for (int i = 0; i < 3; i++)
+    {
+        if (i == 0)
+        {
+            cs = A2;
+        } //Grill
+        if (i == 1)
+        {
+            cs = csm1;
+        } //Meat1
+        if (i == 2)
+        {
+            cs = A2;
+        }
+
+        Temps[i] = myMAX31865.get_Temp(cs);
+        if (i == 2)
+        {
+            TT = target;
+            //tyme = Time.now();
+            time = Time.now();
+            time = time * 1000; // multiply by 1000 to make sure its a unix epoch timestamp that is 13 digits (the multiplication by 1000 basically adds millis to the epoch time as 000, needed by front end web program graph)
+            T1 = Temps[0], T2 = Temps[1], T3 = Temps[2];
+            //            myOLED.update_OLED_temps(target, T1, T2, T3);
+
+            //Serial.println("DoMode -------- updating PID value in OLED display!\r\n");
+        }
+    }
+
+
+    
+    // Record Temperatures in "Firebase"
     if ((Time.now() - toggleTimeTemps > TempInterval) && ResetFIREBASE == 1)
     {
-        // Record Temperatures
-        for (int i = 0; i < 3; i++)
-        {
-            if (i == 0)
-            {
-                cs = A2;
-            } //Grill
-            if (i == 1)
-            {
-                cs = csm1;
-            } //Meat1
-            if (i == 2)
-            {
-                cs = A2;
-            }
-
-            Temps[i] = myMAX31865.get_Temp(cs);
-            if (i == 2)
-            {
-                TT = target;
-                //tyme = Time.now();
-                time = Time.now();
-                time = time * 1000; // multiply by 1000 to make sure its a unix epoch timestamp that is 13 digits (the multiplication by 1000 basically adds millis to the epoch time as 000, needed by front end web program graph)
-                T1 = Temps[0], T2 = Temps[1], T3 = Temps[2];
-            }
-        }
         char qT[128];
         snprintf(qT, sizeof(qT), "{\"T1\":%.6f,\"T2\":%.6f,\"T3\":%.6f,\"TT\":%.0f,\"time\":%.0f,\"n\":\"%s\"}", T1, T2, T3, TT, time, deviceName.c_str());
         Particle.publish(PUBLISH_TEMPS, qT, PRIVATE);
@@ -348,10 +367,6 @@ void ReadTemperatures()
                 Serial.printf("RESET sendmessage flag for IFTTT trigger to OFF\r\n");
             }
         }
-
-        myOLED.update_OLED_temps(target, T1, T2, T3);
-        myOLED.update_OLED_pid(u); // update the pid value on the OLED display .... really need to look at this and perhaps just force the update to OLED ... WHEN ... the PID value actually changes or after a timelapse calc!
-        //Serial.println("DoMode -------- updating PID value in OLED display!\r\n");
     }
 }
 
@@ -389,12 +404,12 @@ void ReadParameters()
 }
 
 void UpdateParameters()
-//loop through new parameters and see what changed
 {
+    //loop through new parameters and see what changed
     if (target != newtarget)
     {
         myPID.setTarget(newtarget);
-        myOLED.update_OLED_target(newtarget);
+        //        myOLED.update_OLED_target(newtarget);
         target = newtarget;
         WriteParameters();
         Serial.println("UpdateParameters - newtarget!");
@@ -418,7 +433,7 @@ void UpdateParameters()
     else if (strcmp(mode, newmode) != 0)
     {
         strcpy(mode, newmode); // should copy newmode into the mode variable
-        strcpy(myOLED.MODE, mode);
+        //        strcpy(myOLED.MODE, mode);
         SetMode();
         WriteParameters();
         Serial.println("UpdateParameters - newmode!");
@@ -440,6 +455,7 @@ void WriteParameters()
         aug = digitalRead(augerPin);
         fan = digitalRead(fanPin);
         ign = digitalRead(igniterPin);
+        Serial.printf("WriteParameters: FIA status: Fan: %d  Igniter: %d  Auger: %d\r\n", fan, ign, aug);
         LWritten = TIMENOW;
 
         char qP[255];
@@ -454,14 +470,14 @@ void WriteParameters()
 
 void SetMode()
 {
-    //    Particle.publish("top of SetMode is: ", String(Parameters.mode) + " | " + String(strcmp(Parameters.mode, "Start", 5) == TRUE), PRIVATE);
     if (strcmp(mode, "Off") == 0)
     {
         modeState = 0;
-        myOLED.ModeState = 0;
+        //        myOLED.ModeState = 0;
         Serial.println("SetMode - Off");
         //myOLED.update_OLED_mode(mode, modeState);
         hopperInit();
+        Serial.printf("SetMode, just finished hopperInit");
     }
     else if (strcmp(mode, "Start") == 0)
     {
@@ -470,6 +486,10 @@ void SetMode()
         setState(augerPin, TRUE);
         setState(fanPin, TRUE);
         setState(igniterPin, TRUE);
+        digitalWrite(fanPin, HIGH);
+        digitalWrite(igniterPin, HIGH);
+        digitalWrite(augerPin, HIGH);
+        Serial.printf("SetMode in START after all pins set TRUE: Fan: %d  Igniter: %d  Auger: %d\r\n", digitalRead(fanPin), digitalRead(igniterPin), digitalRead(augerPin));
         Cycle = 15 + 45;
         u = 15.0 / (15.0 + 45.0); //P0
     }
@@ -505,8 +525,8 @@ void SetMode()
         Cycle = PIDCycleTime;
         u = u_min; //Set to maintenance level
         Serial.printf("SetMode - Hold : u = %.2f\r\n", u);
-        strcpy(myOLED.MODE, mode); // update OLED mode
-        myOLED.ModeState = 4;      // update OLED ModeState
+        //        strcpy(myOLED.MODE, mode); // update OLED mode
+        //        myOLED.ModeState = 4;      // update OLED ModeState
     }
     else if (strcmp(mode, "Shutdown") == 0)
     {
@@ -514,16 +534,16 @@ void SetMode()
         Serial.println("SetMode - Shutdown");
         hopperInit();
         setState(fanPin, TRUE);
-        strcpy(myOLED.MODE, mode); // update OLED mode
-        myOLED.ModeState = 5;      // update OLED ModeState
-        myOLED.update_OLED_mode(mode, modeState);
+        //        strcpy(myOLED.MODE, mode); // update OLED mode
+        //        myOLED.ModeState = 5;      // update OLED ModeState
+        //myOLED.update_OLED_mode(mode, modeState);
     }
 
+    //Serial.print("SetMode: I think I found it... fixing to WriteParameters");
     WriteParameters();
-    if (debug == 1)
-    {
-        Serial.println("SetMode end --- WriteParameters - done!");
-    }
+    //Serial.printf("I found it... WriteParameters done because SetMode is in Setup procedure above !!!!");
+
+    if (debug == 1){Serial.println("SetMode end --- WriteParameters - done!");}
 }
 
 void DoMode()
@@ -546,7 +566,7 @@ void DoMode()
     {
         DoAugerControl();
         setState(igniterPin, TRUE);
-        if (Temps[0] > 90)
+        if (Temps[0] > 115)
         {
             strcpy(mode, "Hold");
             SetMode();
@@ -642,8 +662,8 @@ void DoControl()
         //float z = 0.15;
         //char* uPID = floatToString(z);
         //Serial.printf("DoControl - u PID is now a string: %s\r\n", uPID);
-        myOLED.update_OLED_pid(u);
-        myOLED.update_OLED_mode(mode, modeState);
+        //        myOLED.update_OLED_pid(u);
+        //        myOLED.update_OLED_mode(mode, modeState);
         //Serial.println("");
 
         //Particle.publish("New PID from DoControl...", "PID: " + String(u), PRIVATE);
@@ -671,40 +691,48 @@ void hopperInit()
     aug = digitalRead(augerPin);
     toggleTimeAuger = TIMENOW;
 
-    myOLED.update_FIA(fan, ign, aug); // update FIA on OLED
+    //    myOLED.update_FIA(fan, ign, aug); // update FIA on OLED
 }
 
-bool getState(int pin)
+int getState(int pin)
 {
     return pinReadFast(pin);
 }
 
-void setState(int pin, bool newState)
+void setState(int pin, int newState)  // changed newState from bool to int
 {
-    bool currentState = getState(pin);
+    int currentState = getState(pin);
+    char pinState[10];
+    
+    //strcpy(pinState, "1");
 
     if (currentState != newState)
     {
         digitalWrite(pin, newState);
         switch (pin)
         {
-        case igniterPin:
+        case (D6):
             toggleTimeIgniter = TIMENOW;
-            Serial.printf("setState: toggling Igniter: %d\r\n", newState);
+            snprintf(pinState, sizeof(pinState), "%d", newState);
+            sendToLCD(2, "bt1", pinState);
+            Serial.printf("setState: toggling Igniter: %d and text pinState: %s and length %d\r\n", newState, pinState, strlen(pinState));
             ign = newState;
-            myOLED.update_FIA(fan, ign, aug); // update FIA on OLED
             break;
-        case fanPin:
+        case (D4):
             toggleTimeFan = TIMENOW;
-            Serial.printf("setState: toggling Fan: %d\r\n", newState);
+            snprintf(pinState, sizeof(pinState), "%d", newState);
+            sendToLCD(2, "bt0", pinState);
+            Serial.printf("setState: toggling Fan: %d and text pinState: %s and length %d\r\n", newState, pinState, strlen(pinState));           
+            //Serial.printf("setState: toggling Fan: %d\r\n", newState);
             fan = newState;
-            myOLED.update_FIA(fan, ign, aug); // update FIA on OLED
             break;
-        case augerPin:
+        case (D5):
             toggleTimeAuger = TIMENOW;
-            Serial.printf("setState: toggling Auger: %d\r\n", newState);
+            snprintf(pinState, sizeof(pinState), "%d", newState);
+            sendToLCD(2, "bt2", pinState);
+            Serial.printf("setState: toggling Auger: %d and text pinState: %s and length %d\r\n", newState, pinState, strlen(pinState));            
+            //Serial.printf("setState: toggling Auger: %d\r\n", newState);
             aug = newState;
-            myOLED.update_FIA(fan, ign, aug); // update FIA on OLED
             break;
         }
     }
@@ -719,11 +747,12 @@ void handler(const char *topic, const char *data)
 
 void getDataHandler(const char *topic, const char *data)
 {
-    StaticJsonBuffer<768> jsonBuffer;
+    StaticJsonBuffer<1024> jsonBuffer;
     char *mutableCopy = strdup(data);
     JsonObject &root = jsonBuffer.parseObject(mutableCopy);
+
     Serial.printf("data: %s\r\n", data);
-    //free(mutableCopy);
+    free(mutableCopy);
 
     if (!root.success())
     {
@@ -748,31 +777,21 @@ void getDataHandler(const char *topic, const char *data)
         newtarget = root["target"];
         newu = root["u"];
 
-        {
-            Serial.printf("Read Parameters from Firebase: %d %.1f %.1f %.1f %d %d %.1f %d %d %s %s %s %s %s %d %.2f\r\n", newCycle, newLReadPgm, newLReadWeb, newLWritten, newPB, newPMode, newPToggle, newTd, newTi, newaug ? "true" : "false", newfan ? "true" : "false", newign ? "true" : "false", newmode, newpgm ? "true" : "false", newtarget, newu);
-        }
+        Serial.printf("Read new FIA Parameters from Firebase: fan: %d  igniter: %d  auger: %d\r\n", newfan, newign, newaug);
+        //Serial.printf("Read Parameters from Firebase: %d %.1f %.1f %.1f %d %d %.1f %d %d %s %s %s %s %s %d %.2f\r\n", newCycle, newLReadPgm, newLReadWeb, newLWritten, newPB, newPMode, newPToggle, newTd, newTi, newaug, newfan, newign, newmode, newpgm, newtarget, newu);
     }
 }
 
-
-
 /* Nextion Code *********************************************************************************************/
-/*
- * Text component pop callback function. 
- */
-void t0PopCallback(void *ptr)
+
+void t0PopCallback(void *ptr)   /* Text component pop callback function. */
 {
     dbSerialPrintln("t0PopCallback");
     t0.setText("225");
 }
 
-/*
- * Button0 component pop callback function.
- * In this example,the value of the text component will plus one every time when button0 is released.
- */
-void b0PopCallback(void *ptr)
+void b0PopCallback(void *ptr)   /* Taget temp +5 degrees every time the Up+ button is released. */
 {
-    uint16_t len;
     uint16_t number;
     
     dbSerialPrintln("b0PopCallback");
@@ -782,20 +801,18 @@ void b0PopCallback(void *ptr)
     
     number = atoi(buffer);
     number += 5;
+    newtarget = number;
 
     memset(buffer, 0, sizeof(buffer));
     itoa(number, buffer, 10);
     
     t0.setText(buffer);
+
+    UpdateParameters();
 }
 
-/*
- * Button1 component pop callback function.
- * In this example,the value of the text component will minus one every time when button1 is released.
- */
-void b1PopCallback(void *ptr)
+void b1PopCallback(void *ptr)   /* In this example,the value of the text component will minus 5 degress every time when button1 is released. */
 {
-    uint16_t len;
     uint16_t number;
     
     dbSerialPrintln("b1PopCallback");
@@ -805,10 +822,86 @@ void b1PopCallback(void *ptr)
     
     number = atoi(buffer);
     number -= 5;
+    newtarget = number;
+
+    //Serial.printf("********************** in - 5 temps ***********************************\r\n");
 
     memset(buffer, 0, sizeof(buffer));
     itoa(number, buffer, 10);
     
     t0.setText(buffer);
+
+    UpdateParameters();
 }
+
+void t10PopCallback(void *ptr)   /* Text component pop callback function for Mode. */
+{
+    dbSerialPrintln("t10PopCallback");
+
+    memset(buffer, 0, sizeof(buffer));
+    t10.getText(buffer, sizeof(buffer));
+
+    Particle.publish("** Mode from NEXTION **: " + String(buffer));
+    //Serial.printf("buffer is %s\r\n", buffer);
+    strcpy(newmode, buffer);
+    Serial.printf("T10PopCallback - newmode is: %s and buffer length is: %d\r\n", newmode, strlen(buffer));
+        
+    UpdateParameters();
+}
+
+void t1PopCallback(void)   /* ToDo -- need to do t2 and t2 temp update procs... this is just for T1-Grill Temp update on the Nextion display. */
+{
+    uint16_t integer_temp, decimal_temp;
+
+    char* temp_with_decimal;
+ 
+    integer_temp = T1;
+    decimal_temp = ((T1 - integer_temp)*10);
+    //Serial.printf("T1PopCallback - integer is: %d and the decimal is: %d\r\n", integer_temp, decimal_temp);
+ 
+    memset(buffer, 0, sizeof(buffer));
+    memset(buffer1, 0, sizeof(buffer));
+    itoa(integer_temp, buffer, 10);
+    itoa(decimal_temp, buffer1, 10);
+
+    strcat(buffer, ".");
+    strcat(buffer, buffer1);
+     
+    t1.setText(buffer);
+    t2.setText(buffer); // ToDo -- T2 and T3 need to be fixed when you have ALL 3 probes working on the board
+    t3.setText(buffer); // ToDo -- T2 and T3 need to be fixed when you have ALL 3 probes working on the board
+
+}
+
+void sendToLCD(uint8_t type,String index, String cmd)
+{
+	if (type == 1 ){
+		Serial1.print(index);
+		Serial1.print(".txt=");
+		Serial1.print("\"");
+		Serial1.print(cmd);
+		Serial1.print("\"");
+	}
+	else if (type == 2){
+		Serial1.print(index);
+		Serial1.print(".val=");
+		Serial1.print(cmd);
+	}
+	else if (type == 3){
+		Serial1.print(index);
+		Serial1.print(".picc="); 
+		Serial1.print(cmd);
+	}
+	else if (type ==4 ){
+		Serial1.print("page ");
+		Serial1.print(cmd);
+	}
+	
+	Serial1.write(0xff);
+	Serial1.write(0xff);
+	Serial1.write(0xff);
+	
+	delay(50);
+}
+
 /* END Nextion Code *******************************************************************************************/

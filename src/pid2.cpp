@@ -44,7 +44,7 @@ void pid::setTarget(double SetPoint)
 	Inter = 0.0;
 	Derv = 0.0;
 	LastUpdate = Time.now();
-	Serial.printf("New Target: %.0f\r\n", setPoint);
+	Serial.printf("Pid2 setTarget has processed a New Target: %.0f\r\n", setPoint);
 }
 
 double pid::update(double Current)
