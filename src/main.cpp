@@ -88,8 +88,7 @@ NexTouch *nex_listen_list[] =
 int debug = 0; /* set to 1 to get more debug information to the Serial port */
 /********************************************************************************/
 
-char text[256];
-char TimeStamp[26];
+//char text[256];
 
 String deviceName;
 
@@ -462,9 +461,7 @@ void WriteParameters()
                  Cycle, LReadPgm, LReadWeb, LWritten, PB, PMode, PToggle, Td, Ti, aug ? "true" : "false", fan ? "true" : "false", ign ? "true" : "false", mode, pgm ? "true" : "false", target, u, deviceName.c_str());
  
         Particle.publish(PUBLISH_PARAMETERS, qP);
-        strcpy(TimeStamp, Time.timeStr());
-        //, (const char *)root["mode"]);
-        //TimeStamp = Time.timeStr();
+
         Serial.printf("%s WriteParameters: C:%d LRP:%.1f LRW:%.1f LW:%.1f PB:%d PM:%d PT:%.1f Td:%d Ti:%d A:%s F:%s I:%s Mode:%s Pgm:%s TT:%d u:%.2f\r\n", Time.timeStr().c_str(), Cycle, LReadPgm, LReadWeb, LWritten, PB, PMode, PToggle, Td, Ti, aug ? "true" : "false", fan ? "true" : "false", ign ? "true" : "false", mode, pgm ? "true" : "false", target, u);
         //Serial.println(Time.timeStr());
         //Serial.printf("LWritten %.1f\r\n", LWritten);
