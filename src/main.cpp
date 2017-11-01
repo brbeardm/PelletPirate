@@ -1,7 +1,5 @@
 // This #include statement was automatically added by the Particle IDE.
 #include <ITEADLIB_Nextion.h>
-//#include "Nextion.h"
-
 #include "Particle.h"
 #include "math.h"
 #include <SparkJson.h>
@@ -36,7 +34,6 @@ void t1PopCallback(void);
 //#define fanPin D4
 //#define augerPin D5
 //#define igniterPin D6
-
 #define TIMENOW Time.now() + 0.1;
 
 const char *DELETE_PARAMETERS = "ParametersDELETE";
@@ -92,6 +89,7 @@ int debug = 0; /* set to 1 to get more debug information to the Serial port */
 /********************************************************************************/
 
 char text[256];
+char TimeStamp[26];
 
 String deviceName;
 
@@ -340,7 +338,7 @@ void ReadTemperatures()
         Particle.publish(PUBLISH_TEMPS, qT, PRIVATE);
         //Particle.publish("In IF statement on TempsWrite: ", String(sizeof(qT)) + " | " + strlen(qT), PRIVATE);
         toggleTimeTemps = Time.now();
-        Serial.printf("ReadTemperatures - Grill: %.1f   Meat1: %.1f   Meat2: %.1f   Time:%.0f\r\n", T1, T2, T3, toggleTimeTemps);
+        Serial.printf("%s ReadTemperatures - Grill: %.1f   Meat1: %.1f   Meat2: %.1f   Time:%.0f\r\n", Time.timeStr().c_str(), T1, T2, T3, toggleTimeTemps);
 
         // IFTTT Logic to send text message or phone call if temp drops below a threshhold set in variables above
         if ((T1 >= tempDropOnTemp) && tempMonitorOn == false)
@@ -455,7 +453,7 @@ void WriteParameters()
         aug = digitalRead(augerPin);
         fan = digitalRead(fanPin);
         ign = digitalRead(igniterPin);
-        Serial.printf("WriteParameters: FIA status: Fan: %d  Igniter: %d  Auger: %d\r\n", fan, ign, aug);
+        //Serial.printf("WriteParameters: FIA status: Fan: %d  Igniter: %d  Auger: %d\r\n", fan, ign, aug);
         LWritten = TIMENOW;
 
         char qP[255];
@@ -464,7 +462,11 @@ void WriteParameters()
                  Cycle, LReadPgm, LReadWeb, LWritten, PB, PMode, PToggle, Td, Ti, aug ? "true" : "false", fan ? "true" : "false", ign ? "true" : "false", mode, pgm ? "true" : "false", target, u, deviceName.c_str());
  
         Particle.publish(PUBLISH_PARAMETERS, qP);
-        Serial.printf("WriteParameters: C:%d LRP:%.1f LRW:%.1f LW:%.1f PB:%d PM:%d PT:%.1f Td:%d Ti:%d A:%s F:%s I:%s Mode:%s Pgm:%s TT:%d u:%.2f\r\n", Cycle, LReadPgm, LReadWeb, LWritten, PB, PMode, PToggle, Td, Ti, aug ? "true" : "false", fan ? "true" : "false", ign ? "true" : "false", mode, pgm ? "true" : "false", target, u);
+        strcpy(TimeStamp, Time.timeStr());
+        //, (const char *)root["mode"]);
+        //TimeStamp = Time.timeStr();
+        Serial.printf("%s WriteParameters: C:%d LRP:%.1f LRW:%.1f LW:%.1f PB:%d PM:%d PT:%.1f Td:%d Ti:%d A:%s F:%s I:%s Mode:%s Pgm:%s TT:%d u:%.2f\r\n", Time.timeStr().c_str(), Cycle, LReadPgm, LReadWeb, LWritten, PB, PMode, PToggle, Td, Ti, aug ? "true" : "false", fan ? "true" : "false", ign ? "true" : "false", mode, pgm ? "true" : "false", target, u);
+        //Serial.println(Time.timeStr());
         //Serial.printf("LWritten %.1f\r\n", LWritten);
 }
 
@@ -477,7 +479,7 @@ void SetMode()
         Serial.println("SetMode - Off");
         //myOLED.update_OLED_mode(mode, modeState);
         hopperInit();
-        Serial.printf("SetMode, just finished hopperInit");
+        Serial.printf("%s SetMode, just finished hopperInit", Time.timeStr().c_str());
     }
     else if (strcmp(mode, "Start") == 0)
     {
@@ -489,7 +491,7 @@ void SetMode()
         digitalWrite(fanPin, HIGH);
         digitalWrite(igniterPin, HIGH);
         digitalWrite(augerPin, HIGH);
-        Serial.printf("SetMode in START after all pins set TRUE: Fan: %d  Igniter: %d  Auger: %d\r\n", digitalRead(fanPin), digitalRead(igniterPin), digitalRead(augerPin));
+        Serial.printf("%s SetMode in START after all pins set TRUE: Fan: %d  Igniter: %d  Auger: %d\r\n", Time.timeStr().c_str(),digitalRead(fanPin), digitalRead(igniterPin), digitalRead(augerPin));
         Cycle = 15 + 45;
         u = 15.0 / (15.0 + 45.0); //P0
     }
@@ -599,7 +601,7 @@ void DoAugerControl()
         int TimeSince = Time.now() - toggleTimeAuger;
         if (debug == 1)
         {
-            Serial.printf("DoAugerControl - in TOP of first if - Auger ON! %f %d %f %d\r\n", toggleTimeAuger, Cycle, u, TimeSince);
+            Serial.printf("%s DoAugerControl - in TOP of first if - Auger ON! %f %d %f %d\r\n", Time.timeStr().c_str(), toggleTimeAuger, Cycle, u, TimeSince);
         }
         if (u <= 1.0) // added the = statement 02272017 to stop the violent looping of this function when PID is == 1.0
         {
@@ -715,23 +717,24 @@ void setState(int pin, int newState)  // changed newState from bool to int
             toggleTimeIgniter = TIMENOW;
             snprintf(pinState, sizeof(pinState), "%d", newState);
             sendToLCD(2, "bt1", pinState);
-            Serial.printf("setState: toggling Igniter: %d and text pinState: %s and length %d\r\n", newState, pinState, strlen(pinState));
+            //Serial.printf("setState: toggling Igniter: %d and text pinState: %s and length %d\r\n", newState, pinState, strlen(pinState));
+            Serial.printf("%s setState: toggling Igniter: %d\r\n", Time.timeStr().c_str(), newState);
             ign = newState;
             break;
         case (D4):
             toggleTimeFan = TIMENOW;
             snprintf(pinState, sizeof(pinState), "%d", newState);
             sendToLCD(2, "bt0", pinState);
-            Serial.printf("setState: toggling Fan: %d and text pinState: %s and length %d\r\n", newState, pinState, strlen(pinState));           
-            //Serial.printf("setState: toggling Fan: %d\r\n", newState);
+            //Serial.printf("setState: toggling Fan: %d and text pinState: %s and length %d\r\n", newState, pinState, strlen(pinState));           
+            Serial.printf("%s setState: toggling Fan: %d\r\n", Time.timeStr().c_str(), newState);
             fan = newState;
             break;
         case (D5):
             toggleTimeAuger = TIMENOW;
             snprintf(pinState, sizeof(pinState), "%d", newState);
             sendToLCD(2, "bt2", pinState);
-            Serial.printf("setState: toggling Auger: %d and text pinState: %s and length %d\r\n", newState, pinState, strlen(pinState));            
-            //Serial.printf("setState: toggling Auger: %d\r\n", newState);
+            //Serial.printf("setState: toggling Auger: %d and text pinState: %s and length %d\r\n", newState, pinState, strlen(pinState));            
+            Serial.printf("%s setState: toggling Auger: %d\r\n", Time.timeStr().c_str(), newState);
             aug = newState;
             break;
         }
@@ -751,7 +754,7 @@ void getDataHandler(const char *topic, const char *data)
     char *mutableCopy = strdup(data);
     JsonObject &root = jsonBuffer.parseObject(mutableCopy);
 
-    Serial.printf("data: %s\r\n", data);
+    Serial.printf("%s %s\r\n", Time.timeStr().c_str(), data);
     free(mutableCopy);
 
     if (!root.success())
@@ -777,8 +780,7 @@ void getDataHandler(const char *topic, const char *data)
         newtarget = root["target"];
         newu = root["u"];
 
-        Serial.printf("Read new FIA Parameters from Firebase: fan: %d  igniter: %d  auger: %d\r\n", newfan, newign, newaug);
-        //Serial.printf("Read Parameters from Firebase: %d %.1f %.1f %.1f %d %d %.1f %d %d %s %s %s %s %s %d %.2f\r\n", newCycle, newLReadPgm, newLReadWeb, newLWritten, newPB, newPMode, newPToggle, newTd, newTi, newaug, newfan, newign, newmode, newpgm, newtarget, newu);
+        //Serial.printf("%s Params Read: %d %.1f %.1f %.1f %d %d %.1f %d %d %s %s %s %s %s %d %.2f\r\n", Time.timeStr().c_str(), newCycle, newLReadPgm, newLReadWeb, newLWritten, newPB, newPMode, newPToggle, newTd, newTi, newaug, newfan, newign, newmode, newpgm, newtarget, newu);
     }
 }
 
@@ -844,7 +846,7 @@ void t10PopCallback(void *ptr)   /* Text component pop callback function for Mod
     Particle.publish("** Mode from NEXTION **: " + String(buffer));
     //Serial.printf("buffer is %s\r\n", buffer);
     strcpy(newmode, buffer);
-    Serial.printf("T10PopCallback - newmode is: %s and buffer length is: %d\r\n", newmode, strlen(buffer));
+    Serial.printf("%s T10PopCallback - newmode is: %s and buffer length is: %d\r\n", Time.timeStr().c_str(), newmode, strlen(buffer));
         
     UpdateParameters();
 }

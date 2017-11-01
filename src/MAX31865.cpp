@@ -128,7 +128,7 @@ float MAX31865::get_Temp(int CS)
 //Fault(byte) function requires the contents of the fault bit to be provided. It checks for the bits that are set and provides the faulty bit information on the serial console.
 void MAX31865::Fault(byte fault)
 {
-    if (unpluggedProbe ==0)
+    if (unpluggedProbe == 0)
     {
         Particle.publish("Error MAX31865 in FAULT procedure", String(fault), PRIVATE);
         {
