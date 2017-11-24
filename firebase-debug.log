@@ -1,0 +1,36 @@
+[debug] [2017-11-24T03:10:43.522Z] ----------------------------------------------------------------------
+[debug] [2017-11-24T03:10:43.524Z] Command:       /Users/brianbeardmore/.nvm/versions/node/v9.2.0/bin/node /Users/brianbeardmore/.nvm/versions/node/v9.2.0/bin/firebase serve
+[debug] [2017-11-24T03:10:43.524Z] CLI Version:   3.15.2
+[debug] [2017-11-24T03:10:43.524Z] Platform:      darwin
+[debug] [2017-11-24T03:10:43.524Z] Node Version:  v9.2.0
+[debug] [2017-11-24T03:10:43.525Z] Time:          Thu Nov 23 2017 21:10:43 GMT-0600 (CST)
+[debug] [2017-11-24T03:10:43.525Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-11-24T03:10:43.543Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-11-24T03:10:43.543Z] > authorizing via signed-in user
+[debug] [2017-11-24T03:10:43.544Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-11-24T03:10:43.544Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/Tc7JxwJMxRZLtA3a4yRGyCJiy01eOWyRVY1t7J9dWpg',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Thu Nov 23 2017 21:10:43 GMT-0600 (CST)
+[debug] [2017-11-24T03:10:43.775Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-24T03:10:43.789Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/pelletpirate  
+ Thu Nov 23 2017 21:10:43 GMT-0600 (CST)
+[debug] [2017-11-24T03:10:44.263Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-24T03:10:44.264Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/pelletpirate/tokens  
+ Thu Nov 23 2017 21:10:44 GMT-0600 (CST)
+[debug] [2017-11-24T03:10:44.677Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/brianbeardmore/Dropbox/PelletPirate/pelletpirate'...
+[info] 
+[debug] [2017-11-24T03:10:44.681Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/pelletpirate  
+ Thu Nov 23 2017 21:10:44 GMT-0600 (CST)
+[debug] [2017-11-24T03:10:44.973Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-24T03:10:44.974Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/731610976061/clients/_:getWebAppConfig  
+ Thu Nov 23 2017 21:10:44 GMT-0600 (CST)
+[debug] [2017-11-24T03:10:45.387Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+
