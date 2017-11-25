@@ -76,6 +76,7 @@ NexTouch *nex_listen_list[] =
     &b0,
     &b1,
     &t10,
+    &bt4,
     &t1,
     &t2,
     &t3,
@@ -103,11 +104,11 @@ int cs = A2;    //Grill
 int csm1 = A1;  //Meat1
 int csm2 = A0;  //Meat2
 
-int TempInterval = 6;            // #Frequency to record temperatures
+int TempInterval = 4;            // #Frequency to record temperatures
 int TempRecord = 60;             // #Period to record temperatures in memory
-int ParametersInterval = 4;      //#Frequency to write parameters
+int ParametersInterval = 5;      //#Frequency to write parameters
 int PIDCycleTime = 20;           //#Frequency to update control loop - usually 20
-int ReadParametersInterval = 10; //  #Frequency to poll web for new parameters
+int ReadParametersInterval = 6; //  #Frequency to poll web for new parameters
 int ReadProgramInterval = 60;    // #Freqnency to poll web for new program
 double u_min = 0.15, u_max = 1.0;
 int igniterTemperature = 100;
@@ -159,7 +160,7 @@ int newPB = 60.0;
 int newPMode = 2.0;
 bool newpgm = false;
 double newPToggle;
-int newtarget = 70;
+int newtarget = 225;
 int newTd = 45.0;
 int newTi = 180;
 float newu = 0.15;
@@ -353,62 +354,68 @@ void ReadParameters()
     if ((Time.now() - LReadWeb) >= ReadParametersInterval)
     {
         LReadWeb = TIMENOW;
-        //Particle.publish("**IN READ PARAMS**", "READ PARAMETERS - FIREBASE", PRIVATE);
         char pREAD[255];
         snprintf(pREAD, sizeof(pREAD), "{\"n\":\"%s\"}", deviceName.c_str());
         Particle.publish(CHECK_EVENT_NAME, pREAD, PRIVATE);
-        //Particle.publish(CHECK_EVENT_NAME, "", PRIVATE);
-
         UpdateParameters();
-        //Serial.printf("%f ReadParameters - done!\n", Time.now());
     }
 }
 
 void UpdateParameters()
 {
+    bool DoINeedtoWriteParameters = false;
     //loop through new parameters and see what changed
     if (target != newtarget)
     {
+    
         myPID.setTarget(newtarget);
-        //        myOLED.update_OLED_target(newtarget);
         target = newtarget;
-        WriteParameters();
         Serial.println("UpdateParameters - newtarget!");
+        DoINeedtoWriteParameters= true;
     }
-    else if (PB != newPB || Ti != newTi || Td != newTd)
+    if (PB != newPB || Ti != newTi || Td != newTd)
     {
         PB = newPB;
         Ti = newTi;
         Td = newTd;
         myPID.setGains(PB, Ti, Td);
-        WriteParameters();
         Serial.println("UpdateParameters - newPB or newTI or newTD!");
+        DoINeedtoWriteParameters= true;
     }
-    else if (PMode != newPMode)
+    if (PMode != newPMode)
     {
         PMode = newPMode;
         SetMode();
-        WriteParameters();
+
         Serial.println("UpdateParameters - newPMode!");
+        DoINeedtoWriteParameters= true;
     }
-    else if (strcmp(mode, newmode) != 0)
+    if (strcmp(mode, newmode) != 0)
     {
-        Serial.printf("UpdateParameters - mode(%s) and newmode:(%s) are different", mode, newmode);
+        Serial.printf("UpdateParameters - mode(%s) and newmode:(%s) are different\r\n", mode, newmode);
         strcpy(mode, newmode); // should copy newmode into the mode variable
         SetMode();
-        WriteParameters();
+ 
         Serial.println("UpdateParameters - newmode!");
+        DoINeedtoWriteParameters= true;
     }
-    else if (pgm != newpgm)
+    if (pgm != newpgm)
     {
         pgm = newpgm;
         LReadPgm = TIMENOW - 10000;
         Serial.println("UpdateParameters - newpgm!");
+            DoINeedtoWriteParameters= true;
         //TO DO .... need to finish this when you get to the PROGRAM coding...
         //Program = GetProgram(Parameters, Program)
         //Parameters = SetProgram(Parameters, Program)
         //break # Stop processing new parameters
     }
+    if(DoINeedtoWriteParameters)
+    {
+        WriteParameters();
+        Serial.printf("***** DoINeedToWriteParameters just fired...*****\r\n");
+    }
+    else { Serial.printf("Nothing in Parameters changed this time...\r\n");}
 }
 
 void WriteParameters()
@@ -436,11 +443,9 @@ void SetMode()
     if (strcmp(mode, "Off") == 0)
     {
         modeState = 0;
-        //        myOLED.ModeState = 0;
         Serial.println("SetMode - Off");
-        //myOLED.update_OLED_mode(mode, modeState);
         hopperInit();
-        Serial.printf("%s SetMode, just finished hopperInit", Time.timeStr().c_str());
+        Serial.printf("%s SetMode, just finished hopperInit\r\n", Time.timeStr().c_str());
     }
     else if (strcmp(mode, "Start") == 0)
     {
@@ -449,9 +454,9 @@ void SetMode()
         setState(augerPin, TRUE);
         setState(fanPin, TRUE);
         setState(igniterPin, TRUE);
-        digitalWrite(fanPin, HIGH);
-        digitalWrite(igniterPin, HIGH);
-        digitalWrite(augerPin, HIGH);
+    //    digitalWrite(fanPin, HIGH);
+    //    digitalWrite(igniterPin, HIGH);
+    //    digitalWrite(augerPin, HIGH);
         Serial.printf("%s SetMode in START after all pins set TRUE: Fan: %d  Igniter: %d  Auger: %d\r\n", Time.timeStr().c_str(),digitalRead(fanPin), digitalRead(igniterPin), digitalRead(augerPin));
         Cycle = 15 + 45;
         u = 15.0 / (15.0 + 45.0); //P0
@@ -460,6 +465,9 @@ void SetMode()
     {
         modeState = 2;
         Serial.println("SetMode - Smoke");
+        //sendToLCD(1, "t10", mode);
+        sendCommand("click bt4,1"); //activate press event of component bt4 - the SMOKE button on the display
+        sendCommand("click bt4,0"); //activate press release event of component bt4 - the SMOKE button on the display
         setState(augerPin, TRUE);
         setState(fanPin, TRUE);
         checkIgniter();
@@ -470,6 +478,8 @@ void SetMode()
     {
         modeState = 3;
         Serial.println("SetMode - Ignite");
+        sendCommand("click bt5,1"); //activate press event of component bt5 - the Ignite button on the display
+        sendCommand("click bt5,0"); //activate press release event of component bt5 - the Ignite button on the display
         setState(augerPin, TRUE);
         setState(fanPin, TRUE);
         setState(igniterPin, TRUE);
@@ -481,6 +491,9 @@ void SetMode()
     else if (strcmp(mode, "Hold") == 0)
     {
         modeState = 4;
+        Serial.println("SetMode - Hold");
+        sendCommand("click bt6,1"); //activate press event of component bt6 - the Hold button on the display
+        sendCommand("click bt6,0"); //activate press release event of component bt6 - the Hold button on the display       
         setState(augerPin, TRUE);
         setState(fanPin, TRUE);
         checkIgniter();
@@ -492,6 +505,8 @@ void SetMode()
     {
         modeState = 5;
         Serial.println("SetMode - Shutdown");
+        sendCommand("click bt7,1"); //activate press event of component bt7 - the Shutdown button on the display
+        sendCommand("click bt7,0"); //activate press release event of component bt7 - the Shutdown button on the display               
         hopperInit();
         setState(fanPin, TRUE);
     }
@@ -596,7 +611,6 @@ void checkIgniter()
     if ((Time.now() - toggleTimeIgniter) > 1200 && digitalRead(igniterPin))
     {
         Serial.println("**SAFETY FIRST** - Disabling igniter due to timeout");
-        //digitalWrite(igniterPin, FALSE);
         setState(igniterPin, FALSE);
         strcpy(mode, "Shutdown");
         SetMode();
@@ -658,7 +672,7 @@ void setState(int pin, int newState)  // changed newState from bool to int
         digitalWrite(pin, newState);
         switch (pin)
         {
-        case (D6): // did have D6 here... delete this comment later...
+        case (D6):
             toggleTimeIgniter = TIMENOW;
             snprintf(pinState, sizeof(pinState), "%d", newState);
             sendToLCD(2, "bt1", pinState);
@@ -666,7 +680,7 @@ void setState(int pin, int newState)  // changed newState from bool to int
             Serial.printf("%s setState: toggling Igniter: %d\r\n", Time.timeStr().c_str(), newState);
             ign = newState;
             break;
-        case (D4): // did have D4 here... delete this comment later...
+        case (D4):
             toggleTimeFan = TIMENOW;
             snprintf(pinState, sizeof(pinState), "%d", newState);
             sendToLCD(2, "bt0", pinState);
@@ -674,7 +688,7 @@ void setState(int pin, int newState)  // changed newState from bool to int
             Serial.printf("%s setState: toggling Fan: %d\r\n", Time.timeStr().c_str(), newState);
             fan = newState;
             break;
-        case (D5): // did have D5 here... delete this comment later...
+        case (D5):
             toggleTimeAuger = TIMENOW;
             snprintf(pinState, sizeof(pinState), "%d", newState);
             sendToLCD(2, "bt2", pinState);
@@ -897,7 +911,7 @@ void sendToLCD(uint8_t type,String index, String cmd)
 		Serial1.print("page ");
 		Serial1.print(cmd);
 	}
-	
+
 	Serial1.write(0xff);
 	Serial1.write(0xff);
 	Serial1.write(0xff);
