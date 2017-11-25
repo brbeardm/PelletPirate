@@ -90,7 +90,7 @@ function CUpdatePlot() {
 
 
 //Firebase	
-var ControlsRef = Ref.child('ControllerOwners/Pellet_Pirate_2/Controls');
+var ControlsRef = Ref.child('ControllerOwners/Pellet_Pirate_1/Controls');
 
 
 ControlsRef.once("value", function(snapshot) {

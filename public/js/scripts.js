@@ -174,11 +174,12 @@ var gM2 = new JustGage({
 	relativeGaugeSize: true
 });
 
+
 //Firebase	
 //var Ref = new Firebase('https://pelletpirate.firebaseio.com/');			// added back 6/8/17 per PISmoker investigation
-var TempsRef = Ref.child('ControllerOwners/Pellet_Pirate_2/Temps');
-var ParametersRef = Ref.child('ControllerOwners/Pellet_Pirate_2/Parameters');
-var ProgramRef = Ref.child('ControllerOwners/Pellet_Pirate_2/Program');
+var TempsRef = Ref.child('ControllerOwners/Pellet_Pirate_1/Temps');
+var ParametersRef = Ref.child('ControllerOwners/Pellet_Pirate_1/Parameters');
+var ProgramRef = Ref.child('ControllerOwners/Pellet_Pirate_1/Program');
 
 
 //console.log('before TempsRef.limittoLast' + ParametersRef);
@@ -206,6 +207,7 @@ TempsRef.limitToLast(3600/3*16).once("value", function(snapshot) { //Limit to la
 
 });
 
+
 TempsRef.on("child_removed", function(snapshot, prevChildKey) {
   T1 = [];
   T2 = [];
@@ -218,5 +220,6 @@ function clearData() {
 	TempsRef.remove();
 	ControlsRef.remove();
 }
+
 
 document.getElementById('ControlsRow').style.display = 'none';

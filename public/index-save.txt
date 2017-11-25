@@ -5,34 +5,37 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
-	<title>New UI 11252017</title>
+	<title>New UI 11192017</title>
 	<link href="css/layout.css" rel="stylesheet" type="text/css">
 
-	<!-- Material Design Lite -->
+	<!-- Material Design Lite
+	<link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css"> -->
 	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.orange-indigo.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">		
+	<!-- <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css"> -->
 	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 	<!-- Bootstrap -->
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/angular-toggle-switch-bootstrap-3.css" type="text/css" media="screen">
 	<link href="css/bootstrap-material-design.css" rel="stylesheet">
 
-	<!-- ** NOT FINISHED **Bootstrap for the Grill Guage/Graph on/off buttons ** NOT FINISHED need logic to turn on/off gauge and graph ************************ -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.time.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
 
 	<script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.resize.js"></script>
 
+	<!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script> **** updated to 1.6.1 on 6/29/17-->
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
 
+	<!-- <script src="https://www.gstatic.com/firebasejs/3.2.0/firebase.js"></script> -->
 	<script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
 
+	<!-- <script src="https://cdn.firebase.com/libs/angularfire/2.0.1/angularfire.min.js"></script> -->
 	<script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
 
 	<script src="js/angular-toggle-switch.min.js"></script>
@@ -40,6 +43,7 @@
 
 	<!-- JustGage tools for the dashboard -->
 	<script src="js/justgage.js"></script>
+	
 
 	<script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
 	<script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
@@ -60,10 +64,9 @@
 
 	<link rel="shortcut icon" href="images/pelletpirate-icon-32x32.png">
 
-<!--
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<link rel="stylesheet" href="https://code.getmdl.io/1.2.0/material.cyan-light_blue.min.css"> -->
+	<link rel="stylesheet" href="https://code.getmdl.io/1.2.0/material.cyan-light_blue.min.css">
 	<link rel="stylesheet" href="css/styles.css">
 </head>
 
@@ -123,79 +126,12 @@
 				</nav>
 		</div>
 
-
  		<main class="mdl-layout__content mdl-color--grey-100">
-
-
-							<div class="container">
-							    <div class="row">
-							        <div class="col-xs-12 col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
-							            <div class="panel panel-default">
-
-							                <ul class="list-group">
-							                     <li class="list-group-item">
-							                        Sample switch with value
-							                        <div class="material-switch pull-right">hello
-							                            <input id="someSwitch" name="someSwitch" onclick="getValueSomeSwitch()" type="checkbox"/>
-							                            <label for="someSwitch" class="label-success"></label>
-
-														<script>
-														  //if you want get value
-														  function getValueSomeSwitch()
-														  {
-														   /* var value=$('#someSwitchOptionSuccess:checked').val(); */
-														   var value=$('#someSwitch').prop('checked');
-														   console.log(value);
-														  }
-														</script>
-							                        </div>
-							                    </li>
-							                </ul>
-							            </div>            
-							        </div>
-							    </div>
-							</div>
-
  			<div class="mdl-grid demo-content">
 				<div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-	    	    	<div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-desktop mdl-cell--4-col-phone Gauge" id="GrillGauge"></div>
-					<div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-desktop mdl-cell--4-col-phone Gauge" id="MeatGauge">
-						<div class="col-xs-12 col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
-							<div class="panel panel-default">				
-								<div class="material-switch pull-right">
-									<input id="Meat1Switch" name="SwitchOption001" onclick="getValueMeat1()" type="checkbox"/>
-									<label for="Meat1Switch" class="label-success">off  on</label>
-									<script>
-										function getValueMeat1()
-										{
-										var value=$('#Meat1Switch').prop('checked');
-										console.log(value);
-										}
-									</script>
-								</div>
-							</div>
-						</div>
-				    </div> 
-					<div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-desktop mdl-cell--4-col-phone Gauge" id="MeatGauge2">
-						<div class="col-xs-12 col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
-							<div class="panel panel-default">						
-								<div class="material-switch pull-right">
-									<input id="someSwitchOptionSuccess" align="center" name="someSwitchOption001" onclick="getValueSome()" type="checkbox"/>
-									<label for="someSwitchOptionSuccess" class="label-success">off on</label>
-
-									<script>
-										//if you want get value
-										function getValueSome()
-										{
-										/* var value=$('#someSwitchOptionSuccess:checked').val(); */
-										var value=$('#someSwitchOptionSuccess').prop('checked');
-										console.log(value);
-										}
-									</script>
-								</div>
-							</div>
-						</div>
-					</div>
+	    	    			<div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-desktop mdl-cell--4-col-phone Gauge" id="GrillGauge"></div>
+					<div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-desktop mdl-cell--4-col-phone Gauge" id="MeatGauge"></div> 
+					<div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-desktop mdl-cell--4-col-phone Gauge" id="MeatGauge2"></div>
 				</div>
 
 				<div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
