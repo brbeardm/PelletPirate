@@ -37,7 +37,7 @@ void t3PopCallback(void);
 
 const char *DELETE_PARAMETERS = "ParametersDELETE";
 const char *PUBLISH_PARAMETERS = "ParametersHookBody";
-const char *CHECK_EVENT_NAME = "ParametersRead";
+const char *READ_PARAMETERS = "ParametersRead";
 
 const char *DELETE_TEMPS = "TempsDELETE";
 const char *PUBLISH_TEMPS = "4TempsHookBody";
@@ -75,11 +75,6 @@ NexTouch *nex_listen_list[] =
     &t0,
     &b0,
     &b1,
-    &t10,
-    &bt4,
-    &t1,
-    &t2,
-    &t3,
     NULL
 };
 /* Nextion variable end **********/
@@ -356,7 +351,7 @@ void ReadParameters()
         LReadWeb = TIMENOW;
         char pREAD[255];
         snprintf(pREAD, sizeof(pREAD), "{\"n\":\"%s\"}", deviceName.c_str());
-        Particle.publish(CHECK_EVENT_NAME, pREAD, PRIVATE);
+        Particle.publish(READ_PARAMETERS, pREAD, PRIVATE);
         UpdateParameters();
     }
 }
@@ -386,7 +381,6 @@ void UpdateParameters()
     {
         PMode = newPMode;
         SetMode();
-
         Serial.println("UpdateParameters - newPMode!");
         DoINeedtoWriteParameters= true;
     }
@@ -395,7 +389,6 @@ void UpdateParameters()
         Serial.printf("UpdateParameters - mode(%s) and newmode:(%s) are different\r\n", mode, newmode);
         strcpy(mode, newmode); // should copy newmode into the mode variable
         SetMode();
- 
         Serial.println("UpdateParameters - newmode!");
         DoINeedtoWriteParameters= true;
     }
@@ -619,12 +612,17 @@ void checkIgniter()
 
 void DoControl()
 {
+    double old_u;
+
     //Serial.printf("Time.now: %f  myPID.LastUpdate: %f  difference %d  Cycle: %d\r\n", Time.now(), myPID.LastUpdate, Time.now() - myPID.LastUpdate, Cycle);
     if ((Time.now() - myPID.LastUpdate) > Cycle)
     {
         u = myPID.update(Temps[0]);
+        old_u = u;
         u = max(u, u_min);
         u = min(u, u_max);
+
+        Serial.printf("DoControl - through u max min calculation old_u:%.2f and u:%.2f", old_u, u);
 
         if (debug == 1)
         {
@@ -741,18 +739,17 @@ void getDataHandler(const char *topic, const char *data)
 
         //Serial.printf("%s Params Read: %d %.1f %.1f %.1f %d %d %.1f %d %d %s %s %s %s %s %d %.2f\r\n", Time.timeStr().c_str(), newCycle, newLReadPgm, newLReadWeb, newLWritten, newPB, newPMode, newPToggle, newTd, newTi, newaug, newfan, newign, newmode, newpgm, newtarget, newu);
     }
+
+    UpdateParameters(); // process what we just got from Firebase read!
+
 }
 
-
-
 /* Nextion Code *********************************************************************************************/
-
 void t0PopCallback(void *ptr)   /* Text component pop callback function. */
 {
     dbSerialPrintln("t0PopCallback");
     t0.setText("225");
 }
-
 
 void b0PopCallback(void *ptr)   /* Taget temp +5 degrees every time the Up+ button is released. */
 {
@@ -774,7 +771,6 @@ void b0PopCallback(void *ptr)   /* Taget temp +5 degrees every time the Up+ butt
 
     UpdateParameters();
 }
-
 
 void b1PopCallback(void *ptr)   /* In this example,the value of the text component will minus 5 degress every time when button1 is released. */
 {
@@ -799,7 +795,6 @@ void b1PopCallback(void *ptr)   /* In this example,the value of the text compone
     UpdateParameters();
 }
 
-
 void t10PopCallback(void *ptr)   /* Text component pop callback function for Mode. */
 {
     dbSerialPrintln("t10PopCallback");
@@ -815,8 +810,7 @@ void t10PopCallback(void *ptr)   /* Text component pop callback function for Mod
     UpdateParameters();
 }
 
-
-void t1PopCallback(void)   /* ToDo -- need to do t2 and t2 temp update procs... this is just for T1-Grill Temp update on the Nextion display. */
+void t1PopCallback(void)
 {
     uint16_t integer_temp, decimal_temp;
 
@@ -840,8 +834,7 @@ void t1PopCallback(void)   /* ToDo -- need to do t2 and t2 temp update procs... 
 
 }
 
-
-void t2PopCallback(void)   /* ToDo -- need to do t2 and t2 temp update procs... this is just for T1-Grill Temp update on the Nextion display. */
+void t2PopCallback(void)
 {
     uint16_t integer_temp, decimal_temp;
 
@@ -858,13 +851,10 @@ void t2PopCallback(void)   /* ToDo -- need to do t2 and t2 temp update procs... 
     strcat(buffer, ".");
     strcat(buffer, buffer1);
      
-    //t1.setText(buffer);
-    t2.setText(buffer); // ToDo -- T2 and T3 need to be fixed when you have ALL 3 probes working on the board
-    //t3.setText(buffer); // ToDo -- T2 and T3 need to be fixed when you have ALL 3 probes working on the board
+    t2.setText(buffer);
 }
 
-
-void t3PopCallback(void)   /* ToDo -- need to do t2 and t2 temp update procs... this is just for T1-Grill Temp update on the Nextion display. */
+void t3PopCallback(void)
 {
     uint16_t integer_temp, decimal_temp;
 
@@ -881,12 +871,8 @@ void t3PopCallback(void)   /* ToDo -- need to do t2 and t2 temp update procs... 
     strcat(buffer, ".");
     strcat(buffer, buffer1);
      
-    //t1.setText(buffer);
-    //t2.setText(buffer); // ToDo -- T2 and T3 need to be fixed when you have ALL 3 probes working on the board
-    t3.setText(buffer); // ToDo -- T2 and T3 need to be fixed when you have ALL 3 probes working on the board
-
+    t3.setText(buffer);
 }
-
 
 void sendToLCD(uint8_t type,String index, String cmd)
 {
