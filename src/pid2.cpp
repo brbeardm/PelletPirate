@@ -34,7 +34,7 @@ void pid::CalculateGains(double PB, double Ti, double Td)
 	Kp = -1 / PB;
 	Ki = Kp / Ti;
 	Kd = Kp * Td;
-	Serial.printf("PB: %f  Ti: %f  Td: %f --> Kp: %f  Ki: %f  Kd: %f\r\n", PB, Ti, Td, Kp, Ki, Kd);
+	Serial.printf("%s PB: %f  Ti: %f  Td: %f --> Kp: %f  Ki: %f  Kd: %f\r\n", Time.timeStr().c_str(), PB, Ti, Td, Kp, Ki, Kd);
 }
 
 void pid::setTarget(double SetPoint)
@@ -44,11 +44,13 @@ void pid::setTarget(double SetPoint)
 	Inter = 0.0;
 	Derv = 0.0;
 	LastUpdate = Time.now();
-	Serial.printf("Pid2 setTarget has processed a New Target: %.0f\r\n", setPoint);
+	Serial.printf("%s Pid2 setTarget has processed a New Target: %.0f at LastUpdate: %.0f\r\n", Time.timeStr().c_str(), setPoint, LastUpdate);
 }
 
-double pid::update(double Current)
+double pid::update(double Current, double SetPoint)
 {
+	setPoint = SetPoint;
+	
 	//** P **
 	Error = Current - setPoint;
 	P = Kp * Error + 0.5; //P = 1 for PB/2 under setPoint, P = 0 for PB/2 over setPoint
@@ -71,6 +73,8 @@ double pid::update(double Current)
 	Last = Current;
 	LastUpdate = Time.now();
 
+	Serial.printf("%s Pid2 update has processed Grill Temp: %.0f with Target Temp: %.0f at LastUpdate time: %.0f returning u: %.2f\r\n", Time.timeStr().c_str(), Current, setPoint, LastUpdate, u);
+
 	return u;
 }
 
@@ -78,5 +82,5 @@ void pid::setGains(double PB, double Ti, double Td)
 {
 	CalculateGains(PB, Ti, Kd);
 	Inter_max = fabs(0.5 / Ki);
-	Serial.printf("New Gains (%f, %f, %f)\r\n", Kp, Ki, Kd);
+	Serial.printf("%s New Gains (%f, %f, %f)\r\n", Time.timeStr().c_str(), Kp, Ki, Kd);
 }

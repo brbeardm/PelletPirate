@@ -15,7 +15,7 @@ class pid
 
     void setTarget(double);
 
-    double update(double);
+    double update(double, double);
 
     void setGains(double, double, double);
 

@@ -46,35 +46,36 @@ const char *PUBLISH_TEMPS = "4TempsHookBody";
 USARTSerial& nexSerial = Serial1;       
 
 
-NexButton bt0 = NexButton(1, 7, "bt0");  // Fan light
-NexButton bt1 = NexButton(1, 11, "bt1"); // Igniter light
-NexButton bt2 = NexButton(1, 10, "bt2"); // Auger light
+NexButton bt0 = NexButton(1, 6, "bt0");  // Fan light
+NexButton bt1 = NexButton(1, 10, "bt1"); // Igniter light
+NexButton bt2 = NexButton(1, 9, "bt2"); // Auger light
 
-NexButton bt3 = NexButton(1, 13, "bt3"); // Off - Start button
-NexButton bt4 = NexButton(1, 14, "bt4"); // Mode - Smoke button
-NexButton bt5 = NexButton(1, 15, "bt5"); // Mode - Ignite button
-NexButton bt6 = NexButton(1, 16, "bt6"); // Mode - Hold button
-NexButton bt7 = NexButton(1, 17, "bt7"); // Mode - Shutdown button
+NexButton bt3 = NexButton(1, 12, "bt3"); // Off - Start button
+NexButton bt4 = NexButton(1, 13, "bt4"); // Mode - Smoke button
+NexButton bt5 = NexButton(1, 14, "bt5"); // Mode - Ignite button
+NexButton bt6 = NexButton(1, 15, "bt6"); // Mode - Hold button
+NexButton bt7 = NexButton(1, 16, "bt7"); // Mode - Shutdown button
 
-NexText t0 = NexText(1, 8, "t0");      /* Declare a text object for Target temp of the grill [page id:1, component id:8, component name: "t0"]. */
-NexButton b0 = NexButton(1, 12, "b0"); /* Up ++ target temp */
-NexButton b1 = NexButton(1, 9, "b1");  /* Down -- target temp */
+NexText t0 = NexText(1, 7, "t0");      /* Declare a text object for Target temp of the grill [page id:1, component id:8, component name: "t0"]. */
+NexButton b0 = NexButton(1, 11, "b0"); /* Up ++ target temp */
+NexButton b1 = NexButton(1, 8, "b1");  /* Down -- target temp */
 
 NexText t10 = NexText(1, 6, "t10");     /* Declare a text object for Mode of the grill, default is OFF [pagid:1, component id:6, component name: "t10"]. */
 
-NexText t1 = NexText(1, 3, "t1");       /* Grill Temp object on Nextion display */
-NexText t2 = NexText(1, 4, "t2");       /* Meat 1 Temp object on Nextion display */
-NexText t3 = NexText(1, 5, "t3");       /* Grill Temp object on Nextion display */
+NexText t1 = NexText(1, 2, "t1");       /* Grill Temp object on Nextion display */
+NexText t2 = NexText(1, 3, "t2");       /* Meat 1 Temp object on Nextion display */
+NexText t3 = NexText(1, 4, "t3");       /* Meat 2 Temp object on Nextion display */
 
 char buffer[100] = {0};
 char buffer1[100] = {0};
 
-/* Register object t0, b0, b1, to the Nextion touch event list. */
+/* Register object t0, b0, b1, t10 to the Nextion touch event list. */
 NexTouch *nex_listen_list[] = 
 {
     &t0,
     &b0,
     &b1,
+    &t10,
     NULL
 };
 /* Nextion variable end **********/
@@ -99,9 +100,9 @@ int cs = A2;    //Grill
 int csm1 = A1;  //Meat1
 int csm2 = A0;  //Meat2
 
-int TempInterval = 4;            // #Frequency to record temperatures
+int TempInterval = 6;            // #Frequency to record temperatures
 int TempRecord = 60;             // #Period to record temperatures in memory
-int ParametersInterval = 5;      //#Frequency to write parameters
+int ParametersInterval = 6;      //#Frequency to write parameters
 int PIDCycleTime = 20;           //#Frequency to update control loop - usually 20
 int ReadParametersInterval = 6; //  #Frequency to poll web for new parameters
 int ReadProgramInterval = 60;    // #Freqnency to poll web for new program
@@ -285,7 +286,11 @@ void ReadTemperatures()
             TT = target;
             time = Time.now();
             time = time * 1000; // multiply by 1000 to make sure its a unix epoch timestamp that is 13 digits (the multiplication by 1000 basically adds millis to the epoch time as 000, needed by front end web program graph)
-            T1 = Temps[0], T2 = Temps[1], T3 = Temps[2];
+    
+           if (T1 > 0 && T1 < 500) {T1 = Temps[0];} else {T1 = 1.0;} //force bad temps from MAX31865 to be 1.0 degrees - recode this when MAX31865 is fixed
+           if (T2 > 0 && T2 < 500) {T2 = Temps[1];} else {T2 = 1.0;} //force bad temps from MAX31865 to be 1.0 degrees - recode this when MAX31865 is fixed
+           if (T3 > 0 && T3 < 500) {T3 = Temps[2];} else {T3 = 1.0;} //force bad temps from MAX31865 to be 1.0 degrees - recode this when MAX31865 is fixed
+           //T1 = Temps[0], T2 = Temps[1], T3 = Temps[2];
         }
     }
     
@@ -386,7 +391,7 @@ void UpdateParameters()
     }
     if (strcmp(mode, newmode) != 0)
     {
-        Serial.printf("UpdateParameters - mode(%s) and newmode:(%s) are different\r\n", mode, newmode);
+        Serial.printf("%s UpdateParameters - mode(%s) and newmode:(%s) are different\r\n", Time.timeStr().c_str(), mode, newmode);
         strcpy(mode, newmode); // should copy newmode into the mode variable
         SetMode();
         Serial.println("UpdateParameters - newmode!");
@@ -406,9 +411,9 @@ void UpdateParameters()
     if(DoINeedtoWriteParameters)
     {
         WriteParameters();
-        Serial.printf("***** DoINeedToWriteParameters just fired...*****\r\n");
+        Serial.printf("%s ***** DoINeedToWriteParameters just fired...*****\r\n", Time.timeStr().c_str());
     }
-    else { Serial.printf("Nothing in Parameters changed this time...\r\n");}
+    else { Serial.printf("%s Nothing in Parameters changed this time...\r\n", Time.timeStr().c_str());}
 }
 
 void WriteParameters()
@@ -423,12 +428,9 @@ void WriteParameters()
  
         snprintf(qP, sizeof(qP), "{\"Cycle\":%d,\"LReadPgm\":%.1f,\"LReadWeb\":%.1f,\"LWritten\":%.1f,\"PB\":%d,\"PMode\":%d,\"PToggle\":%.1f,\"Td\":%d,\"Ti\":%d,\"aug\":%s,\"fan\":%s,\"ign\":%s,\"mode\":\"%s\",\"pgm\":%s,\"target\":%d,\"u\":%.2f,\"n\":\"%s\"}",
                  Cycle, LReadPgm, LReadWeb, LWritten, PB, PMode, PToggle, Td, Ti, aug ? "true" : "false", fan ? "true" : "false", ign ? "true" : "false", mode, pgm ? "true" : "false", target, u, deviceName.c_str());
- 
-        Particle.publish(PUBLISH_PARAMETERS, qP);
 
+        Particle.publish(PUBLISH_PARAMETERS, qP);
         Serial.printf("%s WriteParameters: C:%d LRP:%.1f LRW:%.1f LW:%.1f PB:%d PM:%d PT:%.1f Td:%d Ti:%d A:%s F:%s I:%s Mode:%s Pgm:%s TT:%d u:%.2f\r\n", Time.timeStr().c_str(), Cycle, LReadPgm, LReadWeb, LWritten, PB, PMode, PToggle, Td, Ti, aug ? "true" : "false", fan ? "true" : "false", ign ? "true" : "false", mode, pgm ? "true" : "false", target, u);
-        //Serial.println(Time.timeStr());
-        //Serial.printf("LWritten %.1f\r\n", LWritten);
 }
 
 void SetMode()
@@ -443,34 +445,33 @@ void SetMode()
     else if (strcmp(mode, "Start") == 0)
     {
         modeState = 1;
-        Serial.println("SetMode - Start");
         setState(augerPin, TRUE);
         setState(fanPin, TRUE);
         setState(igniterPin, TRUE);
-    //    digitalWrite(fanPin, HIGH);
-    //    digitalWrite(igniterPin, HIGH);
-    //    digitalWrite(augerPin, HIGH);
         Serial.printf("%s SetMode in START after all pins set TRUE: Fan: %d  Igniter: %d  Auger: %d\r\n", Time.timeStr().c_str(),digitalRead(fanPin), digitalRead(igniterPin), digitalRead(augerPin));
         Cycle = 15 + 45;
         u = 15.0 / (15.0 + 45.0); //P0
+        Serial.printf("%s SetMode - Start : u = %.2f\r\n", Time.timeStr().c_str(), u);
     }
     else if (strcmp(mode, "Smoke") == 0)
     {
         modeState = 2;
-        Serial.println("SetMode - Smoke");
         //sendToLCD(1, "t10", mode);
         sendCommand("click bt4,1"); //activate press event of component bt4 - the SMOKE button on the display
         sendCommand("click bt4,0"); //activate press release event of component bt4 - the SMOKE button on the display
         setState(augerPin, TRUE);
         setState(fanPin, TRUE);
         checkIgniter();
-        Cycle = 15 + 45;
-        u = 15.0 / (15.0 + 45.0); //P0
+        On = 15;
+        Off = 45 + PMode * 10;
+        Cycle = On + Off;
+        u = On / (On + Off);
+        Serial.printf("%s SetMode - Smoke : u = %.2f\r\n", Time.timeStr().c_str(), u);
+
     }
     else if (strcmp(mode, "Ignite") == 0)
     {
         modeState = 3;
-        Serial.println("SetMode - Ignite");
         sendCommand("click bt5,1"); //activate press event of component bt5 - the Ignite button on the display
         sendCommand("click bt5,0"); //activate press release event of component bt5 - the Ignite button on the display
         setState(augerPin, TRUE);
@@ -480,6 +481,7 @@ void SetMode()
         Off = 45 + (PMode * 10); //http://tipsforbbq.com/Definition/Traeger-P-Setting
         Cycle = On + Off;
         u = On / (On + Off);
+        Serial.printf("%s SetMode - Ignite : u = %.2f\r\n", Time.timeStr().c_str(), u);
     }
     else if (strcmp(mode, "Hold") == 0)
     {
@@ -492,7 +494,7 @@ void SetMode()
         checkIgniter();
         Cycle = PIDCycleTime;
         u = u_min; //Set to maintenance level
-        Serial.printf("SetMode - Hold : u = %.2f\r\n", u);
+        Serial.printf("%s SetMode - Hold : u = %.2f\r\n", Time.timeStr().c_str(), u);
     }
     else if (strcmp(mode, "Shutdown") == 0)
     {
@@ -531,7 +533,7 @@ void DoMode()
     {
         DoAugerControl();
         setState(igniterPin, TRUE);
-        if (Temps[0] > 115)
+        if (Temps[0] > 80)
         {
             strcpy(mode, "Hold");
             SetMode();
@@ -561,11 +563,11 @@ void DoAugerControl()
     //Auger currently on AND TimeSinceToggle > Auger On Time
     if (digitalRead(augerPin) && ((Time.now() - toggleTimeAuger) > (Cycle * u)))
     {
-        int TimeSince = Time.now() - toggleTimeAuger;
-        if (debug == 1)
-        {
-            Serial.printf("%s DoAugerControl - in TOP of first if - Auger ON! %f %d %f %d\r\n", Time.timeStr().c_str(), toggleTimeAuger, Cycle, u, TimeSince);
-        }
+        int TimeSince1 = Time.now() - toggleTimeAuger;
+        //if (debug == 1)
+        //{
+    Serial.printf("%s DoAugerControl - in TOP of first if - Auger ON! timenow:%f  toggletimeauger:%d  Cycle:%f u:%d\r\n", Time.timeStr().c_str(), toggleTimeAuger, Cycle, u, TimeSince1);
+        //}
         if (u <= 1.0) // added the = statement 02272017 to stop the violent looping of this function when PID is == 1.0
         {
             setState(augerPin, FALSE);
@@ -578,10 +580,11 @@ void DoAugerControl()
     //Auger currently off AND TimeSinceToggle > Auger Off Time
     if (!digitalRead(augerPin) && ((Time.now() - toggleTimeAuger) > ((Cycle * (1 - u)))))
     {
-        if (debug == 1)
-        {
-            Serial.println("DoAugerControl - in TOP of second if - Auger OFF!");
-        }
+        int TimeSince2 = Time.now() - toggleTimeAuger;
+        //if (debug == 1)
+        //{
+        Serial.printf("%s DoAugerControl - in TOP of second if - Auger OFF! timenow:%f  toggletimeauger:%d  Cycle:%f u:%d\r\n", Time.timeStr().c_str(), toggleTimeAuger, Cycle, u, TimeSince2);
+        //}
         setState(augerPin, TRUE);
         checkIgniter();
         WriteParameters();
@@ -614,19 +617,19 @@ void DoControl()
 {
     double old_u;
 
-    //Serial.printf("Time.now: %f  myPID.LastUpdate: %f  difference %d  Cycle: %d\r\n", Time.now(), myPID.LastUpdate, Time.now() - myPID.LastUpdate, Cycle);
+    //Serial.printf("DoControl: Time.now: %f  myPID.LastUpdate: %f  difference %d  Cycle: %d  u now:%.2f\r\n", Time.now(), myPID.LastUpdate, Time.now() - myPID.LastUpdate, Cycle, u);
     if ((Time.now() - myPID.LastUpdate) > Cycle)
     {
-        u = myPID.update(Temps[0]);
+        u = myPID.update(Temps[0], target);
         old_u = u;
         u = max(u, u_min);
         u = min(u, u_max);
 
-        Serial.printf("DoControl - through u max min calculation old_u:%.2f and u:%.2f", old_u, u);
+        Serial.printf("%s DoControl IF Statement - through u max min calculation old_u:%.2f and u:%.2f\r\n", Time.timeStr().c_str(), old_u, u);
 
         if (debug == 1)
         {
-            Serial.printf("DoControl - setting PID u value: %f\r\n", u);
+            Serial.printf("%s DoControl - setting PID u value: %f\r\n", Time.timeStr().c_str(), u);
         }
 
         // To Do ... write code here to STAMP out Program Control data to Firebase
