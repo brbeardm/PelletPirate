@@ -25,7 +25,6 @@ class MAX31865
     MAX31865(int);
     void Write(int, byte, byte);
     byte Read(int, byte);
-    //        float calc_Temp(int, int);
     void Fault(byte);
     float get_Temp(int);
 

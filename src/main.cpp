@@ -11,6 +11,7 @@ void getDataHandler(const char *topic, const char *data);
 void hopperInit(void);
 void SetMode(void);
 void handler(const char *topic, const char *data);
+void tempsHandler(const char *topic, const char *data);
 void ReadTemperatures(void);
 void ReadParameters(void);
 void DoMode(void);
@@ -40,7 +41,8 @@ const char *PUBLISH_PARAMETERS = "ParametersHookBody";
 const char *READ_PARAMETERS = "ParametersRead";
 
 const char *DELETE_TEMPS = "TempsDELETE";
-const char *PUBLISH_TEMPS = "4TempsHookBody";
+//const char *PUBLISH_TEMPS = "4TempsHookBody";
+//const char *PUBLISH_TEMPS ="TempsHookBody"; 
 
 /* Nextion variable **************/
 USARTSerial& nexSerial = Serial1;       
@@ -100,11 +102,11 @@ int cs = A2;    //Grill
 int csm1 = A1;  //Meat1
 int csm2 = A0;  //Meat2
 
-int TempInterval = 6;            // #Frequency to record temperatures
+int TempInterval = 15;            // #Frequency to record temperatures
 int TempRecord = 60;             // #Period to record temperatures in memory
-int ParametersInterval = 6;      //#Frequency to write parameters
+int ParametersInterval = 30;      //#Frequency to write parameters
 int PIDCycleTime = 20;           //#Frequency to update control loop - usually 20
-int ReadParametersInterval = 6; //  #Frequency to poll web for new parameters
+int ReadParametersInterval = 20; //  #Frequency to poll web for new parameters
 int ReadProgramInterval = 60;    // #Freqnency to poll web for new program
 double u_min = 0.15, u_max = 1.0;
 int igniterTemperature = 100;
@@ -182,7 +184,10 @@ void setup()
 {
     Particle.subscribe("spark/", handler);
     Particle.publish("spark/device/name");
-    Particle.subscribe("hook-response/ParametersRead", getDataHandler, MY_DEVICES);
+
+    Particle.subscribe("hook-response/ParametersRead", getDataHandler);
+    
+    Particle.subscribe("SSE-TempsHookBody", tempsHandler);
 
     Particle.variable("msg", &sendmessage, INT);
 
@@ -297,10 +302,10 @@ void ReadTemperatures()
     // Record Temperatures in "Firebase"
     if ((Time.now() - toggleTimeTemps > TempInterval) && ResetFIREBASE == 1)
     {
-        char qT[128];
-        snprintf(qT, sizeof(qT), "{\"T1\":%.6f,\"T2\":%.6f,\"T3\":%.6f,\"TT\":%.0f,\"time\":%.0f,\"n\":\"%s\"}", T1, T2, T3, TT, time, deviceName.c_str());
-        Particle.publish(PUBLISH_TEMPS, qT, PRIVATE);
-        //Particle.publish("In IF statement on TempsWrite: ", String(sizeof(qT)) + " | " + strlen(qT), PRIVATE);
+             char qT[128];
+             snprintf(qT, sizeof(qT), "{\"T1\":%.6f,\"T2\":%.6f,\"T3\":%.6f,\"TT\":%.0f,\"time\":%.0f,\"n\":\"%s\"}", T1, T2, T3, TT, time, deviceName.c_str());
+             Particle.publish("SSE-TempsHookBody", qT);
+    
         toggleTimeTemps = Time.now();
         Serial.printf("%s ReadTemperatures - Grill: %.1f   Meat1: %.1f   Meat2: %.1f   Time:%.0f\r\n", Time.timeStr().c_str(), T1, T2, T3, toggleTimeTemps);
 
@@ -399,8 +404,11 @@ void UpdateParameters()
     }
     if (pgm != newpgm)
     {
+        float timeholder;
+        timeholder = Time.now();
+        Serial.printf("check on this...not sure timeholder is working in UpdateParameters, time is: %f", timeholder);
         pgm = newpgm;
-        LReadPgm = TIMENOW - 10000;
+        LReadPgm = (timeholder - 10000 + .01);
         Serial.println("UpdateParameters - newpgm!");
             DoINeedtoWriteParameters= true;
         //TO DO .... need to finish this when you get to the PROGRAM coding...
@@ -704,8 +712,12 @@ void setState(int pin, int newState)  // changed newState from bool to int
 void handler(const char *topic, const char *data)
 {
     deviceName = String(data);
-    //Particle.publish("Device Name: " + String(deviceName), String(deviceName));
     ResetFirebase();
+}
+
+void tempsHandler(const char *event, const char *data)
+{
+    Serial.println(data);
 }
 
 void getDataHandler(const char *topic, const char *data)
@@ -817,7 +829,7 @@ void t1PopCallback(void)
 {
     uint16_t integer_temp, decimal_temp;
 
-    char* temp_with_decimal;
+    //char* temp_with_decimal;
  
     integer_temp = T1;
     decimal_temp = ((T1 - integer_temp)*10);
@@ -841,7 +853,7 @@ void t2PopCallback(void)
 {
     uint16_t integer_temp, decimal_temp;
 
-    char* temp_with_decimal;
+    //char* temp_with_decimal;
  
     integer_temp = T2;
     decimal_temp = ((T2 - integer_temp)*10);
@@ -861,7 +873,7 @@ void t3PopCallback(void)
 {
     uint16_t integer_temp, decimal_temp;
 
-    char* temp_with_decimal;
+    //char* temp_with_decimal;
  
     integer_temp = T3;
     decimal_temp = ((T3 - integer_temp)*10);
