@@ -4,7 +4,7 @@
 #include "Particle.h"
 
 /* SPI TIMEOUT Value*/
-#define TIMEOUT_VAL 60
+#define TIMEOUT_VAL 70  //changed from 60 12/4/17
 
 /* Read Register Address */
 #define REG_CONFIG 0x00

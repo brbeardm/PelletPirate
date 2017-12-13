@@ -92,8 +92,8 @@ float MAX31865::get_Temp(int CS)
             float Temp = -RTD_Resistance * a + sqrt(RTD_Resistance * RTD_Resistance * a * a - 4 * RTD_Resistance * b * (RTD_Resistance - R)); //Conversion of RTD resistance to Temperature
             Temp = Temp / (2 * RTD_Resistance * b);
             Tempf = Temp * 9 / 5 + 32;
-            Serial.printf("MAX31865_get_Temp %d (%.1f)\r\n", CS, Tempf);
-            delay(2000);
+            //Serial.printf("MAX31865_get_Temp %d (%.1f)\r\n", CS, Tempf);
+            delay(TIMEOUT_VAL);
             lsb_rtd = Read(CS, 0x02);
             fault_test = lsb_rtd & 0x01;
             return Tempf;

@@ -102,9 +102,9 @@ int cs = A2;    //Grill
 int csm1 = A1;  //Meat1
 int csm2 = A0;  //Meat2
 
-int TempInterval = 15;            // #Frequency to record temperatures
+int TempInterval = 3;            // #Frequency to record temperatures
 int TempRecord = 60;             // #Period to record temperatures in memory
-int ParametersInterval = 30;      //#Frequency to write parameters
+int ParametersInterval = 6;      //#Frequency to write parameters
 int PIDCycleTime = 20;           //#Frequency to update control loop - usually 20
 int ReadParametersInterval = 20; //  #Frequency to poll web for new parameters
 int ReadProgramInterval = 60;    // #Freqnency to poll web for new program
@@ -187,7 +187,7 @@ void setup()
 
     Particle.subscribe("hook-response/ParametersRead", getDataHandler);
     
-    Particle.subscribe("SSE-TempsHookBody", tempsHandler);
+    //Particle.subscribe("SSE-TempsHookBody", tempsHandler);
 
     Particle.variable("msg", &sendmessage, INT);
 
@@ -203,7 +203,7 @@ void setup()
     pinMode(csm1, OUTPUT);
     pinMode(csm2, OUTPUT);
 
-    delay(3000);
+    delay(1000);
     Serial.println("\r\n\r\n\r\n*************************************** P R O G R A M    B E G I N ************************************************");
     Serial.println(Time.timeStr());
     Serial.println(Time.format(TIME_FORMAT_ISO8601_FULL));
@@ -250,9 +250,9 @@ void loop()
 
         //Display Grill Temperature
         t1PopCallback();
-        nexLoop(nex_listen_list);
+        //nexLoop(nex_listen_list);
         t2PopCallback();
-        nexLoop(nex_listen_list); //added since others had this after them
+        //nexLoop(nex_listen_list); //added since others had this after them
         t3PopCallback();
         nexLoop(nex_listen_list); //added since others had this after them
 
@@ -262,7 +262,7 @@ void loop()
 
         // Do Mode
         DoMode();
-        nexLoop(nex_listen_list);
+        //nexLoop(nex_listen_list);
     }
 }
 
@@ -304,7 +304,7 @@ void ReadTemperatures()
     {
              char qT[128];
              snprintf(qT, sizeof(qT), "{\"T1\":%.6f,\"T2\":%.6f,\"T3\":%.6f,\"TT\":%.0f,\"time\":%.0f,\"n\":\"%s\"}", T1, T2, T3, TT, time, deviceName.c_str());
-             Particle.publish("SSE-TempsHookBody", qT);
+             Particle.publish("sse-Temps", qT, PRIVATE);
     
         toggleTimeTemps = Time.now();
         Serial.printf("%s ReadTemperatures - Grill: %.1f   Meat1: %.1f   Meat2: %.1f   Time:%.0f\r\n", Time.timeStr().c_str(), T1, T2, T3, toggleTimeTemps);
@@ -541,7 +541,7 @@ void DoMode()
     {
         DoAugerControl();
         setState(igniterPin, TRUE);
-        if (Temps[0] > 80)
+        if (Temps[0] > 120)
         {
             strcpy(mode, "Hold");
             SetMode();
@@ -649,12 +649,12 @@ void DoControl()
 void hopperInit()
 {
     //initialize hopper assembly
-    pinResetFast(fanPin);
+    pinResetFast(fanPin); // initialize to LOW
     pinMode(fanPin, OUTPUT);
     fan = digitalRead(fanPin);
     toggleTimeFan = TIMENOW;
 
-    pinResetFast(igniterPin);
+    pinResetFast(igniterPin); // initialize to LOW
     pinMode(igniterPin, OUTPUT);
     ign = digitalRead(igniterPin);
     toggleTimeIgniter = TIMENOW;
@@ -717,7 +717,7 @@ void handler(const char *topic, const char *data)
 
 void tempsHandler(const char *event, const char *data)
 {
-    Serial.println(data);
+    //Serial.println(data);
 }
 
 void getDataHandler(const char *topic, const char *data)
@@ -817,7 +817,7 @@ void t10PopCallback(void *ptr)   /* Text component pop callback function for Mod
     memset(buffer, 0, sizeof(buffer));
     t10.getText(buffer, sizeof(buffer));
 
-    Particle.publish("** Mode from NEXTION **: " + String(buffer));
+    //Particle.publish("** Mode from NEXTION **: " + String(buffer));
     //Serial.printf("buffer is %s\r\n", buffer);
     strcpy(newmode, buffer);
     Serial.printf("%s T10PopCallback - newmode is: %s and buffer length is: %d\r\n", Time.timeStr().c_str(), newmode, strlen(buffer));
@@ -829,8 +829,6 @@ void t1PopCallback(void)
 {
     uint16_t integer_temp, decimal_temp;
 
-    //char* temp_with_decimal;
- 
     integer_temp = T1;
     decimal_temp = ((T1 - integer_temp)*10);
     //Serial.printf("T1PopCallback - integer is: %d and the decimal is: %d\r\n", integer_temp, decimal_temp);
@@ -844,17 +842,12 @@ void t1PopCallback(void)
     strcat(buffer, buffer1);
      
     t1.setText(buffer);
-    //t2.setText(buffer); // ToDo -- T2 and T3 need to be fixed when you have ALL 3 probes working on the board
-    //t3.setText(buffer); // ToDo -- T2 and T3 need to be fixed when you have ALL 3 probes working on the board
-
 }
 
 void t2PopCallback(void)
 {
     uint16_t integer_temp, decimal_temp;
 
-    //char* temp_with_decimal;
- 
     integer_temp = T2;
     decimal_temp = ((T2 - integer_temp)*10);
      
@@ -873,8 +866,6 @@ void t3PopCallback(void)
 {
     uint16_t integer_temp, decimal_temp;
 
-    //char* temp_with_decimal;
- 
     integer_temp = T3;
     decimal_temp = ((T3 - integer_temp)*10);
      
@@ -917,7 +908,7 @@ void sendToLCD(uint8_t type,String index, String cmd)
 	Serial1.write(0xff);
 	Serial1.write(0xff);
 	
-	delay(50);
+	delay(25); // changed from 50
 }
 
 /* END Nextion Code *******************************************************************************************/
