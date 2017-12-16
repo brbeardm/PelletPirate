@@ -120,7 +120,7 @@ double toggleTimeTemps = 0.0;
 
 // TEMPS
 float Temps[3] = {0};
-float T1, T2, T3;
+float T1=0, T2=0, T3=0;
 //double  tyme;
 double TT; //Target Temp at the time the temps were taken
 
@@ -193,7 +193,7 @@ void setup()
 
     Serial.begin(9600);
     Particle.syncTime();
-    Time.zone(-5); //set to CST
+    Time.zone(-6); //set to CST
 
     pinMode(fanPin, OUTPUT);
     pinMode(augerPin, OUTPUT);
@@ -292,9 +292,9 @@ void ReadTemperatures()
             time = Time.now();
             time = time * 1000; // multiply by 1000 to make sure its a unix epoch timestamp that is 13 digits (the multiplication by 1000 basically adds millis to the epoch time as 000, needed by front end web program graph)
     
-           if (T1 > 0 && T1 < 500) {T1 = Temps[0];} else {T1 = 1.0;} //force bad temps from MAX31865 to be 1.0 degrees - recode this when MAX31865 is fixed
-           if (T2 > 0 && T2 < 500) {T2 = Temps[1];} else {T2 = 1.0;} //force bad temps from MAX31865 to be 1.0 degrees - recode this when MAX31865 is fixed
-           if (T3 > 0 && T3 < 500) {T3 = Temps[2];} else {T3 = 1.0;} //force bad temps from MAX31865 to be 1.0 degrees - recode this when MAX31865 is fixed
+           if (Temps[0] > 0 && Temps[0] < 500) {T1 = Temps[0];} else {T1 = 0.0;} //force bad temps from MAX31865 to be 0.0 degrees - recode this when MAX31865 is fixed
+           if (Temps[1] > 0 && Temps[1] < 500) {T2 = Temps[1];} else {T2 = 0.0;} //force bad temps from MAX31865 to be 0.0 degrees - recode this when MAX31865 is fixed
+           if (Temps[2] > 0 && Temps[2] < 500) {T3 = Temps[2];} else {T3 = 0.0;} //force bad temps from MAX31865 to be 0.0 degrees - recode this when MAX31865 is fixed
            //T1 = Temps[0], T2 = Temps[1], T3 = Temps[2];
         }
     }
@@ -349,7 +349,7 @@ void ResetFirebase()
     snprintf(pDELETE, sizeof(pDELETE), "{\"n\":\"%s\"}", deviceName.c_str());
     Particle.publish(DELETE_PARAMETERS, pDELETE, PRIVATE);
     delay(300);
-    //Serial.printf("%f ResetFirebase - done!\n", Time.now());
+    Serial.printf("%s ResetFirebase is done!\r\n", Time.timeStr().c_str());
 
     ResetFIREBASE = 1;
 }
@@ -452,6 +452,7 @@ void SetMode()
     }
     else if (strcmp(mode, "Start") == 0)
     {
+        ResetFirebase();
         modeState = 1;
         setState(augerPin, TRUE);
         setState(fanPin, TRUE);
@@ -532,6 +533,10 @@ void DoMode()
     {
         if ((Time.now() - toggleTimeFan) > ShutdownTime)
         {
+            sendCommand("click bt3,1"); //activate press release event of component bt3 - the Off/On button of on the display
+            sendCommand("click bt3,0"); //activate press release event of component bt3 - the Off/On button on the display
+            sendToLCD(2, "bt0", "0"); // turn off Fan button
+            sendToLCD(2, "bt7", "0"); // turn off Shutdown mode button
             strcpy(mode, "Off");
             SetMode();
         }
@@ -569,12 +574,12 @@ void DoMode()
 void DoAugerControl()
 {
     //Auger currently on AND TimeSinceToggle > Auger On Time
-    if (digitalRead(augerPin) && ((Time.now() - toggleTimeAuger) > (Cycle * u)))
+    if (digitalRead(augerPin) && ((Time.now() - toggleTimeAuger) > (Cycle * u * 2))) // 12162017 added the *2 to cycle*u to increase the ON time for Auger to get more pellets in kettle!
     {
         int TimeSince1 = Time.now() - toggleTimeAuger;
         //if (debug == 1)
         //{
-    Serial.printf("%s DoAugerControl - in TOP of first if - Auger ON! timenow:%f  toggletimeauger:%d  Cycle:%f u:%d\r\n", Time.timeStr().c_str(), toggleTimeAuger, Cycle, u, TimeSince1);
+        Serial.printf("%s DoAugerControl - in TOP of first if - Auger ON! timenow:%f  toggletimeauger:%d  Cycle:%f u:%d\r\n", Time.timeStr().c_str(), toggleTimeAuger, Cycle, u, TimeSince1);
         //}
         if (u <= 1.0) // added the = statement 02272017 to stop the violent looping of this function when PID is == 1.0
         {
@@ -712,7 +717,7 @@ void setState(int pin, int newState)  // changed newState from bool to int
 void handler(const char *topic, const char *data)
 {
     deviceName = String(data);
-    ResetFirebase();
+    //ResetFirebase();
 }
 
 void tempsHandler(const char *event, const char *data)

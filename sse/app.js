@@ -46,7 +46,7 @@ function storeEvent(event) {
     var obj = {
     	coreid: event.coreid,
     	published_at: event.published_at
-    }
+    };
 
     // Copy the data in message.data, the Particle event data, as top-level 
     // elements in obj. This breaks the data out into separate columns.
@@ -57,4 +57,4 @@ function storeEvent(event) {
     }
    
     dbChild.push().set(obj);
-};
+}
