@@ -94,9 +94,9 @@ int READY = 0;
 int ResetFIREBASE = 0;
 int kount = 0; // used for testing
 
-int fanPin = D4;
-int augerPin = D5;
-int igniterPin = D6;
+int fanPin = D4;        // if you change this, be sure to change it also in SetState()
+int igniterPin = D5;    // if you change this, be sure to change it also in SetState()
+int augerPin = D6;      // if you change this, be sure to change it also in SetState()
 
 int cs = A2;    //Grill
 int csm1 = A1;  //Meat1
@@ -686,14 +686,6 @@ void setState(int pin, int newState)  // changed newState from bool to int
         digitalWrite(pin, newState);
         switch (pin)
         {
-        case (D6):
-            toggleTimeIgniter = TIMENOW;
-            snprintf(pinState, sizeof(pinState), "%d", newState);
-            sendToLCD(2, "bt1", pinState);
-            //Serial.printf("setState: toggling Igniter: %d and text pinState: %s and length %d\r\n", newState, pinState, strlen(pinState));
-            Serial.printf("%s setState: toggling Igniter: %d\r\n", Time.timeStr().c_str(), newState);
-            ign = newState;
-            break;
         case (D4):
             toggleTimeFan = TIMENOW;
             snprintf(pinState, sizeof(pinState), "%d", newState);
@@ -703,6 +695,14 @@ void setState(int pin, int newState)  // changed newState from bool to int
             fan = newState;
             break;
         case (D5):
+            toggleTimeIgniter = TIMENOW;
+            snprintf(pinState, sizeof(pinState), "%d", newState);
+            sendToLCD(2, "bt1", pinState);
+            //Serial.printf("setState: toggling Igniter: %d and text pinState: %s and length %d\r\n", newState, pinState, strlen(pinState));
+            Serial.printf("%s setState: toggling Igniter: %d\r\n", Time.timeStr().c_str(), newState);
+            ign = newState;
+            break;
+        case (D6):
             toggleTimeAuger = TIMENOW;
             snprintf(pinState, sizeof(pinState), "%d", newState);
             sendToLCD(2, "bt2", pinState);
