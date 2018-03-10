@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
-	<title>New UI 11252017</title>
+	<title>New UI 03022018</title>
 	<link href="css/layout.css" rel="stylesheet" type="text/css">
 
 	<!-- Material Design Lite -->
@@ -59,322 +59,314 @@
 	<meta name="msapplication-TileColor" content="#3372DF">
 
 	<link rel="shortcut icon" href="images/pelletpirate-icon-32x32.png">
-
-<!--
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<link rel="stylesheet" href="https://code.getmdl.io/1.2.0/material.cyan-light_blue.min.css"> -->
 	<link rel="stylesheet" href="css/styles.css">
 </head>
 
+
 <body ng-app="PelletPirate">
-		<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-		<header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+		<header class="mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
 			<div class="mdl-layout__header-row">
-  				<span class="mdl-layout-title">Pellet Pirate</span>
-  				<div class="mdl-layout-spacer"></div>
-  				<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-    					<label class="mdl-button mdl-js-button mdl-button--icon" for="search">
-	 					<i class="material-icons">search</i>
-    					</label>
-    					<div class="mdl-textfield__expandable-holder">
-	 					<input class="mdl-textfield__input" type="text" id="search">
-	 					<label class="mdl-textfield__label" for="search">Enter your query...</label>
-    					</div>
-  				</div>
-  				<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
-    					<i class="material-icons">more_vert</i>
-  				</button>
-  				<ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
-    					<li class="mdl-menu__item">About</li>
-    					<li class="mdl-menu__item">Contact</li>
-    					<li class="mdl-menu__item">Legal information</li>
-  				</ul>
+				<span class="mdl-layout-title" ><h1>Pellet Pirate</h1></span>
+				<div class="mdl-layout-spacer"></div>
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+					<label class="mdl-button mdl-js-button mdl-button--icon" for="search">
+					<i class="material-icons">search</i>
+					</label>
+					<div class="mdl-textfield__expandable-holder">
+						<input class="mdl-textfield__input" type="text" id="search">
+						<label class="mdl-textfield__label" for="search">Enter your query...</label>
+					</div>
+				</div>
+				<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
+						<i class="material-icons">more_vert</i>
+				</button>
+				<ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
+						<li class="mdl-menu__item">About</li>
+						<li class="mdl-menu__item">Contact</li>
+						<li class="mdl-menu__item">Legal information</li>
+				</ul>
+				<div class="mdl-layout__header-row">
+					<div id="user-pic"></div>
+					<div id="user-name"></div>
+					<button id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--light-green-800">Sign-out</button>
+					<button id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--light-green-800"><i class="material-icons">account_circle</i>  Google Sign In</button>
+				</div>		
 			</div>
+			<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+				<a href="#scroll-tab-1" class="mdl-layout__tab is-active">Manage a Cook</a>
+				<a href="#scroll-tab-2" class="mdl-layout__tab">Setup</a>
+				<a href="#scroll-tab-3" class="mdl-layout__tab">Link 3</a>
+				<a href="#scroll-tab-4" class="mdl-layout__tab">Link 4</a>
+			</div>			
 		</header>
- 
-		<div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
-				<header class="demo-drawer-header">
-			
 
 
-					<div id="user-container">
-						<div id="user-pic"></div>
-						<div id="user-name"></div>
-						<button id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--light-green-700">Sign-out</button>
-						<button id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--light-green-700"><i class="material-icons">account_circle</i>  Google Sign In</button>
-					</div>
-
-				</header>
-				<nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
-		  			<a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">whatshot</i>Manage a Cook</a>
-		  			<a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Inbox</a>
-		  			<a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">delete</i>Trash</a>
-		  			<a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">report</i>Spam</a>
-		  			<a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">forum</i>Forums</a>
-		  			<a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">local_offer</i>Promos</a>
-		  			<a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">shopping_cart</i>Purchases</a>
-		  			<a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">people</i>Social</a>
-		  			<a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">flag</i>Updates</a>
-		  			<a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">settings</i>Register</a>
-		  			<div class="mdl-layout-spacer"></div>
-		  			<a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i>
-		  			<span class="visuallyhidden">Help</span></a>
-				</nav>
-		</div>
-
-
- 		<main class="mdl-layout__content mdl-color--grey-100">
-
-
-							<div class="container">
-							    <div class="row">
-							        <div class="col-xs-12 col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
-							            <div class="panel panel-default">
-
-							                <ul class="list-group">
-							                     <li class="list-group-item">
-							                        Sample switch with value
-							                        <div class="material-switch pull-right">hello
-							                            <input id="someSwitch" name="someSwitch" onclick="getValueSomeSwitch()" type="checkbox"/>
-							                            <label for="someSwitch" class="label-success"></label>
-
-														<script>
-														  //if you want get value
-														  function getValueSomeSwitch()
-														  {
-														   /* var value=$('#someSwitchOptionSuccess:checked').val(); */
-														   var value=$('#someSwitch').prop('checked');
-														   console.log(value);
-														  }
-														</script>
-							                        </div>
-							                    </li>
-							                </ul>
-							            </div>            
-							        </div>
-							    </div>
-							</div>
-
- 			<div class="mdl-grid demo-content">
-				<div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-	    	    	<div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-desktop mdl-cell--4-col-phone Gauge" id="GrillGauge"></div>
-					<div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-desktop mdl-cell--4-col-phone Gauge" id="MeatGauge">
-						<div class="col-xs-12 col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
-							<div class="panel panel-default">				
-								<div class="material-switch pull-right">
-									<input id="Meat1Switch" name="SwitchOption001" onclick="getValueMeat1()" type="checkbox"/>
-									<label for="Meat1Switch" class="label-success">off  on</label>
-									<script>
-										function getValueMeat1()
-										{
-										var value=$('#Meat1Switch').prop('checked');
-										console.log(value);
-										}
-									</script>
-								</div>
-							</div>
-						</div>
-				    </div> 
-					<div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-desktop mdl-cell--4-col-phone Gauge" id="MeatGauge2">
-						<div class="col-xs-12 col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
-							<div class="panel panel-default">						
-								<div class="material-switch pull-right">
-									<input id="someSwitchOptionSuccess" align="center" name="someSwitchOption001" onclick="getValueSome()" type="checkbox"/>
-									<label for="someSwitchOptionSuccess" class="label-success">off on</label>
-
-									<script>
-										//if you want get value
-										function getValueSome()
-										{
-										/* var value=$('#someSwitchOptionSuccess:checked').val(); */
-										var value=$('#someSwitchOptionSuccess').prop('checked');
-										console.log(value);
-										}
-									</script>
-								</div>
-							</div>
+		<main class="mdl-layout__content mdl-color--grey-100">
+			<section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
+				<div style="height: 1100px;" class="page-content">
+				<div class="container mdl-shadow-4dp">
+				<div class="mdl-grid">
+					<div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+						<div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-desktop mdl-cell--4-col-phone Gauge" id="GrillGauge"></div>
+						<div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-desktop mdl-cell--4-col-phone Gauge" id="MeatGauge">
+							<div class="col-xs-12 col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4"></div>
+						</div> 
+						<div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-desktop mdl-cell--4-col-phone Gauge" id="MeatGauge2">
+							<div class="col-xs-12 col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4"></div>
 						</div>
 					</div>
-				</div>
 
-				<div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
+					<div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
 
-					<div class="plot-container">
-						<div id="temp-placeholder" class="plot-placeholder"></div>
-						<button onclick="clearData()" id="ClearDataButton" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--light-blue-700">Clear Data - Start A New Cook</button>
-					</div>
-
-					<div class="form-group" ng-controller="ParametersController as parmctrl">
-						<form action="walktheplank" method="post" name="parameters" id="parameters" >
-							<div class="mdl-cell mdl-cell--12-col">
-								<toggle-switch class="switch-info" knob-label="Fan" ng-model="Parameters.fan"></toggle-switch>
-								<toggle-switch class="switch-danger" knob-label="Igniter" ng-model="Parameters.ign"></toggle-switch>
-								<toggle-switch class="switch-success" knob-label="Auger" ng-model="Parameters.aug"></toggle-switch>
-								<toggle-switch class="switch-warning" knob-label="Auth" ng-model="parmctrl.Auth"></toggle-switch>
-								<toggle-switch class="switch-primary" knob-label="Active" ng-model="parmctrl.Active"></toggle-switch>
-							</div>
-
-							<!-- <div class="form-group form-group-lg" id="ParmForm"> -->
-							<div id="ParmForm">
-						    	<table class="table table-striped table-hover mdl-color--blue-100">
-						    	<!-- <table class="table table-striped table-hover">-->
-						        	<thead class="parameters-header">
-							        	<tr>
-							     	    	<th class="col-width-lg">Mode</th>
-							          		<th class="col-width-md">Target</th>
-							          		<th class="col-width-md">PMode</th>
-							          		<th class="col-width-md">PB</th>
-							          		<th class="col-width-md">Ti</th>
-							          		<th class="col-width-md">Td</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td class="col-width-lg">
-													<select name="mode" class="form-control" ng-model="Parameters.mode">
-														<option value="Off">Off</option>
-														<option value="Start">Start</option>
-														<option value="Smoke">Smoke</option>
-														<option value="Hold">Hold</option>
-														<option value="Ignite">Ignite</option>
-														<option value="Shutdown">Shutdown</option>
-													</select>
-											</td>
-											<td class="col-width-md"><input type="number" class="form-control" ng-model="Parameters.target"></td>
-											<td class="col-width-md" align="center"><input type="number" class="form-control" ng-model="Parameters.PMode"></td>
-											<td class="col-width-md"><input type="number" class="form-control" ng-model="Parameters.PB"></td>
-											<td class="col-width-md"><input type="number" class="form-control" ng-model="Parameters.Ti"></td>
-											<td class="col-width-md"><input type="number" class="form-control" ng-model="Parameters.Td"></td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</form>
-
-						<div class="program-mode-component">
-							<div id="programrows">
-								<div class="Program-container" ng-controller="ProgramController as pctrl">
-									<toggle-switch class="switch-primary" knob-label="Program" ng-model="Parameters.program"></toggle-switch>
-									<button id="AddProgramButton" ng-click="pctrl.add()" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--light-blue-700">Add A Program Step</button>
-
-						        	<table class="table table-striped table-hover mdl-color--green-100">
-							            <thead class="programs-header">
-								            <tr>
-						            			<th class="col-width-sm">Mode</th>
-								            	<th class="col-width-sm">Target</th>
-								            	<th class="col-width-sm">Trigger</th>
-								            	<th class="col-width-sm">Trigger Value</th>
-								            	<th class="col-width-sm">Delete</th>
-								            </tr>
-							            </thead>
-							        </table>			    
-
-
-							        <div ng-repeat="program in pctrl.Program">
-							        	<table class="table table-striped table-hover mdl-color--green-100">
-<!--								            <thead class="programs-header">
-									            <tr>
-							            			<th class="col-width-lg">Mode</th>
-									            	<th class="col-width-md">Target</th>
-									            	<th class="col-width-lg">Trigger</th>
-									            	<th class="col-width-md">Trigger Value</th>
-									            </tr>
-								            </thead>			            
--->
-								            <tbody>
-									        	<tr>
-						        					<td class="col-width-lg">
-															<select class="form-control" ng-model="program.mode" ng-change="pctrl.Program.$save(program)">
-										     		            <option value="Off">Off</option>
-										                        <option value="Start">Start</option>
-										                        <option value="Smoke">Smoke</option>
-										                        <option value="Hold">Hold</option>
-										                        <option value="Shutdown">Shutdown</option>
-										                    </select>
-									            	</td>
-						        					<td class="col-width-lg"><input type="number" class="form-control" ng-model="program.target" ng-change="pctrl.Program.$save(program)"></td>
-						        					<td class="col-width-lg">
-									                        <select class="form-control" ng-model="program.trigger" ng-change="pctrl.Program.$save(program)">
-									                          <option value="Grill-Temp">Grill Temp</option>
-									                          <option value="Meat1-Temp">Meat 1 Temp</option>
-									                          <option value="Meat2-Temp">Meat 2 Temp</option>
-									                          <option value="Time">Time</option>
-									                      	</select>
-						        					</td>
-						        					<td class="col-width-md"><input type="number" class="form-control" ng-model="program.triggerValue" ng-change="pctrl.Program.$save(program)"></td>
-									            	<td>
-														<button class="butn btn-danger" ng-click="pctrl.Program.$remove(program)"><i class="glyphicon glyphicon-trash"></i></button>
-													</td>
-						    					</tr>
-								            </tbody>
-							        	</table>
-							    	</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="row" id="ControlsRow">
-					<div class="mdl-cell mdl-cell--12-col">
 						<div class="plot-container">
-							<div id="controls-placeholder" class="plot-placeholder"></div>
+							<div id="temp-placeholder" class="plot-placeholder"></div>
+							<button onclick="clearData()" id="ClearDataButton" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--light-blue-700">Clear Data - Start A New Cook</button>
 						</div>
-					</div>
-				</div>
 
-				<div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
-					<div class="demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
-						<div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
-							<h2 class="mdl-card__title-text">Updates</h2>
-						</div>
-						<div class="mdl-card__supporting-text mdl-color-text--grey-600">
-							Non dolore elit adipisicing ea reprehenderit consectetur culpa.
-						</div>
-						<div class="mdl-card__actions mdl-card--border">
-							<a href="#" class="mdl-button mdl-js-button mdl-js-ripple-effect">Read More</a>
+						<div class="form-group" ng-controller="ParametersController as parmctrl">
+							<form action="walktheplank" method="post" name="parameters" id="parameters" >
+								<div class="mdl-cell mdl-cell--12-col">
+									<toggle-switch class="switch-info" knob-label="Fan" ng-model="Parameters.fan"></toggle-switch>
+									<toggle-switch class="switch-danger" knob-label="Igniter" ng-model="Parameters.ign"></toggle-switch>
+									<toggle-switch class="switch-success" knob-label="Auger" ng-model="Parameters.aug"></toggle-switch>
+									<toggle-switch class="switch-warning" knob-label="Auth" ng-model="parmctrl.Auth"></toggle-switch>
+									<toggle-switch class="switch-primary" knob-label="Active" ng-model="parmctrl.Active"></toggle-switch>
+								</div>
+
+								<!-- <div class="form-group form-group-lg" id="ParmForm"> -->
+								<div id="ParmForm">
+									<table class="table table-striped table-hover mdl-color--blue-100">
+									<!-- <table class="table table-striped table-hover">-->
+										<thead class="parameters-header">
+											<tr>
+												<th class="col-width-lg">Mode</th>
+												<th class="col-width-md">Target</th>
+												<th class="col-width-md">PMode</th>
+												<th class="col-width-md">PB</th>
+												<th class="col-width-md">Ti</th>
+												<th class="col-width-md">Td</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td class="col-width-lg">
+														<select name="mode" class="form-control" ng-model="Parameters.mode">
+															<option value="Off">Off</option>
+															<option value="Start">Start</option>
+															<option value="Smoke">Smoke</option>
+															<option value="Hold">Hold</option>
+															<option value="Ignite">Ignite</option>
+															<option value="Shutdown">Shutdown</option>
+														</select>
+												</td>
+												<td class="col-width-md"><input type="number" class="form-control" ng-model="Parameters.target"></td>
+												<td class="col-width-md" align="center"><input type="number" class="form-control" ng-model="Parameters.PMode"></td>
+												<td class="col-width-md"><input type="number" class="form-control" ng-model="Parameters.PB"></td>
+												<td class="col-width-md"><input type="number" class="form-control" ng-model="Parameters.Ti"></td>
+												<td class="col-width-md"><input type="number" class="form-control" ng-model="Parameters.Td"></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</form>
+
+							<div class="program-mode-component">
+								<div id="programrows">
+									<div class="Program-container" ng-controller="ProgramController as pctrl">
+										<toggle-switch class="switch-primary" knob-label="Program" ng-model="Parameters.program"></toggle-switch>
+										<button id="AddProgramButton" ng-click="pctrl.add()" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--light-blue-700">Add A Program Step</button>
+
+										<table class="table table-striped table-hover mdl-color--green-100">
+											<thead class="programs-header">
+												<tr>
+													<th class="col-width-sm">Mode</th>
+													<th class="col-width-sm">Target</th>
+													<th class="col-width-sm">Trigger</th>
+													<th class="col-width-sm">Trigger Value</th>
+													<th class="col-width-sm">Delete</th>
+												</tr>
+											</thead>
+										</table>			    
+
+										<div ng-repeat="program in pctrl.Program">
+											<table class="table table-striped table-hover mdl-color--green-100">
+												<tbody>
+													<tr>
+														<td class="col-width-lg">
+																<select class="form-control" ng-model="program.mode" ng-change="pctrl.Program.$save(program)">
+																	<option value="Off">Off</option>
+																	<option value="Start">Start</option>
+																	<option value="Smoke">Smoke</option>
+																	<option value="Hold">Hold</option>
+																	<option value="Shutdown">Shutdown</option>
+																</select>
+														</td>
+														<td class="col-width-lg"><input type="number" class="form-control" ng-model="program.target" ng-change="pctrl.Program.$save(program)"></td>
+														<td class="col-width-lg">
+																<select class="form-control" ng-model="program.trigger" ng-change="pctrl.Program.$save(program)">
+																<option value="Grill-Temp">Grill Temp</option>
+																<option value="Meat1-Temp">Meat 1 Temp</option>
+																<option value="Meat2-Temp">Meat 2 Temp</option>
+																<option value="Time">Time</option>
+																</select>
+														</td>
+														<td class="col-width-md"><input type="number" class="form-control" ng-model="program.triggerValue" ng-change="pctrl.Program.$save(program)"></td>
+														<td>
+															<button class="butn btn-danger" ng-click="pctrl.Program.$remove(program)"><i class="glyphicon glyphicon-trash"></i></button>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-					<div class="demo-separator mdl-cell--1-col"></div>
-					<div class="demo-options mdl-card mdl-color--deep-purple-500 mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--12-col-desktop">
-						<div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
-							<h3>View options</h3>
-							<ul>
-								<li>
-									<label for="chkbox1" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-		 								<input type="checkbox" id="chkbox1" class="mdl-checkbox__input">
-		 								<span class="mdl-checkbox__label">Click per object</span>
-									</label>
-								</li>
-								<li>
-									<label for="chkbox2" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-										<input type="checkbox" id="chkbox2" class="mdl-checkbox__input">
-										<span class="mdl-checkbox__label">Views per object</span>
-									</label>
-								</li>
-								<li>
-									<label for="chkbox3" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-										<input type="checkbox" id="chkbox3" class="mdl-checkbox__input">
-										<span class="mdl-checkbox__label">Objects selected</span>
-									</label>
-								</li>
-								<li>
-									<label for="chkbox4" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-										<input type="checkbox" id="chkbox4" class="mdl-checkbox__input">
-										<span class="mdl-checkbox__label">Objects viewed</span>
-							    	</label>
-								</li>
-							</ul>
+
+					<div class="row" id="ControlsRow">
+						<div class="mdl-cell mdl-cell--12-col">
+							<div class="plot-container">
+								<div id="controls-placeholder" class="plot-placeholder"></div>
+							</div>
 						</div>
-						<div class="mdl-card__actions mdl-card--border">
-							<a href="#" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--blue-grey-50">Change location</a>
-							<div class="mdl-layout-spacer"></div>
-							<i class="material-icons">location_on</i>
+					</div>
+
+					<div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
+						<div class="demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
+							<div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
+								<h2 class="mdl-card__title-text">Updates</h2>
+							</div>
+							<div class="mdl-card__supporting-text mdl-color-text--grey-600">
+								Non dolore elit adipisicing ea reprehenderit consectetur culpa.
+							</div>
+							<div class="mdl-card__actions mdl-card--border">
+								<a href="#" class="mdl-button mdl-js-button mdl-js-ripple-effect">Read More</a>
+							</div>
+						</div>
+						<div class="demo-separator mdl-cell--1-col"></div>
+						<div class="demo-options mdl-card mdl-color--deep-purple-500 mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--12-col-desktop">
+							<div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+								<h3>View options</h3>
+								<ul>
+									<li>
+										<label for="chkbox1" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+											<input type="checkbox" id="chkbox1" class="mdl-checkbox__input">
+											<span class="mdl-checkbox__label">Click per object</span>
+										</label>
+									</li>
+									<li>
+										<label for="chkbox2" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+											<input type="checkbox" id="chkbox2" class="mdl-checkbox__input">
+											<span class="mdl-checkbox__label">Views per object</span>
+										</label>
+									</li>
+									<li>
+										<label for="chkbox3" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+											<input type="checkbox" id="chkbox3" class="mdl-checkbox__input">
+											<span class="mdl-checkbox__label">Objects selected</span>
+										</label>
+									</li>
+									<li>
+										<label for="chkbox4" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+											<input type="checkbox" id="chkbox4" class="mdl-checkbox__input">
+											<span class="mdl-checkbox__label">Objects viewed</span>
+										</label>
+									</li>
+								</ul>
+							</div>
+							<div class="mdl-card__actions mdl-card--border">
+								<a href="#" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--blue-grey-50">Change location</a>
+								<div class="mdl-layout-spacer"></div>
+								<i class="material-icons">location_on</i>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			</div>
+			</section>
+
+			<section class="mdl-layout__tab-panel" id="scroll-tab-2">
+				<div id='initial-div' class="page-content container mdl-shadow-4dp" style='display: none'>
+					<h2>Let's connect your controller to WiFi</h2>
+					<p>
+						<ol>
+							<li>Plug-in your controller.</li>
+							<li>Make sure it is blinking blue. If it isn't, press and hold the 'S' button until it does.</li>
+							<li>Search your wireless networks and connect to the new WiFi hotspot created by Pellet Pirate. It will appear as <i>Photon-XXXX</i> on your network list.</li>
+							<li>Press Next.</li>
+						</ol>
+					<p>
+					<button id='initial-button' type='button'>Next</button>
+				</div>
+						
+						<div id='device-id-div' style='display: none'>
+							<h3>Device ID:</h3>
+							<input type=text id='device-id' size='30' value='' disabled/>
+							<button type='button' class='input-helper' id='copy-button'>Copy</button>
+						</div>
+						
+						<div id='scan-div' style='display: none'>
+							<h3>Scan for visible WiFi networks</h3>
+							<button id='scan-button' type='button'>Scan</button>
+						</div>
+						
+						<div id='networks-div'>
+						</div>
+						
+						<div id='connect-div' style='display: none'>
+							<p>Don't see your network? Move your device closer to your router, then re-scan.</p>
+							<form id='connect-form'>
+							<input type='password' id='password' size='25' placeholder='password'/>
+							<button type='button' class='input-helper' id='show-button'>Show</button>
+							<button type='submit' id='connect-button'>Connect</button>
+							</form>
+						</div>
+
+
+
+
+
+				<div style="height: 350px;" class="page-content">
+					<div class="container mdl-shadow-4dp">
+						<h1>Setup Pellet Pirate</h1>
+						<p>Setup WiFi here</p>
+						<p>Lorem adipisicing elit. Distinctio autem</p>
+						<h2>Register your controller</h2>
+						<p>Add fields here</p>
+						<p>voluptates tempora!</p>
+					</div>
+				</div>
+			</section>  
+			
+			<section class="mdl-layout__tab-panel" id="scroll-tab-3">
+				<div style="height: 350px;" class="page-content">
+					<div class="container mdl-shadow-4dp">
+						<h1>Setup Pellet Pirate</h1>
+						<p>Setup WiFi here</p>
+						<p>Lorem adipisicing elit. Distinctio autem</p>
+						<h2>Register your controller</h2>
+						<p>Add fields here</p>
+						<p>voluptates tempora!</p>
+					</div>
+				</div>
+			</section>  
+			
+			<section class="mdl-layout__tab-panel" id="scroll-tab-4">
+				<div style="height: 350px;" class="page-content">
+					<div class="container mdl-shadow-4dp">
+						<h1>Inbox for Pellet Pirate</h1>
+						<p>Let's check your mail...</p>
+						<p>Lorem adipisicing elit. Distinctio autem</p>
+						<h2>Inbox rulz!</h2>
+						<p>Add inbox fields here</p>
+						<p>voluptates tempora!</p>
+					</div>
+				</div>
+			</section>     					
+
 
 			<footer class="mdl-mini-footer">
 				<div class="mdl-mini-footer--middle-section">
@@ -515,6 +507,15 @@
 <script src="/__/firebase/init.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
+
+<!-- For the WiFi setup Workflow -->
+<script src='rsa-utils/jsbn_1.js'></script>
+<script src='rsa-utils/jsbn_2.js'></script>
+<script src='rsa-utils/prng4.js'></script>
+<script src='rsa-utils/rng.js'></script>
+<script src='rsa-utils/rsa.js'></script>
+<script src='js/wifi_script.js'></script>
+
 <script>
   // Initialize Firebase
   var config = {

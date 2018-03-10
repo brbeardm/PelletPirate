@@ -116,9 +116,9 @@ html, body {
 
 .demo-charts {
   -webkit-align-items: center;
-      -ms-flex-align: center;
-              -ms-grid-row-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  -ms-grid-row-align: center;
+  align-items: center;
 }
 .demo-chart:nth-child(1) {
   color: #ACEC00;

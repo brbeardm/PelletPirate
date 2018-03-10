@@ -167,7 +167,7 @@ double LCalcula = 0;
 
 //variables for the Grill temperature dropping more than XX degrees while in a cook... then we want to make a phone call or maybe send a text message!
 bool tempMonitorOn = false;
-int tempDropOnTemp = 92;      /* The grill must reach this temp before temp drop monitoring is enabled */
+int tempDropOnTemp = 115;      /* The grill must reach this temp before temp drop monitoring is enabled */
 double tempDropOnTime;        /* The 1st timestamp when we have reached or exceeded the target temp and grill temp monitoring should start from this point. */
 int tempMonitorVariance = 25; /* grill temp degrees of allowable drop in temp before we make a phone call */
 int tempDropInterval = 60;    /* the interval at which we check to see if there is a grill temp drop */
@@ -250,9 +250,7 @@ void loop()
 
         //Display Grill Temperature
         t1PopCallback();
-        //nexLoop(nex_listen_list);
         t2PopCallback();
-        //nexLoop(nex_listen_list); //added since others had this after them
         t3PopCallback();
         nexLoop(nex_listen_list); //added since others had this after them
 
@@ -262,7 +260,6 @@ void loop()
 
         // Do Mode
         DoMode();
-        //nexLoop(nex_listen_list);
     }
 }
 
@@ -314,8 +311,8 @@ void ReadTemperatures()
         {
             tempMonitorOn = true;
             tempDropOnTime = Time.now();
-            Serial.printf("*** ALERT *** We are IN a Cook and Grill Temp is now being monitored for Target: %.1f and Grill: %.1f as of time:%.0f\r\n", target, T1, tempDropOnTime);
-            Serial.println(Time.timeStr());
+            Serial.printf("%s *** ALERT *** We are IN a Cook and Grill Temp is now being monitored for Target: %.1f and Grill: %.1f as of time:%.0f\r\n", Time.timeStr().c_str(), target, T1, tempDropOnTime);
+            //Serial.println(Time.timeStr());
         }
 
         if ((tempMonitorOn == true) && (Time.now() - tempDropOnTime > tempDropInterval) && (target - T1 >= tempMonitorVariance))
@@ -326,13 +323,10 @@ void ReadTemperatures()
             sendmessageTIME = Time.now();
         }
 
-        if ((Time.now() - sendmessageTIME) > (tempDropInterval + 15))
+        if (((Time.now() - sendmessageTIME) > (tempDropInterval + 15)) && sendmessage == 1)
         {
             sendmessage = 0; // this should turn off the IFTTT trigger
-            if (debug == 1)
-            {
-                Serial.printf("RESET sendmessage flag for IFTTT trigger to OFF\r\n");
-            }
+            Serial.printf("%s RESET sendmessage flag for IFTTT trigger to OFF\r\n", Time.timeStr().c_str());
         }
     }
 }
@@ -822,8 +816,15 @@ void t10PopCallback(void *ptr)   /* Text component pop callback function for Mod
     memset(buffer, 0, sizeof(buffer));
     t10.getText(buffer, sizeof(buffer));
 
-    //Particle.publish("** Mode from NEXTION **: " + String(buffer));
-    //Serial.printf("buffer is %s\r\n", buffer);
+    if(strcmp("Off", buffer) == 0) // on-off button pressed ... if set to "Off" then i need to force Shutdown if grill is currently HOT... so shutdown process runs to cool grill
+    { 
+        if(T1 > 115) 
+        {
+          Serial.printf("%s T10PopCallback - On/Off button pressed while in cook, setting mode to Shutdown for proper cool down procedure ", Time.timeStr().c_str());
+          strcpy(buffer, "Shutdown");
+          t10.setText(buffer); 
+        }
+    }
     strcpy(newmode, buffer);
     Serial.printf("%s T10PopCallback - newmode is: %s and buffer length is: %d\r\n", Time.timeStr().c_str(), newmode, strlen(buffer));
         

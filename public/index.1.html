@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<!--
+IMPORTANT Notes:
+1- File must NOT contain any double quotes (")
+2- Do not add any additional <style> or <script> tags
+3- Do to minification process, you must attach events to DOM elements in javascript and not in the HTML. i.e. do not use <Button onclick=myfunc>
+-->
+
+<html>
+
+<body>
+  <h1>Pellet Pirate Setup</h1>
+  
+  <div id='initial-div' style='display: none'>
+  <h2>Let's connect your controller to WiFi</h2>
+    <p>
+      <ol>
+        <li>Plug-in your controller.</li>
+        <li>Make sure it is blinking blue. If it isn't, press and hold the 'S' button until it does.</li>
+        <li>Search your wireless networks and connect to the new WiFi hotspot created by Pellet Pirate. It will appear as <i>Photon-XXXX</i> on your network list.</li>
+        <li>Press Next.</li>
+      </ol>
+    <p>
+    <button id='initial-button' type='button'>Next</button>
+  </div>
+  
+  <div id='device-id-div' style='display: none'>
+    <h3>Device ID:</h3>
+    <input type=text id='device-id' size='30' value='' disabled/>
+    <button type='button' class='input-helper' id='copy-button'>Copy</button>
+  </div>
+  
+  <div id='scan-div' style='display: none'>
+    <h3>Scan for visible WiFi networks</h3>
+    <button id='scan-button' type='button'>Scan</button>
+  </div>
+
+  <div id='networks-div'>
+  </div>
+  
+  <div id='connect-div' style='display: none'>
+    <p>Don't see your network? Move your device closer to your router, then re-scan.</p>
+    <form id='connect-form'>
+      <input type='password' id='password' size='25' placeholder='password'/>
+      <button type='button' class='input-helper' id='show-button'>Show</button>
+      <button type='submit' id='connect-button'>Connect</button>
+    </form>
+  </div>
+
+  <script src='rsa-utils/jsbn_1.js'></script>
+  <script src='rsa-utils/jsbn_2.js'></script>
+  <script src='rsa-utils/prng4.js'></script>
+  <script src='rsa-utils/rng.js'></script>
+  <script src='rsa-utils/rsa.js'></script>
+  <script src='js/wifi_script.js'></script>
+
+</body>
+
+</html>
