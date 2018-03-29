@@ -29,7 +29,8 @@ nconf
     'FIREBASE_CERT_FILE',
     'FIREBASE_DATABASE',
     'FIREBASE_PARENT',
-    'FIREBASE_CHILD'
+    'FIREBASE_CHILD',
+    'FIREBASE_LOGGER'
   ])
   // 3. Config file
   .file({ file: path.join(__dirname, 'config.json') })
@@ -45,7 +46,8 @@ nconf
     FIREBASE_CERT_FILE: '',
     FIREBASE_DATABASE: '',
     FIREBASE_PARENT: '',
-    FIREBASE_CHILD: ''
+    FIREBASE_CHILD: '',
+    FIREBASE_LOGGER: ''
   });
 
 // Check for required settings
@@ -55,7 +57,7 @@ checkConfig('FIREBASE_CERT_FILE');
 checkConfig('FIREBASE_DATABASE');
 checkConfig('FIREBASE_PARENT');
 checkConfig('FIREBASE_CHILD');
-
+checkConfig('FIREBASE_LOGGER');
 
 function checkConfig (setting) {
   if (!nconf.get(setting)) {

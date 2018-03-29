@@ -20,7 +20,7 @@ function UpdatePlot() {
 				lines: { show: true }
 			},
 			{
-				label: "Meat 3",
+				label: "Meat 2",
 				data: T3,
 				color: "#14CC42",
 				points: { fillColor: "#14CC42", show: false },

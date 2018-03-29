@@ -33,7 +33,7 @@ particle.getEventStream({ deviceId:config.get('DEVICE_FILTER'), auth:config.get(
 			});
 		},
 		function(err) {
-			console.log("Failed to getEventStream: ", err);
+			console.log("Failed to getEventStream for Temps: ", err);
 		});
 
 function storeEvent(event) {
@@ -57,4 +57,40 @@ function storeEvent(event) {
     }
    
     dbChild.push().set(obj);
+}
+
+
+// this is for the app logging into Firebase via the sse-Logger particle event
+particle.getEventStream({ deviceId:config.get('DEVICE_FILTER'), auth:config.get('AUTH_TOKEN'), name:'sse-Logger' }).then(
+	function(stream) {
+		stream.on('event', function(event) {
+			console.log("event: ", event);
+			storeEvent2(event);
+		});
+	},
+	function(err) {
+		console.log("Failed to getEventStream for Logger: ", err);
+	});
+
+function storeEvent2(event) {
+
+var dbChild2 = dbRef.child(config.get('FIREBASE_LOGGER'));
+
+var data2 = JSON.parse(event.data);
+
+// You can uncomment some of the other things if you want to store them in the database
+var obj2 = {};
+	//coreid: event.coreid,
+	published_at: event.published_at
+//};
+
+// Copy the data in message.data, the Particle event data, as top-level 
+// elements in obj. This breaks the data out into separate columns.
+for (var prop2 in data2) {
+	if (data2.hasOwnProperty(prop2)) {
+		obj2[prop2] = data2[prop2];
+	}
+}
+
+dbChild2.push(obj2); // changed from dbChild2.push().set(obj2);
 }
