@@ -1,100 +1,54 @@
-// This #include statement was automatically added by the Particle IDE.
 #include <ITEADLIB_Nextion.h>
 #include "Particle.h"
 #include "math.h"
 #include <SparkJson.h>
+#include "main.h"
 #include "MAX31865.h"
 #include "pid2.h"
 
-//SYSTEM_THREAD(ENABLED);
-
-// Forward declarations
-//int devicesHandler(String data); // forward declaration
-//void sendData(void);
-void getDataHandler(const char *topic, const char *data);
-void hopperInit(void);
-void SetMode(void);
-void handler(const char *topic, const char *data);
-void tempsHandler(const char *topic, const char *data);
-void ReadTemperatures(void);
-void ReadParameters(void);
-void DoMode(void);
-void UpdateParameters(void);
-void WriteParameters(void);
-void setState(int, int); // changed 2nd variable from bool to int on 7/29/17 -- testing
-int  getState(int);
-void checkIgniter(void);
-void DoAugerControl(void);
-void DoControl(void);
-void sendToLCD(uint8_t type,String index, String cmd);
-
-/* Nextion Forward Declarations */
-void t0PopCallback(void *ptr);
-void b0PopCallback(void *ptr);
-void b1PopCallback(void *ptr);
-void t10PopCallback(void *ptr);
-void t1PopCallback(void);
-void t2PopCallback(void);
-void t3PopCallback(void);
-/* END of Nextion Forward Declarations*/
-
-#define TIMENOW Time.now() + 0.1;
+SYSTEM_THREAD(ENABLED);
+STARTUP(WiFi.selectAntenna(ANT_EXTERNAL)); // selects the u.FL antenna
 
 const char *DELETE_PARAMETERS = "ParametersDELETE";
 const char *PUBLISH_PARAMETERS = "ParametersHookBody";
 const char *READ_PARAMETERS = "ParametersRead";
 
 const char *DELETE_TEMPS = "TempsDELETE";
-//const char *PUBLISH_TEMPS = "4TempsHookBody";
-//const char *PUBLISH_TEMPS ="TempsHookBody"; 
-
-// Logging Variables for Connection State to Node logging server
-//const unsigned long REQUEST_WAIT_MS = 10000;
-//const unsigned long RETRY_WAIT_MS = 30000;
-//const unsigned long SEND_WAIT_MS = 20;
-
-//enum State { STATE_REQUEST, STATE_REQUEST_WAIT, STATE_CONNECT, STATE_SEND_DATA, STATE_RETRY_WAIT };
-//State state = STATE_REQUEST;
-//unsigned long stateTime = 0;
-//IPAddress serverAddr;
-//int serverPort;
-//char nonce[34];
-//TCPClient client;
-//// END of Logging Variables
 
 /* Nextion variable **************/
 USARTSerial& nexSerial = Serial1;       
 
-NexButton bt0 = NexButton(1, 6, "bt0");  // Fan light
-NexButton bt1 = NexButton(1, 10, "bt1"); // Igniter light
-NexButton bt2 = NexButton(1, 9, "bt2"); // Auger light
+NexButton bt0 = NexButton(5, 6, "bt0");  // Fan light
+NexButton bt1 = NexButton(5, 10, "bt1"); // Igniter light
+NexButton bt2 = NexButton(5, 9, "bt2"); // Auger light
 
-NexButton bt3 = NexButton(1, 12, "bt3"); // Off - Start button
-NexButton bt4 = NexButton(1, 13, "bt4"); // Mode - Smoke button
-NexButton bt5 = NexButton(1, 14, "bt5"); // Mode - Ignite button
-NexButton bt6 = NexButton(1, 15, "bt6"); // Mode - Hold button
-NexButton bt7 = NexButton(1, 16, "bt7"); // Mode - Shutdown button
-
-NexText t0 = NexText(1, 7, "t0");      /* Declare a text object for Target temp of the grill [page id:1, component id:8, component name: "t0"]. */
-NexButton b0 = NexButton(1, 11, "b0"); /* Up ++ target temp */
-NexButton b1 = NexButton(1, 8, "b1");  /* Down -- target temp */
-
-NexText t10 = NexText(1, 6, "t10");     /* Declare a text object for Mode of the grill, default is OFF [pagid:1, component id:6, component name: "t10"]. */
-
-NexText t1 = NexText(1, 2, "t1");       /* Grill Temp object on Nextion display */
-NexText t2 = NexText(1, 3, "t2");       /* Meat 1 Temp object on Nextion display */
-NexText t3 = NexText(1, 4, "t3");       /* Meat 2 Temp object on Nextion display */
+NexButton bt3 = NexButton(5, 12, "bt3"); // Off - Start button
+NexButton bt4 = NexButton(5, 13, "bt4"); // Mode - Smoke button
+NexButton bt5 = NexButton(5, 14, "bt5"); // Mode - Ignite button
+NexButton bt6 = NexButton(5, 15, "bt6"); // Mode - Hold button
+NexButton bt7 = NexButton(5, 16, "bt7"); // Mode - Shutdown button
+NexText t10 =   NexText(5, 5, "t10");     /* Declare a text object for Mode of the grill, default is OFF [pagid:5, component id:6, component name: "t10"]. */
+NexText t1 =    NexText(5, 2, "t1");       /* Grill Temp object on Nextion display */
+NexText t2 =    NexText(5, 3, "t2");       /* Meat 1 Temp object on Nextion display */
+NexText t3 =    NexText(5, 4, "t3");       /* Meat 2 Temp object on Nextion display */
+NexText t0 =    NexText(5, 7, "t0");      /* Declare a text object for Target temp of the grill [page id:5, component id:7, component name: "t0"]. */
+NexButton b1 =  NexButton(5, 8, "b1"); /* Up ++ target temp */
+NexButton b0 =  NexButton(5, 11, "b0");  /* Down -- target temp */
+NexText l2 =    NexText(6, 2, "l2");      /* Declare a text object for current logging level [page id:6, component id:2, component name: "l2"]. */
+NexButton l4 =  NexButton(6, 4, "l4"); /* Up ++ logging level */
+NexButton l3 =  NexButton(6, 3, "l3");  /* Down -- logging level */
 
 char buffer[100] = {0};
 char buffer1[100] = {0};
-char lQ[256] = {0}; // logging queue buffer
 
-/* Register object t0, b0, b1, t10 to the Nextion touch event list. */
+/* Register object b0, b1, t10 to the Nextion touch event list. */
 NexTouch *nex_listen_list[] = 
 {
-    &t0,
+    //&t0,
     &b0,
     &b1,
+    &l4,
+    &l3,
     &t10,
     NULL
 };
@@ -103,8 +57,6 @@ NexTouch *nex_listen_list[] =
 /********************************************************************************/
 int debug = 0; /* set to 1 to get more debug information to the Serial port */
 /********************************************************************************/
-
-//char text[256];
 
 String deviceName;
 
@@ -124,7 +76,7 @@ int TempInterval = 3;            // #Frequency to record temperatures
 int TempRecord = 60;             // #Period to record temperatures in memory
 int ParametersInterval = 6;      //#Frequency to write parameters
 int PIDCycleTime = 20;           //#Frequency to update control loop - usually 20
-int ReadParametersInterval = 20; //  #Frequency to poll web for new parameters
+int ReadParametersInterval = 6; //  #Frequency to poll web for new parameters
 int ReadProgramInterval = 60;    // #Freqnency to poll web for new program
 double u_min = 0.15, u_max = 1.0;
 int igniterTemperature = 100;
@@ -157,7 +109,7 @@ int PB = 60.0;
 int PMode = 2.0;
 bool pgm = false;
 double PToggle;
-int target = 225; // normally initially set to 225
+int target = 90; // normally initially set to 225
 int Td = 45.0;
 int Ti = 180;
 float u = 0.15;
@@ -176,45 +128,68 @@ int newPB = 60.0;
 int newPMode = 2.0;
 bool newpgm = false;
 double newPToggle;
-int newtarget = 225;
+int newtarget = 200;
 int newTd = 45.0;
 int newTi = 180;
 float newu = 0.15;
 
-double LCalcula = 0;
+//double LCalcula = 0;
+
+//variables for WiFi management
+int wifi_strength; // -128 is weak to -1 is strong signal strength. A 1 means Wi-Fi chip error and 2 means a time-out error.
+int wifi_bars; // a calculation of the signal strength -128 to -97 = 1bar; <-97 && >-64 = 2bar; <-64 & >-32 = 3bar; <-32 && > 0 = 4bar;
+
+int SYSTEM_MODE = 2; //1-AUTOMATIC and 2-MANUAL  --- NEED TO THINK THIS ONE THROUGH will need Manual Mode when you just want to cook!
 
 //variables for the Grill temperature dropping more than XX degrees while in a cook... then we want to make a phone call or maybe send a text message!
 bool tempMonitorOn = false;
-int tempDropOnTemp = 115;      /* The grill must reach this temp before temp drop monitoring is enabled */
+int tempDropOnTemp = 90;      /* 115 - The grill must reach this temp before temp drop monitoring is enabled */
 double tempDropOnTime;        /* The 1st timestamp when we have reached or exceeded the target temp and grill temp monitoring should start from this point. */
-int tempMonitorVariance = 25; /* grill temp degrees of allowable drop in temp before we make a phone call */
+int tempMonitorVariance = 15; /* 25 - grill temp degrees of allowable drop in temp before we make a phone call */
 int tempDropInterval = 60;    /* the interval at which we check to see if there is a grill temp drop */
 int sendmessage = 0;
+int loglevel = 0;
 double sendmessageTIME;
+int loopcounter =0;
 
 //initialize PID
-pid myPID(PB, Ti, Td);
+pid myPID(PB, Ti, Td, loglevel);
 
 //initialize MAX31865
 MAX31865 myMAX31865(cs);
 
-void setup()
-{
+void setup() {
+    Serial.begin(9600);
+    waitFor(Serial.isConnected, 5000);
+
+    // if the cloud is not available, then change SYSTEM_MODE from 2(manual) to 1(automatic) -- this theory needs some work...
+    if(waitFor(Particle.connected, 10000)) {
+        Particle.syncTime();
+        Time.zone(-5); //set to CST
+        SYSTEM_MODE = 1;
+        Serial.printf("Pellet Pirate successfully connected to the cloud\r\n");
+        Serial.printf("System Mode is: %d\r\n", SYSTEM_MODE);
+    }
+
+    Serial.printf("**************************************************************************************************************************\r\n");
+    Serial.printf("*************************************** P R O G R A M    B E G I N *******************************************************\r\n");
+    Serial.printf("Firmware version: %s  at: %s\r\n", System.version().c_str(), Time.timeStr().c_str());
+
+    // write to log what network credentials we have setup on the photon
+    // security is one of WLAN_SEC_UNSEC, WLAN_SEC_WEP, WLAN_SEC_WPA, WLAN_SEC_WPA2, WLAN_SEC_WPA_ENTERPRISE, WLAN_SEC_WPA2_ENTERPRISE
+    // cipher is one of WLAN_CIPHER_AES, WLAN_CIPHER_TKIP or WLAN_CIPHER_AES_TKIP
+    WiFiAccessPoint ap[5];
+    int found = WiFi.getCredentials(ap, 5);
+    for (int i = 0; i < found; i++) {Serial.printf("Network credential in PelletPirate: ssid: %s  security: %d  cipher: %d\r\n", ap[i].ssid, ap[i].security, ap[i].cipher);}
+    // END log network credentials
+    wifi_strength = WiFi.RSSI();
+    Serial.printf("Connected to: %s  strength: %d\r\n", WiFi.SSID(), wifi_strength);
+
     Particle.subscribe("spark/", handler);
     Particle.publish("spark/device/name");
-
-    Particle.subscribe("hook-response/ParametersRead", getDataHandler);
-    
-    //Particle.subscribe("SSE-TempsHookBody", tempsHandler);
-
+    Particle.subscribe("hook-response/ParametersRead", getDataHandler, MY_DEVICES);
     Particle.variable("msg", &sendmessage, INT);
-
- //   Particle.function("devices", devicesHandler); //for logging
-
-    Serial.begin(9600);
-    Particle.syncTime();
-    Time.zone(-6); //set to CST
-
+ 
     pinMode(fanPin, OUTPUT);
     pinMode(augerPin, OUTPUT);
     pinMode(igniterPin, OUTPUT);
@@ -223,120 +198,46 @@ void setup()
     pinMode(csm1, OUTPUT);
     pinMode(csm2, OUTPUT);
 
-    delay(3000);
-    Serial.printf("*************************************** P R O G R A M    B E G I N ************************************************\r\n");
-    //snprintf(lQ, sizeof(lQ), "{\"log\":\"*************************************** P R O G R A M    B E G I N ************************************************\"}");
-    //Particle.publish("sse-Logger", lQ, PRIVATE);
-
-    Serial.println(Time.timeStr());
-    //snprintf(lQ, sizeof(lQ), "{\"log\":\"Time: %s\"}", Time.timeStr().c_str());
-    //Particle.publish("sse-Logger", lQ, PRIVATE);
-    
-    Serial.println(Time.format(TIME_FORMAT_ISO8601_FULL));
+    delay(5000);
 
     /* Nextion Display code ********************************************************************************************************/
     /* Set the baudrate which is for debug and communicate with Nextion screen. */
     nexInit();
-    /* Register the pop event callback function of the current text component. */
-    t0.attachPop(t0PopCallback);
-    /* Register the pop event callback function of the current button0 component. */
-    b0.attachPop(b0PopCallback);
-    /* Register the pop event callback function of the current button1 component. */
-    b1.attachPop(b1PopCallback);
-    /* Register the pop event callback function of the current Mode component. */
-    t10.attachPop(t10PopCallback);
-    //    /* Register the pop event callback function of the current Grill Temp component. */
-    //   t1.attachPop(t1PopCallback);
+    
+    t0.attachPop(t0PopCallback); /* Register the pop(Release) event callback function of the current text component. */
+    b0.attachPop(b0PopCallback); /* Register the pop(Release) event callback function of the current button0 component. */
+    b1.attachPop(b1PopCallback); /* Register the pop(Release) event callback function of the current button1 component. */
+    t10.attachPop(t10PopCallback); /* Register the pop(Release) event callback function of the current Mode component. */
+    l4.attachPop(l4PopCallback); /* Register the pop(Release) event callback function of the logging button L4 component. */
+    l3.attachPop(l3PopCallback);  /* Register the pop(Release) event callback function of the logging button L3 component. */       
 
     dbSerialPrintln("setup done");
     /* END Nextion Display code ****************************************************************************************************/
 
-    LReadPgm = Time.now();
-    LReadWeb = Time.now();
-
+    LReadPgm = TIMENOW;
+    LReadWeb = TIMENOW;
 
     delay(1000); // just 1 second to chill...
     Serial.println("Finishing SETUP in 1 second, awaiting command from the Pellet Pirate!");
     READY = 1; // now we are ready for the LOOP to start churning... all setup has run
-
 }
 
-void loop()
-{
-
-/*
-	switch(state) {
-	case STATE_REQUEST:
-		if (Particle.connected()) {
-			Serial.println("sending devicesRequest");
-			Particle.publish("devicesRequest", WiFi.localIP().toString().c_str(), 10, PRIVATE);
-			state = STATE_REQUEST_WAIT;
-			stateTime = millis();
-		}
-		break;
-
-	case STATE_REQUEST_WAIT:
-		if (millis() - stateTime >= REQUEST_WAIT_MS) {
-			state = STATE_RETRY_WAIT;
-			stateTime = millis();
-		}
-		break;
-
-	case STATE_CONNECT:
-		if (client.connect(serverAddr, serverPort)) {
-			client.println("POST /devices HTTP/1.0");
-			client.printlnf("Authorization: %s", nonce);
-			client.printlnf("Content-Length: 99999999");
-		    client.println();
-		    state = STATE_SEND_DATA;
-		}
-		else {
-			state = STATE_RETRY_WAIT;
-			stateTime = millis();
-		}
-		break;
-
-	case STATE_SEND_DATA:
-		// In this state, we send data until we lose the connection to the server for whatever
-		// reason. We'll to the server again.
-		if (!client.connected()) {
-			Serial.println("server disconnected");
-			client.stop();
-			state = STATE_RETRY_WAIT;
-			stateTime = millis();
-			break;
-		}
-
-		if (millis() - stateTime >= SEND_WAIT_MS) {
-			stateTime = millis();
-
-			sendData();
-		}
-		break;
-
-	case STATE_RETRY_WAIT:
-		if (millis() - stateTime >= RETRY_WAIT_MS) {
-			state = STATE_REQUEST;
-		}
-		break;
-	}
-*/
-
+void loop() {
     /* Nextion Code -- When a pop or push event occured every time, the corresponding component[right page id and component id] in touch event list will be asked. */
     nexLoop(nex_listen_list);
      /* END Nextion Code */
 
-    if (READY == 1 && modeState != 0)
-    {
+    if (READY == 1 && modeState != 0) {
 
         //Record Temperatures
         ReadTemperatures();
         nexLoop(nex_listen_list);
 
-        //Display Grill Temperature
+        //Update the display with current temperatures
         t1PopCallback();
         t2PopCallback();
         t3PopCallback();
+        
         nexLoop(nex_listen_list); //added since others had this after them
 
         //Check for new parameters that may have been written from the Nextion Touch Display or Web Program into Firebase
@@ -348,91 +249,78 @@ void loop()
     }
 }
 
-void ReadTemperatures()
-{
+// EXAMPLE using a callback
+void wifi_scan_callback(WiFiAccessPoint* wap, void* data) {
+    WiFiAccessPoint& ap = *wap;
+    Serial.print("SSID: ");
+    Serial.println(ap.ssid);
+    Serial.print("Security: ");
+    Serial.println(ap.security);
+    Serial.print("Channel: ");
+    Serial.println(ap.channel);
+    Serial.print("RSSI: ");
+    Serial.println(ap.rssi);
+}
+
+void ReadTemperatures() {
     double time;
 
-    for (int i = 0; i < 3; i++)
-    {
-        if (i == 0)
-        {
-            cs = A2;
-        } //Grill
-        if (i == 1)
-        {
-            cs = csm1;
-        } //Meat1
-        if (i == 2)
-        {
-            cs = csm2;
-        } //Meat2
+    for (int i = 0; i < 3; i++) {
+        if (i == 0) {cs = A2;} //Grill
+        if (i == 1) {cs = csm1;} //Meat1
+        if (i == 2) {cs = csm2;} //Meat2
 
         Temps[i] = myMAX31865.get_Temp(cs);
-        if (i == 2)
-        {
+        if (i == 2) {
             TT = target;
             time = Time.now();
             time = time * 1000; // multiply by 1000 to make sure its a unix epoch timestamp that is 13 digits (the multiplication by 1000 basically adds millis to the epoch time as 000, needed by front end web program graph)
     
-           if (Temps[0] > 0 && Temps[0] < 500) {T1 = Temps[0];} else {T1 = 0.0;} //force bad temps from MAX31865 to be 0.0 degrees - recode this when MAX31865 is fixed
-           if (Temps[1] > 0 && Temps[1] < 500) {T2 = Temps[1];} else {T2 = 0.0;} //force bad temps from MAX31865 to be 0.0 degrees - recode this when MAX31865 is fixed
-           if (Temps[2] > 0 && Temps[2] < 500) {T3 = Temps[2];} else {T3 = 0.0;} //force bad temps from MAX31865 to be 0.0 degrees - recode this when MAX31865 is fixed
+            if (Temps[0] > 0 && Temps[0] < 500) {T1 = Temps[0];} else {T1 = 0.0;} //force bad temps from MAX31865 to be 0.0 degrees - recode this when MAX31865 is fixed
+            if (Temps[1] > 0 && Temps[1] < 500) {T2 = Temps[1];} else {T2 = 0.0;} //force bad temps from MAX31865 to be 0.0 degrees - recode this when MAX31865 is fixed
+            if (Temps[2] > 0 && Temps[2] < 500) {T3 = Temps[2];} else {T3 = 0.0;} //force bad temps from MAX31865 to be 0.0 degrees - recode this when MAX31865 is fixed
            //T1 = Temps[0], T2 = Temps[1], T3 = Temps[2];
         }
     }
     
     // Record Temperatures in "Firebase"
-    if ((Time.now() - toggleTimeTemps > TempInterval) && ResetFIREBASE == 1)
-    {
+    if ((Time.now() - toggleTimeTemps > TempInterval) && ResetFIREBASE == 1) {
              char qT[128];
              snprintf(qT, sizeof(qT), "{\"T1\":%.6f,\"T2\":%.6f,\"T3\":%.6f,\"TT\":%.0f,\"time\":%.0f,\"n\":\"%s\"}", T1, T2, T3, TT, time, deviceName.c_str());
              Particle.publish("sse-Temps", qT, PRIVATE);
     
         toggleTimeTemps = Time.now();
 
-
-
-
-
-
-        Serial.printf("%s ReadTemperatures - Grill: %.1f   Meat1: %.1f   Meat2: %.1f   Time:%.0f\r\n", Time.timeStr().c_str(), T1, T2, T3, toggleTimeTemps);
+        if (loglevel >= 1) {Serial.printf("%s ReadTemperatures - Grill: %.1f   Meat1: %.1f   Meat2: %.1f   Time:%.0f\r\n", Time.timeStr().c_str(), T1, T2, T3, toggleTimeTemps);}
              //char lQ[128]; // logger queue
              //printf(lQ, sizeof(lQ), "{\"log\":\"ReadTemperatures - Grill:%.1f Meat1:%.1f Meat2:%.1f Time:%.0f\"}", T1, T2, T3, Time.timeStr().c_str());
              //Particle.publish("sse-Logger", lQ, PRIVATE);
-
-
-
-
-
-
-
+        
         // IFTTT Logic to send text message or phone call if temp drops below a threshhold set in variables above
-        if ((T1 >= tempDropOnTemp) && tempMonitorOn == false)
-        {
-            tempMonitorOn = true;
-            tempDropOnTime = Time.now();
-            Serial.printf("%s *** ALERT *** We are IN a Cook and Grill Temp is now being monitored for Target: %.1f and Grill: %.1f as of time:%.0f\r\n", Time.timeStr().c_str(), target, T1, tempDropOnTime);
-            //Serial.println(Time.timeStr());
-        }
+        if (modeState not_eq 0 && modeState not_eq 5) {   // as long as we are not OFF or in Shutdown mode, then you can blast IFTTT messages!
+            if ((T1 >= tempDropOnTemp) && tempMonitorOn == false) { // testing to SEE if we should flip to say we are IN a cook !!!
+                tempMonitorOn = true;
+                tempDropOnTime = Time.now();
+                Serial.printf("%s *** ALERT *** We are IN a Cook and Grill Temp is now being monitored for Target: %d and Grill: %.1f as of time:%.0f\r\n", Time.timeStr().c_str(), target, T1, tempDropOnTime);
+                //Serial.println(Time.timeStr());
+            }
 
-        if ((tempMonitorOn == true) && (Time.now() - tempDropOnTime > tempDropInterval) && (target - T1 >= tempMonitorVariance))
-        {
-            Serial.printf("****** MAKING PHONE CALL and SENDING SMS ****** temp is dropping - Target: %.1f and Grill: %.1f as of time:%.0f\r\n", target, T1, tempDropOnTime);
-            tempMonitorOn = false;
-            sendmessage = 1; // this will TRIGGER the Phone call and SMS message through IFTTT
-            sendmessageTIME = Time.now();
-        }
+            if ((tempMonitorOn == true) && (Time.now() - tempDropOnTime > tempDropInterval) && (target - T1 >= tempMonitorVariance)) {
+                sendmessage = 1; // this will TRIGGER the Phone call and SMS message through IFTTT
+                Serial.printf("****** MAKING PHONE CALL and SENDING SMS ****** temp is dropping - Target: %d and Grill: %.1f as of time:%.0f\r\n", target, T1, tempDropOnTime);
+                tempMonitorOn = false;
+                sendmessageTIME = Time.now();
+            }
 
-        if (((Time.now() - sendmessageTIME) > (tempDropInterval + 15)) && sendmessage == 1)
-        {
-            sendmessage = 0; // this should turn off the IFTTT trigger
-            Serial.printf("%s RESET sendmessage flag for IFTTT trigger to OFF\r\n", Time.timeStr().c_str());
+            if (((Time.now() - sendmessageTIME) > (tempDropInterval + 15)) && sendmessage == 1) {
+                sendmessage = 0; // this should turn off the IFTTT trigger
+                Serial.printf("%s RESET sendmessage flag for IFTTT trigger to OFF\r\n", Time.timeStr().c_str());
+            }
         }
     }
 }
 
-void ResetFirebase()
-{
+void ResetFirebase() {
     char qDELETE[64];
     snprintf(qDELETE, sizeof(qDELETE), "{\"n\":\"%s\"}", deviceName.c_str());
     Particle.publish(DELETE_TEMPS, qDELETE, PRIVATE);
@@ -448,10 +336,9 @@ void ResetFirebase()
     ResetFIREBASE = 1;
 }
 
-void ReadParameters()
-{
-    if ((Time.now() - LReadWeb) >= ReadParametersInterval)
-    {
+void ReadParameters() {
+    if ((Time.now() - LReadWeb) >= ReadParametersInterval) {
+        //Serial.printf("*****************************  IN ReadParameters  ************************************************\r\n");
         LReadWeb = TIMENOW;
         char pREAD[255];
         snprintf(pREAD, sizeof(pREAD), "{\"n\":\"%s\"}", deviceName.c_str());
@@ -460,66 +347,60 @@ void ReadParameters()
     }
 }
 
-void UpdateParameters()
-{
+void UpdateParameters() {
     bool DoINeedtoWriteParameters = false;
+    char str_target[4];
+
     //loop through new parameters and see what changed
-    if (target != newtarget)
-    {
-    
-        myPID.setTarget(newtarget);
+    if (target != newtarget) {
+        myPID.setTarget(newtarget, loglevel);
         target = newtarget;
-        Serial.println("UpdateParameters - newtarget!");
+        sprintf(str_target,"%d",target); // get target into a string so we can send it to the nextion display
+        t0.setText(str_target);
+        Serial.printf("%s UpdateParameters - new target temp is: %s\r\n", Time.timeStr().c_str(), str_target);
         DoINeedtoWriteParameters= true;
     }
-    if (PB != newPB || Ti != newTi || Td != newTd)
-    {
+    if (PB != newPB || Ti != newTi || Td != newTd) {
         PB = newPB;
         Ti = newTi;
         Td = newTd;
-        myPID.setGains(PB, Ti, Td);
-        Serial.println("UpdateParameters - newPB or newTI or newTD!");
+        myPID.setGains(PB, Ti, Td, loglevel);
+        Serial.printf("%s UpdateParameters - newPB or newTI or newTD!\r\n", Time.timeStr().c_str());
         DoINeedtoWriteParameters= true;
     }
-    if (PMode != newPMode)
-    {
+    if (PMode != newPMode) {
         PMode = newPMode;
         SetMode();
-        Serial.println("UpdateParameters - newPMode!");
+        Serial.printf("%s UpdateParameters - new PMode is: %d\r\n", Time.timeStr().c_str(), PMode );
         DoINeedtoWriteParameters= true;
     }
-    if (strcmp(mode, newmode) != 0)
-    {
-        Serial.printf("%s UpdateParameters - mode(%s) and newmode:(%s) are different\r\n", Time.timeStr().c_str(), mode, newmode);
+    if (strcmp(mode, newmode) != 0) {
+        Serial.printf("%s UpdateParameters - Processing New Mode: (%s) changing from Previous Mode: (%s)\r\n", Time.timeStr().c_str(), newmode, mode);
         strcpy(mode, newmode); // should copy newmode into the mode variable
         SetMode();
-        Serial.println("UpdateParameters - newmode!");
         DoINeedtoWriteParameters= true;
     }
-    if (pgm != newpgm)
-    {
+    if (pgm != newpgm) {
         float timeholder;
         timeholder = Time.now();
         Serial.printf("check on this...not sure timeholder is working in UpdateParameters, time is: %f", timeholder);
         pgm = newpgm;
         LReadPgm = (timeholder - 10000 + .01);
-        Serial.println("UpdateParameters - newpgm!");
+        //Serial.println("UpdateParameters - newpgm!");
             DoINeedtoWriteParameters= true;
         //TO DO .... need to finish this when you get to the PROGRAM coding...
         //Program = GetProgram(Parameters, Program)
         //Parameters = SetProgram(Parameters, Program)
         //break # Stop processing new parameters
     }
-    if(DoINeedtoWriteParameters)
-    {
+    if(DoINeedtoWriteParameters) {
         WriteParameters();
         //Serial.printf("%s ***** DoINeedToWriteParameters just fired...*****\r\n", Time.timeStr().c_str());
     }
     //else { Serial.printf("%s Nothing in Parameters changed this time...\r\n", Time.timeStr().c_str());}
 }
 
-void WriteParameters()
-{
+void WriteParameters() {
         aug = digitalRead(augerPin);
         fan = digitalRead(fanPin);
         ign = digitalRead(igniterPin);
@@ -532,20 +413,17 @@ void WriteParameters()
                  Cycle, LReadPgm, LReadWeb, LWritten, PB, PMode, PToggle, Td, Ti, aug ? "true" : "false", fan ? "true" : "false", ign ? "true" : "false", mode, pgm ? "true" : "false", target, u, deviceName.c_str());
 
         Particle.publish(PUBLISH_PARAMETERS, qP);
-        Serial.printf("%s WriteParameters: C:%d LRP:%.1f LRW:%.1f LW:%.1f PB:%d PM:%d PT:%.1f Td:%d Ti:%d A:%s F:%s I:%s Mode:%s Pgm:%s TT:%d u:%.2f\r\n", Time.timeStr().c_str(), Cycle, LReadPgm, LReadWeb, LWritten, PB, PMode, PToggle, Td, Ti, aug ? "true" : "false", fan ? "true" : "false", ign ? "true" : "false", mode, pgm ? "true" : "false", target, u);
+        if ( loglevel >= 2 ) {Serial.printf("%s WriteParameters: C:%d LRP:%.1f LRW:%.1f LW:%.1f PB:%d PM:%d PT:%.1f Td:%d Ti:%d A:%s F:%s I:%s Mode:%s Pgm:%s TT:%d u:%.2f\r\n", Time.timeStr().c_str(), Cycle, LReadPgm, LReadWeb, LWritten, PB, PMode, PToggle, Td, Ti, aug ? "true" : "false", fan ? "true" : "false", ign ? "true" : "false", mode, pgm ? "true" : "false", target, u);}
 }
 
-void SetMode()
-{
-    if (strcmp(mode, "Off") == 0)
-    {
+void SetMode() {
+    if (strcmp(mode, "Off") == 0) {
         modeState = 0;
         Serial.println("SetMode - Off");
         hopperInit();
         Serial.printf("%s SetMode, just finished hopperInit\r\n", Time.timeStr().c_str());
     }
-    else if (strcmp(mode, "Start") == 0)
-    {
+    else if (strcmp(mode, "Start") == 0) {
         ResetFirebase();
         modeState = 1;
         setState(augerPin, TRUE);
@@ -556,8 +434,7 @@ void SetMode()
         u = 15.0 / (15.0 + 45.0); //P0
         Serial.printf("%s SetMode - Start : u = %.2f\r\n", Time.timeStr().c_str(), u);
     }
-    else if (strcmp(mode, "Smoke") == 0)
-    {
+    else if (strcmp(mode, "Smoke") == 0) {
         modeState = 2;
         //sendToLCD(1, "t10", mode);
         sendCommand("click bt4,1"); //activate press event of component bt4 - the SMOKE button on the display
@@ -572,8 +449,7 @@ void SetMode()
         Serial.printf("%s SetMode - Smoke : u = %.2f\r\n", Time.timeStr().c_str(), u);
 
     }
-    else if (strcmp(mode, "Ignite") == 0)
-    {
+    else if (strcmp(mode, "Ignite") == 0) {
         modeState = 3;
         sendCommand("click bt5,1"); //activate press event of component bt5 - the Ignite button on the display
         sendCommand("click bt5,0"); //activate press release event of component bt5 - the Ignite button on the display
@@ -586,8 +462,7 @@ void SetMode()
         u = On / (On + Off);
         Serial.printf("%s SetMode - Ignite : u = %.2f\r\n", Time.timeStr().c_str(), u);
     }
-    else if (strcmp(mode, "Hold") == 0)
-    {
+    else if (strcmp(mode, "Hold") == 0) {
         modeState = 4;
         Serial.println("SetMode - Hold");
         sendCommand("click bt6,1"); //activate press event of component bt6 - the Hold button on the display
@@ -599,34 +474,30 @@ void SetMode()
         u = u_min; //Set to maintenance level
         Serial.printf("%s SetMode - Hold : u = %.2f\r\n", Time.timeStr().c_str(), u);
     }
-    else if (strcmp(mode, "Shutdown") == 0)
-    {
+    else if (strcmp(mode, "Shutdown") == 0) {
         modeState = 5;
         Serial.println("SetMode - Shutdown");
         sendCommand("click bt7,1"); //activate press event of component bt7 - the Shutdown button on the display
         sendCommand("click bt7,0"); //activate press release event of component bt7 - the Shutdown button on the display               
         hopperInit();
         setState(fanPin, TRUE);
+        setState(augerPin, false); // added 4/1/2018 after this button stayed on while in Shutdown mode, it should be OFF to burn off pellets.
     }
 
-    //Serial.print("SetMode: I think I found it... fixing to WriteParameters");
+    //Serial.printf("SetMode: I think I found it... fixing to WriteParameters");
     WriteParameters();
     //Serial.printf("I found it... WriteParameters done because SetMode is in Setup procedure above !!!!");
 
-    if (debug == 1){Serial.println("SetMode end --- WriteParameters - done!");}
+    if (loglevel == 3){Serial.println("SetMode end --- WriteParameters - done!");}
 }
 
-void DoMode()
-{
-    if (strcmp(mode, "Off") == 0)
-    {
+void DoMode() {
+    if (strcmp(mode, "Off") == 0) {
         return;
     }
 
-    else if (strcmp(mode, "Shutdown") == 0)
-    {
-        if ((Time.now() - toggleTimeFan) > ShutdownTime)
-        {
+    else if (strcmp(mode, "Shutdown") == 0) {
+        if ((Time.now() - toggleTimeFan) > ShutdownTime) {
             sendCommand("click bt3,1"); //activate press release event of component bt3 - the Off/On button of on the display
             sendCommand("click bt3,0"); //activate press release event of component bt3 - the Off/On button on the display
             sendToLCD(2, "bt0", "0"); // turn off Fan button
@@ -636,47 +507,38 @@ void DoMode()
         }
     }
 
-    else if (strcmp(mode, "Start") == 0)
-    {
+    else if (strcmp(mode, "Start") == 0) {
         DoAugerControl();
         setState(igniterPin, TRUE);
-        if (Temps[0] > 120)
-        {
+        if (Temps[0] > 120) {
             strcpy(mode, "Hold");
             SetMode();
         }
     }
 
-    else if (strcmp(mode, "Smoke") == 0)
-    {
+    else if (strcmp(mode, "Smoke") == 0) {
         DoAugerControl();
     }
 
-    else if (strcmp(mode, "Ignite") == 0)
-    {
+    else if (strcmp(mode, "Ignite") == 0) {
         DoAugerControl();
         setState(igniterPin, TRUE);
     }
 
-    else if (strcmp(mode, "Hold") == 0)
-    {
+    else if (strcmp(mode, "Hold") == 0) {
         DoControl();
         DoAugerControl();
     }
 }
 
-void DoAugerControl()
-{
+void DoAugerControl() {
     //Auger currently on AND TimeSinceToggle > Auger On Time
-    if (digitalRead(augerPin) && ((Time.now() - toggleTimeAuger) > (Cycle * u * 2))) // 12162017 added the *2 to cycle*u to increase the ON time for Auger to get more pellets in kettle!
-    {
+    if (digitalRead(augerPin) && ((Time.now() - toggleTimeAuger) > (Cycle * u * 2))) { // 12162017 added the *2 to cycle*u to increase the ON time for Auger to get more pellets in kettle!
         int TimeSince1 = Time.now() - toggleTimeAuger;
-        //if (debug == 1)
-        //{
-        Serial.printf("%s DoAugerControl - in TOP of first if - Auger ON! timenow:%f  toggletimeauger:%d  Cycle:%f u:%d\r\n", Time.timeStr().c_str(), toggleTimeAuger, Cycle, u, TimeSince1);
+        //if (debug == 1) {
+        //Serial.printf("%s DoAugerControl - in TOP of first if - Auger is on! turning it OFF! timenow:%f  toggletimeauger:%d  Cycle:%0.2f u:%d\r\n", Time.timeStr().c_str(), toggleTimeAuger, Cycle, u, TimeSince1);
         //}
-        if (u <= 1.0) // added the = statement 02272017 to stop the violent looping of this function when PID is == 1.0
-        {
+        if (u <= 1.0) { // added the = statement 02272017 to stop the violent looping of this function when PID is == 1.0
             setState(augerPin, FALSE);
             WriteParameters();
         }
@@ -685,12 +547,11 @@ void DoAugerControl()
     }
 
     //Auger currently off AND TimeSinceToggle > Auger Off Time
-    if (!digitalRead(augerPin) && ((Time.now() - toggleTimeAuger) > ((Cycle * (1 - u)))))
-    {
+    if (!digitalRead(augerPin) && ((Time.now() - toggleTimeAuger) > ((Cycle * (1 - u))))) {
         int TimeSince2 = Time.now() - toggleTimeAuger;
         //if (debug == 1)
         //{
-        Serial.printf("%s DoAugerControl - in TOP of second if - Auger OFF! timenow:%f  toggletimeauger:%d  Cycle:%f u:%d\r\n", Time.timeStr().c_str(), toggleTimeAuger, Cycle, u, TimeSince2);
+        //Serial.printf("%s DoAugerControl - in TOP of second if - Auger is off, turning it ON! timenow:%f  toggletimeauger:%d  Cycle:%f u:%d\r\n", Time.timeStr().c_str(), toggleTimeAuger, Cycle, u, TimeSince2);
         //}
         setState(augerPin, TRUE);
         checkIgniter();
@@ -698,21 +559,17 @@ void DoAugerControl()
     }
 }
 
-void checkIgniter()
-{
+void checkIgniter() {
     //Check if igniter needed
-    if (Temps[0] < igniterTemperature)
-    {
+    if (Temps[0] < igniterTemperature) {
         setState(igniterPin, TRUE);
     }
-    else
-    {
+    else {
         setState(igniterPin, FALSE);
     }
 
     //Check if the igniter has been running too long
-    if ((Time.now() - toggleTimeIgniter) > 1200 && digitalRead(igniterPin))
-    {
+    if ((Time.now() - toggleTimeIgniter) > 1200 && digitalRead(igniterPin)) {
         Serial.println("**SAFETY FIRST** - Disabling igniter due to timeout");
         setState(igniterPin, FALSE);
         strcpy(mode, "Shutdown");
@@ -720,22 +577,19 @@ void checkIgniter()
     }
 }
 
-void DoControl()
-{
+void DoControl() {
     double old_u;
 
     //Serial.printf("DoControl: Time.now: %f  myPID.LastUpdate: %f  difference %d  Cycle: %d  u now:%.2f\r\n", Time.now(), myPID.LastUpdate, Time.now() - myPID.LastUpdate, Cycle, u);
-    if ((Time.now() - myPID.LastUpdate) > Cycle)
-    {
-        u = myPID.update(Temps[0], target);
+    if ((Time.now() - myPID.LastUpdate) > Cycle) {
+        u = myPID.update(Temps[0], target, loglevel);
         old_u = u;
         u = max(u, u_min);
         u = min(u, u_max);
 
-        Serial.printf("%s DoControl IF Statement - through u max min calculation old_u:%.2f and u:%.2f\r\n", Time.timeStr().c_str(), old_u, u);
+        if (loglevel == 3) {Serial.printf("%s DoControl IF Statement - through u max min calculation old_u:%.2f and u:%.2f\r\n", Time.timeStr().c_str(), old_u, u);}
 
-        if (debug == 1)
-        {
+        if (loglevel == 3) {
             Serial.printf("%s DoControl - setting PID u value: %f\r\n", Time.timeStr().c_str(), u);
         }
 
@@ -745,43 +599,38 @@ void DoControl()
     }
 }
 
-void hopperInit()
-{
+void hopperInit() {
     //initialize hopper assembly
     pinResetFast(fanPin); // initialize to LOW
     pinMode(fanPin, OUTPUT);
     fan = digitalRead(fanPin);
-    toggleTimeFan = TIMENOW;
+    toggleTimeFan = Time.now(); //TIMENOW
 
     pinResetFast(igniterPin); // initialize to LOW
     pinMode(igniterPin, OUTPUT);
     ign = digitalRead(igniterPin);
-    toggleTimeIgniter = TIMENOW;
+    toggleTimeIgniter = Time.now(); // TIMENOW;
 
     pinResetFast(augerPin); // initialize to LOW
     pinMode(augerPin, OUTPUT);
     aug = digitalRead(augerPin);
-    toggleTimeAuger = TIMENOW;
+    toggleTimeAuger = Time.now(); // TIMENOW;
 
 }
 
-int getState(int pin)
-{
+int getState(int pin) {
     return pinReadFast(pin);
 }
 
-void setState(int pin, int newState)  // changed newState from bool to int
-{
+void setState(int pin, int newState) {  // changed newState from bool to int
     int currentState = getState(pin);
     char pinState[10];
     
-     if (currentState != newState)
-    {
+     if (currentState != newState) {
         digitalWrite(pin, newState);
-        switch (pin)
-        {
+        switch (pin) {
         case (D4):
-            toggleTimeFan = TIMENOW;
+            toggleTimeFan = Time.now(); //TIMENOW;
             snprintf(pinState, sizeof(pinState), "%d", newState);
             sendToLCD(2, "bt0", pinState);
             //Serial.printf("setState: toggling Fan: %d and text pinState: %s and length %d\r\n", newState, pinState, strlen(pinState));           
@@ -789,7 +638,7 @@ void setState(int pin, int newState)  // changed newState from bool to int
             fan = newState;
             break;
         case (D5):
-            toggleTimeIgniter = TIMENOW;
+            toggleTimeIgniter = Time.now(); //TIMENOW;
             snprintf(pinState, sizeof(pinState), "%d", newState);
             sendToLCD(2, "bt1", pinState);
             //Serial.printf("setState: toggling Igniter: %d and text pinState: %s and length %d\r\n", newState, pinState, strlen(pinState));
@@ -797,7 +646,7 @@ void setState(int pin, int newState)  // changed newState from bool to int
             ign = newState;
             break;
         case (D6):
-            toggleTimeAuger = TIMENOW;
+            toggleTimeAuger = Time.now(); //TIMENOW;
             snprintf(pinState, sizeof(pinState), "%d", newState);
             sendToLCD(2, "bt2", pinState);
             //Serial.printf("setState: toggling Auger: %d and text pinState: %s and length %d\r\n", newState, pinState, strlen(pinState));            
@@ -808,32 +657,28 @@ void setState(int pin, int newState)  // changed newState from bool to int
     }
 }
 
-void handler(const char *topic, const char *data)
-{
+void handler(const char *topic, const char *data) {
     deviceName = String(data);
     //ResetFirebase();
 }
 
-void tempsHandler(const char *event, const char *data)
-{
+//void tempsHandler(const char *event, const char *data) {
     //Serial.println(data);
-}
+//}
 
-void getDataHandler(const char *topic, const char *data)
-{
-    StaticJsonBuffer<1024> jsonBuffer;
+void getDataHandler(const char *event, const char *data) {
+    //Serial.printf("*****************************IN GetDataHandler************************************************\r\n");
+    StaticJsonBuffer<768> jsonBuffer;
     char *mutableCopy = strdup(data);
     JsonObject &root = jsonBuffer.parseObject(mutableCopy);
 
-    Serial.printf("%s %s\r\n", Time.timeStr().c_str(), data);
-    free(mutableCopy);
+    if ( loglevel >= 3 ) {Serial.printf("%s %s\r\n", Time.timeStr().c_str(), data);}
+    //free(mutableCopy);
 
-    if (!root.success())
-    {
-        Serial.println("parse failed");
+    if (!root.success()) {
+        Serial.println("JSON parsing of Parameters read from Firebase failed");
     }
-    else
-    {
+    else {
         newCycle = root["Cycle"];
         newLReadPgm = root["LReadPgm"];
         newLReadWeb = root["LReadWeb"];
@@ -851,7 +696,7 @@ void getDataHandler(const char *topic, const char *data)
         newtarget = root["target"];
         newu = root["u"];
 
-        //Serial.printf("%s Params Read: %d %.1f %.1f %.1f %d %d %.1f %d %d %s %s %s %s %s %d %.2f\r\n", Time.timeStr().c_str(), newCycle, newLReadPgm, newLReadWeb, newLWritten, newPB, newPMode, newPToggle, newTd, newTi, newaug, newfan, newign, newmode, newpgm, newtarget, newu);
+        if ( loglevel >= 3 ) {Serial.printf("%s Params Read: %d %0.1f %0.1f %0.1f %d %d %0.1f %d %d %o %o %o %s %o %d %0.2f\r\n", Time.timeStr().c_str(), newCycle, newLReadPgm, newLReadWeb, newLWritten, newPB, newPMode, newPToggle, newTd, newTi, newfan, newign, newaug, newmode, newpgm, newtarget, newu);}
     }
 
     UpdateParameters(); // process what we just got from Firebase read!
@@ -859,17 +704,17 @@ void getDataHandler(const char *topic, const char *data)
 }
 
 /* Nextion Code *********************************************************************************************/
-void t0PopCallback(void *ptr)   /* Text component pop callback function. */
-{
+void t0PopCallback(void *ptr) {  /* Text component pop callback function. */
     dbSerialPrintln("t0PopCallback");
-    t0.setText("225");
+    
+    memset(buffer, 0, sizeof(buffer));
+    t0.setText(itoa(target, buffer, 4));
 }
 
-void b0PopCallback(void *ptr)   /* Taget temp +5 degrees every time the Up+ button is released. */
-{
+void b1PopCallback(void *ptr) {  /* Target temp +5 degrees every time the Up+ button is released. */
     uint16_t number;
     
-    dbSerialPrintln("b0PopCallback");
+    dbSerialPrintln("b1PopCallback");
 
     memset(buffer, 0, sizeof(buffer));
     t0.getText(buffer, sizeof(buffer));
@@ -886,11 +731,10 @@ void b0PopCallback(void *ptr)   /* Taget temp +5 degrees every time the Up+ butt
     UpdateParameters();
 }
 
-void b1PopCallback(void *ptr)   /* In this example,the value of the text component will minus 5 degress every time when button1 is released. */
-{
+void b0PopCallback(void *ptr) {  /* In this example,the value of the text component will minus 5 degress every time when button0 is released. */
     uint16_t number;
     
-    dbSerialPrintln("b1PopCallback");
+    dbSerialPrintln("b0PopCallback");
 
     memset(buffer, 0, sizeof(buffer));
     t0.getText(buffer, sizeof(buffer));
@@ -909,8 +753,7 @@ void b1PopCallback(void *ptr)   /* In this example,the value of the text compone
     UpdateParameters();
 }
 
-void t10PopCallback(void *ptr)   /* Text component pop callback function for Mode. */
-{
+void t10PopCallback(void *ptr) {   /* Text component pop callback function for Mode. */
     dbSerialPrintln("t10PopCallback");
 
     memset(buffer, 0, sizeof(buffer));
@@ -931,8 +774,7 @@ void t10PopCallback(void *ptr)   /* Text component pop callback function for Mod
     UpdateParameters();
 }
 
-void t1PopCallback(void)
-{
+void t1PopCallback(void) {
     uint16_t integer_temp, decimal_temp;
 
     integer_temp = T1;
@@ -950,8 +792,7 @@ void t1PopCallback(void)
     t1.setText(buffer);
 }
 
-void t2PopCallback(void)
-{
+void t2PopCallback(void) {
     uint16_t integer_temp, decimal_temp;
 
     integer_temp = T2;
@@ -968,8 +809,7 @@ void t2PopCallback(void)
     t2.setText(buffer);
 }
 
-void t3PopCallback(void)
-{
+void t3PopCallback(void) {
     uint16_t integer_temp, decimal_temp;
 
     integer_temp = T3;
@@ -986,8 +826,7 @@ void t3PopCallback(void)
     t3.setText(buffer);
 }
 
-void sendToLCD(uint8_t type,String index, String cmd)
-{
+void sendToLCD(uint8_t type,String index, String cmd) {
 	if (type == 1 ){
 		Serial1.print(index);
 		Serial1.print(".txt=");
@@ -1015,6 +854,47 @@ void sendToLCD(uint8_t type,String index, String cmd)
 	Serial1.write(0xff);
 	
 	delay(25); // changed from 50
+}
+
+void l4PopCallback(void *ptr) {  /* raise logging level by 1 from the logging level screen in Setup on the Nextion display everytime the Up+ button is released. */
+
+    uint16_t number = 0;
+    
+    dbSerialPrintln("l4PopCallback");
+
+    memset(buffer, 0, sizeof(buffer));
+    l2.getText(buffer, sizeof(buffer));
+    number = atoi(buffer);
+
+    if (loglevel < 3) { //max loglevel is 3 at this time...
+        number += 1;
+        loglevel = number;
+        memset(buffer, 0, sizeof(buffer));
+        itoa(number, buffer, 10);
+        
+        l2.setText(buffer);
+        Serial.printf("%s Logging level changed to: %d\r\n", Time.timeStr().c_str(), loglevel);
+    }
+}
+
+void l3PopCallback(void *ptr) {  /* lower the logging level by 1 in logging level in Setup on the Nextion display everytime the Down- button is released. */
+    uint16_t number = 0;
+    
+    dbSerialPrintln("b1PopCallback");
+
+    memset(buffer, 0, sizeof(buffer));
+    l2.getText(buffer, sizeof(buffer));
+    number = atoi(buffer);
+
+    if (loglevel > 0) { //max loglevel between 0 and 3 at this time don't want to subtract if we are already at loglevel 0
+        number -= 1;
+        loglevel = number;
+        memset(buffer, 0, sizeof(buffer));
+        itoa(number, buffer, 10);
+    
+        l2.setText(buffer);
+        Serial.printf("%s Logging level changed to: %d\r\n", Time.timeStr().c_str(), loglevel);
+    }
 }
 
 /* END Nextion Code *******************************************************************************************/

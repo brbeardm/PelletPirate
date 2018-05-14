@@ -61,6 +61,8 @@ function storeEvent(event) {
 
 
 // this is for the app logging into Firebase via the sse-Logger particle event
+// NOTE:  NOT using this sse-Logger event in pellet pirate as of 03/28/2018 --- trying to get a better method to replace Serial.printf
+/*
 particle.getEventStream({ deviceId:config.get('DEVICE_FILTER'), auth:config.get('AUTH_TOKEN'), name:'sse-Logger' }).then(
 	function(stream) {
 		stream.on('event', function(event) {
@@ -81,7 +83,7 @@ var data2 = JSON.parse(event.data);
 // You can uncomment some of the other things if you want to store them in the database
 var obj2 = {};
 	//coreid: event.coreid,
-	published_at: event.published_at
+	//published_at: event.published_at
 //};
 
 // Copy the data in message.data, the Particle event data, as top-level 
@@ -93,4 +95,4 @@ for (var prop2 in data2) {
 }
 
 dbChild2.push(obj2); // changed from dbChild2.push().set(obj2);
-}
+} */
