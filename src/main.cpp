@@ -331,7 +331,7 @@ void ReadTemperatures() {
 
 void ResetFirebase() {
 
-    if(ONLINE == true) {
+    if(ONLINE == true && ResetFIREBASE == 0) {  //ResetFIRBASE == 0 is only so we reset only ONCE per power on.  Lets see how this works 06/03/2018
         char qDELETE[64];
         snprintf(qDELETE, sizeof(qDELETE), "{\"n\":\"%s\"}", deviceName.c_str());
         Particle.publish(DELETE_TEMPS, qDELETE, PRIVATE);
@@ -465,7 +465,7 @@ void SetMode() {
     }
     else if (strcmp(mode, "Ignite") == 0) {
         modeState = 3;
-        sendCommand("click bt5,1"); //activate press event of component bt5 - the Ignite button on the display
+        //sendCommand("click bt5,1"); //activate press event of component bt5 - the Ignite button on the display
         sendCommand("click bt5,0"); //activate press release event of component bt5 - the Ignite button on the display
         setState(augerPin, TRUE);
         setState(fanPin, TRUE);
@@ -479,7 +479,7 @@ void SetMode() {
     else if (strcmp(mode, "Hold") == 0) {
         modeState = 4;
         Log.info("SetMode - Hold\r\n");
-        sendCommand("click bt6,1"); //activate press event of component bt6 - the Hold button on the display
+        //sendCommand("click bt6,1"); //activate press event of component bt6 - the Hold button on the display
         sendCommand("click bt6,0"); //activate press release event of component bt6 - the Hold button on the display       
         setState(augerPin, TRUE);
         setState(fanPin, TRUE);
@@ -491,8 +491,8 @@ void SetMode() {
     else if (strcmp(mode, "Shutdown") == 0) {
         modeState = 5;
         Log.info("SetMode - Shutdown\r\n");
-        sendCommand("click bt7,1"); //activate press event of component bt7 - the Shutdown button on the display
-        sendCommand("click bt7,0"); //activate press release event of component bt7 - the Shutdown button on the display               
+        //sendCommand("click bt7,1"); //activate PRESS event of component bt7 - the Shutdown button on the display
+        sendCommand("click bt7,0"); //activate RELEASE event of component bt7 - the Shutdown button on the display               
         hopperInit();
         setState(fanPin, TRUE);
         setState(augerPin, false); // added 4/1/2018 after this button stayed on while in Shutdown mode, it should be OFF to burn off pellets.
@@ -609,17 +609,14 @@ void DoControl() {
 void hopperInit() {
     //initialize hopper assembly
     pinResetFast(fanPin); // initialize to LOW
-    //pinMode(fanPin, OUTPUT); // this is done in STARTUP.... I don't think I need to do it again 05142018
     fan = digitalRead(fanPin);
     toggleTimeFan = Time.now(); //TIMENOW
 
     pinResetFast(igniterPin); // initialize to LOW
-    //pinMode(igniterPin, OUTPUT); // this is done in STARTUP.... I don't think I need to do it again 05142018
     ign = digitalRead(igniterPin);
     toggleTimeIgniter = Time.now(); // TIMENOW;
 
     pinResetFast(augerPin); // initialize to LOW
-    //pinMode(augerPin, OUTPUT); // this is done in STARTUP.... I don't think I need to do it again 05142018
     aug = digitalRead(augerPin);
     toggleTimeAuger = Time.now(); // TIMENOW;
 
@@ -638,26 +635,23 @@ void setState(int pin, int newState) {  // changed newState from bool to int
         switch (pin) {
         case (D4):
             toggleTimeFan = Time.now(); //TIMENOW;
-            snprintf(pinState, sizeof(pinState), "%d", newState);
-            sendToLCD(2, "bt0", pinState);
-            //Log.info("setState: toggling Fan: %d and text pinState: %s and length %d\r\n", newState, pinState, strlen(pinState));           
-            Log.info("%s setState: toggling Fan: %d\r\n", Time.timeStr().c_str(), newState);
+            snprintf(pinState, sizeof(pinState), "%d", newState); //gotta write a char to the sentToLCD function for the nextion.
+            sendToLCD(2, "bt0", pinState);      
+            Log.info("%s setState: toggling Fan: %d and pinState: %s\r\n", Time.timeStr().c_str(), newState, pinState);
             fan = newState;
             break;
         case (D5):
             toggleTimeIgniter = Time.now(); //TIMENOW;
             snprintf(pinState, sizeof(pinState), "%d", newState);
             sendToLCD(2, "bt1", pinState);
-            //Log.info("setState: toggling Igniter: %d and text pinState: %s and length %d\r\n", newState, pinState, strlen(pinState));
-            Log.info("%s setState: toggling Igniter: %d\r\n", Time.timeStr().c_str(), newState);
+            Log.info("%s setState: toggling Igniter: %d and pinState: %s\r\n", Time.timeStr().c_str(), newState, pinState);
             ign = newState;
             break;
         case (D6):
             toggleTimeAuger = Time.now(); //TIMENOW;
             snprintf(pinState, sizeof(pinState), "%d", newState);
-            sendToLCD(2, "bt2", pinState);
-            //Log.info("setState: toggling Auger: %d and text pinState: %s and length %d\r\n", newState, pinState, strlen(pinState));            
-            Log.info("%s setState: toggling Auger: %d\r\n", Time.timeStr().c_str(), newState);
+            sendToLCD(2, "bt2", pinState);          
+            Log.info("%s setState: toggling Auger: %d and pinState: %s\r\n", Time.timeStr().c_str(), newState, pinState);
             aug = newState;
             break;
         }
@@ -666,7 +660,6 @@ void setState(int pin, int newState) {  // changed newState from bool to int
 
 void handler(const char *topic, const char *data) {
     deviceName = String(data);
-    //ResetFirebase();
 }
 
 void getDataHandler(const char *event, const char *data) {
