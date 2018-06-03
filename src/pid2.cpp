@@ -34,7 +34,7 @@ void pid::CalculateGains(double PB, double Ti, double Td, int loglevel)
 	Kp = -1 / PB;
 	Ki = Kp / Ti;
 	Kd = Kp * Td;
-	if (loglevel == 3) {Serial.printf("%s PB: %f  Ti: %f  Td: %f --> Kp: %f  Ki: %f  Kd: %f\r\n", Time.timeStr().c_str(), PB, Ti, Td, Kp, Ki, Kd);}
+	if (loglevel == 3) {Log.info("%s PB: %f  Ti: %f  Td: %f --> Kp: %f  Ki: %f  Kd: %f\r\n", Time.timeStr().c_str(), PB, Ti, Td, Kp, Ki, Kd);}
 }
 
 void pid::setTarget(double SetPoint, int loglevel)
@@ -44,7 +44,7 @@ void pid::setTarget(double SetPoint, int loglevel)
 	Inter = 0.0;
 	Derv = 0.0;
 	LastUpdate = Time.now();
-	if (loglevel == 3) {Serial.printf("%s Pid2 setTarget has processed a New Target: %.0f at LastUpdate: %.0f\r\n", Time.timeStr().c_str(), setPoint, LastUpdate);}
+	if (loglevel == 3) {Log.info("%s Pid2 setTarget has processed a New Target: %.0f at LastUpdate: %.0f\r\n", Time.timeStr().c_str(), setPoint, LastUpdate);}
 }
 
 double pid::update(double Current, double SetPoint, int loglevel)
@@ -73,7 +73,7 @@ double pid::update(double Current, double SetPoint, int loglevel)
 	Last = Current;
 	LastUpdate = Time.now();
 
-	if(loglevel == 3){Serial.printf("%s Pid2 update has processed Grill Temp: %.0f with Target Temp: %.0f at LastUpdate time: %.0f returning u: %.2f\r\n", Time.timeStr().c_str(), Current, setPoint, LastUpdate, u);}
+	if(loglevel == 3){Log.info("%s Pid2 update has processed Grill Temp: %.0f with Target Temp: %.0f at LastUpdate time: %.0f returning u: %.2f\r\n", Time.timeStr().c_str(), Current, setPoint, LastUpdate, u);}
 
 	return u;
 }
@@ -82,5 +82,5 @@ void pid::setGains(double PB, double Ti, double Td, int loglevel)
 {
 	CalculateGains(PB, Ti, Kd, loglevel);
 	Inter_max = fabs(0.5 / Ki);
-	if(loglevel == 3) {Serial.printf("%s New Gains (%f, %f, %f)\r\n", Time.timeStr().c_str(), Kp, Ki, Kd);}
+	if(loglevel == 3) {Log.info("%s New Gains (%f, %f, %f)\r\n", Time.timeStr().c_str(), Kp, Ki, Kd);}
 }

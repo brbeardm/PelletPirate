@@ -4,6 +4,7 @@
 //int devicesHandler(String data); // forward declaration
 //void sendData(void);
 void wifi_scan_callback(WiFiAccessPoint* wap, void* data);
+void cloudConnect(void);
 void getDataHandler(const char *event, const char *data);
 void hopperInit(void);
 void SetMode(void);

@@ -54,11 +54,9 @@ Write function does require that slaveSelectPin is properly defined in the setup
 void MAX31865::Write(int CS, byte w_addr, byte data)
 {
     digitalWrite(CS, LOW);
-    //Serial.printf("CS:%d should be low:%d\r\n", CS, digitalRead(CS));
     SPI.transfer(w_addr);
     SPI.transfer(data);
     digitalWrite(CS, HIGH);
-    //Serial.printf("CS:%d should be high:%d\r\n", CS, digitalRead(CS));
 }
 
 //Read function(byte ) accepts the register address to be read and returns the contents of the register to the loop function
@@ -92,7 +90,7 @@ float MAX31865::get_Temp(int CS)
             float Temp = -RTD_Resistance * a + sqrt(RTD_Resistance * RTD_Resistance * a * a - 4 * RTD_Resistance * b * (RTD_Resistance - R)); //Conversion of RTD resistance to Temperature
             Temp = Temp / (2 * RTD_Resistance * b);
             Tempf = Temp * 9 / 5 + 32;
-            //Serial.printf("MAX31865_get_Temp %d (%.1f)\r\n", CS, Tempf);
+            //Log.info("MAX31865_get_Temp %d (%.1f)\r\n", CS, Tempf);
             delay(TIMEOUT_VAL);
             lsb_rtd = Read(CS, 0x02);
             fault_test = lsb_rtd & 0x01;
@@ -102,9 +100,7 @@ float MAX31865::get_Temp(int CS)
     else
     {
         //If a fault is detected, Fault register is called and list of faults are displayed in the Serial console. Users are expected to troubleshoot the faults prior to proceeding
-        Serial.printf("Fault Detected %d", Fault_Error);
-        //Serial.println("Fault Detected. Please refer to fault bits below: ");
-        //Serial.println(" ");
+        Log.error("Fault Detected %d", Fault_Error);
         Fault(Fault_Error);
         Write(CS, Configuration, 0b10000010);
         delay(700); //Fault register isn't cleared automatically. Users are expected to clear it after every fault.
@@ -112,33 +108,27 @@ float MAX31865::get_Temp(int CS)
         delay(700);
 
     } //Setting the device in autoconfiguration again.
-    //return 0;
+    return 0;
 }
 
 //Fault(byte) function requires the contents of the fault bit to be provided. It checks for the bits that are set and provides the faulty bit information on the serial console.
 void MAX31865::Fault(byte fault)
 {
-    //if (unpluggedProbe == 0)
-    //{
         Particle.publish("Error MAX31865 in FAULT procedure", String(fault), PRIVATE);
         {
-            Serial.println(fault, BIN);
+            //Log.error(fault, BIN);
             byte temp = 0;       //temporary variable created: Purpose is to find out which error bit is set in the fault register
             temp = fault & 0x80; //Logic Anding fault register contents with 0b10000000 to detect for D7 error bit
-            if (temp > 0) {Serial.println("Bit D7 is Set. It's Possible your RTD device is disconnected from RTD+ or RTD - High Fault Threshold Value"); }
+            if (temp > 0) {Log.error("Bit D7 is Set. It's Possible your RTD device is disconnected from RTD+ or RTD - High Fault Threshold Value"); }
             temp = fault & 0x40;
-            if (temp > 0) {Serial.println("Bit D6 is Set. It's Possible your RTD+ and RTD- is shorted - Low Fault Threshold Value."); }
+            if (temp > 0) {Log.error("Bit D6 is Set. It's Possible your RTD+ and RTD- is shorted - Low Fault Threshold Value."); }
             temp = fault & 0x20;
-            if (temp > 0) {Serial.println("Bit D5 is Set. Vref- is greater than 0.85 * Vbias"); }
+            if (temp > 0) {Log.error("Bit D5 is Set. Vref- is greater than 0.85 * Vbias"); }
             temp = fault & 0x10;
-            if (temp > 0) {Serial.println("Bit D4 is Set. Please refer to data sheet for more information"); }
+            if (temp > 0) {Log.error("Bit D4 is Set. Please refer to data sheet for more information"); }
             temp = fault & 0x08;
-            if (temp > 0) {Serial.println("Bit D3 is Set. Please refer to data sheet for more information"); }
+            if (temp > 0) {Log.error("Bit D3 is Set. Please refer to data sheet for more information"); }
             temp = fault & 0x04;
-            if (temp > 0) {Serial.println("Bit D2 is Set. Please refer to data sheet for more information"); }
+            if (temp > 0) {Log.error("Bit D2 is Set. Please refer to data sheet for more information"); }
         }
-    //}
-
-    //unpluggedProbe=1;
-    
 }
