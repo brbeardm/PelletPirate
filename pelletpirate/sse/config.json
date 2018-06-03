@@ -1,0 +1,10 @@
+{
+  "GCLOUD_PROJECT": "pelletpirate",
+  "AUTH_TOKEN":"542ff3422072ac28d96f2a6d5d9fdd35f1f60ec8",
+  "DEVICE_FILTER":"mine",
+  "FIREBASE_CERT_FILE":"pelletpirate-firebase.json",
+  "FIREBASE_DATABASE":"pelletpirate",
+  "FIREBASE_PARENT":"ControllerOwners/Pellet_Pirate_1",
+  "FIREBASE_CHILD":"Temps",
+  "FIREBASE_LOGGER": "log"
+}

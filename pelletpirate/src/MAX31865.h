@@ -4,7 +4,7 @@
 #include "Particle.h"
 
 /* SPI TIMEOUT Value*/
-#define TIMEOUT_VAL 60
+#define TIMEOUT_VAL 70  //changed from 60 12/4/17
 
 /* Read Register Address */
 #define REG_CONFIG 0x00
@@ -25,7 +25,6 @@ class MAX31865
     MAX31865(int);
     void Write(int, byte, byte);
     byte Read(int, byte);
-    //        float calc_Temp(int, int);
     void Fault(byte);
     float get_Temp(int);
 
