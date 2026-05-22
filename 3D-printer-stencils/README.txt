@@ -1,0 +1,4 @@
+SolderSCAD: 3D printed solder stencils! by bluecoast on Thingiverse: https://www.thingiverse.com/thing:40720
+
+Summary:
+Update -- 12 July 2020: With auto bed leveling commonplace, removable flexible build plates, and top-layer ironing in slicers (e.g. Cura) it's likely now possible to make uniform 0.1mm thick smooth-topped prints and cleanly release them from the bed. I hope someone will try this again soon -- the script may be feasible now that it's 7.5 years old!Update -- script is here: https://github.com/bluecoast/SolderSCADI wrote a script to convert solder stencil gerbers to STL via OpenSCAD. It takes advantage of the similarity between OpenSCAD and photoplotting by first converting all defined apertures to OpenSCAD modules, then calling them individually whenever that aperture is flashed later in the file. It doesn't yet handle draws (only flashes) or aperture macros, but those don't seem to be used in solder paste layers. 

@@ -1,0 +1,14 @@
+(version 1)
+  (rule "molex_mount_pads"
+    (condition "A.Pad_Number == 'P1' || A.Pad_Number == 'P2' || B.Pad_Number == 'P1' || B.Pad_Number == 'P2'")
+    (constraint clearance (min 0.1mm))
+  )
+  (rule "molex_mask_bridge" 
+	(condition "A.NetName == 'GND' && B.NetName == 'unconnected-(J6-Pad39)'")
+    (constraint physical_clearance (min 0mm))
+  )
+  (rule "molex_mask_bridge"
+    (condition "A.Pad_Number == 'P2' && B.Pad_Number == '39'")
+    (constraint physical_clearance (min 0mm))
+    (constraint silk_clearance (min 0mm))
+  )

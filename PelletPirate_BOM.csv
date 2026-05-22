@@ -1,0 +1,84 @@
+Section,Ref,Value,Footprint,Type,Notes
+AC-Power,WirePad1,LOAD (L) 16ga,Through-hole pad,Wire pad,AC Line input
+AC-Power,WirePad2,NEUTRAL (N) 16ga,Through-hole pad,Wire pad,AC Neutral input
+AC-Power,F1,2A,Through-hole,Fuse,300V/2A per datasheet Table 1
+AC-Power,MOV1,14D561K,Through-hole,Metal Oxide Varistor,AC surge protection
+AC-Power,C14,0.1µF 310V,Through-hole,X2 Safety Film Cap,Across-the-line EMC cap
+AC-Power,LF1,Choke_CommonMode,Through-hole,Common Mode Choke,UU9.8 30mH min per datasheet
+AC-Power,C15,470pF 250V,Through-hole,Y2 Safety Film Cap,Line to earth
+AC-Power,C16,470pF 250V,Through-hole,Y2 Safety Film Cap,Line to earth
+AC-Power,C17,15µF 450V,Through-hole,Electrolytic,Input bulk cap for PS1
+AC-Power,PS1,PBO-5F-12,Through-hole SIP,AC-DC Power Supply,12V 420mA 5W
+AC-Power,D1,SMBJ20A,SMD DO-214AA,TVS Diode,Unidirectional overvoltage clamp for 12V
+AC-Power,C18,1000pF 400V,Through-hole,Y2 Safety Film Cap,Output Y-cap
+AC-Power,L1,2.2µH,Through-hole or SMD,Power Inductor,Output EMC filter
+AC-Power,C19,470µF 25V,Through-hole,Solid Polymer Aluminum Electrolytic,Output bulk cap
+AC-Power,C20,220µF 35V,Through-hole,Solid Polymer Aluminum Electrolytic,Output bulk cap
+TPS562201DDCR,PS2,TPS562201DDCR,SOT-23-6,Buck Converter IC,8.5-17V in 3.3V @ 2A out
+TPS562201DDCR,C32,10µF,0805 or 1206,X7R Ceramic MLCC,Input decoupling 25V min rating
+TPS562201DDCR,C33,0.1µF,0603 or 0805,X7R Ceramic MLCC,High-frequency input bypass
+TPS562201DDCR,C34,100nF 25V,0603 or 0805,X7R Ceramic MLCC,Bootstrap cap VBST to SW
+TPS562201DDCR,R15,100K,0603 or 0805,Resistor,EN pullup to VIN
+TPS562201DDCR,L2,3.3µH,Wurth 744311330,Shielded Power Inductor,>=2A saturation current low DCR
+TPS562201DDCR,R16,33.2K,0603 or 0805,Resistor 1%,Feedback divider upper
+TPS562201DDCR,R17,10K,0603 or 0805,Resistor 1%,Feedback divider lower
+TPS562201DDCR,C35,22µF,1206,X7R Ceramic MLCC,Output cap low ESR
+TPS562201DDCR,C36,22µF,1206,X7R Ceramic MLCC,Output cap low ESR
+TPS562201DDCR,C37,22µF,1206,X7R Ceramic MLCC,Output cap low ESR
+Grill-Igniter,WirePad3,IGNITER 16ga,Through-hole pad,Wire pad,AC load connection
+Grill-Igniter,R6,200,Through-hole or 0805,Resistor,Snubber resistor across triac
+Grill-Igniter,C11,0.22µF,Through-hole or 0805,Film Cap,Snubber cap across triac
+Grill-Igniter,T1,BTA12-600BWRG,Through-hole TO-220,Triac,12A 600V
+Grill-Igniter,R7,22,Through-hole or 0805,Resistor,Gate resistor
+Grill-Igniter,U1,MOC3063M,Through-hole DIP-6,Optocoupler,Zero-cross triac output
+Grill-Igniter,R8,400,Through-hole or 0805,Resistor,LED current limit from IGNITER-I/O
+Grill-Auger,WirePad4,AUGER 16ga,Through-hole pad,Wire pad,AC load connection
+Grill-Auger,R9,200,Through-hole or 0805,Resistor,Snubber resistor across triac
+Grill-Auger,C12,0.22µF,Through-hole or 0805,Film Cap,Snubber cap across triac
+Grill-Auger,T2,BTA12-600BWRG,Through-hole TO-220,Triac,12A 600V
+Grill-Auger,R10,22,Through-hole or 0805,Resistor,Gate resistor
+Grill-Auger,U7,MOC3063M,Through-hole DIP-6,Optocoupler,Zero-cross triac output
+Grill-Auger,R11,400,Through-hole or 0805,Resistor,LED current limit from AUGER-I/O
+Grill-Fan,WirePad5,FAN 16ga,Through-hole pad,Wire pad,AC load connection
+Grill-Fan,R12,200,Through-hole or 0805,Resistor,Snubber resistor across triac
+Grill-Fan,C13,0.22µF,Through-hole or 0805,Film Cap,Snubber cap across triac
+Grill-Fan,T4,BTA12-600BWRG,Through-hole TO-220,Triac,12A 600V
+Grill-Fan,R13,22,Through-hole or 0805,Resistor,Gate resistor
+Grill-Fan,U8,MOC3063M,Through-hole DIP-6,Optocoupler,Zero-cross triac output
+Grill-Fan,R14,400,Through-hole or 0805,Resistor,LED current limit from FAN-I/O
+MAX31865-Grill,C21,0.1µF,0603 or 0805,X7R Ceramic MLCC,Decoupling cap
+MAX31865-Grill,MAX1,MAX31865,SMD TQFN-20,RTD-to-Digital Converter,Grill_Temp
+MAX31865-Grill,R1,400,0603 or 0805,Resistor 0.1%,RREF reference resistor
+MAX31865-Grill,C1,0.22µF,0603 or 0805,X7R Ceramic MLCC,Filter cap
+MAX31865-Grill,C2,0.1µF,0603 or 0805,X7R Ceramic MLCC,Bypass cap
+MAX31865-Grill,J1,Connector,Through-hole,RTD Connector,Grill_Temp probe
+MAX31865-Meat1,C22,0.1µF,0603 or 0805,X7R Ceramic MLCC,Decoupling cap
+MAX31865-Meat1,MAX2,MAX31865,SMD TQFN-20,RTD-to-Digital Converter,Meat1_Temp
+MAX31865-Meat1,R2,400,0603 or 0805,Resistor 0.1%,RREF reference resistor
+MAX31865-Meat1,C3,0.22µF,0603 or 0805,X7R Ceramic MLCC,Filter cap
+MAX31865-Meat1,C4,0.1µF,0603 or 0805,X7R Ceramic MLCC,Bypass cap
+MAX31865-Meat1,J2,Connector,Through-hole,RTD Connector,Meat1_Temp probe
+MAX31865-Meat2,C23,0.1µF,0603 or 0805,X7R Ceramic MLCC,Decoupling cap
+MAX31865-Meat2,MAX3,MAX31865,SMD TQFN-20,RTD-to-Digital Converter,Meat2_Temp
+MAX31865-Meat2,R3,400,0603 or 0805,Resistor 0.1%,RREF reference resistor
+MAX31865-Meat2,C5,0.22µF,0603 or 0805,X7R Ceramic MLCC,Filter cap
+MAX31865-Meat2,C6,0.1µF,0603 or 0805,X7R Ceramic MLCC,Bypass cap
+MAX31865-Meat2,J3,Connector,Through-hole,RTD Connector,Meat2_Temp probe
+MAX31865-Meat3,C24,0.1µF,0603 or 0805,X7R Ceramic MLCC,Decoupling cap
+MAX31865-Meat3,MAX4,MAX31865,SMD TQFN-20,RTD-to-Digital Converter,Meat3_Temp
+MAX31865-Meat3,R4,400,0603 or 0805,Resistor 0.1%,RREF reference resistor
+MAX31865-Meat3,C7,0.22µF,0603 or 0805,X7R Ceramic MLCC,Filter cap
+MAX31865-Meat3,C8,0.1µF,0603 or 0805,X7R Ceramic MLCC,Bypass cap
+MAX31865-Meat3,J4,Connector,Through-hole,RTD Connector,Meat3_Temp probe
+MAX31865-Meat4,C25,0.1µF,0603 or 0805,X7R Ceramic MLCC,Decoupling cap
+MAX31865-Meat4,MAX5,MAX31865,SMD TQFN-20,RTD-to-Digital Converter,Meat4_Temp
+MAX31865-Meat4,R5,400,0603 or 0805,Resistor 0.1%,RREF reference resistor
+MAX31865-Meat4,C9,0.22µF,0603 or 0805,X7R Ceramic MLCC,Filter cap
+MAX31865-Meat4,C10,0.1µF,0603 or 0805,X7R Ceramic MLCC,Bypass cap
+MAX31865-Meat4,J5,Connector,Through-hole,RTD Connector,Meat4_Temp probe
+ESP-LCD,PS3,LM7805CT/NOPB,Through-hole TO-220,LDO Voltage Regulator,12V to 5V 1.5A for Grayhill
+ESP-LCD,C28,0.22µF,0603 or 0805,X7R Ceramic MLCC,LDO input cap
+ESP-LCD,C29,0.1µF ceramic,0603 or 0805,X7R Ceramic MLCC,LDO output cap
+ESP-LCD,ESP1,ESP32-WROOM-32E,SMD Module,MCU WiFi/BT Module,Main controller
+ESP-LCD,LCD1,SPI TFT LCD,Through-hole/FPC,3.5 inch TFT Display,SPI interface
+ESP-LCD,GN1,b24C32-19-P,Through-hole,Grayhill Rotary Encoder,5V powered via PS3

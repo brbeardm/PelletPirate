@@ -1,0 +1,31 @@
+# ESP-IDF build artifacts
+pelletpirate_ESP/build/
+pelletpirate_ESP/managed_components/
+pelletpirate_ESP/dependencies.lock
+pelletpirate_ESP/sdkconfig
+pelletpirate_ESP/sdkconfig.old
+
+# Claude Code
+.claude/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.code-workspace
+
+# Compiled binaries
+*.bin
+*.elf
+*.hex
+*.map
+*.lst
+*.dfu
+*.o
+*.d
+*.a
+vc140.pdb

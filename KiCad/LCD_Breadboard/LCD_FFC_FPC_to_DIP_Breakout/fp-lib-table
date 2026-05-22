@@ -1,0 +1,5 @@
+(fp_lib_table
+	(version 7)
+	(lib (name "HiRose") (type "KiCad") (uri "${KIPRJMOD}/HiRose") (options "") (descr ""))
+	(lib (name "Pinheader_Odd_PelletPirate_1x20_2.54mm_Vertical") (type "KiCad") (uri "C:/DEVELOPMENT/pelletpirate/KiCad/LCD_Breadboard/Connector_PelletPirate/Pinheader_Odd_PelletPirate_1x20_2.54mm_Vertical.pretty") (options "") (descr ""))
+)

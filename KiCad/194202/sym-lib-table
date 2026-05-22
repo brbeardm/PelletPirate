@@ -1,0 +1,5 @@
+(sym_lib_table
+	(version 7)
+	(lib (name "PeletPirate") (type "KiCad") (uri "${KIPRJMOD}/PeletPirate.kicad_sym") (options "") (descr ""))
+	(lib (name "Varistor_14D561K") (type "KiCad") (uri "${KIPRJMOD}/Varistor_14D561K.kicad_sym") (options "") (descr ""))
+)

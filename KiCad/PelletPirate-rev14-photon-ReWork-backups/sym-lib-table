@@ -1,0 +1,4 @@
+(sym_lib_table
+	(version 7)
+	(lib (name "PelletPirate-rev14-photon-ReWork-eagle-import") (type "KiCad") (uri "${KIPRJMOD}/PelletPirate-rev14-photon-ReWork-eagle-import.kicad_sym") (options "") (descr ""))
+)
