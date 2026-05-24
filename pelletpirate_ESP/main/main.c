@@ -35,6 +35,19 @@ void app_main(void)
         ESP_LOGE(TAG, "LCD init failed");
         return;
     }
+    // Color test — RED screen for 2 seconds to verify color rendering
+    ESP_LOGI(TAG, "Color test: RED (0xF800)");
+    hx8357d_fill_screen(HX8357D_RED);
+    vTaskDelay(pdMS_TO_TICKS(2000));
+
+    ESP_LOGI(TAG, "Color test: GREEN (0x07E0)");
+    hx8357d_fill_screen(HX8357D_GREEN);
+    vTaskDelay(pdMS_TO_TICKS(2000));
+
+    ESP_LOGI(TAG, "Color test: BLUE (0x001F)");
+    hx8357d_fill_screen(HX8357D_BLUE);
+    vTaskDelay(pdMS_TO_TICKS(2000));
+
     hx8357d_boot_splash();
     ESP_LOGI(TAG, "Boot splash displayed");
 

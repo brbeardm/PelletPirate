@@ -91,13 +91,13 @@ lv_obj_t *ui_cook_mode_create(void)
 
     int y = 4;
 
-    // Cook Mode status
+    // Cook Mode status — same font as menu items
     lv_obj_t *lbl = lv_label_create(s_screen);
     lv_label_set_text_fmt(lbl, "Cook Mode: %s", grill_mode_name(active));
-    lv_obj_set_style_text_font(lbl, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(lbl, &lv_font_montserrat_20, 0);
     lv_obj_set_style_text_color(lbl, UI_COLOR_ACCENT, 0);
     lv_obj_set_pos(lbl, 8, y);
-    y += 22;
+    y += 26;
 
     // Current temp
     lv_obj_t *lbl_cur = lv_label_create(s_screen);
@@ -132,10 +132,10 @@ lv_obj_t *ui_cook_mode_create(void)
     // "SET COOK MODE" title
     lbl = lv_label_create(s_screen);
     lv_label_set_text(lbl, "SET COOK MODE");
-    lv_obj_set_style_text_font(lbl, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(lbl, &lv_font_montserrat_20, 0);
     lv_obj_set_style_text_color(lbl, lv_color_hex(0xFFFFFF), 0);
     lv_obj_set_pos(lbl, 8, y);
-    y += 20;
+    y += 26;
 
     // Encoder group
     lv_group_t *g = lv_group_get_default();
@@ -170,7 +170,7 @@ lv_obj_t *ui_cook_mode_create(void)
 
         lv_obj_t *lbl_m = lv_label_create(s_mode_btns[i]);
         lv_label_set_text(lbl_m, mode_labels[i]);
-        lv_obj_set_style_text_font(lbl_m, &lv_font_montserrat_16, 0);
+        lv_obj_set_style_text_font(lbl_m, &lv_font_montserrat_20, 0);
         lv_obj_set_style_text_color(lbl_m, lv_color_hex(0xFFFFFF), 0);
         lv_obj_align(lbl_m, LV_ALIGN_LEFT_MID, 0, 0);
 
@@ -187,12 +187,12 @@ lv_obj_t *ui_cook_mode_create(void)
     lv_obj_set_style_border_width(btn_main, 2, 0);
     lv_obj_set_style_radius(btn_main, 4, 0);
     lv_obj_set_style_shadow_width(btn_main, 0, 0);
-    lv_obj_set_style_bg_color(btn_main, lv_color_hex(0x331800), LV_STATE_FOCUSED);
+    lv_obj_set_style_bg_color(btn_main, UI_COLOR_ACCENT, LV_STATE_FOCUSED);
     lv_obj_add_event_cb(btn_main, go_main, LV_EVENT_CLICKED, NULL);
     lv_obj_t *l1 = lv_label_create(btn_main);
     lv_label_set_text(l1, "Main");
     lv_obj_set_style_text_font(l1, &lv_font_montserrat_14, 0);
-    lv_obj_set_style_text_color(l1, UI_COLOR_ACCENT, 0);
+    lv_obj_set_style_text_color(l1, lv_color_hex(0xFFFFFF), 0);
     lv_obj_center(l1);
     if (g) lv_group_add_obj(g, btn_main);
 
@@ -204,12 +204,12 @@ lv_obj_t *ui_cook_mode_create(void)
     lv_obj_set_style_border_width(btn_save, 2, 0);
     lv_obj_set_style_radius(btn_save, 4, 0);
     lv_obj_set_style_shadow_width(btn_save, 0, 0);
-    lv_obj_set_style_bg_color(btn_save, lv_color_hex(0x331800), LV_STATE_FOCUSED);
+    lv_obj_set_style_bg_color(btn_save, UI_COLOR_ACCENT, LV_STATE_FOCUSED);
     lv_obj_add_event_cb(btn_save, do_save, LV_EVENT_CLICKED, NULL);
     lv_obj_t *l2 = lv_label_create(btn_save);
     lv_label_set_text(l2, "Save");
     lv_obj_set_style_text_font(l2, &lv_font_montserrat_14, 0);
-    lv_obj_set_style_text_color(l2, UI_COLOR_ACCENT, 0);
+    lv_obj_set_style_text_color(l2, lv_color_hex(0xFFFFFF), 0);
     lv_obj_center(l2);
     if (g) lv_group_add_obj(g, btn_save);
 

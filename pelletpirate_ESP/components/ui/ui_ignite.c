@@ -135,12 +135,12 @@ lv_obj_t *ui_ignite_create(void)
     lv_obj_set_style_border_width(btn_main, 2, 0);
     lv_obj_set_style_radius(btn_main, 4, 0);
     lv_obj_set_style_shadow_width(btn_main, 0, 0);
-    lv_obj_set_style_bg_color(btn_main, lv_color_hex(0x331800), LV_STATE_FOCUSED);
+    lv_obj_set_style_bg_color(btn_main, UI_COLOR_ACCENT, LV_STATE_FOCUSED);
     lv_obj_add_event_cb(btn_main, go_main, LV_EVENT_CLICKED, NULL);
     lv_obj_t *l1 = lv_label_create(btn_main);
     lv_label_set_text(l1, "Main");
     lv_obj_set_style_text_font(l1, &lv_font_montserrat_14, 0);
-    lv_obj_set_style_text_color(l1, UI_COLOR_ACCENT, 0);
+    lv_obj_set_style_text_color(l1, lv_color_hex(0xFFFFFF), 0);
     lv_obj_center(l1);
     if (g) lv_group_add_obj(g, btn_main);
 
@@ -154,12 +154,12 @@ lv_obj_t *ui_ignite_create(void)
         lv_obj_set_style_border_width(btn_ign, 2, 0);
         lv_obj_set_style_radius(btn_ign, 4, 0);
         lv_obj_set_style_shadow_width(btn_ign, 0, 0);
-        lv_obj_set_style_bg_color(btn_ign, lv_color_hex(0x331800), LV_STATE_FOCUSED);
+        lv_obj_set_style_bg_color(btn_ign, UI_COLOR_ACCENT, LV_STATE_FOCUSED);
         lv_obj_add_event_cb(btn_ign, do_ignite, LV_EVENT_CLICKED, NULL);
         lv_obj_t *l2 = lv_label_create(btn_ign);
         lv_label_set_text(l2, "Start Ignite");
         lv_obj_set_style_text_font(l2, &lv_font_montserrat_14, 0);
-        lv_obj_set_style_text_color(l2, UI_COLOR_ACCENT, 0);
+        lv_obj_set_style_text_color(l2, lv_color_hex(0xFFFFFF), 0);
         lv_obj_center(l2);
         if (g) lv_group_add_obj(g, btn_ign);
         lv_group_focus_obj(btn_ign);

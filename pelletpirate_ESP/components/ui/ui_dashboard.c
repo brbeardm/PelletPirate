@@ -143,7 +143,7 @@ lv_obj_t *ui_dashboard_create(void)
 
     // Cook Mode
     s_lbl_mode = lv_label_create(s_screen);
-    lv_obj_set_style_text_font(s_lbl_mode, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(s_lbl_mode, &lv_font_montserrat_20, 0);
     lv_obj_set_style_text_color(s_lbl_mode, UI_COLOR_ACCENT, 0);
     lv_obj_set_pos(s_lbl_mode, 8, y);
     y += 22;
@@ -188,26 +188,26 @@ lv_obj_t *ui_dashboard_create(void)
     // Probe rows
     for (int i = 0; i < NUM_MEAT_PROBES; i++) {
         s_probes[i].lbl_name = lv_label_create(s_screen);
-        lv_obj_set_style_text_font(s_probes[i].lbl_name, &lv_font_montserrat_16, 0);
+        lv_obj_set_style_text_font(s_probes[i].lbl_name, &lv_font_montserrat_20, 0);
         lv_obj_set_style_text_color(s_probes[i].lbl_name, lv_color_hex(0xFFFFFF), 0);
         lv_obj_set_pos(s_probes[i].lbl_name, 8, y);
 
         s_probes[i].lbl_temp = lv_label_create(s_screen);
-        lv_obj_set_style_text_font(s_probes[i].lbl_temp, &lv_font_montserrat_16, 0);
+        lv_obj_set_style_text_font(s_probes[i].lbl_temp, &lv_font_montserrat_20, 0);
         lv_obj_set_style_text_color(s_probes[i].lbl_temp, lv_color_hex(0xFFFFFF), 0);
-        lv_obj_set_pos(s_probes[i].lbl_temp, 250, y);
-        y += 20;
+        lv_obj_set_pos(s_probes[i].lbl_temp, 240, y);
+        y += 24;
 
         s_probes[i].lbl_alarm = lv_label_create(s_screen);
-        lv_obj_set_style_text_font(s_probes[i].lbl_alarm, &lv_font_montserrat_14, 0);
+        lv_obj_set_style_text_font(s_probes[i].lbl_alarm, &lv_font_montserrat_16, 0);
         lv_obj_set_style_text_color(s_probes[i].lbl_alarm, UI_COLOR_TEXT_DIM, 0);
         lv_obj_set_pos(s_probes[i].lbl_alarm, 16, y);
 
         s_probes[i].lbl_goal = lv_label_create(s_screen);
-        lv_obj_set_style_text_font(s_probes[i].lbl_goal, &lv_font_montserrat_14, 0);
+        lv_obj_set_style_text_font(s_probes[i].lbl_goal, &lv_font_montserrat_16, 0);
         lv_obj_set_style_text_color(s_probes[i].lbl_goal, UI_COLOR_TEXT_DIM, 0);
-        lv_obj_set_pos(s_probes[i].lbl_goal, 230, y);
-        y += 22;
+        lv_obj_set_pos(s_probes[i].lbl_goal, 220, y);
+        y += 24;
     }
 
     // Main button

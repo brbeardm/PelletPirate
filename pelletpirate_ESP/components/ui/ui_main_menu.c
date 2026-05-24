@@ -251,12 +251,12 @@ lv_obj_t *ui_main_menu_create(void)
     s_editing = false;
     int y = 4;
 
-    // Cook Mode status
+    // Cook Mode status — same font as menu items
     s_lbl_mode = lv_label_create(s_screen);
-    lv_obj_set_style_text_font(s_lbl_mode, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(s_lbl_mode, &lv_font_montserrat_20, 0);
     lv_obj_set_style_text_color(s_lbl_mode, UI_COLOR_ACCENT, 0);
     lv_obj_set_pos(s_lbl_mode, 8, y);
-    y += 20;
+    y += 26;
 
     // CURRENT
     lv_obj_t *lbl = lv_label_create(s_screen);
@@ -336,7 +336,8 @@ lv_obj_t *ui_main_menu_create(void)
     // Menu item buttons
     for (int i = 0; i < NUM_MENU_ITEMS; i++) {
         s_menu_btns[i] = lv_button_create(s_screen);
-        lv_obj_set_size(s_menu_btns[i], 304, 38);
+        s_menu_btns[i] = lv_button_create(s_screen);
+        lv_obj_set_size(s_menu_btns[i], 304, 36);
         lv_obj_set_pos(s_menu_btns[i], 8, y);
         lv_obj_set_style_bg_color(s_menu_btns[i], lv_color_hex(0x000000), 0);
         lv_obj_set_style_bg_opa(s_menu_btns[i], LV_OPA_COVER, 0);
@@ -344,22 +345,24 @@ lv_obj_t *ui_main_menu_create(void)
         lv_obj_set_style_border_width(s_menu_btns[i], 2, 0);
         lv_obj_set_style_border_opa(s_menu_btns[i], LV_OPA_TRANSP, 0);
         lv_obj_set_style_radius(s_menu_btns[i], 4, 0);
-        lv_obj_set_style_pad_left(s_menu_btns[i], 8, 0);
+        lv_obj_set_style_pad_left(s_menu_btns[i], 6, 0);
+        lv_obj_set_style_pad_top(s_menu_btns[i], 2, 0);
+        lv_obj_set_style_pad_bottom(s_menu_btns[i], 2, 0);
         lv_obj_set_style_shadow_width(s_menu_btns[i], 0, 0);
         lv_obj_set_style_border_opa(s_menu_btns[i], LV_OPA_COVER, LV_STATE_FOCUSED);
-        lv_obj_set_style_bg_color(s_menu_btns[i], lv_color_hex(0x331800), LV_STATE_FOCUSED);
+        lv_obj_set_style_bg_color(s_menu_btns[i], UI_COLOR_ACCENT, LV_STATE_FOCUSED);
 
         lv_obj_add_event_cb(s_menu_btns[i], navigate_to, LV_EVENT_CLICKED, (void *)(intptr_t)i);
 
         lv_obj_t *l = lv_label_create(s_menu_btns[i]);
         lv_label_set_text(l, menu_labels[i]);
-        lv_obj_set_style_text_font(l, &lv_font_montserrat_16, 0);
+        lv_obj_set_style_text_font(l, &lv_font_montserrat_20, 0);
         lv_obj_set_style_text_color(l, lv_color_hex(0xFFFFFF), 0);
         lv_obj_align(l, LV_ALIGN_LEFT_MID, 0, 0);
 
         if (i == MENU_IGNITE) s_lbl_ignite = l;
 
-        y += 42;
+        y += 40;
     }
 
     // Cook Dashboard button
@@ -371,7 +374,7 @@ lv_obj_t *ui_main_menu_create(void)
     lv_obj_set_style_border_width(s_menu_btns[NUM_MENU_ITEMS], 2, 0);
     lv_obj_set_style_radius(s_menu_btns[NUM_MENU_ITEMS], 4, 0);
     lv_obj_set_style_shadow_width(s_menu_btns[NUM_MENU_ITEMS], 0, 0);
-    lv_obj_set_style_bg_color(s_menu_btns[NUM_MENU_ITEMS], lv_color_hex(0x331800), LV_STATE_FOCUSED);
+    lv_obj_set_style_bg_color(s_menu_btns[NUM_MENU_ITEMS], UI_COLOR_ACCENT, LV_STATE_FOCUSED);
     lv_obj_set_style_border_opa(s_menu_btns[NUM_MENU_ITEMS], LV_OPA_COVER, LV_STATE_FOCUSED);
     lv_obj_add_event_cb(s_menu_btns[NUM_MENU_ITEMS], navigate_to, LV_EVENT_CLICKED, (void *)(intptr_t)MENU_DASHBOARD);
 

@@ -56,7 +56,7 @@ DRAM_ATTR static const lcd_init_cmd_t hx8357d_init_cmds[] = {
         0x00, 0x01
     }, 34},
     {CMD_COLMOD, {0x55}, 1},
-    {CMD_MADCTL, {0xC8}, 1},  // MY+MX+BGR
+    {CMD_MADCTL, {0xC0}, 1},  // MY+MX (panel is natively BGR, no BGR bit needed)
 
     // Display inversion on (some panels need this for correct polarity)
     {0x21, {0}, 0},

@@ -107,6 +107,9 @@ void ui_init(void)
                            BUF_SIZE_BYTES, LV_DISPLAY_RENDER_MODE_PARTIAL);
     lv_display_set_flush_cb(s_display, lvgl_flush_cb);
 
+    // Disable default theme to prevent blue cursor/focus artifacts
+    lv_display_set_theme(s_display, NULL);
+
     // Encoder input
     s_encoder_indev = lv_indev_create();
     lv_indev_set_type(s_encoder_indev, LV_INDEV_TYPE_ENCODER);
