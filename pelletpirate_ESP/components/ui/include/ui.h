@@ -3,16 +3,15 @@
 
 #include "lvgl.h"
 
-/**
- * Initialize LVGL, register display driver and encoder input device,
- * create the default theme, and load the home screen.
- * Must be called after hx8357d_init() and encoder_init().
- */
 void ui_init(void);
+lv_indev_t *ui_get_encoder_indev(void);
 
 /**
- * Get the LVGL encoder input device (for assigning groups).
+ * Disable/enable LVGL encoder input processing.
+ * Screens that poll the encoder directly via timers must call
+ * ui_encoder_set_direct(true) to prevent LVGL from consuming events.
+ * Call ui_encoder_set_direct(false) when returning to group-based navigation.
  */
-lv_indev_t *ui_get_encoder_indev(void);
+void ui_encoder_set_direct(bool direct);
 
 #endif

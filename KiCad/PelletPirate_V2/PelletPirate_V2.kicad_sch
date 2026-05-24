@@ -16613,7 +16613,7 @@
 			(uuid "e991f36a-c578-45ce-8288-c133db465d32")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR048")
 					(unit 1)
@@ -16692,7 +16692,7 @@
 			(uuid "70c61327-cdf1-4d24-a7d4-f51d2270f21b")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR07")
 					(unit 1)
@@ -16770,7 +16770,7 @@
 			(uuid "1f643c7f-3c91-4f95-b7bd-bb98d9c77186")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR09")
 					(unit 1)
@@ -16850,7 +16850,7 @@
 			(uuid "e5d34d61-0c5b-4aa2-8468-653d3da70f8f")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R6")
 					(unit 1)
@@ -16932,7 +16932,7 @@
 			(uuid "6d3ce2f6-de01-4b61-94e1-3c7b21f4d780")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C16")
 					(unit 1)
@@ -17018,7 +17018,7 @@
 			(uuid "c94a5e27-1378-47d9-b8c2-e4943fcb70f8")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "LF1")
 					(unit 1)
@@ -17096,7 +17096,7 @@
 			(uuid "ebe527c5-6a9a-44f8-a67f-7dbc7ea3d037")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR045")
 					(unit 1)
@@ -17174,7 +17174,7 @@
 			(uuid "42f50297-7b82-453d-b9f2-f00c84887122")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR043")
 					(unit 1)
@@ -17401,7 +17401,7 @@
 			(uuid "13672cd0-cc6b-4313-a8d0-3f71f7a9142c")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "D1")
 					(unit 1)
@@ -17481,7 +17481,7 @@
 			(uuid "3a6a7916-5f07-44a5-85ba-49bfbf218bda")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R27")
 					(unit 1)
@@ -17563,7 +17563,7 @@
 			(uuid "4316cd7c-1d41-4e41-8c57-8aa469343d47")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C24")
 					(unit 1)
@@ -17643,7 +17643,7 @@
 			(uuid "42c0991b-983b-415b-b0bc-423a25341191")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R2")
 					(unit 1)
@@ -17820,7 +17820,7 @@
 			(uuid "8ea0ec99-8a7b-453e-9c85-a2f8060536d3")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "F1")
 					(unit 1)
@@ -17908,7 +17908,7 @@
 			(uuid "9347d864-eb1d-4543-9687-585637720bfe")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "T1")
 					(unit 1)
@@ -17989,7 +17989,7 @@
 			(uuid "0c04b280-1238-4131-8b09-95e7c300e916")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R17")
 					(unit 1)
@@ -18007,9 +18007,10 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
+		(fields_autoplaced yes)
 		(uuid "17dfaf76-67a9-41df-bbe5-f6c4ec3a3f7b")
 		(property "Reference" "ESP_J3"
-			(at 246.126 142.24 0)
+			(at 237.109 140.97 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -18019,7 +18020,7 @@
 			)
 		)
 		(property "Value" "PelletPirate_J3_01toJ3_19"
-			(at 255.27 144.018 0)
+			(at 237.109 143.51 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -18119,7 +18120,7 @@
 			(uuid "28ae4131-9b33-4626-ab54-d89c83da21c0")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "ESP_J3")
 					(unit 1)
@@ -18197,7 +18198,7 @@
 			(uuid "84b432ee-f79d-4d01-828b-5fc7544da843")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR036")
 					(unit 1)
@@ -18279,7 +18280,7 @@
 			(uuid "49d1c5bb-5851-40b0-83a9-3ed4e5e7aee2")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R15")
 					(unit 1)
@@ -18361,7 +18362,7 @@
 			(uuid "b719725d-2d8a-4c36-a52f-2e89207a9b9b")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R14")
 					(unit 1)
@@ -18500,7 +18501,7 @@
 			(uuid "8786c05a-66cf-4f7e-9f13-f8d4bf9a6e02")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "MAX5")
 					(unit 1)
@@ -18588,7 +18589,7 @@
 			(uuid "1d1c4bc7-5e74-4295-91df-5c330c57c7b1")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "T3")
 					(unit 1)
@@ -18670,7 +18671,7 @@
 			(uuid "e5b31912-421f-4222-8446-fba1abc4a23e")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C30")
 					(unit 1)
@@ -18747,7 +18748,7 @@
 			(uuid "d372c3d6-0cb5-4db8-ba12-b9287381a0be")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR031")
 					(unit 1)
@@ -19090,7 +19091,7 @@
 			(uuid "9505a183-2132-4ea3-8d9c-3fa1f0ab5c2f")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "FPC1")
 					(unit 1)
@@ -19169,7 +19170,7 @@
 			(uuid "e0a38d68-0d24-45cf-86a8-65b3f7c1206a")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR037")
 					(unit 1)
@@ -19251,7 +19252,7 @@
 			(uuid "959d309c-4491-44f5-b9c8-2cd3331e219e")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C14")
 					(unit 1)
@@ -19327,7 +19328,7 @@
 			)
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "MH1")
 					(unit 1)
@@ -19406,7 +19407,7 @@
 			(uuid "1a7ca27b-a161-432b-b12f-51bbd6f8aaab")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR013")
 					(unit 1)
@@ -19483,7 +19484,7 @@
 			(uuid "c485ad6a-5277-40c2-996f-8609098b322f")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR014")
 					(unit 1)
@@ -19562,7 +19563,7 @@
 			(uuid "59f985e7-d81e-430f-9fde-82dfef3516a5")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR041")
 					(unit 1)
@@ -19640,7 +19641,7 @@
 			(uuid "06c17937-0c1e-4417-8213-1608de9b80e7")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR038")
 					(unit 1)
@@ -19720,7 +19721,7 @@
 			(uuid "881b2121-5a2e-4935-b531-9b69052fa672")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R8")
 					(unit 1)
@@ -19798,7 +19799,7 @@
 			(uuid "6ccba280-0781-4f92-9484-fcc01ea78b4d")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#FLG01")
 					(unit 1)
@@ -19880,7 +19881,7 @@
 			(uuid "b3084b1a-72e9-4db0-8d01-a1c427ffe638")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C34")
 					(unit 1)
@@ -19961,7 +19962,7 @@
 			(uuid "35e4f480-868a-42db-844f-6c83200d1222")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R31")
 					(unit 1)
@@ -20040,7 +20041,7 @@
 			(uuid "9866d30b-627b-4dbb-b7eb-b6c58409562d")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR04")
 					(unit 1)
@@ -20121,7 +20122,7 @@
 			(uuid "e0ed2d56-c982-4520-b902-e06bc1562914")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C13")
 					(unit 1)
@@ -20198,7 +20199,7 @@
 			(uuid "781b7c96-8ff9-402f-a4f2-c9fb782f6529")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR052")
 					(unit 1)
@@ -20276,7 +20277,7 @@
 			(uuid "abae9ec9-c0f2-403e-8c28-54036f041774")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR08")
 					(unit 1)
@@ -20358,7 +20359,7 @@
 			(uuid "9cd24e3c-18b3-4e77-b20f-b76bd1adfd8b")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C23")
 					(unit 1)
@@ -20438,7 +20439,7 @@
 			(uuid "5ce84b50-fa7c-4c7a-aa33-61edb19c1388")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R7")
 					(unit 1)
@@ -20518,7 +20519,7 @@
 			(uuid "a8315fd8-e0e6-4759-b834-72506aefd897")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR02")
 					(unit 1)
@@ -20596,7 +20597,7 @@
 			(uuid "d65da37e-60cf-4039-87ad-306ddee7aba0")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR022")
 					(unit 1)
@@ -20785,7 +20786,7 @@
 			(uuid "6b8fc169-e99c-495d-b851-2a1cab7a5196")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "PS3")
 					(unit 1)
@@ -20866,7 +20867,7 @@
 			(uuid "ac652b9b-6e38-44d3-87ce-54306d5d97a6")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C7")
 					(unit 1)
@@ -21005,7 +21006,7 @@
 			(uuid "19cca186-ad87-4f21-97dc-b1510225ade3")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "MAX1")
 					(unit 1)
@@ -21082,7 +21083,7 @@
 			(uuid "d026eb98-88f5-495e-a619-f5285342dfe7")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR047")
 					(unit 1)
@@ -21162,7 +21163,7 @@
 			(uuid "c6377e43-c15c-4142-ba28-044ab8077273")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R4")
 					(unit 1)
@@ -21241,7 +21242,7 @@
 			(uuid "91a46300-c494-45a7-b9cd-1149076088c9")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR021")
 					(unit 1)
@@ -21327,7 +21328,7 @@
 			(uuid "b2b794bb-6481-4287-8b61-e4455166069c")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "J6")
 					(unit 1)
@@ -21404,7 +21405,7 @@
 			(uuid "20ede8d2-f72d-4bf0-ba2d-4c9fe5fd5d7c")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR042")
 					(unit 1)
@@ -21536,7 +21537,7 @@
 			(uuid "c56e21a9-e975-4d26-a1fc-4f608b868772")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "ESP_J2")
 					(unit 1)
@@ -21618,7 +21619,7 @@
 			(uuid "11d577e6-daee-40f6-a28b-58621e907829")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "WirePad3")
 					(unit 1)
@@ -21695,7 +21696,7 @@
 			(uuid "a331105e-e668-4aee-8032-e09634fab880")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR030")
 					(unit 1)
@@ -21776,7 +21777,7 @@
 			(uuid "69e9b331-e6c6-4d06-8435-8758e089fa59")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C4")
 					(unit 1)
@@ -21857,7 +21858,7 @@
 			(uuid "98479110-663a-41de-91ec-f50c3eccf931")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C15")
 					(unit 1)
@@ -21993,7 +21994,7 @@
 			(uuid "e1b8e096-de51-43da-b098-feaac9916db8")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "MOV1")
 					(unit 1)
@@ -22074,7 +22075,7 @@
 			(uuid "b4a5bf38-60f3-4da0-9607-ddc75b07bf52")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C36")
 					(unit 1)
@@ -22154,7 +22155,7 @@
 			(uuid "75a2c6f5-7fea-4d14-a2d6-b134a28a1f98")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR03")
 					(unit 1)
@@ -22235,7 +22236,7 @@
 			(uuid "67512e33-441c-4d35-8ec1-96909a04394d")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR019")
 					(unit 1)
@@ -22317,7 +22318,7 @@
 			(uuid "ae84926c-7000-41a7-b874-9f0d45f815bb")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C10")
 					(unit 1)
@@ -22393,7 +22394,7 @@
 			)
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "MH2")
 					(unit 1)
@@ -22487,7 +22488,7 @@
 			(uuid "24a6aeb4-d1f5-48c7-a092-a7e6aaf3a2af")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "MOC3")
 					(unit 1)
@@ -22569,7 +22570,7 @@
 			(uuid "97f221d8-9007-442d-8ba2-353f9daa0189")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C28")
 					(unit 1)
@@ -22663,7 +22664,7 @@
 			(uuid "f9151b75-ffbe-4e60-b3fc-14dd9c9a925d")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "MOC2")
 					(unit 1)
@@ -22745,7 +22746,7 @@
 			(uuid "5c68ca48-e313-49db-a7e6-e7afd6a57646")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C31")
 					(unit 1)
@@ -22823,7 +22824,7 @@
 			(uuid "127256b7-5f1d-4a59-9596-5652636d4cd4")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#FLG04")
 					(unit 1)
@@ -22905,7 +22906,7 @@
 			(uuid "89d96ca9-85fb-4a6b-bdf4-d1d00f8513e0")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C19")
 					(unit 1)
@@ -22987,7 +22988,7 @@
 			(uuid "fe3f4974-7ba9-4ecc-ac7a-25995b7d91a0")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R23")
 					(unit 1)
@@ -23063,7 +23064,7 @@
 			(uuid "e3ee1cc4-f215-40fb-bbf5-2ea9452ff0b8")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "WirePad2")
 					(unit 1)
@@ -23202,7 +23203,7 @@
 			(uuid "655b7eb6-f7c5-4722-9a85-c811ec11ab30")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "MAX2")
 					(unit 1)
@@ -23284,7 +23285,7 @@
 			(uuid "d8b28361-eee8-484b-9606-548ca0ea6d9f")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C12")
 					(unit 1)
@@ -23362,7 +23363,7 @@
 			(uuid "1c071a2d-7910-4994-96af-62a417e6e78f")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR046")
 					(unit 1)
@@ -23442,7 +23443,7 @@
 			(uuid "a7ad3425-3e68-4a69-ad20-128a5f3e18ac")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R28")
 					(unit 1)
@@ -23524,7 +23525,7 @@
 			(uuid "4ccf7f6e-e77a-4611-96bf-a35265d70f86")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C22")
 					(unit 1)
@@ -23604,7 +23605,7 @@
 			(uuid "f5eead44-98ba-42e7-8dc5-65cce66ef966")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R3")
 					(unit 1)
@@ -23684,7 +23685,7 @@
 			(uuid "c25fd25f-8457-45d3-995b-67a7cf218795")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R26")
 					(unit 1)
@@ -23766,7 +23767,7 @@
 			(uuid "9ed1e5ee-8783-415a-af36-839e75a0aa25")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C20")
 					(unit 1)
@@ -23848,7 +23849,7 @@
 			(uuid "4064e577-3d1d-438f-a9d2-e19a6030280c")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R20")
 					(unit 1)
@@ -23924,7 +23925,7 @@
 			(uuid "a51ec31e-75f1-44ef-948b-184d08f418ac")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "Earth1")
 					(unit 1)
@@ -24150,7 +24151,7 @@
 			(uuid "493782b7-d16f-4793-87e0-491981545b25")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "L1")
 					(unit 1)
@@ -24357,7 +24358,7 @@
 			(uuid "0036c4b9-80b4-4035-89f4-a97e42cbaabb")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "J3")
 					(unit 1)
@@ -24434,7 +24435,7 @@
 			(uuid "70aec7ea-ef93-43d3-9137-adc3310a6e7b")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR024")
 					(unit 1)
@@ -24516,7 +24517,7 @@
 			(uuid "084ce0d1-5e89-4ded-a0f8-4d585df210ad")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C27")
 					(unit 1)
@@ -24723,7 +24724,7 @@
 			(uuid "e69dce65-c4a8-4685-b48b-0cf3afc3ac53")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "J5")
 					(unit 1)
@@ -24805,7 +24806,7 @@
 			(uuid "36ad3a7c-9734-4d07-b016-6be88d05244a")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C1")
 					(unit 1)
@@ -24887,7 +24888,7 @@
 			(uuid "8bd379e6-3d62-46c8-9b44-767221f62654")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C25")
 					(unit 1)
@@ -24965,7 +24966,7 @@
 			(uuid "fa9217a9-2ffd-4cc4-bb50-bcee8d1f4399")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR020")
 					(unit 1)
@@ -25131,7 +25132,7 @@
 			(uuid "97c6da4a-ae71-4d1c-b48e-d06d88a01753")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "D2")
 					(unit 1)
@@ -25213,7 +25214,7 @@
 			(uuid "d7b8ef65-fa1c-418a-b7c6-13fd8ae52968")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C3")
 					(unit 1)
@@ -25291,7 +25292,7 @@
 			(uuid "87370844-14a8-419c-8b04-bd84d23a01b9")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR049")
 					(unit 1)
@@ -25368,7 +25369,7 @@
 			(uuid "39aa2c5e-dd37-4416-a439-b6be335e2f4e")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR025")
 					(unit 1)
@@ -25450,7 +25451,7 @@
 			(uuid "6a669728-e6e7-4865-8b0f-9de1a8296329")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C33")
 					(unit 1)
@@ -25657,7 +25658,7 @@
 			(uuid "f6bf1e0e-a1d1-4f01-b315-aaa57409efb2")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "J2")
 					(unit 1)
@@ -25739,7 +25740,7 @@
 			(uuid "319e3103-3f17-4a42-bb65-7a0cb39a625f")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R16")
 					(unit 1)
@@ -25977,7 +25978,7 @@
 			(uuid "e5186aef-b55a-403e-b708-cb0c4642c587")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "L2")
 					(unit 1)
@@ -26058,7 +26059,7 @@
 			(uuid "af7bbf69-971c-48a8-af9d-e893cc0806a0")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R18")
 					(unit 1)
@@ -26135,7 +26136,7 @@
 			(uuid "e730e534-8d83-4770-9412-a86beebb3284")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR027")
 					(unit 1)
@@ -26217,7 +26218,7 @@
 			(uuid "2393435c-b622-47ed-b34b-02dcc823135f")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R22")
 					(unit 1)
@@ -26424,7 +26425,7 @@
 			(uuid "c4fe3ea7-868c-4c36-b923-ed0c48481c99")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "J1")
 					(unit 1)
@@ -26506,7 +26507,7 @@
 			(uuid "8f6bc6d5-356d-4412-a79b-3ddc3f13e2a3")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C21")
 					(unit 1)
@@ -26588,7 +26589,7 @@
 			(uuid "b30da0b4-9db4-4c92-80e6-b406dac7ed41")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C2")
 					(unit 1)
@@ -26669,7 +26670,7 @@
 			(uuid "7f66e9cf-dfdd-4710-89fb-d6baa2f48972")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R30")
 					(unit 1)
@@ -26747,7 +26748,7 @@
 			(uuid "5d7109a8-570d-46b2-b134-85994ecdafd1")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR034")
 					(unit 1)
@@ -26829,7 +26830,7 @@
 			(uuid "42dcc3c7-aa05-4179-9e95-9c2f6fdb7386")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R25")
 					(unit 1)
@@ -26907,7 +26908,7 @@
 			(uuid "1e215b46-baa7-46f6-bb50-afdc0b12971f")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#FLG03")
 					(unit 1)
@@ -26985,7 +26986,7 @@
 			(uuid "48ec2c35-38a4-46a4-a6e2-e0882ceb57e9")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR033")
 					(unit 1)
@@ -27073,7 +27074,7 @@
 			(uuid "fd25e6cf-9bd5-43c0-9208-e30eb005c7d1")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "T2")
 					(unit 1)
@@ -27149,7 +27150,7 @@
 			)
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "MH3")
 					(unit 1)
@@ -27288,7 +27289,7 @@
 			(uuid "aa1c67f2-fc81-4400-95ea-38ddb269fe6c")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "MAX4")
 					(unit 1)
@@ -27370,7 +27371,7 @@
 			(uuid "76e9b38f-0957-44e4-a177-2577b41dfbf9")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C26")
 					(unit 1)
@@ -27452,7 +27453,7 @@
 			(uuid "4e5946a1-468d-469c-9885-27dfd0ed490b")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R19")
 					(unit 1)
@@ -27530,7 +27531,7 @@
 			(uuid "02693dfa-1508-4922-bf28-68301226dd98")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR044")
 					(unit 1)
@@ -27612,7 +27613,7 @@
 			(uuid "086fffea-4406-44c9-bd7c-43c17fd09230")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C32")
 					(unit 1)
@@ -27689,7 +27690,7 @@
 			(uuid "64361843-c4e6-4014-b295-0defab8e2a67")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR053")
 					(unit 1)
@@ -27828,7 +27829,7 @@
 			(uuid "fe8912a6-6fe1-4505-9c82-28d3e42162f4")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "MAX3")
 					(unit 1)
@@ -27904,7 +27905,7 @@
 			)
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "MH4")
 					(unit 1)
@@ -27981,7 +27982,7 @@
 			(uuid "b77fb0e7-6fac-4101-8320-a3afbbf0bae9")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR011")
 					(unit 1)
@@ -28058,7 +28059,7 @@
 			(uuid "ea068430-d024-4552-8c10-cf91e2be454e")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR028")
 					(unit 1)
@@ -28140,7 +28141,7 @@
 			(uuid "ae0d6202-843e-4718-8d6b-827014fc588b")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C35")
 					(unit 1)
@@ -28221,7 +28222,7 @@
 			(uuid "eeb63833-6acf-47fb-8ad3-2028fdf8fbbf")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C9")
 					(unit 1)
@@ -28301,7 +28302,7 @@
 			(uuid "12369c06-1c90-4e85-80b6-fe4a87bea5a8")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R5")
 					(unit 1)
@@ -28527,7 +28528,7 @@
 			(uuid "4dbb251a-21c9-42d6-a4a9-87f61fd34d5d")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "PS1")
 					(unit 1)
@@ -28608,7 +28609,7 @@
 			(uuid "46f50705-5e67-4a1e-ba25-d0350d4e1d64")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R24")
 					(unit 1)
@@ -28687,7 +28688,7 @@
 			(uuid "7bc40583-3029-4b3d-80b7-8732d963be27")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C5")
 					(unit 1)
@@ -28764,7 +28765,7 @@
 			(uuid "3492d890-3d07-4e92-95a9-228d9977442a")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR023")
 					(unit 1)
@@ -28843,7 +28844,7 @@
 			(uuid "83259e86-389d-450d-bb0c-dc2815cd2837")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR039")
 					(unit 1)
@@ -28921,7 +28922,7 @@
 			(uuid "2072e2b5-0d36-4161-92fa-b726c9d7ab03")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR06")
 					(unit 1)
@@ -28999,7 +29000,7 @@
 			(uuid "2eb14d43-81f2-402c-abae-d7c1e1fe2141")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR040")
 					(unit 1)
@@ -29225,7 +29226,7 @@
 			(uuid "19013b39-ee36-4e2d-b935-9bea41d94d5c")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "PS2")
 					(unit 1)
@@ -29307,7 +29308,7 @@
 			(uuid "361afb8b-2586-42a3-adc0-db36ec836a83")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C18")
 					(unit 1)
@@ -29514,7 +29515,7 @@
 			(uuid "ea043774-9307-4fca-823e-84e8f5eecb8b")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "J4")
 					(unit 1)
@@ -29596,7 +29597,7 @@
 			(uuid "b480c588-ec91-4537-9584-f1540fb4b0fb")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "WirePad4")
 					(unit 1)
@@ -29675,7 +29676,7 @@
 			(uuid "b4d1bbb1-d41c-4fdd-bdd8-55b85eda2067")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR035")
 					(unit 1)
@@ -29769,7 +29770,7 @@
 			(uuid "fcb4160a-f4c4-43d0-834b-40b515c89605")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "MOC1")
 					(unit 1)
@@ -29850,7 +29851,7 @@
 			(uuid "0b57b533-7ad0-4fe3-b1a6-72cb9733e880")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C6")
 					(unit 1)
@@ -29932,7 +29933,7 @@
 			(uuid "07885ec5-abd5-49a0-8ddd-66917b9dfcb6")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C29")
 					(unit 1)
@@ -30013,7 +30014,7 @@
 			(uuid "1b079dae-048f-4d9c-a65a-255dda4408ee")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R29")
 					(unit 1)
@@ -30091,7 +30092,7 @@
 			(uuid "c891bed7-6bd6-4340-9b88-02849d012e7e")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR032")
 					(unit 1)
@@ -30168,7 +30169,7 @@
 			(uuid "0e5c7fe8-61b9-4a19-9526-0fbe738dedd7")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR029")
 					(unit 1)
@@ -30248,7 +30249,7 @@
 			(uuid "2245056c-4a16-47b1-9d12-c9ebb3180e29")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR01")
 					(unit 1)
@@ -30325,7 +30326,7 @@
 			(uuid "5918d388-d527-4ad2-8142-287990d0aa8f")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR017")
 					(unit 1)
@@ -30407,7 +30408,7 @@
 			(uuid "478b5c46-85bf-4cf5-bf14-73cc719f9eb6")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C11")
 					(unit 1)
@@ -30489,7 +30490,7 @@
 			(uuid "69fe7f9a-12b4-4f38-98cb-571ae6c9cd3c")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R13")
 					(unit 1)
@@ -30566,7 +30567,7 @@
 			(uuid "0fb4be5c-9966-4484-8c15-75471a5f2e1b")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR026")
 					(unit 1)
@@ -30646,7 +30647,7 @@
 			(uuid "73c8bcc8-054e-458c-80c1-9626a0cb0082")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R9")
 					(unit 1)
@@ -30728,7 +30729,7 @@
 			(uuid "b6ae12f0-f0bf-4c84-879c-06f55deae51d")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "WirePad5")
 					(unit 1)
@@ -30804,7 +30805,7 @@
 			(uuid "cba23d1e-c5b9-4078-9a75-f5accc51cf28")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "WirePad1")
 					(unit 1)
@@ -30881,7 +30882,7 @@
 			(uuid "efec3ab8-78b0-4413-b6af-a9dc2984c425")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR012")
 					(unit 1)
@@ -30963,7 +30964,7 @@
 			(uuid "a64b9f09-2a7f-49d3-9d21-f678bdb53064")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C8")
 					(unit 1)
@@ -31128,7 +31129,7 @@
 			(uuid "02adb5d7-4e36-4073-a8ec-e63008f59b0c")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "L3")
 					(unit 1)
@@ -31210,7 +31211,7 @@
 			(uuid "59972c80-652a-4e20-81e7-d1dccc881825")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R21")
 					(unit 1)
@@ -31288,7 +31289,7 @@
 			(uuid "c8fb3cff-1461-488a-9ff0-758bcdd03473")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR051")
 					(unit 1)
@@ -31368,7 +31369,7 @@
 			(uuid "89393ee9-8c0e-401b-944f-474132db5fac")
 		)
 		(instances
-			(project "PelletPirate_V2_breadboard"
+			(project "PelletPirate_V2"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R1")
 					(unit 1)

@@ -3,8 +3,8 @@
 #include "ui.h"
 #include "ui_styles.h"
 #include "ui_splash.h"
-#include "ui_menu.h"
-#include "ui_home.h"
+#include "ui_main_menu.h"
+#include "ui_dashboard.h"
 #include "hx8357d.h"
 #include "encoder.h"
 #include "grill_state.h"
@@ -36,11 +36,24 @@ static void lvgl_flush_cb(lv_display_t *disp, const lv_area_t *area, uint8_t *px
     lv_display_flush_ready(disp);
 }
 
+// When true, LVGL encoder callback is disabled — screen polls encoder directly
+static bool s_encoder_direct = false;
+
+void ui_encoder_set_direct(bool direct)
+{
+    s_encoder_direct = direct;
+}
+
 // LVGL encoder read callback
 static void lvgl_encoder_read_cb(lv_indev_t *indev, lv_indev_data_t *data)
 {
+    if (s_encoder_direct) {
+        // Screen is handling encoder directly — don't consume events
+        data->enc_diff = 0;
+        data->state = LV_INDEV_STATE_RELEASED;
+        return;
+    }
     int diff = encoder_get_diff();
-    // Clamp to ±1 so menu moves one item at a time
     if (diff > 0) diff = 1;
     else if (diff < 0) diff = -1;
     data->enc_diff = diff;
@@ -57,19 +70,17 @@ static void lvgl_tick_cb(void *arg)
 static void on_splash_complete(void)
 {
     ESP_LOGI(TAG, "Splash complete, loading main menu...");
-    lv_obj_t *menu = ui_menu_create();
-    lv_scr_load_anim(menu, LV_SCR_LOAD_ANIM_FADE_IN, 500, 0, true);
+    lv_obj_t *menu = ui_main_menu_create();
+    lv_scr_load(menu);
 }
 
 // LVGL task
 static void lvgl_task(void *arg)
 {
     while (1) {
-        // Only update home screen data if it's the active screen
-        if (lv_scr_act() != NULL) {
-            // Check if we're past the splash (home_update is safe to call anytime)
-            ui_home_update();
-        }
+        // Update active screen data
+        ui_main_menu_update();
+        ui_dashboard_update();
         lv_timer_handler();
         vTaskDelay(pdMS_TO_TICKS(16));  // ~60fps
     }

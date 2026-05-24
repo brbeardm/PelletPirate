@@ -1,5 +1,7 @@
 idf_component_register(
-    SRCS "ui.c" "ui_styles.c" "ui_splash.c" "ui_menu.c" "ui_home.c" "logo_img.c"
+    SRCS "ui.c" "ui_styles.c" "ui_splash.c" "ui_main_menu.c"
+         "ui_set_target.c" "ui_cook_mode.c" "ui_ignite.c"
+         "ui_set_probes.c" "ui_dashboard.c" "logo_img.c"
     INCLUDE_DIRS "include"
     REQUIRES lvgl hx8357d encoder grill_state esp_timer
 )
