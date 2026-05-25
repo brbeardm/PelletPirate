@@ -78,7 +78,7 @@ static void go_main(lv_event_t *e)
     ui_encoder_set_direct(false);
     s_screen = NULL;
     lv_obj_t *menu = ui_main_menu_create();
-    lv_scr_load(menu);
+    ui_load_screen(menu);
 }
 
 static void do_save(lv_event_t *e)

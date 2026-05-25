@@ -6,6 +6,7 @@
 
 #include "ui_cook_mode.h"
 #include "ui_main_menu.h"
+#include "ui.h"
 #include "ui_styles.h"
 #include "grill_state.h"
 #include "esp_log.h"
@@ -43,7 +44,7 @@ static void go_main(lv_event_t *e)
 {
     s_screen = NULL;
     lv_obj_t *menu = ui_main_menu_create();
-    lv_scr_load(menu);
+    ui_load_screen(menu);
 }
 
 static void do_save(lv_event_t *e)
@@ -180,35 +181,39 @@ lv_obj_t *ui_cook_mode_create(void)
 
     // Main / Save buttons
     lv_obj_t *btn_main = lv_button_create(s_screen);
-    lv_obj_set_size(btn_main, 100, 36);
+    lv_obj_set_size(btn_main, 110, 38);
     lv_obj_align(btn_main, LV_ALIGN_BOTTOM_LEFT, 8, -8);
     lv_obj_set_style_bg_color(btn_main, lv_color_hex(0x000000), 0);
+    lv_obj_set_style_bg_opa(btn_main, LV_OPA_COVER, 0);
     lv_obj_set_style_border_color(btn_main, UI_COLOR_ACCENT, 0);
     lv_obj_set_style_border_width(btn_main, 2, 0);
     lv_obj_set_style_radius(btn_main, 4, 0);
     lv_obj_set_style_shadow_width(btn_main, 0, 0);
     lv_obj_set_style_bg_color(btn_main, UI_COLOR_ACCENT, LV_STATE_FOCUSED);
+    lv_obj_set_style_bg_opa(btn_main, LV_OPA_COVER, LV_STATE_FOCUSED);
     lv_obj_add_event_cb(btn_main, go_main, LV_EVENT_CLICKED, NULL);
     lv_obj_t *l1 = lv_label_create(btn_main);
     lv_label_set_text(l1, "Main");
-    lv_obj_set_style_text_font(l1, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(l1, &lv_font_montserrat_16, 0);
     lv_obj_set_style_text_color(l1, lv_color_hex(0xFFFFFF), 0);
     lv_obj_center(l1);
     if (g) lv_group_add_obj(g, btn_main);
 
     lv_obj_t *btn_save = lv_button_create(s_screen);
-    lv_obj_set_size(btn_save, 100, 36);
+    lv_obj_set_size(btn_save, 110, 38);
     lv_obj_align(btn_save, LV_ALIGN_BOTTOM_RIGHT, -8, -8);
     lv_obj_set_style_bg_color(btn_save, lv_color_hex(0x000000), 0);
+    lv_obj_set_style_bg_opa(btn_save, LV_OPA_COVER, 0);
     lv_obj_set_style_border_color(btn_save, UI_COLOR_ACCENT, 0);
     lv_obj_set_style_border_width(btn_save, 2, 0);
     lv_obj_set_style_radius(btn_save, 4, 0);
     lv_obj_set_style_shadow_width(btn_save, 0, 0);
     lv_obj_set_style_bg_color(btn_save, UI_COLOR_ACCENT, LV_STATE_FOCUSED);
+    lv_obj_set_style_bg_opa(btn_save, LV_OPA_COVER, LV_STATE_FOCUSED);
     lv_obj_add_event_cb(btn_save, do_save, LV_EVENT_CLICKED, NULL);
     lv_obj_t *l2 = lv_label_create(btn_save);
     lv_label_set_text(l2, "Save");
-    lv_obj_set_style_text_font(l2, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(l2, &lv_font_montserrat_16, 0);
     lv_obj_set_style_text_color(l2, lv_color_hex(0xFFFFFF), 0);
     lv_obj_center(l2);
     if (g) lv_group_add_obj(g, btn_save);

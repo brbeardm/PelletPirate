@@ -60,6 +60,15 @@ static void lvgl_encoder_read_cb(lv_indev_t *indev, lv_indev_data_t *data)
     data->state = encoder_button_pressed() ? LV_INDEV_STATE_PRESSED : LV_INDEV_STATE_RELEASED;
 }
 
+void ui_load_screen(lv_obj_t *new_screen)
+{
+    lv_obj_t *old = lv_screen_active();
+    lv_scr_load(new_screen);
+    if (old && old != new_screen) {
+        lv_obj_delete(old);
+    }
+}
+
 // LVGL tick provider
 static void lvgl_tick_cb(void *arg)
 {
@@ -71,7 +80,7 @@ static void on_splash_complete(void)
 {
     ESP_LOGI(TAG, "Splash complete, loading main menu...");
     lv_obj_t *menu = ui_main_menu_create();
-    lv_scr_load(menu);
+    ui_load_screen(menu);
 }
 
 // LVGL task

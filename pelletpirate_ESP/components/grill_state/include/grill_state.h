@@ -17,6 +17,11 @@ typedef enum {
 
 #define GRILL_MODE_COUNT 8
 
+// Rolling temp history for EST calculation
+// Sample every 5 minutes, keep 12 samples = 60 minutes of history
+#define TEMP_HISTORY_SIZE 12
+#define TEMP_HISTORY_INTERVAL_SEC 300  // 5 minutes
+
 typedef struct {
     bool enabled;
     float current_temp;
@@ -25,6 +30,12 @@ typedef struct {
     float alarm_temp;       // 0 = off, >0 = alarm threshold
     char alarm_type[16];    // "Wrap", "Beer Me", etc.
     float calibration_offset;
+
+    // Temp history for EST rolling average
+    float temp_history[TEMP_HISTORY_SIZE];
+    int history_count;      // how many valid entries (0 to TEMP_HISTORY_SIZE)
+    int history_index;      // next write position (circular)
+    float start_temp;       // temp when probe was first enabled in this cook
 } probe_state_t;
 
 #define NUM_MEAT_PROBES 4
@@ -55,8 +66,9 @@ typedef struct {
     int pid_cycle;
 
     // Timers
-    uint32_t cook_start_time;
+    uint32_t cook_start_time;       // epoch seconds when cook started (0 = not cooking)
     uint32_t shutdown_start_time;
+    uint32_t last_history_time;     // last time temp history was sampled
 
     // WiFi
     bool wifi_connected;
@@ -73,5 +85,36 @@ grill_state_t *grill_state_get(void);
 void grill_state_lock(void);
 void grill_state_unlock(void);
 const char *grill_mode_name(grill_mode_t mode);
+
+/**
+ * Record current probe temps into rolling history.
+ * Call this every TEMP_HISTORY_INTERVAL_SEC from the main loop.
+ */
+void grill_state_record_history(void);
+
+/**
+ * Save current probe configs and grill target to NVS flash.
+ * Call this when the user presses Save on the probe or target screens.
+ */
+void grill_state_save_to_nvs(void);
+
+/**
+ * Load probe configs and grill target from NVS flash.
+ * Called automatically by grill_state_init(). If no saved data exists,
+ * defaults are used.
+ */
+void grill_state_load_from_nvs(void);
+
+/**
+ * Get estimated minutes remaining for a probe based on rolling average.
+ * Returns -1 if not enough data to estimate.
+ */
+int grill_state_get_est_minutes(int probe_idx);
+
+/**
+ * Get elapsed cook time in minutes.
+ * Returns 0 if not cooking.
+ */
+int grill_state_get_elapsed_minutes(void);
 
 #endif

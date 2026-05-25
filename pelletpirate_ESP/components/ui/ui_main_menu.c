@@ -31,9 +31,8 @@ static lv_obj_t *s_digit_lbls[3];
 static lv_obj_t *s_digit_boxes[3];
 
 // Menu buttons (stored for re-adding to group after edit)
-static lv_obj_t *s_menu_btns[7];  // 6 menu items + dashboard
+static lv_obj_t *s_menu_btns[7];  // 7 menu items (dashboard is now in the list)
 static lv_obj_t *s_lbl_ignite;    // ignite button label (dynamic text)
-#define NUM_MENU_ITEMS 6
 
 // Digit editing state
 static bool s_editing = false;
@@ -47,16 +46,19 @@ static const int digit_max[] = {4, 9, 9};
 typedef enum {
     MENU_SET_TARGET = 0,
     MENU_IGNITE,
+    MENU_DASHBOARD,
     MENU_COOK_MODE,
     MENU_SET_PROBES,
     MENU_SETTINGS,
     MENU_GRAPHS,
-    MENU_DASHBOARD,
 } menu_item_t;
+
+#define NUM_MENU_ITEMS 7
 
 static const char *menu_labels[] = {
     "SET TARGET TEMP",
     "START NOW - IGNITE",
+    "COOK DASHBOARD",
     "COOK MODE",
     "SET PROBES",
     "SETTINGS",
@@ -92,6 +94,7 @@ static void finish_editing(bool save)
         ESP_LOGI(TAG, "Target set to %d", temp);
         grill_state_lock();
         grill_state_get()->grill_target = temp;
+        grill_state_save_to_nvs();
         grill_state_unlock();
     }
 
@@ -220,7 +223,7 @@ static void navigate_to(lv_event_t *e)
 
     if (next) {
         s_screen = NULL;
-        lv_scr_load(next);
+        ui_load_screen(next);
     }
 }
 
@@ -232,7 +235,7 @@ static void setup_menu_group(void)
     if (!g) return;
     lv_group_remove_all_objs(g);
     lv_group_set_wrap(g, false);
-    for (int i = 0; i < NUM_MENU_ITEMS + 1; i++) {
+    for (int i = 0; i < NUM_MENU_ITEMS; i++) {
         lv_group_add_obj(g, s_menu_btns[i]);
     }
 }
@@ -241,6 +244,11 @@ static void setup_menu_group(void)
 
 lv_obj_t *ui_main_menu_create(void)
 {
+    // Always reset encoder to LVGL group mode when entering main menu
+    ui_encoder_set_direct(false);
+    encoder_get_button_event();  // consume any stale button events
+    encoder_get_diff();          // consume any stale rotation
+
     s_screen = lv_obj_create(NULL);
     lv_obj_remove_style_all(s_screen);
     lv_obj_set_size(s_screen, 320, 480);
@@ -364,25 +372,6 @@ lv_obj_t *ui_main_menu_create(void)
 
         y += 40;
     }
-
-    // Cook Dashboard button
-    s_menu_btns[NUM_MENU_ITEMS] = lv_button_create(s_screen);
-    lv_obj_set_size(s_menu_btns[NUM_MENU_ITEMS], 150, 32);
-    lv_obj_align(s_menu_btns[NUM_MENU_ITEMS], LV_ALIGN_BOTTOM_LEFT, 8, -6);
-    lv_obj_set_style_bg_color(s_menu_btns[NUM_MENU_ITEMS], lv_color_hex(0x000000), 0);
-    lv_obj_set_style_border_color(s_menu_btns[NUM_MENU_ITEMS], UI_COLOR_ACCENT, 0);
-    lv_obj_set_style_border_width(s_menu_btns[NUM_MENU_ITEMS], 2, 0);
-    lv_obj_set_style_radius(s_menu_btns[NUM_MENU_ITEMS], 4, 0);
-    lv_obj_set_style_shadow_width(s_menu_btns[NUM_MENU_ITEMS], 0, 0);
-    lv_obj_set_style_bg_color(s_menu_btns[NUM_MENU_ITEMS], UI_COLOR_ACCENT, LV_STATE_FOCUSED);
-    lv_obj_set_style_border_opa(s_menu_btns[NUM_MENU_ITEMS], LV_OPA_COVER, LV_STATE_FOCUSED);
-    lv_obj_add_event_cb(s_menu_btns[NUM_MENU_ITEMS], navigate_to, LV_EVENT_CLICKED, (void *)(intptr_t)MENU_DASHBOARD);
-
-    lv_obj_t *lbl_dash = lv_label_create(s_menu_btns[NUM_MENU_ITEMS]);
-    lv_label_set_text(lbl_dash, "Cook Dashboard");
-    lv_obj_set_style_text_font(lbl_dash, &lv_font_montserrat_14, 0);
-    lv_obj_set_style_text_color(lbl_dash, UI_COLOR_ACCENT, 0);
-    lv_obj_center(lbl_dash);
 
     // Setup encoder group
     setup_menu_group();

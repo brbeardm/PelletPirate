@@ -84,7 +84,7 @@ static void go_main_direct(void) {
     ui_encoder_set_direct(false);
     s_screen = NULL;
     lv_obj_t *menu = ui_main_menu_create();
-    lv_scr_load(menu);
+    ui_load_screen(menu);
 }
 
 static int get_digit_value(void) {
@@ -131,6 +131,7 @@ static void save_probe(void) {
     p->alarm_temp = s_work_alarm;
     strncpy(p->alarm_type, s_work_alarm_type, sizeof(p->alarm_type));
     p->enabled = (s_work_target > 0);
+    grill_state_save_to_nvs();
     grill_state_unlock();
     ESP_LOGI(TAG, "Saved probe %d: %s t=%.0f a=%.0f %s",
              s_probe_idx+1, s_work_food, s_work_target, s_work_alarm, s_work_alarm_type);

@@ -14,4 +14,9 @@ lv_indev_t *ui_get_encoder_indev(void);
  */
 void ui_encoder_set_direct(bool direct);
 
+/**
+ * Load a new screen and delete the previous one to prevent memory leaks.
+ */
+void ui_load_screen(lv_obj_t *new_screen);
+
 #endif
