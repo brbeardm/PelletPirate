@@ -59,6 +59,13 @@ static const double FAN_CYCLE_SEC = 30.0;   // burst period (zero-cross friendly
 static const double FAN_BAND_F = 10.0;      // pulse fan when within +/- this of target
 static const double FAN_MIN_DUTY = 0.5;
 
+// Anti-surge stagger on cold start (leaving OFF): fan first, then auger,
+// then igniter. Motor inrush lasts ~0.5-1s, so 2s stages let each load's
+// inrush finish before the next switches on. Zero-cross triacs handle
+// sub-cycle timing already; this only spreads the big steps.
+static const double AUGER_STAGGER_SEC = 2.0;
+static const double IGNITER_STAGGER_SEC = 4.0;
+
 static pid *s_pid = nullptr;
 static double s_u = U_MIN;                  // current auger duty
 
@@ -71,6 +78,7 @@ static burst_state s_auger = {};
 static burst_state s_fan = {};
 
 static double s_igniter_on_since = 0;       // 0 = igniter off
+static double s_active_since = 0;           // when we last left OFF (0 = in OFF)
 static grill_mode_t s_prev_mode = GRILL_MODE_OFF;
 
 // Physical pin states, for transition-only logging
@@ -137,6 +145,11 @@ static void actuator_task(void *arg)
             if (mode != GRILL_MODE_OFF && s_prev_mode == GRILL_MODE_OFF) {
                 burst_start_on(&s_auger, now);  // cycles begin in the ON phase
                 burst_start_on(&s_fan, now);
+                s_active_since = now;
+                ESP_LOGI(TAG, "cold start — anti-surge stagger: fan t+0, auger t+%.0fs, igniter t+%.0fs",
+                         AUGER_STAGGER_SEC, IGNITER_STAGGER_SEC);
+            } else if (mode == GRILL_MODE_OFF) {
+                s_active_since = 0;
             }
             if (mode == GRILL_MODE_SHUTDOWN) {
                 grill_state_lock();
@@ -214,6 +227,14 @@ static void actuator_task(void *arg)
 
         default:
             break;
+        }
+
+        // Anti-surge stagger: on a cold start, hold auger and igniter back
+        // until their stage times so the three inrush events never stack
+        if (s_active_since != 0) {
+            double active_for = now - s_active_since;
+            if (active_for < AUGER_STAGGER_SEC) aug = false;
+            if (active_for < IGNITER_STAGGER_SEC) ign = false;
         }
 
         // Interlock: never feed pellets or ignite without combustion air
