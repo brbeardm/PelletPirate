@@ -16,6 +16,7 @@
 #include "encoder.h"
 #include "grill_state.h"
 #include "max31865.h"
+#include "actuator.h"
 #include "ui.h"
 
 static const char *TAG = "pelletpirate";
@@ -60,17 +61,25 @@ static void heartbeat_timer_cb(void *arg)
 void app_main(void)
 {
     // TPS61165 backlight driver enable (CTRL): must never float or go high
-    // during boot, so drive it LOW before any other initialization.
-    gpio_set_level(BACKLIGHT_CTRL_GPIO, 0);
-    gpio_config_t bl_ctrl_cfg = {
-        .pin_bit_mask = 1ULL << BACKLIGHT_CTRL_GPIO,
-        .mode = GPIO_MODE_OUTPUT,
-        .pull_up_en = GPIO_PULLUP_DISABLE,
-        .pull_down_en = GPIO_PULLDOWN_DISABLE,
-        .intr_type = GPIO_INTR_DISABLE,
+    // during boot, so drive it LOW before any other initialization. The
+    // triac outputs (fan/igniter/auger) get the same treatment — a floating
+    // MOC3063 input on AC power is unacceptable.
+    const int boot_low_pins[] = {
+        BACKLIGHT_CTRL_GPIO,
+        ACTUATOR_FAN_GPIO, ACTUATOR_IGNITER_GPIO, ACTUATOR_AUGER_GPIO,
     };
-    gpio_config(&bl_ctrl_cfg);
-    gpio_set_level(BACKLIGHT_CTRL_GPIO, 0);
+    for (int i = 0; i < 4; i++) {
+        gpio_set_level(boot_low_pins[i], 0);
+        gpio_config_t low_cfg = {
+            .pin_bit_mask = 1ULL << boot_low_pins[i],
+            .mode = GPIO_MODE_OUTPUT,
+            .pull_up_en = GPIO_PULLUP_DISABLE,
+            .pull_down_en = GPIO_PULLDOWN_DISABLE,
+            .intr_type = GPIO_INTR_DISABLE,
+        };
+        gpio_config(&low_cfg);
+        gpio_set_level(boot_low_pins[i], 0);
+    }
 
     // Heartbeat LED: power/alive indicator for bench debugging. Toggled at
     // 1 Hz by a periodic esp_timer so it never blocks the rest of the program.
@@ -160,6 +169,9 @@ void app_main(void)
         max31865_init(&s_rtd[i], &cfg);
     }
     xTaskCreatePinnedToCore(temp_task, "rtd_temps", 4096, NULL, 4, NULL, 1);
+
+    // Fan/auger/igniter control (reads grill_state, drives the triac outputs)
+    actuator_init();
 
     // LVGL takes over the display
     ESP_LOGI(TAG, "Starting LVGL...");
