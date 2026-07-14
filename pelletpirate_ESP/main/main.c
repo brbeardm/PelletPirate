@@ -12,6 +12,7 @@
 #include "esp_timer.h"
 #include "driver/gpio.h"
 #include "hx8357d.h"
+#include "backlight.h"
 #include "encoder.h"
 #include "grill_state.h"
 #include "ui.h"
@@ -78,6 +79,12 @@ void app_main(void)
         ESP_LOGE(TAG, "LCD init failed");
         return;
     }
+
+    // LCD controller is initialized — safe to light the backlight.
+    // backlight_init() takes over IO17 from the boot-time GPIO hold above
+    // and drives it with LEDC PWM at the saved brightness level.
+    backlight_init();
+    backlight_on();
     // Color test — RED screen for 2 seconds to verify color rendering
     ESP_LOGI(TAG, "Color test: RED (0xF800)");
     hx8357d_fill_screen(HX8357D_RED);

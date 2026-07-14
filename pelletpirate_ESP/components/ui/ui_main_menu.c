@@ -13,6 +13,7 @@
 #include "ui_cook_mode.h"
 #include "ui_set_probes.h"
 #include "ui_dashboard.h"
+#include "ui_settings.h"
 #include "grill_state.h"
 #include "encoder.h"
 #include "esp_log.h"
@@ -216,6 +217,8 @@ static void navigate_to(lv_event_t *e)
         next = ui_dashboard_create();
         break;
     case MENU_SETTINGS:
+        next = ui_settings_create();
+        break;
     case MENU_GRAPHS:
         ESP_LOGI(TAG, "%s: coming soon", menu_labels[idx]);
         return;
