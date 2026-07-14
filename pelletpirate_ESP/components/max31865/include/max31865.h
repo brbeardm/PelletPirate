@@ -25,7 +25,9 @@
 //   - Particle SPI -> ESP-IDF spi_device_transmit()
 //   - Particle.publish() -> ESP_LOGI/ESP_LOGE
 //   - Constructor takes config struct instead of raw CS pin
-//   - CS managed by ESP-IDF SPI driver (not manual GPIO)
+//   - CS managed manually as GPIO: ESP32 allows only 3 devices per SPI
+//     bus and the LCD occupies one, so all 5 MAXes share one CS-less
+//     device handle
 //   - Temperature math and register logic unchanged
 
 typedef struct {
@@ -36,7 +38,8 @@ typedef struct {
 } max31865_config_t;
 
 typedef struct {
-    spi_device_handle_t spi;
+    spi_device_handle_t spi;    // shared CS-less device (all MAXes)
+    int pin_cs;                 // this chip's CS, driven manually as GPIO
     float ref_resistor;
     float rtd_nominal;
     bool initialized;

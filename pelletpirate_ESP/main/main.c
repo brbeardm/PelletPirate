@@ -15,9 +15,37 @@
 #include "backlight.h"
 #include "encoder.h"
 #include "grill_state.h"
+#include "max31865.h"
 #include "ui.h"
 
 static const char *TAG = "pelletpirate";
+
+// MAX31865 chip selects: MAX1..MAX5 (V2 schematic)
+// Provisional channel map: MAX1 = grill RTD, MAX2-5 = meat probes 1-4
+static const int s_rtd_cs[5] = { 27, 13, 5, 26, 21 };
+static max31865_handle_t s_rtd[5];
+
+static void temp_task(void *arg)
+{
+    while (1) {
+        float t[5];
+        for (int i = 0; i < 5; i++) {
+            t[i] = max31865_get_temp_f(&s_rtd[i]);
+        }
+        ESP_LOGI(TAG, "RTD: grill=%.1fF p1=%.1fF p2=%.1fF p3=%.1fF p4=%.1fF",
+                 t[0], t[1], t[2], t[3], t[4]);
+
+        grill_state_lock();
+        grill_state_t *gs = grill_state_get();
+        gs->grill_temp = t[0];
+        for (int i = 0; i < NUM_MEAT_PROBES; i++) {
+            gs->probes[i].current_temp = t[i + 1];
+        }
+        grill_state_unlock();
+
+        vTaskDelay(pdMS_TO_TICKS(2000));
+    }
+}
 
 #define BACKLIGHT_CTRL_GPIO 17  // TPS61165 CTRL (backlight enable)
 #define HEARTBEAT_LED_GPIO  2   // Onboard blue LED on DevKitC
@@ -62,6 +90,21 @@ void app_main(void)
     ESP_ERROR_CHECK(esp_timer_create(&heartbeat_args, &heartbeat_timer));
     ESP_ERROR_CHECK(esp_timer_start_periodic(heartbeat_timer, 500 * 1000)); // toggle every 500 ms = 1 Hz blink
 
+    // Park all MAX31865 chip selects high before the LCD starts clocking
+    // the shared SPI bus, so the MAXes can't see stray traffic.
+    for (int i = 0; i < 5; i++) {
+        gpio_set_level(s_rtd_cs[i], 1);
+        gpio_config_t cs_cfg = {
+            .pin_bit_mask = 1ULL << s_rtd_cs[i],
+            .mode = GPIO_MODE_OUTPUT,
+            .pull_up_en = GPIO_PULLUP_DISABLE,
+            .pull_down_en = GPIO_PULLDOWN_DISABLE,
+            .intr_type = GPIO_INTR_DISABLE,
+        };
+        gpio_config(&cs_cfg);
+        gpio_set_level(s_rtd_cs[i], 1);
+    }
+
     // LCD first — boot splash for immediate visual feedback
     hx8357d_config_t lcd_cfg = {
         .spi_host = SPI2_HOST,
@@ -104,6 +147,19 @@ void app_main(void)
     // Init encoder and grill state
     encoder_init();
     grill_state_init();
+
+    // Init the 5 RTD converters on the shared SPI bus and start polling.
+    // A failed channel logs an error and reads as 0.0F; the rest keep going.
+    for (int i = 0; i < 5; i++) {
+        max31865_config_t cfg = {
+            .spi_host = SPI2_HOST,
+            .pin_cs = s_rtd_cs[i],
+            .ref_resistor = 400.0f,   // R21 etc., verified from schematic
+            .rtd_nominal = 100.0f,    // PT100
+        };
+        max31865_init(&s_rtd[i], &cfg);
+    }
+    xTaskCreatePinnedToCore(temp_task, "rtd_temps", 4096, NULL, 4, NULL, 1);
 
     // LVGL takes over the display
     ESP_LOGI(TAG, "Starting LVGL...");
