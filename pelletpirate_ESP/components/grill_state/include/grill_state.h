@@ -47,6 +47,20 @@ typedef struct {
 // Ignite auto-disable threshold
 #define IGNITE_DISABLE_TEMP 115.0f
 
+// --- Alarm engine ---
+// Alarms are evaluated by grill_state_alarms_update() (called after each
+// temperature refresh) and mirrored by every interface (LCD banner, web).
+
+typedef enum {
+    ALARM_IDLE = 0,   // not armed, or armed and below threshold
+    ALARM_ACTIVE,     // fired, unacknowledged
+    ALARM_ACKED,      // acknowledged; re-arms when condition clears
+} alarm_state_t;
+
+#define ALARM_PROBE_HYST_F  5.0f   // probe re-arms this far below its alarm temp
+#define GRILL_DROP_BAND_F   30.0f  // grill alarm: temp below target by this much
+#define GRILL_INBAND_F      15.0f  // "at temp" band that arms drop detection
+
 typedef struct {
     // Mode
     grill_mode_t mode;
@@ -69,6 +83,11 @@ typedef struct {
     uint32_t cook_start_time;       // epoch seconds when cook started (0 = not cooking)
     uint32_t shutdown_start_time;
     uint32_t last_history_time;     // last time temp history was sampled
+
+    // Alarms
+    alarm_state_t probe_alarm[NUM_MEAT_PROBES];
+    alarm_state_t grill_alarm;      // grill temp-drop alarm
+    bool grill_reached_band;        // grill got within GRILL_INBAND_F of target this cook
 
     // WiFi
     bool wifi_connected;
@@ -116,5 +135,28 @@ int grill_state_get_est_minutes(int probe_idx);
  * Returns 0 if not cooking.
  */
 int grill_state_get_elapsed_minutes(void);
+
+/**
+ * Evaluate all alarm conditions against current temps/mode.
+ * Call after each temperature refresh. Takes the state lock itself.
+ */
+void grill_state_alarms_update(void);
+
+/**
+ * True if any alarm is ACTIVE (fired and unacknowledged).
+ */
+bool grill_state_alarm_active(void);
+
+/**
+ * Write a human-readable description of the highest-priority active alarm
+ * into buf. Returns false (buf untouched) if no alarm is active.
+ */
+bool grill_state_alarm_text(char *buf, int len);
+
+/**
+ * Acknowledge all active alarms. Each re-arms automatically once its
+ * condition clears (probe cools below threshold, grill returns to band).
+ */
+void grill_state_alarm_ack(void);
 
 #endif

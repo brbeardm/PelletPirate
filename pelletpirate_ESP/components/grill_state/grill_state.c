@@ -175,6 +175,134 @@ int grill_state_get_elapsed_minutes(void)
     return (int)(elapsed / 60);
 }
 
+// --- Alarm engine ---
+
+static bool mode_is_cooking(grill_mode_t m)
+{
+    // Modes where the grill is expected to hold temperature — the only
+    // modes where a temp-drop alarm is meaningful. START/REIGNITE are
+    // still climbing; OFF/SHUTDOWN are supposed to fall.
+    return m == GRILL_MODE_SMOKE || m == GRILL_MODE_SUPER_SMOKE ||
+           m == GRILL_MODE_COOK || m == GRILL_MODE_KEEP_WARM;
+}
+
+void grill_state_alarms_update(void)
+{
+    grill_state_lock();
+
+    // Probe alarms: fire at/above alarm_temp; re-arm after acknowledge
+    // once the probe cools ALARM_PROBE_HYST_F below the threshold.
+    // current_temp == 0 means fault/unplugged — never fire on that.
+    for (int i = 0; i < NUM_MEAT_PROBES; i++) {
+        probe_state_t *p = &s_state.probes[i];
+        bool armed = p->enabled && p->alarm_temp > 0 && p->current_temp > 0;
+
+        if (!armed) {
+            s_state.probe_alarm[i] = ALARM_IDLE;
+            continue;
+        }
+        switch (s_state.probe_alarm[i]) {
+        case ALARM_IDLE:
+            if (p->current_temp >= p->alarm_temp) {
+                s_state.probe_alarm[i] = ALARM_ACTIVE;
+                ESP_LOGW(TAG, "ALARM: probe %d reached %.0fF (alarm %.0fF, type '%s')",
+                         i + 1, p->current_temp, p->alarm_temp, p->alarm_type);
+            }
+            break;
+        case ALARM_ACKED:
+            if (p->current_temp < p->alarm_temp - ALARM_PROBE_HYST_F) {
+                s_state.probe_alarm[i] = ALARM_IDLE;  // re-armed
+            }
+            break;
+        default:
+            break;
+        }
+    }
+
+    // Grill temp-drop alarm: only meaningful in holding modes, and only
+    // after the grill has actually reached the target band once (so it
+    // never fires during warm-up). Mirrors the Photon tempMonitorOn logic.
+    if (!mode_is_cooking(s_state.mode)) {
+        s_state.grill_alarm = ALARM_IDLE;
+        s_state.grill_reached_band = false;
+    } else {
+        float t = s_state.grill_temp;
+        float target = (float)s_state.grill_target;
+
+        if (t > 0 && t >= target - GRILL_INBAND_F) {
+            s_state.grill_reached_band = true;
+            if (s_state.grill_alarm == ALARM_ACKED) {
+                s_state.grill_alarm = ALARM_IDLE;  // recovered — re-arm
+            }
+        }
+        if (s_state.grill_reached_band && t > 0 &&
+            t < target - GRILL_DROP_BAND_F &&
+            s_state.grill_alarm == ALARM_IDLE) {
+            s_state.grill_alarm = ALARM_ACTIVE;
+            ESP_LOGE(TAG, "ALARM: grill temp dropped to %.0fF (target %d) — fire out?",
+                     t, s_state.grill_target);
+        }
+    }
+
+    grill_state_unlock();
+}
+
+bool grill_state_alarm_active(void)
+{
+    bool active = false;
+    grill_state_lock();
+    if (s_state.grill_alarm == ALARM_ACTIVE) active = true;
+    for (int i = 0; i < NUM_MEAT_PROBES && !active; i++) {
+        if (s_state.probe_alarm[i] == ALARM_ACTIVE) active = true;
+    }
+    grill_state_unlock();
+    return active;
+}
+
+bool grill_state_alarm_text(char *buf, int len)
+{
+    bool found = false;
+    grill_state_lock();
+
+    // Grill drop outranks probe alarms — it means the cook is at risk
+    if (s_state.grill_alarm == ALARM_ACTIVE) {
+        snprintf(buf, len, "GRILL TEMP DROP: %.0f\xC2\xB0""F (target %d\xC2\xB0""F)",
+                 s_state.grill_temp, s_state.grill_target);
+        found = true;
+    } else {
+        for (int i = 0; i < NUM_MEAT_PROBES; i++) {
+            if (s_state.probe_alarm[i] == ALARM_ACTIVE) {
+                probe_state_t *p = &s_state.probes[i];
+                if (p->alarm_type[0] != '\0') {
+                    snprintf(buf, len, "PROBE %d: %.0f\xC2\xB0""F - %s!",
+                             i + 1, p->current_temp, p->alarm_type);
+                } else {
+                    snprintf(buf, len, "PROBE %d ALARM: %.0f\xC2\xB0""F",
+                             i + 1, p->current_temp);
+                }
+                found = true;
+                break;
+            }
+        }
+    }
+
+    grill_state_unlock();
+    return found;
+}
+
+void grill_state_alarm_ack(void)
+{
+    grill_state_lock();
+    if (s_state.grill_alarm == ALARM_ACTIVE) s_state.grill_alarm = ALARM_ACKED;
+    for (int i = 0; i < NUM_MEAT_PROBES; i++) {
+        if (s_state.probe_alarm[i] == ALARM_ACTIVE) {
+            s_state.probe_alarm[i] = ALARM_ACKED;
+        }
+    }
+    grill_state_unlock();
+    ESP_LOGI(TAG, "Alarms acknowledged");
+}
+
 void grill_state_save_to_nvs(void)
 {
     nvs_handle_t handle;

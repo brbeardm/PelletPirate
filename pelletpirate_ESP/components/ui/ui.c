@@ -9,6 +9,7 @@
 #include "encoder.h"
 #include "grill_state.h"
 
+#include <stdio.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "esp_log.h"
@@ -83,6 +84,72 @@ static void on_splash_complete(void)
     ui_load_screen(menu);
 }
 
+// --- Alarm banner ---
+// Overlay on lv_layer_top() so it shows above every screen and survives
+// screen changes. Ack: hold the encoder button ~1.2s while the banner is
+// visible (uses encoder_button_pressed() state, which does not consume
+// events — note the active screen may also act on the press).
+
+static lv_obj_t *s_alarm_banner = NULL;
+static lv_obj_t *s_alarm_label = NULL;
+static int64_t s_ack_hold_start = 0;
+
+#define ALARM_ACK_HOLD_US (1200 * 1000)
+
+static void alarm_banner_create(void)
+{
+    s_alarm_banner = lv_obj_create(lv_layer_top());
+    lv_obj_remove_style_all(s_alarm_banner);
+    lv_obj_set_size(s_alarm_banner, 320, 46);
+    lv_obj_set_pos(s_alarm_banner, 0, 0);
+    lv_obj_set_style_bg_color(s_alarm_banner, UI_COLOR_RED, 0);
+    lv_obj_set_style_bg_opa(s_alarm_banner, LV_OPA_COVER, 0);
+    lv_obj_clear_flag(s_alarm_banner, LV_OBJ_FLAG_SCROLLABLE);
+    lv_obj_clear_flag(s_alarm_banner, LV_OBJ_FLAG_CLICKABLE);
+
+    s_alarm_label = lv_label_create(s_alarm_banner);
+    lv_obj_set_style_text_font(s_alarm_label, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_color(s_alarm_label, lv_color_hex(0xFFFFFF), 0);
+    lv_obj_set_style_text_align(s_alarm_label, LV_TEXT_ALIGN_CENTER, 0);
+    lv_obj_center(s_alarm_label);
+}
+
+static void ui_alarm_update(void)
+{
+    if (!grill_state_alarm_active()) {
+        if (s_alarm_banner) lv_obj_add_flag(s_alarm_banner, LV_OBJ_FLAG_HIDDEN);
+        s_ack_hold_start = 0;
+        return;
+    }
+
+    if (!s_alarm_banner) alarm_banner_create();
+
+    char txt[64];
+    char full[112];
+    if (grill_state_alarm_text(txt, sizeof(txt))) {
+        snprintf(full, sizeof(full), "%s\nHold button to silence", txt);
+        lv_label_set_text(s_alarm_label, full);
+    }
+
+    // Blink between red and dark red so it reads as an alert
+    bool bright = (lv_tick_get() / 600) % 2 == 0;
+    lv_obj_set_style_bg_color(s_alarm_banner,
+        bright ? UI_COLOR_RED : lv_color_hex(0x661111), 0);
+    lv_obj_clear_flag(s_alarm_banner, LV_OBJ_FLAG_HIDDEN);
+
+    // Hold-to-acknowledge
+    if (encoder_button_pressed()) {
+        if (s_ack_hold_start == 0) {
+            s_ack_hold_start = esp_timer_get_time();
+        } else if (esp_timer_get_time() - s_ack_hold_start > ALARM_ACK_HOLD_US) {
+            grill_state_alarm_ack();
+            s_ack_hold_start = 0;
+        }
+    } else {
+        s_ack_hold_start = 0;
+    }
+}
+
 // LVGL task
 static void lvgl_task(void *arg)
 {
@@ -90,6 +157,7 @@ static void lvgl_task(void *arg)
         // Update active screen data
         ui_main_menu_update();
         ui_dashboard_update();
+        ui_alarm_update();
         lv_timer_handler();
         vTaskDelay(pdMS_TO_TICKS(16));  // ~60fps
     }

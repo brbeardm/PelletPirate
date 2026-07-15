@@ -44,6 +44,9 @@ static void temp_task(void *arg)
         }
         grill_state_unlock();
 
+        // Evaluate alarms against the fresh readings
+        grill_state_alarms_update();
+
         vTaskDelay(pdMS_TO_TICKS(2000));
     }
 }
