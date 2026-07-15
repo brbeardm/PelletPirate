@@ -50,32 +50,8 @@ void grill_state_init(void)
     // Try to load saved settings from NVS
     grill_state_load_from_nvs();
 
-    // Mock current temps for UI testing (these would come from MAX31865 in production)
-    s_state.grill_temp = 87.0f;
-    for (int i = 0; i < NUM_MEAT_PROBES; i++) {
-        if (s_state.probes[i].enabled) {
-            // Simulate some temp for display testing
-            s_state.probes[i].current_temp = 40.0f + (float)(i * 30);
-            s_state.probes[i].start_temp = 40.0f;
-        }
-    }
-
-    // Simulate a cook start for ET/EST testing
-    s_state.cook_start_time = now_sec() - (7 * 3600 + 43 * 60);
-
-    // Pre-populate history for mock EST
-    for (int p = 0; p < NUM_MEAT_PROBES; p++) {
-        if (!s_state.probes[p].enabled) continue;
-        for (int i = 0; i < TEMP_HISTORY_SIZE; i++) {
-            float progress = (float)i / TEMP_HISTORY_SIZE;
-            s_state.probes[p].temp_history[i] =
-                s_state.probes[p].start_temp +
-                (s_state.probes[p].current_temp - s_state.probes[p].start_temp) * progress;
-        }
-        s_state.probes[p].history_count = TEMP_HISTORY_SIZE;
-        s_state.probes[p].history_index = 0;
-    }
-
+    // cook_start_time stays 0 until the actuator sees the mode leave OFF
+    // (grill_state_cook_started); ET/EST and history are per-cook.
     s_state.last_history_time = now_sec();
     ESP_LOGI(TAG, "Grill state initialized, target=%d", s_state.grill_target);
 }
@@ -103,9 +79,29 @@ const char *grill_mode_name(grill_mode_t mode)
     return "Unknown";
 }
 
+void grill_state_cook_started(void)
+{
+    // Caller must hold the lock. Marks the cook start and resets per-cook
+    // probe baselines so ET/EST reflect this cook, not the last one.
+    s_state.cook_start_time = now_sec();
+    s_state.last_history_time = now_sec();
+    for (int i = 0; i < NUM_MEAT_PROBES; i++) {
+        s_state.probes[i].start_temp = s_state.probes[i].current_temp;
+        s_state.probes[i].history_count = 0;
+        s_state.probes[i].history_index = 0;
+    }
+}
+
+void grill_state_cook_ended(void)
+{
+    // Caller must hold the lock.
+    s_state.cook_start_time = 0;
+}
+
 void grill_state_record_history(void)
 {
-    // Call this periodically from main loop
+    // Caller must hold the lock (ui_dashboard calls this inside its
+    // locked update pass).
     uint32_t t = now_sec();
     if (s_state.cook_start_time == 0) return;
     if (t - s_state.last_history_time < TEMP_HISTORY_INTERVAL_SEC) return;
@@ -252,6 +248,7 @@ bool grill_state_alarm_active(void)
     bool active = false;
     grill_state_lock();
     if (s_state.grill_alarm == ALARM_ACTIVE) active = true;
+    if (s_state.sensor_alarm == ALARM_ACTIVE) active = true;
     for (int i = 0; i < NUM_MEAT_PROBES && !active; i++) {
         if (s_state.probe_alarm[i] == ALARM_ACTIVE) active = true;
     }
@@ -264,6 +261,12 @@ bool grill_state_alarm_text(char *buf, int len)
     bool found = false;
     grill_state_lock();
 
+    // Sensor fault outranks everything — the controller is flying blind
+    // and has forced a shutdown burn-off
+    if (s_state.sensor_alarm == ALARM_ACTIVE) {
+        snprintf(buf, len, "GRILL SENSOR FAULT - SHUTTING DOWN");
+        found = true;
+    } else
     // Grill drop outranks probe alarms — it means the cook is at risk
     if (s_state.grill_alarm == ALARM_ACTIVE) {
         snprintf(buf, len, "GRILL TEMP DROP: %.0f\xC2\xB0""F (target %d\xC2\xB0""F)",
@@ -294,6 +297,7 @@ void grill_state_alarm_ack(void)
 {
     grill_state_lock();
     if (s_state.grill_alarm == ALARM_ACTIVE) s_state.grill_alarm = ALARM_ACKED;
+    if (s_state.sensor_alarm == ALARM_ACTIVE) s_state.sensor_alarm = ALARM_ACKED;
     for (int i = 0; i < NUM_MEAT_PROBES; i++) {
         if (s_state.probe_alarm[i] == ALARM_ACTIVE) {
             s_state.probe_alarm[i] = ALARM_ACKED;
@@ -303,46 +307,56 @@ void grill_state_alarm_ack(void)
     ESP_LOGI(TAG, "Alarms acknowledged");
 }
 
-void grill_state_save_to_nvs(void)
+esp_err_t grill_state_save_to_nvs(void)
 {
     nvs_handle_t handle;
     esp_err_t err = nvs_open(NVS_NAMESPACE, NVS_READWRITE, &handle);
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "NVS open failed: %s", esp_err_to_name(err));
-        return;
+        return err;
     }
 
-    // Save grill target
-    nvs_set_i32(handle, "grill_target", s_state.grill_target);
+    // Accumulate the first failure — a partial save must not report success
+    esp_err_t worst = ESP_OK;
+#define NVS_CHECK(call) do { \
+        esp_err_t e_ = (call); \
+        if (e_ != ESP_OK && worst == ESP_OK) worst = e_; \
+    } while (0)
 
-    // Save each probe's config
+    NVS_CHECK(nvs_set_i32(handle, "grill_target", s_state.grill_target));
+
     for (int i = 0; i < NUM_MEAT_PROBES; i++) {
         char key[16];
         probe_state_t *p = &s_state.probes[i];
 
         snprintf(key, sizeof(key), "p%d_en", i);
-        nvs_set_u8(handle, key, p->enabled ? 1 : 0);
+        NVS_CHECK(nvs_set_u8(handle, key, p->enabled ? 1 : 0));
 
         snprintf(key, sizeof(key), "p%d_tgt", i);
-        nvs_set_i32(handle, key, (int32_t)p->target_temp);
+        NVS_CHECK(nvs_set_i32(handle, key, (int32_t)p->target_temp));
 
         snprintf(key, sizeof(key), "p%d_alm", i);
-        nvs_set_i32(handle, key, (int32_t)p->alarm_temp);
+        NVS_CHECK(nvs_set_i32(handle, key, (int32_t)p->alarm_temp));
 
         snprintf(key, sizeof(key), "p%d_food", i);
-        nvs_set_str(handle, key, p->food_type);
+        NVS_CHECK(nvs_set_str(handle, key, p->food_type));
 
         snprintf(key, sizeof(key), "p%d_atyp", i);
-        nvs_set_str(handle, key, p->alarm_type);
+        NVS_CHECK(nvs_set_str(handle, key, p->alarm_type));
     }
+#undef NVS_CHECK
 
-    err = nvs_commit(handle);
-    if (err == ESP_OK) {
+    esp_err_t cerr = nvs_commit(handle);
+    if (worst == ESP_OK) worst = cerr;
+    nvs_close(handle);
+
+    if (worst == ESP_OK) {
         ESP_LOGI(TAG, "Settings saved to NVS");
     } else {
-        ESP_LOGE(TAG, "NVS commit failed: %s", esp_err_to_name(err));
+        ESP_LOGE(TAG, "NVS save FAILED (%s) — settings will not survive reboot",
+                 esp_err_to_name(worst));
     }
-    nvs_close(handle);
+    return worst;
 }
 
 void grill_state_load_from_nvs(void)

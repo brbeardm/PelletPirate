@@ -20,3 +20,9 @@ CONFIG_HTTPD_WS_SUPPORT=y
 
 # Size optimization: WiFi stack + LVGL leave little app-partition headroom at -Og
 CONFIG_COMPILER_OPTIMIZATION_SIZE=y
+
+# Task watchdog: actuator_task and temp_task are subscribed. A hung control
+# loop with fire burning must reboot (panic) — boot re-drives all triac
+# outputs LOW. 10s clears worst-case NVS/LittleFS stalls.
+CONFIG_ESP_TASK_WDT_TIMEOUT_S=10
+CONFIG_ESP_TASK_WDT_PANIC=y

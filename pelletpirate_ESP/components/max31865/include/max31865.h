@@ -43,6 +43,7 @@ typedef struct {
     float ref_resistor;
     float rtd_nominal;
     bool initialized;
+    bool comm_err;              // last read failed at the SPI layer (logged on transition)
 } max31865_handle_t;
 
 /**

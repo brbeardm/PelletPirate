@@ -37,7 +37,9 @@ extern "C" {
 #include "driver/gpio.h"
 #include "esp_log.h"
 #include "esp_timer.h"
+#include "esp_task_wdt.h"
 #include "grill_state.h"
+#include "cooklog.h"
 }
 #include "pid.h"
 
@@ -53,6 +55,7 @@ static const int    P_SETTING_SMOKE = 2;    // off = 45 + P*10
 static const int    P_SETTING_SUPER = 4;
 static const double IGNITER_MAX_ON_SEC = 1200.0;  // 20 min safety timeout
 static const double SHUTDOWN_BURNOFF_SEC = 900.0; // 15 min (V2 spec; Photon used 600)
+static const double RTD_FAULT_SHUTDOWN_SEC = 30.0; // grill sensor dead this long -> burn-off
 
 // --- Enhancement constants ---
 static const double FAN_CYCLE_SEC = 30.0;   // burst period (zero-cross friendly)
@@ -79,6 +82,7 @@ static burst_state s_fan = {};
 
 static double s_igniter_on_since = 0;       // 0 = igniter off
 static double s_active_since = 0;           // when we last left OFF (0 = in OFF)
+static double s_fault_since = 0;            // grill RTD reading 0.0 in an active mode
 static grill_mode_t s_prev_mode = GRILL_MODE_OFF;
 
 // Physical pin states, for transition-only logging
@@ -123,7 +127,12 @@ static void apply_pin(int gpio, bool want, bool *cur, const char *name,
 
 static void actuator_task(void *arg)
 {
+    // A hung control loop with fire burning must reboot the board — the
+    // boot-time GPIO holds drive every output LOW again (safe state).
+    esp_task_wdt_add(NULL);
+
     while (1) {
+        esp_task_wdt_reset();
         double now = now_sec();
 
         grill_state_lock();
@@ -138,6 +147,7 @@ static void actuator_task(void *arg)
         if (mode != s_prev_mode) {
             ESP_LOGI(TAG, "mode %s -> %s (temp=%.0fF target=%d)",
                      grill_mode_name(s_prev_mode), grill_mode_name(mode), temp, target);
+            s_fault_since = 0;  // each mode gets a fresh sensor-fault grace period
             if (mode == GRILL_MODE_COOK || mode == GRILL_MODE_KEEP_WARM) {
                 s_pid->setTarget(target, 0);  // reset integrator (Photon SetMode=Hold)
                 s_u = U_MIN;                  // start at maintenance level
@@ -146,10 +156,16 @@ static void actuator_task(void *arg)
                 burst_start_on(&s_auger, now);  // cycles begin in the ON phase
                 burst_start_on(&s_fan, now);
                 s_active_since = now;
+                grill_state_lock();
+                grill_state_cook_started();     // ET zero, per-cook probe baselines
+                grill_state_unlock();
                 ESP_LOGI(TAG, "cold start — anti-surge stagger: fan t+0, auger t+%.0fs, igniter t+%.0fs",
                          AUGER_STAGGER_SEC, IGNITER_STAGGER_SEC);
             } else if (mode == GRILL_MODE_OFF) {
                 s_active_since = 0;
+                grill_state_lock();
+                grill_state_cook_ended();
+                grill_state_unlock();
             }
             if (mode == GRILL_MODE_SHUTDOWN) {
                 grill_state_lock();
@@ -162,6 +178,31 @@ static void actuator_task(void *arg)
 
         bool fan = false, aug = false, ign = false;
         grill_mode_t new_mode = mode;
+        bool fault_shutdown = false;
+
+        // Grill RTD fault (0.0F convention) while running: the controller
+        // is blind. Grace period rides out transients (the median filter
+        // upstream already ate single glitches); a persistent fault forces
+        // a shutdown burn-off — never keep feeding pellets on a dead sensor.
+        bool sensor_fault = (temp <= 0.0f);
+        if (sensor_fault && mode != GRILL_MODE_OFF && mode != GRILL_MODE_SHUTDOWN) {
+            if (s_fault_since == 0) {
+                s_fault_since = now;
+                ESP_LOGW(TAG, "grill RTD fault — holding output, igniter inhibited");
+            } else if ((now - s_fault_since) > RTD_FAULT_SHUTDOWN_SEC) {
+                ESP_LOGE(TAG, "SAFETY: grill RTD dead for %.0f s — forcing SHUTDOWN",
+                         now - s_fault_since);
+                cooklog_event("auto", "RTD FAULT grill %.0fs - forced SHUTDOWN",
+                              now - s_fault_since);
+                new_mode = GRILL_MODE_SHUTDOWN;
+                fault_shutdown = true;
+            }
+        } else if (!sensor_fault) {
+            if (s_fault_since != 0) {
+                ESP_LOGI(TAG, "grill RTD recovered (%.0fF)", temp);
+            }
+            s_fault_since = 0;
+        }
 
         switch (mode) {
         case GRILL_MODE_OFF:
@@ -170,7 +211,7 @@ static void actuator_task(void *arg)
         case GRILL_MODE_START:
         case GRILL_MODE_REIGNITE:
             aug = burst_cycle(&s_auger, now, START_CYCLE_SEC, START_U);
-            ign = (temp < IGNITE_DISABLE_TEMP);
+            ign = (temp > 0 && temp < IGNITE_DISABLE_TEMP);
             fan = true;
             if (temp >= IGNITE_DISABLE_TEMP) {
                 ESP_LOGI(TAG, "grill lit (%.0fF >= %.0fF) — auto %s -> COOK",
@@ -185,20 +226,23 @@ static void actuator_task(void *arg)
             double off = 45.0 + p * 10.0;
             double cyc = SMOKE_ON_SEC + off;
             aug = burst_cycle(&s_auger, now, cyc, SMOKE_ON_SEC / cyc);
-            ign = (temp < IGNITE_DISABLE_TEMP);  // cold-smoke flame assist
+            ign = (temp > 0 && temp < IGNITE_DISABLE_TEMP);  // cold-smoke flame assist
             fan = true;
             break;
         }
 
         case GRILL_MODE_COOK:
         case GRILL_MODE_KEEP_WARM: {
-            if ((now - s_pid->LastUpdate) > PID_CYCLE_SEC) {
+            // On sensor fault: skip the PID (a 0.0F reading looks like
+            // "225F too cold" and winds the output to max) and hold the
+            // last duty until recovery or the fault shutdown fires.
+            if (!sensor_fault && (now - s_pid->LastUpdate) > PID_CYCLE_SEC) {
                 double u = s_pid->update(temp, target, 0);
                 s_u = u < U_MIN ? U_MIN : (u > U_MAX ? U_MAX : u);
                 ESP_LOGI(TAG, "PID: temp=%.1fF target=%d u=%.2f", temp, target, s_u);
             }
             aug = burst_cycle(&s_auger, now, PID_CYCLE_SEC, s_u);
-            ign = (temp < IGNITE_DISABLE_TEMP);  // flame-out recovery
+            ign = (temp > 0 && temp < IGNITE_DISABLE_TEMP);  // flame-out recovery
 
             // Fan burst modulation once temp settles into the band;
             // air scales with fuel (duty tied to PID output)
@@ -268,6 +312,7 @@ static void actuator_task(void *arg)
         if (aug) gs->auger_runtime_sec += 1.0f;
         if (fan && !fan_was_on) gs->fan_cycles++;
         if (new_mode != mode) gs->mode = new_mode;
+        if (fault_shutdown) gs->sensor_alarm = ALARM_ACTIVE;  // banner + web alarm
         grill_state_unlock();
 
         vTaskDelay(pdMS_TO_TICKS(1000));

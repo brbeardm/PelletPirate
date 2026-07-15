@@ -10,6 +10,7 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 #include "esp_timer.h"
+#include "esp_task_wdt.h"
 #include "driver/gpio.h"
 #include "hx8357d.h"
 #include "backlight.h"
@@ -28,23 +29,60 @@ static const char *TAG = "pelletpirate";
 static const int s_rtd_cs[5] = { 27, 13, 5, 26, 21 };
 static max31865_handle_t s_rtd[5];
 
+// Median of the last 3 raw samples per channel: one glitched SPI read or
+// conversion spike can no longer reach grill_state (which treats 0.0F as
+// a fault). A real fault still propagates on the second bad sample (~4s).
+static float med3(float a, float b, float c)
+{
+    if (a > b) { float t = a; a = b; b = t; }
+    if (b > c) { float t = b; b = c; c = t; }
+    if (a > b) { float t = a; a = b; b = t; }
+    return b;
+}
+
+static const char *s_rtd_name[5] = { "grill", "probe 1", "probe 2", "probe 3", "probe 4" };
+
 static void temp_task(void *arg)
 {
+    esp_task_wdt_add(NULL);
+
+    float hist[5][3];
+    int samples = 0;
+    bool was_fault[5] = { false };
+
     while (1) {
+        esp_task_wdt_reset();
+
         float t[5];
         for (int i = 0; i < 5; i++) {
-            t[i] = max31865_get_temp_f(&s_rtd[i]);
+            float raw = max31865_get_temp_f(&s_rtd[i]);
+            hist[i][samples % 3] = raw;
+            t[i] = (samples >= 2) ? med3(hist[i][0], hist[i][1], hist[i][2]) : raw;
         }
+        samples++;
         ESP_LOGI(TAG, "RTD: grill=%.1fF p1=%.1fF p2=%.1fF p3=%.1fF p4=%.1fF",
                  t[0], t[1], t[2], t[3], t[4]);
 
+        bool in_use[5] = { true };  // grill channel always matters
         grill_state_lock();
         grill_state_t *gs = grill_state_get();
         gs->grill_temp = t[0];
         for (int i = 0; i < NUM_MEAT_PROBES; i++) {
             gs->probes[i].current_temp = t[i + 1];
+            in_use[i + 1] = gs->probes[i].enabled;
         }
         grill_state_unlock();
+
+        // Audit-log fault transitions on channels that are actually in use
+        // (empty meat-probe jacks read 0.0F permanently — that's normal)
+        for (int i = 0; i < 5; i++) {
+            bool fault = (t[i] <= 0.0f);
+            if (in_use[i] && fault != was_fault[i]) {
+                cooklog_event("auto", "RTD %s %s", s_rtd_name[i],
+                              fault ? "FAULT" : "OK");
+            }
+            was_fault[i] = fault;
+        }
 
         // Evaluate alarms against the fresh readings
         grill_state_alarms_update();
@@ -142,19 +180,6 @@ void app_main(void)
     // and drives it with LEDC PWM at the saved brightness level.
     backlight_init();
     backlight_on();
-    // Color test — RED screen for 2 seconds to verify color rendering
-    ESP_LOGI(TAG, "Color test: RED (0xF800)");
-    hx8357d_fill_screen(HX8357D_RED);
-    vTaskDelay(pdMS_TO_TICKS(2000));
-
-    ESP_LOGI(TAG, "Color test: GREEN (0x07E0)");
-    hx8357d_fill_screen(HX8357D_GREEN);
-    vTaskDelay(pdMS_TO_TICKS(2000));
-
-    ESP_LOGI(TAG, "Color test: BLUE (0x001F)");
-    hx8357d_fill_screen(HX8357D_BLUE);
-    vTaskDelay(pdMS_TO_TICKS(2000));
-
     hx8357d_boot_splash();
     ESP_LOGI(TAG, "Boot splash displayed");
 

@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include "esp_err.h"
 
 typedef enum {
     GRILL_MODE_OFF,
@@ -87,6 +88,7 @@ typedef struct {
     // Alarms
     alarm_state_t probe_alarm[NUM_MEAT_PROBES];
     alarm_state_t grill_alarm;      // grill temp-drop alarm
+    alarm_state_t sensor_alarm;     // grill RTD fault forced a shutdown
     bool grill_reached_band;        // grill got within GRILL_INBAND_F of target this cook
 
     // WiFi
@@ -109,15 +111,23 @@ const char *grill_mode_name(grill_mode_t mode);
 
 /**
  * Record current probe temps into rolling history.
- * Call this every TEMP_HISTORY_INTERVAL_SEC from the main loop.
+ * Call this every TEMP_HISTORY_INTERVAL_SEC. Caller must hold the lock.
  */
 void grill_state_record_history(void);
 
 /**
+ * Mark cook start/end (mode leaving/entering OFF). Resets per-cook probe
+ * baselines and ET. Caller must hold the lock.
+ */
+void grill_state_cook_started(void);
+void grill_state_cook_ended(void);
+
+/**
  * Save current probe configs and grill target to NVS flash.
  * Call this when the user presses Save on the probe or target screens.
+ * Returns the first error hit — a partial save never reports ESP_OK.
  */
-void grill_state_save_to_nvs(void);
+esp_err_t grill_state_save_to_nvs(void);
 
 /**
  * Load probe configs and grill target from NVS flash.

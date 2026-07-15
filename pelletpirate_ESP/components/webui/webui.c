@@ -28,9 +28,12 @@ static void start_webserver(void);
 static httpd_handle_t s_server = NULL;
 static int s_retry_count = 0;
 
-// Connected WebSocket clients (socket fds; -1 = free slot)
+// Connected WebSocket clients (socket fds; -1 = free slot). The table is
+// mutated from httpd worker threads and read by ws_push_task — every
+// access goes through the spinlock.
 #define MAX_WS_CLIENTS 4
 static int s_ws_fds[MAX_WS_CLIENTS] = { -1, -1, -1, -1 };
+static portMUX_TYPE s_ws_mux = portMUX_INITIALIZER_UNLOCKED;
 
 // Embedded dashboard page (see index.html in this component)
 extern const uint8_t index_html_start[] asm("_binary_index_html_start");
@@ -554,27 +557,37 @@ static esp_err_t wifi_set_post_handler(httpd_req_t *req)
 
 static void ws_client_add(int fd)
 {
+    bool added = false, present = false;
+    portENTER_CRITICAL(&s_ws_mux);
     for (int i = 0; i < MAX_WS_CLIENTS; i++) {
-        if (s_ws_fds[i] == fd) return;
+        if (s_ws_fds[i] == fd) present = true;
     }
-    for (int i = 0; i < MAX_WS_CLIENTS; i++) {
-        if (s_ws_fds[i] < 0) {
-            s_ws_fds[i] = fd;
-            ESP_LOGI(TAG, "WS client connected (fd %d)", fd);
-            return;
+    if (!present) {
+        for (int i = 0; i < MAX_WS_CLIENTS; i++) {
+            if (s_ws_fds[i] < 0) {
+                s_ws_fds[i] = fd;
+                added = true;
+                break;
+            }
         }
     }
-    ESP_LOGW(TAG, "WS client table full, fd %d not tracked", fd);
+    portEXIT_CRITICAL(&s_ws_mux);
+    if (added) ESP_LOGI(TAG, "WS client connected (fd %d)", fd);
+    else if (!present) ESP_LOGW(TAG, "WS client table full, fd %d not tracked", fd);
 }
 
 static void ws_client_remove(int fd)
 {
+    bool removed = false;
+    portENTER_CRITICAL(&s_ws_mux);
     for (int i = 0; i < MAX_WS_CLIENTS; i++) {
         if (s_ws_fds[i] == fd) {
             s_ws_fds[i] = -1;
-            ESP_LOGI(TAG, "WS client disconnected (fd %d)", fd);
+            removed = true;
         }
     }
+    portEXIT_CRITICAL(&s_ws_mux);
+    if (removed) ESP_LOGI(TAG, "WS client disconnected (fd %d)", fd);
 }
 
 static esp_err_t ws_handler(httpd_req_t *req)
@@ -613,15 +626,21 @@ static void ws_push_task(void *arg)
         char buf[STATUS_JSON_MAX];
         int len = build_status_json(buf, sizeof(buf));
 
+        // Snapshot the table so sends happen outside the spinlock
+        int fds[MAX_WS_CLIENTS];
+        portENTER_CRITICAL(&s_ws_mux);
+        for (int i = 0; i < MAX_WS_CLIENTS; i++) fds[i] = s_ws_fds[i];
+        portEXIT_CRITICAL(&s_ws_mux);
+
         for (int i = 0; i < MAX_WS_CLIENTS; i++) {
-            if (s_ws_fds[i] < 0) continue;
+            if (fds[i] < 0) continue;
             httpd_ws_frame_t frame = {
                 .type = HTTPD_WS_TYPE_TEXT,
                 .payload = (uint8_t *)buf,
                 .len = len,
             };
-            if (httpd_ws_send_frame_async(s_server, s_ws_fds[i], &frame) != ESP_OK) {
-                ws_client_remove(s_ws_fds[i]);
+            if (httpd_ws_send_frame_async(s_server, fds[i], &frame) != ESP_OK) {
+                ws_client_remove(fds[i]);
             }
         }
 

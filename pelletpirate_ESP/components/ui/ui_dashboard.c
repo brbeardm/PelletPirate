@@ -210,6 +210,13 @@ lv_obj_t *ui_dashboard_create(void)
     lv_obj_set_style_pad_top(s_lbl_target, 2, 0);
     lv_obj_set_style_pad_bottom(s_lbl_target, 2, 0);
     lv_obj_set_style_radius(s_lbl_target, 4, 0);
+    // Fully determine the border styles up front: the app is themeless,
+    // and a border rendered before update_focus_visual() assigns a color
+    // draws in an undefined (purple-ish) default.
+    lv_obj_set_style_border_width(s_lbl_target, 2, 0);
+    lv_obj_set_style_border_color(s_lbl_target, UI_COLOR_ACCENT, 0);
+    lv_obj_set_style_border_opa(s_lbl_target, LV_OPA_TRANSP, 0);
+    lv_obj_set_style_outline_width(s_lbl_target, 0, 0);
     lv_obj_align(s_lbl_target, LV_ALIGN_TOP_MID, 0, y);
 
     s_lbl_adjust = lv_label_create(s_screen);

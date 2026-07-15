@@ -153,10 +153,19 @@ bool profiles_load(const char *fname)
         return false;
     }
 
+    // Read the whole file BEFORE taking the grill_state lock — flash I/O
+    // under that lock stalls the temperature and actuator tasks.
+    char lines[8][96];
+    int nlines = 0;
+    while (nlines < 8 && fgets(lines[nlines], sizeof(lines[0]), f)) {
+        nlines++;
+    }
+    fclose(f);
+
     grill_state_lock();
     grill_state_t *gs = grill_state_get();
-    char line[96];
-    while (fgets(line, sizeof(line), f)) {
+    for (int li = 0; li < nlines; li++) {
+        char *line = lines[li];
         int v;
         if (sscanf(line, "tgt=%d", &v) == 1) {
             if (v >= TARGET_TEMP_MIN && v <= TARGET_TEMP_MAX) gs->grill_target = v;
@@ -186,10 +195,13 @@ bool profiles_load(const char *fname)
             }
         }
     }
-    grill_state_save_to_nvs();
+    esp_err_t serr = grill_state_save_to_nvs();
     grill_state_unlock();
-    fclose(f);
 
+    if (serr != ESP_OK) {
+        ESP_LOGE(TAG, "profile %s applied but NVS save failed", fname);
+        return false;  // caller shows the failure; live state is still set
+    }
     ESP_LOGI(TAG, "profile loaded: %s", fname);
     return true;
 }

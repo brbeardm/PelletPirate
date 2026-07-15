@@ -48,18 +48,19 @@ static esp_err_t max_xfer(max31865_handle_t *h, const uint8_t *tx, uint8_t *rx, 
     return err;
 }
 
-static void write_reg(max31865_handle_t *h, uint8_t reg, uint8_t val)
+static esp_err_t write_reg(max31865_handle_t *h, uint8_t reg, uint8_t val)
 {
     uint8_t tx[2] = { MAX31865_WR(reg), val };
-    max_xfer(h, tx, NULL, 2);
+    return max_xfer(h, tx, NULL, 2);
 }
 
-static uint8_t read_reg(max31865_handle_t *h, uint8_t reg)
+static esp_err_t read_reg(max31865_handle_t *h, uint8_t reg, uint8_t *val)
 {
     uint8_t tx[2] = { reg, 0x00 };
     uint8_t rx[2] = { 0 };
-    max_xfer(h, tx, rx, 2);
-    return rx[1];
+    esp_err_t err = max_xfer(h, tx, rx, 2);
+    *val = rx[1];
+    return err;
 }
 
 esp_err_t max31865_init(max31865_handle_t *handle, const max31865_config_t *config)
@@ -68,6 +69,7 @@ esp_err_t max31865_init(max31865_handle_t *handle, const max31865_config_t *conf
     handle->rtd_nominal = config->rtd_nominal;
     handle->pin_cs = config->pin_cs;
     handle->initialized = false;
+    handle->comm_err = false;
 
     // CS as plain GPIO output, idle high
     gpio_config_t cs_conf = {
@@ -98,9 +100,15 @@ esp_err_t max31865_init(max31865_handle_t *handle, const max31865_config_t *conf
 
     // Same bring-up sequence as the Photon code: write run config, read it
     // back to verify communication, then set fault thresholds wide open.
-    write_reg(handle, MAX31865_REG_CONFIG, CONFIG_RUN);
+    esp_err_t werr = write_reg(handle, MAX31865_REG_CONFIG, CONFIG_RUN);
     vTaskDelay(pdMS_TO_TICKS(10));
-    uint8_t cfg = read_reg(handle, MAX31865_REG_CONFIG);
+    uint8_t cfg = 0;
+    esp_err_t rerr = read_reg(handle, MAX31865_REG_CONFIG, &cfg);
+    if (werr != ESP_OK || rerr != ESP_OK) {
+        ESP_LOGE(TAG, "CS %d: SPI error during init (%s/%s)",
+                 handle->pin_cs, esp_err_to_name(werr), esp_err_to_name(rerr));
+        return ESP_FAIL;
+    }
     if (cfg != CONFIG_RUN) {
         ESP_LOGE(TAG, "CS %d: config readback 0x%02X (expected 0x%02X) — no comms",
                  handle->pin_cs, cfg, CONFIG_RUN);
@@ -117,27 +125,59 @@ esp_err_t max31865_init(max31865_handle_t *handle, const max31865_config_t *conf
     return ESP_OK;
 }
 
+// Reset the fault detection so the converter recovers on the next cycle
+// (the fault status register never self-clears)
+static void clear_fault_and_rerun(max31865_handle_t *handle)
+{
+    write_reg(handle, MAX31865_REG_CONFIG, CONFIG_CLRFLT);
+    vTaskDelay(pdMS_TO_TICKS(10));
+    write_reg(handle, MAX31865_REG_CONFIG, CONFIG_RUN);
+}
+
+// Log SPI-layer failures once per error episode, not once per 2s poll
+static bool comm_check(max31865_handle_t *handle, esp_err_t err, const char *what)
+{
+    if (err != ESP_OK) {
+        if (!handle->comm_err) {
+            ESP_LOGE(TAG, "CS %d: SPI %s failed: %s", handle->pin_cs, what,
+                     esp_err_to_name(err));
+            handle->comm_err = true;
+        }
+        return false;
+    }
+    if (handle->comm_err) {
+        ESP_LOGI(TAG, "CS %d: SPI communication recovered", handle->pin_cs);
+        handle->comm_err = false;
+    }
+    return true;
+}
+
 float max31865_get_temp_f(max31865_handle_t *handle)
 {
     if (!handle->initialized) return 0.0f;
 
-    uint8_t fault = read_reg(handle, MAX31865_REG_FAULT_STATUS);
+    uint8_t fault = 0;
+    if (!comm_check(handle, read_reg(handle, MAX31865_REG_FAULT_STATUS, &fault), "fault read"))
+        return 0.0f;
     if (fault != 0) {
         max31865_check_fault(handle);
-        // Clear the fault and restore run config (register doesn't
-        // self-clear; unplugged probe re-faults on the next cycle)
-        write_reg(handle, MAX31865_REG_CONFIG, CONFIG_CLRFLT);
-        vTaskDelay(pdMS_TO_TICKS(10));
-        write_reg(handle, MAX31865_REG_CONFIG, CONFIG_RUN);
+        // Unplugged probe re-faults on the next cycle; that's normal
+        clear_fault_and_rerun(handle);
         return 0.0f;
     }
 
-    uint8_t lsb = read_reg(handle, MAX31865_REG_RTD_LSB);
+    uint8_t lsb = 0;
+    if (!comm_check(handle, read_reg(handle, MAX31865_REG_RTD_LSB, &lsb), "RTD read"))
+        return 0.0f;
     if (lsb & 0x01) {
-        // LSB fault bit set — treat as fault, detail comes next cycle
+        // LSB fault bit set without FAULT_STATUS detail — clear it the
+        // same way or it can latch and read 0.0F forever
+        clear_fault_and_rerun(handle);
         return 0.0f;
     }
-    uint8_t msb = read_reg(handle, MAX31865_REG_RTD_MSB);
+    uint8_t msb = 0;
+    if (!comm_check(handle, read_reg(handle, MAX31865_REG_RTD_MSB, &msb), "RTD read"))
+        return 0.0f;
 
     // 15-bit RTD code -> resistance -> temperature (math identical to Photon)
     float rtd_code = (float)(((uint16_t)msb << 7) | (lsb >> 1));
@@ -157,7 +197,8 @@ float max31865_get_temp_f(max31865_handle_t *handle)
 
 void max31865_check_fault(max31865_handle_t *handle)
 {
-    uint8_t fault = read_reg(handle, MAX31865_REG_FAULT_STATUS);
+    uint8_t fault = 0;
+    if (read_reg(handle, MAX31865_REG_FAULT_STATUS, &fault) != ESP_OK) return;
     if (fault == 0) return;
 
     if (fault & 0x80) ESP_LOGW(TAG, "CS %d: D7 — RTD high threshold (probe unplugged?)", handle->pin_cs);
