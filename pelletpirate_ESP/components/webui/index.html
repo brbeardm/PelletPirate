@@ -5,29 +5,55 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PelletPirate</title>
 <style>
-body{background:#000;color:#eee;font-family:system-ui,-apple-system,sans-serif;text-align:center;margin:0;padding:16px;-webkit-user-select:none;user-select:none}
-h1{color:#FF6B35;font-size:1.2rem;letter-spacing:3px;margin:0 0 14px}
-.lbl{color:#888;font-size:.8rem;letter-spacing:2px}
-.cur{font-size:4.2rem;font-weight:700;margin:.05em 0;line-height:1}
-.tgt-row{display:flex;align-items:center;justify-content:center;gap:16px;margin:.15em 0 .4em}
-.tgt{color:#FF6B35;font-size:2rem;font-weight:600;min-width:120px}
-button{background:#000;color:#fff;border:2px solid #FF6B35;border-radius:8px;font-size:1.25rem;font-weight:600;min-width:58px;height:52px;touch-action:manipulation}
+body{background:#000;color:#eee;font-family:system-ui,-apple-system,sans-serif;text-align:center;margin:0;padding:14px;-webkit-user-select:none;user-select:none}
+h1{color:#FF6B35;font-size:1.15rem;letter-spacing:3px;margin:0 0 10px}
+.alarm{display:none;background:#FF4444;color:#fff;font-weight:700;padding:12px 8px;border-radius:8px;margin:0 0 12px;font-size:1rem}
+.alarm .hint{font-weight:400;font-size:.75rem;opacity:.85}
+.lbl{color:#888;font-size:.78rem;letter-spacing:2px}
+.cur{font-size:4rem;font-weight:700;margin:.05em 0;line-height:1}
+.tgt-row{display:flex;align-items:center;justify-content:center;gap:14px;margin:.1em 0 .3em}
+.tgt{color:#FF6B35;font-size:1.9rem;font-weight:600;min-width:112px}
+button{background:#000;color:#fff;border:2px solid #FF6B35;border-radius:8px;font-size:1.2rem;font-weight:600;min-width:56px;height:50px;touch-action:manipulation}
 button:active{background:#FF6B35}
-button.sm{font-size:.85rem;height:40px;min-width:52px;border-color:#555;color:#aaa}
-.mode{color:#00D4AA;font-size:1rem;margin:8px 0 14px}
+button.sm{font-size:.82rem;height:38px;min-width:48px;border-color:#555;color:#aaa}
+button.chip{font-size:.8rem;height:42px;min-width:60px;border-color:#555;color:#ccc;border-radius:20px}
+button.chip.on{border-color:#00D4AA;color:#00D4AA;font-weight:700}
+button.chip.dim{opacity:.3}
+button.go{background:#FF6B35;color:#000;font-size:1.1rem;min-width:170px}
+button.warn{border-color:#FF4444;color:#FF4444}
+.mode{color:#00D4AA;font-size:.95rem;margin:6px 0 4px}
 .off{color:#555}
+.et{color:#888;font-size:.85rem;min-height:1.1em}
+.acts{display:flex;justify-content:center;gap:18px;margin:8px 0 12px}
+.act{font-size:.78rem;letter-spacing:1px;color:#333;border:1px solid #333;border-radius:14px;padding:5px 12px}
+.act.on{color:#000;font-weight:700}
+#af.on{background:#44FF44;border-color:#44FF44}
+#aa.on{background:#FFCC00;border-color:#FFCC00}
+#ai.on{background:#FF4444;border-color:#FF4444}
+.modes{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:10px 0 14px}
 .probes{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:520px;margin:0 auto}
-.card{border:1px solid #333;border-radius:10px;padding:10px 6px}
-.card .nm{color:#888;font-size:.75rem;letter-spacing:1px;min-height:1em}
-.card .pt{font-size:1.7rem;font-weight:700;margin:2px 0}
-.card .ptg{color:#44FF44;font-size:1rem;font-weight:600;min-width:64px}
+.card{border:1px solid #333;border-radius:10px;padding:8px 6px}
+.card .nm{color:#888;font-size:.72rem;letter-spacing:1px;min-height:1em}
+.card .pt{font-size:1.6rem;font-weight:700;margin:2px 0}
+.card .inf{color:#555;font-size:.72rem;min-height:2.2em;line-height:1.5}
+.card .inf .g{color:#44FF44}
+.card .inf .r{color:#FF4444}
 .card.dis .pt{color:#444}
-.card .prow{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px}
-.link{color:#555;font-size:.75rem;margin-top:18px}
+.card .prow{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:5px}
+.link{color:#555;font-size:.72rem;margin-top:16px}
+#editor{display:none;position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:10;padding:26px 18px;overflow-y:auto}
+#editor h2{color:#FF6B35;font-size:1.05rem;letter-spacing:2px;margin:0 0 18px}
+.erow{display:flex;align-items:center;justify-content:center;gap:14px;margin:10px 0}
+.eval{color:#FF6B35;font-size:1.6rem;font-weight:600;min-width:96px}
+select{background:#111;color:#eee;border:2px solid #555;border-radius:8px;font-size:1.05rem;padding:10px;width:230px;margin:6px 0}
+.ebtns{display:flex;justify-content:center;gap:14px;margin-top:22px}
 </style>
 </head>
 <body>
 <h1>PELLETPIRATE</h1>
+<div class="alarm" id="alarm" onclick="ackAlarm()">
+  <span id="altxt"></span><br><span class="hint">tap to silence</span>
+</div>
 <div class="lbl">CURRENT</div>
 <div class="cur" id="gt">--</div>
 <div class="lbl">TARGET</div>
@@ -37,32 +63,95 @@ button.sm{font-size:.85rem;height:40px;min-width:52px;border-color:#555;color:#a
   <button id="up">+5</button>
 </div>
 <div class="mode off" id="mode">connecting&hellip;</div>
-<div class="lbl">PROBES</div>
+<div class="et" id="et"></div>
+<div class="acts">
+  <div class="act" id="af">FAN</div>
+  <div class="act" id="aa">AUGER</div>
+  <div class="act" id="ai">IGNITER</div>
+</div>
+<div class="modes" id="modes"></div>
+<div class="lbl">PROBES &middot; tap a probe to set up</div>
 <div class="probes" id="probes"></div>
 <div class="link" id="link"></div>
-<script>
-var tgtVal = null, pending = null, ws = null, pollTimer = null;
-var pTgt = [null,null,null,null], pPend = [null,null,null,null];
 
-// Build the four probe cards once
+<div id="editor">
+  <h2 id="ehead">PROBE 1</h2>
+  <div class="lbl">TARGET</div>
+  <div class="erow">
+    <button onclick="eBump('tg',-5)">&minus;5</button>
+    <div class="eval" id="etg">OFF</div>
+    <button onclick="eBump('tg',5)">+5</button>
+  </div>
+  <div class="lbl">MEAT</div><br>
+  <select id="emeat"></select>
+  <div class="lbl" style="margin-top:8px">ALARM</div>
+  <div class="erow">
+    <button onclick="eBump('am',-5)">&minus;5</button>
+    <div class="eval" id="eam">OFF</div>
+    <button onclick="eBump('am',5)">+5</button>
+  </div>
+  <div class="lbl">ALARM ACTION</div><br>
+  <select id="ealarm"></select>
+  <div class="ebtns">
+    <button class="sm" style="min-width:100px" onclick="eClear()">CLEAR PROBE</button>
+  </div>
+  <div class="ebtns">
+    <button style="min-width:120px" onclick="eSave()">SAVE</button>
+    <button class="sm" style="min-width:100px;height:50px" onclick="eClose()">CANCEL</button>
+  </div>
+</div>
+
+<script>
+// Keep in sync with ui_set_probes.c meat_types[] / alarm_types[]
+var MEATS = ['Brisket','Beef','Chicken','Fish','Lamb','Pork Butt','Turkey','Veg (for girls)','Wild Game'];
+var ALARMS = ['Baste','Custom','Secret','Turn','Wrap','Beer Me','Whiskey Shot','Margarita'];
+
+var tgtVal = null, pending = null, ws = null, pollTimer = null, curMode = '', last = null;
+
 (function(){
   var host = document.getElementById('probes'), html = '';
   for (var i = 0; i < 4; i++) {
-    html += '<div class="card dis" id="c'+i+'">' +
+    html += '<div class="card dis" id="c'+i+'" onclick="eOpen('+i+')">' +
       '<div class="nm" id="nm'+i+'">PROBE '+(i+1)+'</div>' +
       '<div class="pt" id="pt'+i+'">--</div>' +
-      '<div class="prow">' +
-        '<button class="sm" onclick="pBump('+i+',-5)">&minus;5</button>' +
-        '<div class="ptg" id="ptg'+i+'">OFF</div>' +
-        '<button class="sm" onclick="pBump('+i+',5)">+5</button>' +
-      '</div>' +
-      '<div class="prow"><button class="sm" onclick="pOff('+i+')">OFF</button></div>' +
+      '<div class="inf" id="inf'+i+'"></div>' +
       '</div>';
   }
   host.innerHTML = html;
+  var m = '', a = '';
+  for (var j = 0; j < MEATS.length; j++) m += '<option>'+MEATS[j]+'</option>';
+  for (var k = 0; k < ALARMS.length; k++) a += '<option>'+ALARMS[k]+'</option>';
+  document.getElementById('emeat').innerHTML = m;
+  document.getElementById('ealarm').innerHTML = a;
 })();
 
+var TOKS = { 'smoke':'SMOKE', 'supersmoke':'SUPER', 'cook':'COOK', 'keepwarm':'WARM', 'reignite':'RE-IGN' };
+
+function renderModes(mode){
+  var host = document.getElementById('modes'), html = '';
+  var active = (mode !== 'Off' && mode !== 'Ignite');
+  if (mode === 'Off') {
+    html += '<button class="go" onclick="setMode(\'start\')">START &middot; IGNITE</button>';
+  } else if (mode === 'Ignite') {
+    html += '<button class="go warn" style="background:#000;color:#FF4444" onclick="setMode(\'off\')">STOP IGNITE</button>';
+  }
+  for (var tok in TOKS) {
+    var on = active && mode.replace(/[ -]/g,'').toLowerCase() === tok ? ' on' : '';
+    var dim = active ? '' : ' dim';
+    var click = active ? ' onclick="setMode(\''+tok+'\')"' : '';
+    html += '<button class="chip'+on+dim+'"'+click+'>'+TOKS[tok]+'</button>';
+  }
+  var sdim = active ? '' : ' dim';
+  var sclick = active ? ' onclick="setMode(\'shutdown\')"' : '';
+  html += '<button class="chip warn'+sdim+'"'+sclick+'>SHUTDOWN</button>';
+  if (mode === 'Shutdown') {
+    html += '<button class="chip warn" onclick="setMode(\'off\')">OFF NOW</button>';
+  }
+  host.innerHTML = html;
+}
+
 function render(s){
+  last = s;
   document.getElementById('gt').textContent = Math.round(s.gt) + '°F';
   if (!pending) {
     tgtVal = s.tgt;
@@ -71,20 +160,40 @@ function render(s){
   var m = document.getElementById('mode');
   m.textContent = 'Mode: ' + s.mode;
   m.className = 'mode' + (s.mode === 'Off' ? ' off' : '');
+  if (s.mode !== curMode) { curMode = s.mode; renderModes(s.mode); }
+
+  document.getElementById('et').textContent =
+    (s.mode !== 'Off' && s.et > 0)
+      ? 'ET ' + Math.floor(s.et/60) + ':' + ('0'+(s.et%60)).slice(-2) : '';
+
+  document.getElementById('af').className = 'act' + (s.f ? ' on' : '');
+  document.getElementById('aa').className = 'act' + (s.a ? ' on' : '');
+  document.getElementById('ai').className = 'act' + (s.ig ? ' on' : '');
+
+  var ab = document.getElementById('alarm');
+  if (s.al) {
+    document.getElementById('altxt').textContent = s.alt;
+    ab.style.display = 'block';
+  } else {
+    ab.style.display = 'none';
+  }
 
   if (s.p) for (var i = 0; i < 4; i++) {
     var p = s.p[i];
-    var card = document.getElementById('c'+i);
-    card.className = 'card' + (p.en ? '' : ' dis');
+    document.getElementById('c'+i).className = 'card' + (p.en ? '' : ' dis');
     document.getElementById('nm'+i).textContent =
       'PROBE ' + (i+1) + (p.fd ? ' · ' + p.fd.toUpperCase() : '');
     document.getElementById('pt'+i).textContent =
       (p.en && p.t > 0) ? Math.round(p.t) + '°' : '--';
-    if (!pPend[i]) {
-      pTgt[i] = p.en ? p.tg : 0;
-      document.getElementById('ptg'+i).textContent =
-        (p.en && p.tg > 0) ? p.tg + '°' : 'OFF';
+    var inf = '';
+    if (p.en) {
+      inf = '<span class="g">goal ' + p.tg + '°</span>';
+      if (p.am > 0) inf += ' · <span class="r">' + p.am + '° ' + (p.at || 'alarm') + '</span>';
+      if (p.es >= 0) inf += '<br>~' + p.es + ' min';
+    } else {
+      inf = 'not set';
     }
+    document.getElementById('inf'+i).innerHTML = inf;
   }
 }
 
@@ -109,7 +218,6 @@ function connectWS(){
   };
 }
 
-// Grill target: optimistic local update, debounced POST
 function bump(delta){
   if (tgtVal === null) return;
   tgtVal = Math.min(499, Math.max(100, tgtVal + delta));
@@ -124,26 +232,58 @@ function bump(delta){
 document.getElementById('up').onclick = function(){ bump(5); };
 document.getElementById('dn').onclick = function(){ bump(-5); };
 
-// Probe targets: -5/+5 (starts at 160 from OFF), OFF button clears
-function pPost(i, val){
-  if (pPend[i]) clearTimeout(pPend[i]);
-  pPend[i] = setTimeout(async function(){
-    try{ await fetch('/api/probe-target', { method:'POST', body:(i+1) + ' ' + val }); }
-    catch(e){}
-    pPend[i] = null;
-  }, 600);
+async function setMode(tok){
+  if (tok === 'start' && !confirm('Start ignition?')) return;
+  if (tok === 'shutdown' && !confirm('Start shutdown burn-off?')) return;
+  try{ await fetch('/api/mode', { method:'POST', body: tok }); poll(); }
+  catch(e){}
 }
-function pBump(i, delta){
-  var v = pTgt[i] || 0;
-  v = v === 0 ? 160 : Math.min(499, Math.max(100, v + delta));
-  pTgt[i] = v;
-  document.getElementById('ptg'+i).textContent = v + '°';
-  pPost(i, v);
+async function ackAlarm(){
+  try{ await fetch('/api/alarm-ack', { method:'POST' }); poll(); }
+  catch(e){}
 }
-function pOff(i){
-  pTgt[i] = 0;
-  document.getElementById('ptg'+i).textContent = 'OFF';
-  pPost(i, 0);
+
+// --- Probe editor (mirrors the LCD Set Probes wizard) ---
+var eIdx = 0, eTg = 0, eAm = 0;
+
+function eShow(){
+  document.getElementById('etg').textContent = eTg > 0 ? eTg + '°' : 'OFF';
+  document.getElementById('eam').textContent = eAm > 0 ? eAm + '°' : 'OFF';
+}
+function eOpen(i){
+  if (!last || !last.p) return;
+  var p = last.p[i];
+  eIdx = i;
+  eTg = p.en ? p.tg : 0;
+  eAm = p.en ? p.am : 0;
+  document.getElementById('ehead').textContent = 'PROBE ' + (i+1);
+  var mi = MEATS.indexOf(p.fd); document.getElementById('emeat').selectedIndex = mi >= 0 ? mi : 0;
+  var ai = ALARMS.indexOf(p.at); document.getElementById('ealarm').selectedIndex = ai >= 0 ? ai : 0;
+  eShow();
+  document.getElementById('editor').style.display = 'block';
+}
+function eBump(which, delta){
+  if (which === 'tg') {
+    eTg = eTg === 0 ? (delta > 0 ? 160 : 0) : eTg + delta;
+    if (eTg < 100) eTg = 0;
+    if (eTg > 499) eTg = 499;
+  } else {
+    eAm = eAm === 0 ? (delta > 0 ? 160 : 0) : eAm + delta;
+    if (eAm < 100) eAm = 0;
+    if (eAm > 499) eAm = 499;
+  }
+  eShow();
+}
+function eClose(){ document.getElementById('editor').style.display = 'none'; }
+function eClear(){ eTg = 0; eAm = 0; eSave(); }
+async function eSave(){
+  var food = eTg > 0 ? document.getElementById('emeat').value : '';
+  var at = (eTg > 0 && eAm > 0) ? document.getElementById('ealarm').value : '';
+  var body = (eIdx+1) + '|' + eTg + '|' + eAm + '|' + food + '|' + at;
+  try{ await fetch('/api/probe-config', { method:'POST', body: body }); }
+  catch(e){}
+  eClose();
+  poll();
 }
 
 poll();

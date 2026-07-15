@@ -92,6 +92,7 @@ typedef struct {
     // WiFi
     bool wifi_connected;
     int wifi_rssi;
+    char wifi_ip[16];       // dotted-quad string, empty when disconnected
 
     // Diagnostics
     float auger_runtime_sec;

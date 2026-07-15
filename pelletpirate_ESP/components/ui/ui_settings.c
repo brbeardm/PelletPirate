@@ -9,6 +9,7 @@
 #include "ui_styles.h"
 #include "backlight.h"
 #include "encoder.h"
+#include "grill_state.h"
 #include "esp_log.h"
 #include <stdio.h>
 
@@ -18,6 +19,8 @@ static lv_obj_t *s_screen;
 static lv_obj_t *s_btn_bright;
 static lv_obj_t *s_lbl_bright_val;
 static lv_obj_t *s_btn_main;
+static lv_obj_t *s_lbl_wifi;
+static lv_timer_t *s_wifi_timer = NULL;
 
 // Brightness adjust state
 static bool s_adjusting = false;
@@ -97,8 +100,24 @@ static void bright_clicked(lv_event_t *e)
     s_adj_timer = lv_timer_create(adjust_timer_cb, 80, NULL);
 }
 
+static void wifi_info_refresh(lv_timer_t *timer)
+{
+    char buf[80];
+    grill_state_lock();
+    grill_state_t *gs = grill_state_get();
+    if (gs->wifi_connected && gs->wifi_ip[0]) {
+        snprintf(buf, sizeof(buf), "Connected  %d dBm\nhttp://%s\npelletpirate.local",
+                 gs->wifi_rssi, gs->wifi_ip);
+    } else {
+        snprintf(buf, sizeof(buf), "Not connected");
+    }
+    grill_state_unlock();
+    lv_label_set_text(s_lbl_wifi, buf);
+}
+
 static void go_main(lv_event_t *e)
 {
+    if (s_wifi_timer) { lv_timer_delete(s_wifi_timer); s_wifi_timer = NULL; }
     s_screen = NULL;
     lv_obj_t *menu = ui_main_menu_create();
     ui_load_screen(menu);
@@ -154,6 +173,22 @@ lv_obj_t *ui_settings_create(void)
     lv_obj_set_style_text_font(s_lbl_bright_val, &lv_font_montserrat_20, 0);
     lv_obj_align(s_lbl_bright_val, LV_ALIGN_RIGHT_MID, 0, 0);
     update_bright_display();
+    y += 48;
+
+    // WI-FI status (info only, not in the encoder group)
+    lv_obj_t *lbl_w = lv_label_create(s_screen);
+    lv_label_set_text(lbl_w, "WI-FI");
+    lv_obj_set_style_text_font(lbl_w, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_color(lbl_w, lv_color_hex(0xFFFFFF), 0);
+    lv_obj_set_pos(lbl_w, 14, y);
+    y += 28;
+
+    s_lbl_wifi = lv_label_create(s_screen);
+    lv_obj_set_style_text_font(s_lbl_wifi, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_color(s_lbl_wifi, UI_COLOR_ACCENT2, 0);
+    lv_obj_set_pos(s_lbl_wifi, 14, y);
+    wifi_info_refresh(NULL);
+    s_wifi_timer = lv_timer_create(wifi_info_refresh, 2000, NULL);
 
     // Main button
     s_btn_main = lv_button_create(s_screen);

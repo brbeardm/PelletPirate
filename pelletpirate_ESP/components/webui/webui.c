@@ -9,6 +9,7 @@
 #include "esp_netif.h"
 #include "esp_http_server.h"
 #include "esp_log.h"
+#include "mdns.h"
 #include "grill_state.h"
 #include "sdkconfig.h"
 
@@ -33,20 +34,32 @@ static int build_status_json(char *buf, int len)
     int rssi = 0;
     if (esp_wifi_sta_get_ap_info(&ap) == ESP_OK) rssi = ap.rssi;
 
+    char alarm_txt[72] = "";
+    bool alarm = grill_state_alarm_active();
+    if (alarm) grill_state_alarm_text(alarm_txt, sizeof(alarm_txt));
+
     grill_state_lock();
     grill_state_t *gs = grill_state_get();
     gs->wifi_rssi = rssi;
 
     int n = snprintf(buf, len,
-                     "{\"gt\":%.1f,\"tgt\":%d,\"mode\":\"%s\",\"rssi\":%d,\"p\":[",
+                     "{\"gt\":%.1f,\"tgt\":%d,\"mode\":\"%s\",\"rssi\":%d,"
+                     "\"et\":%d,\"f\":%d,\"a\":%d,\"ig\":%d,"
+                     "\"al\":%d,\"alt\":\"%s\",\"p\":[",
                      gs->grill_temp, gs->grill_target,
-                     grill_mode_name(gs->mode), rssi);
+                     grill_mode_name(gs->mode), rssi,
+                     grill_state_get_elapsed_minutes(),
+                     gs->fan_on ? 1 : 0, gs->auger_on ? 1 : 0,
+                     gs->igniter_on ? 1 : 0,
+                     alarm ? 1 : 0, alarm_txt);
     for (int i = 0; i < NUM_MEAT_PROBES && n < len; i++) {
         probe_state_t *p = &gs->probes[i];
         n += snprintf(buf + n, len - n,
-                      "%s{\"en\":%d,\"t\":%.1f,\"tg\":%d,\"fd\":\"%s\"}",
+                      "%s{\"en\":%d,\"t\":%.1f,\"tg\":%d,\"es\":%d,"
+                      "\"am\":%d,\"at\":\"%s\",\"fd\":\"%s\"}",
                       i ? "," : "", p->enabled ? 1 : 0, p->current_temp,
-                      (int)p->target_temp, p->food_type);
+                      (int)p->target_temp, grill_state_get_est_minutes(i),
+                      (int)p->alarm_temp, p->alarm_type, p->food_type);
     }
     if (n < len) n += snprintf(buf + n, len - n, "]}");
     grill_state_unlock();
@@ -62,7 +75,7 @@ static esp_err_t root_get_handler(httpd_req_t *req)
                            index_html_end - index_html_start);
 }
 
-#define STATUS_JSON_MAX 512
+#define STATUS_JSON_MAX 896
 
 static esp_err_t status_get_handler(httpd_req_t *req)
 {
@@ -136,6 +149,144 @@ static esp_err_t probe_post_handler(httpd_req_t *req)
     grill_state_unlock();
     ESP_LOGI(TAG, "web: probe %d target set to %d", idx, t);
 
+    return status_get_handler(req);
+}
+
+// POST /api/probe-config — full probe setup matching the LCD wizard.
+// Body is pipe-delimited: idx|target|alarm|food|alarmtype
+// e.g. 2|203|165|Brisket|Wrap. Target 0 disables and clears everything
+// (LCD semantics); alarm 0 clears the alarm and its type.
+static esp_err_t probe_config_post_handler(httpd_req_t *req)
+{
+    char body[96] = { 0 };
+    int recv_len = req->content_len < (int)sizeof(body) - 1
+                       ? req->content_len : (int)sizeof(body) - 1;
+    int r = httpd_req_recv(req, body, recv_len);
+    if (r <= 0) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "empty body");
+        return ESP_FAIL;
+    }
+
+    // Split into 5 fields on '|', preserving empty fields
+    char *f[5] = { body, NULL, NULL, NULL, NULL };
+    int nf = 1;
+    for (char *c = body; *c && nf < 5; c++) {
+        if (*c == '|') { *c = '\0'; f[nf++] = c + 1; }
+    }
+    if (nf < 5) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "want: idx|target|alarm|food|alarmtype");
+        return ESP_FAIL;
+    }
+    int idx = atoi(f[0]);
+    int tg = atoi(f[1]);
+    int am = atoi(f[2]);
+    if (idx < 1 || idx > NUM_MEAT_PROBES ||
+        (tg != 0 && (tg < 100 || tg > 499)) ||
+        (am != 0 && (am < 100 || am > 499))) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "value out of range");
+        return ESP_FAIL;
+    }
+
+    grill_state_lock();
+    probe_state_t *p = &grill_state_get()->probes[idx - 1];
+    if (tg == 0) {
+        p->enabled = false;
+        p->target_temp = 0;
+        p->alarm_temp = 0;
+        p->food_type[0] = '\0';
+        p->alarm_type[0] = '\0';
+    } else {
+        p->enabled = true;
+        p->target_temp = (float)tg;
+        strlcpy(p->food_type, f[3], sizeof(p->food_type));
+        if (am == 0) {
+            p->alarm_temp = 0;
+            p->alarm_type[0] = '\0';
+        } else {
+            p->alarm_temp = (float)am;
+            strlcpy(p->alarm_type, f[4], sizeof(p->alarm_type));
+        }
+    }
+    grill_state_save_to_nvs();
+    grill_state_unlock();
+    ESP_LOGI(TAG, "web: probe %d configured (tg=%d am=%d food='%s' type='%s')",
+             idx, tg, am, f[3], f[4]);
+
+    return status_get_handler(req);
+}
+
+// POST /api/mode — body is a mode token. Guards mirror the LCD exactly:
+// start only from Off; cook modes and shutdown only when not Off/Ignite
+// (the LCD grays out COOK MODE in those states); off always allowed.
+static esp_err_t mode_post_handler(httpd_req_t *req)
+{
+    char body[16] = { 0 };
+    int recv_len = req->content_len < (int)sizeof(body) - 1
+                       ? req->content_len : (int)sizeof(body) - 1;
+    int r = httpd_req_recv(req, body, recv_len);
+    if (r <= 0) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "empty body");
+        return ESP_FAIL;
+    }
+
+    static const struct { const char *tok; grill_mode_t m; } map[] = {
+        { "off",        GRILL_MODE_OFF },
+        { "start",      GRILL_MODE_START },
+        { "smoke",      GRILL_MODE_SMOKE },
+        { "supersmoke", GRILL_MODE_SUPER_SMOKE },
+        { "cook",       GRILL_MODE_COOK },
+        { "keepwarm",   GRILL_MODE_KEEP_WARM },
+        { "shutdown",   GRILL_MODE_SHUTDOWN },
+        { "reignite",   GRILL_MODE_REIGNITE },
+    };
+    int found = -1;
+    for (int i = 0; i < (int)(sizeof(map) / sizeof(map[0])); i++) {
+        if (strncmp(body, map[i].tok, sizeof(body)) == 0) { found = i; break; }
+    }
+    if (found < 0) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "unknown mode");
+        return ESP_FAIL;
+    }
+    grill_mode_t want = map[found].m;
+
+    grill_state_lock();
+    grill_state_t *gs = grill_state_get();
+    grill_mode_t cur = gs->mode;
+
+    bool ok;
+    if (want == GRILL_MODE_OFF) {
+        ok = true;
+    } else if (want == GRILL_MODE_START) {
+        ok = (cur == GRILL_MODE_OFF);
+    } else {
+        // cook modes, shutdown, reignite: same gate as the LCD COOK MODE menu
+        ok = (cur != GRILL_MODE_OFF && cur != GRILL_MODE_START);
+    }
+
+    if (ok) {
+        gs->mode = want;
+        if (want == GRILL_MODE_OFF) {
+            gs->fan_on = false;
+            gs->auger_on = false;
+            gs->igniter_on = false;
+        }
+    }
+    grill_state_unlock();
+
+    if (!ok) {
+        ESP_LOGW(TAG, "web: mode '%s' rejected (current %s)", body, grill_mode_name(cur));
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "not allowed in current mode");
+        return ESP_FAIL;
+    }
+    ESP_LOGI(TAG, "web: mode set to %s (was %s)", grill_mode_name(want), grill_mode_name(cur));
+    return status_get_handler(req);
+}
+
+// POST /api/alarm-ack — acknowledge all active alarms (same as LCD hold)
+static esp_err_t alarm_ack_post_handler(httpd_req_t *req)
+{
+    grill_state_alarm_ack();
+    ESP_LOGI(TAG, "web: alarms acknowledged");
     return status_get_handler(req);
 }
 
@@ -246,6 +397,15 @@ static void start_webserver(void)
     const httpd_uri_t probe = {
         .uri = "/api/probe-target", .method = HTTP_POST, .handler = probe_post_handler,
     };
+    const httpd_uri_t probe_cfg = {
+        .uri = "/api/probe-config", .method = HTTP_POST, .handler = probe_config_post_handler,
+    };
+    const httpd_uri_t mode = {
+        .uri = "/api/mode", .method = HTTP_POST, .handler = mode_post_handler,
+    };
+    const httpd_uri_t ack = {
+        .uri = "/api/alarm-ack", .method = HTTP_POST, .handler = alarm_ack_post_handler,
+    };
     const httpd_uri_t ws = {
         .uri = "/ws", .method = HTTP_GET, .handler = ws_handler,
         .is_websocket = true,
@@ -254,6 +414,9 @@ static void start_webserver(void)
     httpd_register_uri_handler(s_server, &status);
     httpd_register_uri_handler(s_server, &target);
     httpd_register_uri_handler(s_server, &probe);
+    httpd_register_uri_handler(s_server, &probe_cfg);
+    httpd_register_uri_handler(s_server, &mode);
+    httpd_register_uri_handler(s_server, &ack);
     httpd_register_uri_handler(s_server, &ws);
     ESP_LOGI(TAG, "HTTP server started (REST + WS)");
 }
@@ -268,6 +431,7 @@ static void wifi_event_handler(void *arg, esp_event_base_t base,
     } else if (base == WIFI_EVENT && id == WIFI_EVENT_STA_DISCONNECTED) {
         grill_state_lock();
         grill_state_get()->wifi_connected = false;
+        grill_state_get()->wifi_ip[0] = '\0';
         grill_state_unlock();
         s_retry_count++;
         if (s_retry_count <= 5 || s_retry_count % 12 == 0) {
@@ -281,7 +445,9 @@ static void wifi_event_handler(void *arg, esp_event_base_t base,
         s_retry_count = 0;
         ESP_LOGI(TAG, "WiFi connected: " IPSTR, IP2STR(&event->ip_info.ip));
         grill_state_lock();
-        grill_state_get()->wifi_connected = true;
+        grill_state_t *gs = grill_state_get();
+        gs->wifi_connected = true;
+        snprintf(gs->wifi_ip, sizeof(gs->wifi_ip), IPSTR, IP2STR(&event->ip_info.ip));
         grill_state_unlock();
         start_webserver();
     }
@@ -317,6 +483,16 @@ void webui_init(void)
     esp_wifi_set_config(WIFI_IF_STA, &wifi_config);
     err = esp_wifi_start();
     if (err != ESP_OK) { ESP_LOGE(TAG, "wifi start failed: %s", esp_err_to_name(err)); return; }
+
+    // mDNS: reachable as pelletpirate.local (iOS/macOS reliably; Android
+    // often can't resolve .local — the LCD Settings screen shows the IP)
+    if (mdns_init() == ESP_OK) {
+        mdns_hostname_set("pelletpirate");
+        mdns_instance_name_set("PelletPirate Grill Controller");
+        ESP_LOGI(TAG, "mDNS: pelletpirate.local");
+    } else {
+        ESP_LOGW(TAG, "mDNS init failed (IP access still works)");
+    }
 
     xTaskCreate(ws_push_task, "ws_push", 4096, NULL, 4, NULL);
 

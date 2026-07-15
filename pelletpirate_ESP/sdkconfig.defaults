@@ -17,3 +17,6 @@ CONFIG_LV_DRAW_SW_SUPPORT_RGB565_SWAPPED=y
 
 # WebSocket support for the WiFi dashboard
 CONFIG_HTTPD_WS_SUPPORT=y
+
+# Size optimization: WiFi stack + LVGL leave little app-partition headroom at -Og
+CONFIG_COMPILER_OPTIMIZATION_SIZE=y
