@@ -43,7 +43,9 @@ static void fmt_time(char *buf, int len)
     struct tm tm;
     localtime_r(&now, &tm);
     if (tm.tm_year + 1900 >= 2020) {
-        snprintf(buf, len, "%02d:%02d:%02d", tm.tm_hour, tm.tm_min, tm.tm_sec);
+        // Full ISO date-time so spreadsheets parse it directly and cooks
+        // crossing midnight stay unambiguous
+        strftime(buf, len, "%Y-%m-%d %H:%M:%S", &tm);
     } else {
         // No wall clock (SNTP not synced) — seconds since boot
         snprintf(buf, len, "+%lld", esp_timer_get_time() / 1000000LL);
@@ -53,7 +55,7 @@ static void fmt_time(char *buf, int len)
 // Build one CSV row with the full state snapshot. Takes the state lock.
 static void build_row(char *buf, int len, char ev, const char *note)
 {
-    char ts[16];
+    char ts[24];
     fmt_time(ts, sizeof(ts));
 
     grill_state_lock();
