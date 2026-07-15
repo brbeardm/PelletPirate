@@ -6,6 +6,7 @@
 
 #include "ui_dashboard.h"
 #include "ui_main_menu.h"
+#include "ui_set_probes.h"
 #include "ui.h"
 #include "ui_styles.h"
 #include "grill_state.h"
@@ -34,10 +35,11 @@ typedef struct {
 
 static probe_row_t s_probes[NUM_MEAT_PROBES];
 
-typedef enum { DASH_FOCUS_TARGET, DASH_FOCUS_MAIN } dash_focus_t;
+// Focus order: 0 = target, 1-4 = probe rows, 5 = Main
+enum { DASH_FOCUS_TARGET = 0, DASH_FOCUS_P1 = 1, DASH_FOCUS_MAIN = 5, DASH_FOCUS_COUNT = 6 };
 typedef enum { DASH_MODE_NAV, DASH_MODE_ADJUST } dash_mode_t;
 
-static dash_focus_t s_focus;
+static int s_focus;
 static dash_mode_t s_mode;
 static int s_adj_target;
 static lv_timer_t *s_enc_timer = NULL;
@@ -65,20 +67,41 @@ static void update_focus_visual(void)
         lv_obj_clear_flag(s_lbl_adjust, LV_OBJ_FLAG_HIDDEN);
         update_adjust_display();
         lv_obj_set_style_bg_color(s_btn_main, lv_color_hex(0x000000), 0);
-    } else {
-        lv_obj_clear_flag(s_lbl_target, LV_OBJ_FLAG_HIDDEN);
-        lv_obj_add_flag(s_lbl_adjust, LV_OBJ_FLAG_HIDDEN);
-        if (s_focus == DASH_FOCUS_TARGET) {
-            lv_obj_set_style_text_color(s_lbl_target, UI_COLOR_ACCENT, 0);
-            lv_obj_set_style_border_width(s_lbl_target, 2, 0);
-            lv_obj_set_style_border_color(s_lbl_target, UI_COLOR_ACCENT, 0);
-            lv_obj_set_style_border_opa(s_lbl_target, LV_OPA_COVER, 0);
-            lv_obj_set_style_bg_color(s_btn_main, lv_color_hex(0x000000), 0);
-        } else {
-            lv_obj_set_style_border_opa(s_lbl_target, LV_OPA_TRANSP, 0);
-            lv_obj_set_style_bg_color(s_btn_main, UI_COLOR_ACCENT, 0);
-        }
+        for (int i = 0; i < NUM_MEAT_PROBES; i++)
+            lv_obj_set_style_border_opa(s_probes[i].lbl_name, LV_OPA_TRANSP, 0);
+        return;
     }
+
+    lv_obj_clear_flag(s_lbl_target, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(s_lbl_adjust, LV_OBJ_FLAG_HIDDEN);
+
+    // Target
+    if (s_focus == DASH_FOCUS_TARGET) {
+        lv_obj_set_style_text_color(s_lbl_target, UI_COLOR_ACCENT, 0);
+        lv_obj_set_style_border_width(s_lbl_target, 2, 0);
+        lv_obj_set_style_border_color(s_lbl_target, UI_COLOR_ACCENT, 0);
+        lv_obj_set_style_border_opa(s_lbl_target, LV_OPA_COVER, 0);
+    } else {
+        lv_obj_set_style_border_opa(s_lbl_target, LV_OPA_TRANSP, 0);
+    }
+
+    // Probe rows (focus = orange border on the name label)
+    for (int i = 0; i < NUM_MEAT_PROBES; i++) {
+        bool f = (s_focus == DASH_FOCUS_P1 + i);
+        lv_obj_set_style_border_opa(s_probes[i].lbl_name, f ? LV_OPA_COVER : LV_OPA_TRANSP, 0);
+    }
+
+    // Main button
+    lv_obj_set_style_bg_color(s_btn_main,
+        s_focus == DASH_FOCUS_MAIN ? UI_COLOR_ACCENT : lv_color_hex(0x000000), 0);
+}
+
+static void open_probe_setup(int probe_idx)
+{
+    if (s_enc_timer) { lv_timer_delete(s_enc_timer); s_enc_timer = NULL; }
+    ui_encoder_set_direct(false);
+    s_screen = NULL;
+    ui_load_screen(ui_set_probes_create_for(probe_idx));
 }
 
 static void dash_encoder_timer_cb(lv_timer_t *timer)
@@ -89,16 +112,17 @@ static void dash_encoder_timer_cb(lv_timer_t *timer)
 
     if (s_mode == DASH_MODE_NAV) {
         if (diff != 0) {
-            if (s_focus == DASH_FOCUS_TARGET && diff > 0)
-                s_focus = DASH_FOCUS_MAIN;
-            else if (s_focus == DASH_FOCUS_MAIN && diff < 0)
-                s_focus = DASH_FOCUS_TARGET;
+            s_focus += (diff > 0) ? 1 : -1;
+            if (s_focus < 0) s_focus = 0;
+            if (s_focus >= DASH_FOCUS_COUNT) s_focus = DASH_FOCUS_COUNT - 1;
             update_focus_visual();
         }
         if (btn == ENCODER_BTN_SHORT) {
             if (s_focus == DASH_FOCUS_TARGET) {
                 s_mode = DASH_MODE_ADJUST;
                 update_focus_visual();
+            } else if (s_focus >= DASH_FOCUS_P1 && s_focus < DASH_FOCUS_MAIN) {
+                open_probe_setup(s_focus - DASH_FOCUS_P1); return;
             } else {
                 go_main_direct(); return;
             }
@@ -198,10 +222,17 @@ lv_obj_t *ui_dashboard_create(void)
 
     // Probe rows with ET/EST bars — bold fonts for distance readability
     for (int i = 0; i < NUM_MEAT_PROBES; i++) {
-        // Row 1: name + temp (BOLD — montserrat_24)
+        // Row 1: name + temp (BOLD — montserrat_24). Name label doubles as
+        // the focus target for click-to-configure (orange border when focused).
         s_probes[i].lbl_name = lv_label_create(s_screen);
         lv_obj_set_style_text_font(s_probes[i].lbl_name, &lv_font_montserrat_24, 0);
         lv_obj_set_style_text_color(s_probes[i].lbl_name, lv_color_hex(0xFFFFFF), 0);
+        lv_obj_set_style_border_width(s_probes[i].lbl_name, 2, 0);
+        lv_obj_set_style_border_color(s_probes[i].lbl_name, UI_COLOR_ACCENT, 0);
+        lv_obj_set_style_border_opa(s_probes[i].lbl_name, LV_OPA_TRANSP, 0);
+        lv_obj_set_style_radius(s_probes[i].lbl_name, 4, 0);
+        lv_obj_set_style_pad_left(s_probes[i].lbl_name, 3, 0);
+        lv_obj_set_style_pad_right(s_probes[i].lbl_name, 3, 0);
         lv_obj_set_pos(s_probes[i].lbl_name, 4, y);
 
         s_probes[i].lbl_temp = lv_label_create(s_screen);

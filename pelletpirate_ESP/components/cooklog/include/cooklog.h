@@ -15,6 +15,8 @@
  * Oldest cook files are deleted when the partition runs low.
  */
 
+#include <stdbool.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -32,6 +34,9 @@ int cooklog_get_interval(void);
  */
 void cooklog_event(const char *source, const char *fmt, ...)
     __attribute__((format(printf, 2, 3)));
+
+/** True when the LittleFS partition mounted (profiles share it). */
+bool cooklog_fs_ready(void);
 
 #ifdef __cplusplus
 }

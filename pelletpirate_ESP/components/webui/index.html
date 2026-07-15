@@ -72,6 +72,9 @@ select{background:#111;color:#eee;border:2px solid #555;border-radius:8px;font-s
 <div class="modes" id="modes"></div>
 <div class="lbl">PROBES &middot; tap a probe to set up</div>
 <div class="probes" id="probes"></div>
+<div class="lbl" style="margin-top:18px">COOK PROFILES</div>
+<div style="margin:8px 0"><button class="sm" style="min-width:200px;border-color:#FF6B35;color:#FF6B35" onclick="saveProfile()">SAVE CURRENT COOK</button></div>
+<div id="profiles"></div>
 <div class="lbl" style="margin-top:18px">COOK LOGS</div>
 <div id="logs" style="margin-top:6px"></div>
 <div class="link" id="link"></div>
@@ -306,9 +309,35 @@ async function loadLogs(){
   }catch(e){}
 }
 
+async function loadProfiles(){
+  try{
+    var r = await fetch('/api/profiles');
+    var ps = await r.json();
+    var host = document.getElementById('profiles');
+    if (!ps.length) { host.innerHTML = '<span style="color:#555;font-size:.8rem">no saved cooks</span>'; return; }
+    var html = '';
+    for (var i = 0; i < ps.length; i++) {
+      html += '<div style="margin:6px 0"><button class="sm" style="min-width:230px" ' +
+        'onclick="loadProfile(\'' + ps[i].f + '\',\'' + ps[i].d.replace(/'/g,'') + '\')">' +
+        ps[i].d + '</button></div>';
+    }
+    host.innerHTML = html;
+  }catch(e){}
+}
+async function saveProfile(){
+  try{ await fetch('/api/profile-save', { method:'POST' }); loadProfiles(); }
+  catch(e){}
+}
+async function loadProfile(f, d){
+  if (!confirm('Load "' + d + '"? This replaces the current target and probe setup.')) return;
+  try{ await fetch('/api/profile-load', { method:'POST', body: f }); poll(); }
+  catch(e){}
+}
+
 poll();
 connectWS();
 loadLogs();
+loadProfiles();
 setInterval(loadLogs, 60000);
 </script>
 </body>

@@ -10,6 +10,7 @@
 
 #include "ui_set_probes.h"
 #include "ui_main_menu.h"
+#include "ui_dashboard.h"
 #include "ui.h"
 #include "ui_styles.h"
 #include "grill_state.h"
@@ -80,12 +81,15 @@ static int s_saved_meat_idx, s_saved_alarm_idx;
 
 static void update_all(void);
 
+// True when entered from the dashboard probe rows — exit returns there
+static bool s_from_dashboard = false;
+
 static void go_main_direct(void) {
     if (s_timer) { lv_timer_delete(s_timer); s_timer = NULL; }
     ui_encoder_set_direct(false);
     s_screen = NULL;
-    lv_obj_t *menu = ui_main_menu_create();
-    ui_load_screen(menu);
+    lv_obj_t *next = s_from_dashboard ? ui_dashboard_create() : ui_main_menu_create();
+    ui_load_screen(next);
 }
 
 static int get_digit_value(void) {
@@ -341,6 +345,7 @@ static void timer_cb(lv_timer_t *timer) {
                 update_all();
             } else if (s_cursor == L2_SAVE) {
                 save_probe();
+                if (s_from_dashboard) { go_main_direct(); return; }
                 s_state = LVL1_SCROLL;
                 s_cursor = s_probe_idx;
                 update_all();
@@ -463,6 +468,7 @@ static void timer_cb(lv_timer_t *timer) {
         // Save is highlighted, just waiting for click
         if (btn == ENCODER_BTN_SHORT) {
             save_probe();
+            if (s_from_dashboard) { go_main_direct(); return; }
             s_state = LVL1_SCROLL;
             s_cursor = s_probe_idx;
             update_all();
@@ -484,6 +490,7 @@ lv_obj_t *ui_set_probes_create(void) {
     s_probe_idx = 0;
     s_saved_meat_idx = -1;
     s_saved_alarm_idx = -1;
+    s_from_dashboard = false;
 
     lv_group_t *g = lv_group_get_default();
     if (g) lv_group_remove_all_objs(g);
@@ -650,4 +657,19 @@ lv_obj_t *ui_set_probes_create(void) {
     s_timer = lv_timer_create(timer_cb, 80, NULL);
 
     return s_screen;
+}
+
+// Entry from the dashboard probe rows: opens directly at Level 2 for the
+// given probe; all exits return to the dashboard instead of the main menu.
+lv_obj_t *ui_set_probes_create_for(int probe_idx) {
+    lv_obj_t *scr = ui_set_probes_create();
+    if (probe_idx >= 0 && probe_idx < 4) {
+        s_from_dashboard = true;
+        s_probe_idx = probe_idx;
+        s_cursor = L2_TARGET;
+        s_state = LVL2_SCROLL;
+        load_probe_data();
+        update_all();
+    }
+    return scr;
 }

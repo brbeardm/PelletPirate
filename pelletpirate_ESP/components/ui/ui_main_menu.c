@@ -11,7 +11,7 @@
 #include "ui_styles.h"
 #include "ui_ignite.h"
 #include "ui_cook_mode.h"
-#include "ui_set_probes.h"
+#include "ui_profiles.h"
 #include "ui_dashboard.h"
 #include "ui_settings.h"
 #include "grill_state.h"
@@ -50,7 +50,7 @@ typedef enum {
     MENU_IGNITE,
     MENU_DASHBOARD,
     MENU_COOK_MODE,
-    MENU_SET_PROBES,
+    MENU_PROFILES,      // probe setup now lives on the dashboard rows
     MENU_SETTINGS,
     MENU_GRAPHS,
 } menu_item_t;
@@ -62,7 +62,7 @@ static const char *menu_labels[] = {
     "START NOW - IGNITE",
     "COOK DASHBOARD",
     "COOK MODE",
-    "SET PROBES",
+    "COOK PROFILES",
     "SETTINGS",
     "GRAPHS",
 };
@@ -213,8 +213,8 @@ static void navigate_to(lv_event_t *e)
         next = ui_cook_mode_create();
         break;
     }
-    case MENU_SET_PROBES:
-        next = ui_set_probes_create();
+    case MENU_PROFILES:
+        next = ui_profiles_create();
         break;
     case MENU_DASHBOARD:
         next = ui_dashboard_create();

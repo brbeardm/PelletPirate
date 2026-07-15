@@ -267,6 +267,11 @@ int cooklog_get_interval(void)
     return s_interval;
 }
 
+bool cooklog_fs_ready(void)
+{
+    return s_mounted;
+}
+
 void cooklog_init(void)
 {
     s_mutex = xSemaphoreCreateMutex();
