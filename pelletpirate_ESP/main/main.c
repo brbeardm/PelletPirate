@@ -18,6 +18,7 @@
 #include "max31865.h"
 #include "actuator.h"
 #include "webui.h"
+#include "cooklog.h"
 #include "ui.h"
 
 static const char *TAG = "pelletpirate";
@@ -160,6 +161,9 @@ void app_main(void)
     // Init encoder and grill state
     encoder_init();
     grill_state_init();
+
+    // Cook audit logging to the LittleFS partition
+    cooklog_init();
 
     // Init the 5 RTD converters on the shared SPI bus and start polling.
     // A failed channel logs an error and reads as 0.0F; the rest keep going.

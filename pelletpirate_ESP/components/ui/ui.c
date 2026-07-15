@@ -8,6 +8,7 @@
 #include "hx8357d.h"
 #include "encoder.h"
 #include "grill_state.h"
+#include "cooklog.h"
 
 #include <stdio.h>
 #include "freertos/FreeRTOS.h"
@@ -143,6 +144,7 @@ static void ui_alarm_update(void)
             s_ack_hold_start = esp_timer_get_time();
         } else if (esp_timer_get_time() - s_ack_hold_start > ALARM_ACK_HOLD_US) {
             grill_state_alarm_ack();
+            cooklog_event("lcd", "ALARM ACK");
             s_ack_hold_start = 0;
         }
     } else {

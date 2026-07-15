@@ -10,6 +10,7 @@
 #include "backlight.h"
 #include "encoder.h"
 #include "grill_state.h"
+#include "cooklog.h"
 #include "esp_log.h"
 #include <stdio.h>
 
@@ -21,6 +22,8 @@ static lv_obj_t *s_lbl_bright_val;
 static lv_obj_t *s_btn_main;
 static lv_obj_t *s_lbl_wifi;
 static lv_timer_t *s_wifi_timer = NULL;
+static lv_obj_t *s_btn_log;
+static lv_obj_t *s_lbl_log_val;
 
 // Brightness adjust state
 static bool s_adjusting = false;
@@ -34,7 +37,23 @@ static void setup_group(void)
     lv_group_remove_all_objs(g);
     lv_group_set_wrap(g, false);
     lv_group_add_obj(g, s_btn_bright);
+    lv_group_add_obj(g, s_btn_log);
     lv_group_add_obj(g, s_btn_main);
+}
+
+static void update_log_display(void)
+{
+    int iv = cooklog_get_interval();
+    lv_label_set_text(s_lbl_log_val, iv == 0 ? "OFF" : (iv == 30 ? "30s" : "10s"));
+}
+
+// Click cycles 30s -> 10s -> OFF -> 30s
+static void log_clicked(lv_event_t *e)
+{
+    int iv = cooklog_get_interval();
+    int next = (iv == 30) ? 10 : (iv == 10) ? 0 : 30;
+    cooklog_set_interval(next);
+    update_log_display();
 }
 
 static void update_bright_display(void)
@@ -173,6 +192,38 @@ lv_obj_t *ui_settings_create(void)
     lv_obj_set_style_text_font(s_lbl_bright_val, &lv_font_montserrat_20, 0);
     lv_obj_align(s_lbl_bright_val, LV_ALIGN_RIGHT_MID, 0, 0);
     update_bright_display();
+    y += 48;
+
+    // Cook logging interval (click cycles 30s -> 10s -> OFF)
+    s_btn_log = lv_button_create(s_screen);
+    lv_obj_set_size(s_btn_log, 304, 36);
+    lv_obj_set_pos(s_btn_log, 8, y);
+    lv_obj_set_style_bg_color(s_btn_log, lv_color_hex(0x000000), 0);
+    lv_obj_set_style_bg_opa(s_btn_log, LV_OPA_COVER, 0);
+    lv_obj_set_style_border_color(s_btn_log, UI_COLOR_ACCENT, 0);
+    lv_obj_set_style_border_width(s_btn_log, 2, 0);
+    lv_obj_set_style_border_opa(s_btn_log, LV_OPA_TRANSP, 0);
+    lv_obj_set_style_radius(s_btn_log, 4, 0);
+    lv_obj_set_style_pad_left(s_btn_log, 6, 0);
+    lv_obj_set_style_pad_right(s_btn_log, 6, 0);
+    lv_obj_set_style_pad_top(s_btn_log, 2, 0);
+    lv_obj_set_style_pad_bottom(s_btn_log, 2, 0);
+    lv_obj_set_style_shadow_width(s_btn_log, 0, 0);
+    lv_obj_set_style_border_opa(s_btn_log, LV_OPA_COVER, LV_STATE_FOCUSED);
+    lv_obj_set_style_bg_color(s_btn_log, UI_COLOR_ACCENT, LV_STATE_FOCUSED);
+    lv_obj_add_event_cb(s_btn_log, log_clicked, LV_EVENT_CLICKED, NULL);
+
+    lv_obj_t *ll = lv_label_create(s_btn_log);
+    lv_label_set_text(ll, "COOK LOG");
+    lv_obj_set_style_text_font(ll, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_color(ll, lv_color_hex(0xFFFFFF), 0);
+    lv_obj_align(ll, LV_ALIGN_LEFT_MID, 0, 0);
+
+    s_lbl_log_val = lv_label_create(s_btn_log);
+    lv_obj_set_style_text_font(s_lbl_log_val, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_color(s_lbl_log_val, UI_COLOR_ACCENT, 0);
+    lv_obj_align(s_lbl_log_val, LV_ALIGN_RIGHT_MID, 0, 0);
+    update_log_display();
     y += 48;
 
     // WI-FI status (info only, not in the encoder group)

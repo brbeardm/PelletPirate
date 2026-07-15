@@ -13,6 +13,7 @@
 #include "ui.h"
 #include "ui_styles.h"
 #include "grill_state.h"
+#include "cooklog.h"
 #include "encoder.h"
 #include "esp_log.h"
 #include <stdio.h>
@@ -135,6 +136,8 @@ static void save_probe(void) {
     grill_state_unlock();
     ESP_LOGI(TAG, "Saved probe %d: %s t=%.0f a=%.0f %s",
              s_probe_idx+1, s_work_food, s_work_target, s_work_alarm, s_work_alarm_type);
+    cooklog_event("lcd", "PROBE %d cfg tg=%d al=%d %s/%s", s_probe_idx + 1,
+                  (int)s_work_target, (int)s_work_alarm, s_work_food, s_work_alarm_type);
     load_probe_data();
 }
 

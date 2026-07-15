@@ -14,4 +14,13 @@ menu "PelletPirate WebUI"
             Password of the local WiFi network. Set the real value in
             sdkconfig (gitignored) — do not commit credentials.
 
+    config PELLETPIRATE_TZ
+        string "Local timezone (POSIX TZ string)"
+        default "CST6CDT,M3.2.0/2,M11.1.0/2"
+        help
+            Used for cook-log timestamps. Default is US Central with DST.
+            US Eastern: EST5EDT,M3.2.0/2,M11.1.0/2
+            US Mountain: MST7MDT,M3.2.0/2,M11.1.0/2
+            US Pacific: PST8PDT,M3.2.0/2,M11.1.0/2
+
 endmenu

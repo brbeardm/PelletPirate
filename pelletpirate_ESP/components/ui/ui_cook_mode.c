@@ -9,6 +9,7 @@
 #include "ui.h"
 #include "ui_styles.h"
 #include "grill_state.h"
+#include "cooklog.h"
 #include "esp_log.h"
 #include <stdio.h>
 
@@ -54,6 +55,7 @@ static void do_save(lv_event_t *e)
     grill_state_lock();
     grill_state_get()->mode = s_selected_mode;
     grill_state_unlock();
+    cooklog_event("lcd", "MODE %s", grill_mode_name(s_selected_mode));
     go_main(e);
 }
 

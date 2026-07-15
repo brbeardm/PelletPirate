@@ -11,6 +11,7 @@
 #include "ui.h"
 #include "ui_styles.h"
 #include "grill_state.h"
+#include "cooklog.h"
 #include "esp_log.h"
 #include <stdio.h>
 
@@ -42,6 +43,7 @@ static void do_ignite(lv_event_t *e)
     gs->auger_on = true;
     gs->igniter_on = true;
     grill_state_unlock();
+    cooklog_event("lcd", "MODE Off>Ignite (start)");
 
     go_main(e);
 }

@@ -16,6 +16,7 @@
 #include "ui_settings.h"
 #include "grill_state.h"
 #include "encoder.h"
+#include "cooklog.h"
 #include "esp_log.h"
 #include <stdio.h>
 
@@ -97,6 +98,7 @@ static void finish_editing(bool save)
         grill_state_get()->grill_target = temp;
         grill_state_save_to_nvs();
         grill_state_unlock();
+        cooklog_event("lcd", "TARGET %d", temp);
     }
 
     // Hide digit editor, show normal target label
@@ -192,6 +194,7 @@ static void navigate_to(lv_event_t *e)
             gs2->auger_on = false;
             gs2->igniter_on = false;
             grill_state_unlock();
+            cooklog_event("lcd", "MODE Ignite>Off (stop)");
             ui_main_menu_update();
             return;
         }

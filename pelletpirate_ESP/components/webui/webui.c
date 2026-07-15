@@ -2,8 +2,13 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#include <dirent.h>
+#include <sys/stat.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "esp_netif_sntp.h"
+#include "cooklog.h"
 #include "esp_wifi.h"
 #include "esp_event.h"
 #include "esp_netif.h"
@@ -108,6 +113,7 @@ static esp_err_t target_post_handler(httpd_req_t *req)
     grill_state_save_to_nvs();
     grill_state_unlock();
     ESP_LOGI(TAG, "web: grill target set to %d", t);
+    cooklog_event("web", "TARGET %d", t);
 
     return status_get_handler(req);
 }
@@ -148,6 +154,7 @@ static esp_err_t probe_post_handler(httpd_req_t *req)
     grill_state_save_to_nvs();
     grill_state_unlock();
     ESP_LOGI(TAG, "web: probe %d target set to %d", idx, t);
+    cooklog_event("web", "PROBE %d target %d", idx, t);
 
     return status_get_handler(req);
 }
@@ -211,6 +218,7 @@ static esp_err_t probe_config_post_handler(httpd_req_t *req)
     grill_state_unlock();
     ESP_LOGI(TAG, "web: probe %d configured (tg=%d am=%d food='%s' type='%s')",
              idx, tg, am, f[3], f[4]);
+    cooklog_event("web", "PROBE %d cfg tg=%d al=%d %s/%s", idx, tg, am, f[3], f[4]);
 
     return status_get_handler(req);
 }
@@ -279,6 +287,7 @@ static esp_err_t mode_post_handler(httpd_req_t *req)
         return ESP_FAIL;
     }
     ESP_LOGI(TAG, "web: mode set to %s (was %s)", grill_mode_name(want), grill_mode_name(cur));
+    cooklog_event("web", "MODE %s>%s", grill_mode_name(cur), grill_mode_name(want));
     return status_get_handler(req);
 }
 
@@ -287,7 +296,63 @@ static esp_err_t alarm_ack_post_handler(httpd_req_t *req)
 {
     grill_state_alarm_ack();
     ESP_LOGI(TAG, "web: alarms acknowledged");
+    cooklog_event("web", "ALARM ACK");
     return status_get_handler(req);
+}
+
+// GET /api/log — list cook files; GET /api/log?f=<name> — stream one CSV
+static esp_err_t log_get_handler(httpd_req_t *req)
+{
+    char query[80], fname[48];
+    if (httpd_req_get_url_query_str(req, query, sizeof(query)) == ESP_OK &&
+        httpd_query_key_value(query, "f", fname, sizeof(fname)) == ESP_OK) {
+        if (strncmp(fname, "cook_", 5) != 0 || strchr(fname, '/') || strstr(fname, "..")) {
+            httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "bad filename");
+            return ESP_FAIL;
+        }
+        char path[64];
+        snprintf(path, sizeof(path), "/lfs/%s", fname);
+        FILE *file = fopen(path, "r");
+        if (!file) {
+            httpd_resp_send_err(req, HTTPD_404_NOT_FOUND, "no such log");
+            return ESP_FAIL;
+        }
+        httpd_resp_set_type(req, "text/csv");
+        char chunk[512];
+        size_t n;
+        while ((n = fread(chunk, 1, sizeof(chunk), file)) > 0) {
+            if (httpd_resp_send_chunk(req, chunk, n) != ESP_OK) {
+                fclose(file);
+                httpd_resp_send_chunk(req, NULL, 0);
+                return ESP_FAIL;
+            }
+        }
+        fclose(file);
+        return httpd_resp_send_chunk(req, NULL, 0);
+    }
+
+    // No query: list the cook files as JSON
+    char buf[512];
+    int n = snprintf(buf, sizeof(buf), "[");
+    DIR *dir = opendir("/lfs");
+    if (dir) {
+        struct dirent *de;
+        bool first = true;
+        while ((de = readdir(dir)) != NULL && n < (int)sizeof(buf) - 64) {
+            if (strncmp(de->d_name, "cook_", 5) != 0) continue;
+            char path[64];
+            struct stat st = { 0 };
+            snprintf(path, sizeof(path), "/lfs/%.40s", de->d_name);
+            stat(path, &st);
+            n += snprintf(buf + n, sizeof(buf) - n, "%s{\"n\":\"%.40s\",\"s\":%ld}",
+                          first ? "" : ",", de->d_name, (long)st.st_size);
+            first = false;
+        }
+        closedir(dir);
+    }
+    n += snprintf(buf + n, sizeof(buf) - n, "]");
+    httpd_resp_set_type(req, "application/json");
+    return httpd_resp_send(req, buf, n);
 }
 
 // --- WebSocket ---
@@ -406,6 +471,9 @@ static void start_webserver(void)
     const httpd_uri_t ack = {
         .uri = "/api/alarm-ack", .method = HTTP_POST, .handler = alarm_ack_post_handler,
     };
+    const httpd_uri_t logs = {
+        .uri = "/api/log", .method = HTTP_GET, .handler = log_get_handler,
+    };
     const httpd_uri_t ws = {
         .uri = "/ws", .method = HTTP_GET, .handler = ws_handler,
         .is_websocket = true,
@@ -417,6 +485,7 @@ static void start_webserver(void)
     httpd_register_uri_handler(s_server, &probe_cfg);
     httpd_register_uri_handler(s_server, &mode);
     httpd_register_uri_handler(s_server, &ack);
+    httpd_register_uri_handler(s_server, &logs);
     httpd_register_uri_handler(s_server, &ws);
     ESP_LOGI(TAG, "HTTP server started (REST + WS)");
 }
@@ -449,12 +518,25 @@ static void wifi_event_handler(void *arg, esp_event_base_t base,
         gs->wifi_connected = true;
         snprintf(gs->wifi_ip, sizeof(gs->wifi_ip), IPSTR, IP2STR(&event->ip_info.ip));
         grill_state_unlock();
+
+        // Wall-clock time for cook-log timestamps
+        static bool sntp_started = false;
+        if (!sntp_started) {
+            sntp_started = true;
+            esp_sntp_config_t sntp_cfg = ESP_NETIF_SNTP_DEFAULT_CONFIG("pool.ntp.org");
+            esp_netif_sntp_init(&sntp_cfg);
+        }
+
         start_webserver();
     }
 }
 
 void webui_init(void)
 {
+    // Local timezone for human-readable cook-log timestamps
+    setenv("TZ", CONFIG_PELLETPIRATE_TZ, 1);
+    tzset();
+
     esp_err_t err = esp_netif_init();
     if (err != ESP_OK) { ESP_LOGE(TAG, "netif init failed"); return; }
     err = esp_event_loop_create_default();
