@@ -95,6 +95,16 @@ static void profile_clicked(lv_event_t *e)
     }
 }
 
+// Accent-colored row text would vanish on the orange focus bar — invert
+// to black while focused (same convention as digit editing).
+static void accent_row_focus_cb(lv_event_t *e)
+{
+    lv_obj_t *btn = lv_event_get_target(e);
+    lv_obj_set_style_text_color(lv_obj_get_child(btn, 0),
+        lv_event_get_code(e) == LV_EVENT_FOCUSED ? lv_color_hex(0x000000)
+                                                 : UI_COLOR_ACCENT, 0);
+}
+
 static lv_obj_t *make_row(int y, const char *text, bool accent)
 {
     lv_obj_t *btn = lv_button_create(s_screen);
@@ -118,6 +128,10 @@ static lv_obj_t *make_row(int y, const char *text, bool accent)
     lv_obj_set_style_text_font(l, &lv_font_montserrat_20, 0);
     lv_obj_set_style_text_color(l, accent ? UI_COLOR_ACCENT : lv_color_hex(0xFFFFFF), 0);
     lv_obj_align(l, LV_ALIGN_LEFT_MID, 0, 0);
+    if (accent) {
+        lv_obj_add_event_cb(btn, accent_row_focus_cb, LV_EVENT_FOCUSED, NULL);
+        lv_obj_add_event_cb(btn, accent_row_focus_cb, LV_EVENT_DEFOCUSED, NULL);
+    }
     return btn;
 }
 

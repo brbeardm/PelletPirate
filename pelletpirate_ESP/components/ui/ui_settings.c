@@ -56,6 +56,25 @@ static void log_clicked(lv_event_t *e)
     update_log_display();
 }
 
+static void update_bright_display(void);
+
+// Accent-colored value text would vanish on the orange focus bar — invert
+// to black while the row is focused (same convention as digit editing).
+static void bright_focus_cb(lv_event_t *e)
+{
+    if (lv_event_get_code(e) == LV_EVENT_FOCUSED)
+        lv_obj_set_style_text_color(s_lbl_bright_val, lv_color_hex(0x000000), 0);
+    else
+        update_bright_display();  // restores accent, or green mid-adjust
+}
+
+static void log_focus_cb(lv_event_t *e)
+{
+    lv_obj_set_style_text_color(s_lbl_log_val,
+        lv_event_get_code(e) == LV_EVENT_FOCUSED ? lv_color_hex(0x000000)
+                                                 : UI_COLOR_ACCENT, 0);
+}
+
 static void update_bright_display(void)
 {
     char buf[16];
@@ -181,6 +200,8 @@ lv_obj_t *ui_settings_create(void)
     lv_obj_set_style_border_opa(s_btn_bright, LV_OPA_COVER, LV_STATE_FOCUSED);
     lv_obj_set_style_bg_color(s_btn_bright, UI_COLOR_ACCENT, LV_STATE_FOCUSED);
     lv_obj_add_event_cb(s_btn_bright, bright_clicked, LV_EVENT_CLICKED, NULL);
+    lv_obj_add_event_cb(s_btn_bright, bright_focus_cb, LV_EVENT_FOCUSED, NULL);
+    lv_obj_add_event_cb(s_btn_bright, bright_focus_cb, LV_EVENT_DEFOCUSED, NULL);
 
     lv_obj_t *l = lv_label_create(s_btn_bright);
     lv_label_set_text(l, "BRIGHTNESS");
@@ -212,6 +233,8 @@ lv_obj_t *ui_settings_create(void)
     lv_obj_set_style_border_opa(s_btn_log, LV_OPA_COVER, LV_STATE_FOCUSED);
     lv_obj_set_style_bg_color(s_btn_log, UI_COLOR_ACCENT, LV_STATE_FOCUSED);
     lv_obj_add_event_cb(s_btn_log, log_clicked, LV_EVENT_CLICKED, NULL);
+    lv_obj_add_event_cb(s_btn_log, log_focus_cb, LV_EVENT_FOCUSED, NULL);
+    lv_obj_add_event_cb(s_btn_log, log_focus_cb, LV_EVENT_DEFOCUSED, NULL);
 
     lv_obj_t *ll = lv_label_create(s_btn_log);
     lv_label_set_text(ll, "COOK LOG");
