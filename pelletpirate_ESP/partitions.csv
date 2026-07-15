@@ -1,0 +1,9 @@
+# PelletPirate V2 custom partition table (4MB flash)
+# NVS offset/size unchanged from the default table so saved settings survive.
+# factory grown 1MB -> 1.5MB for the WiFi stack; littlefs carved for future
+# cook logging (unused until the logging feature lands).
+# Name,   Type, SubType, Offset,  Size
+nvs,      data, nvs,     0x9000,  24K
+phy_init, data, phy,     0xf000,  4K
+factory,  app,  factory, 0x10000, 1536K
+storage,  data, spiffs,  ,        2496K
