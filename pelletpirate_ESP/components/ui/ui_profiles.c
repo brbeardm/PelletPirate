@@ -30,20 +30,36 @@ static int s_count;
 static lv_obj_t *s_lbl_status;
 static int s_confirm_idx = -1;  // row armed for delete, -1 = none
 
+// Screen changes are deferred via lv_async_call: deleting the old screen
+// inside a button's own event handler crashes. lv_group_remove_all_objs()
+// in the new screen's create runs first, so by deletion time the button
+// has no group, LVGL skips its indev reset (lv_obj_tree.c obj_delete_core),
+// and the release sequence then sends CLICKED to the freed button.
+static void async_show_menu(void *unused)
+{
+    ui_load_screen(ui_main_menu_create());
+}
+
+static void async_show_profiles(void *unused)
+{
+    ui_load_screen(ui_profiles_create());
+}
+
 static void go_main(lv_event_t *e)
 {
     s_screen = NULL;
-    ui_load_screen(ui_main_menu_create());
+    lv_async_call(async_show_menu, NULL);
 }
 
 static void save_clicked(lv_event_t *e)
 {
+    if (!s_screen) return;  // screen change already pending
     char name[PROFILE_NAME_MAX];
     if (profiles_save_current(name, sizeof(name))) {
         cooklog_event("lcd", "PROFILE SAVE %s", name);
         // Rebuild the screen so the new profile appears in the list
         s_screen = NULL;
-        ui_load_screen(ui_profiles_create());
+        lv_async_call(async_show_profiles, NULL);
     } else {
         lv_label_set_text(s_lbl_status, "Save failed (storage?)");
     }
@@ -73,6 +89,7 @@ static void profile_defocused(lv_event_t *e)
 
 static void profile_clicked(lv_event_t *e)
 {
+    if (!s_screen) return;  // screen change already pending
     int idx = (int)(intptr_t)lv_event_get_user_data(e);
     if (idx < 0 || idx >= s_count) return;
     if (s_confirm_idx == idx) {
@@ -80,7 +97,7 @@ static void profile_clicked(lv_event_t *e)
         if (profiles_delete(s_profiles[idx].fname)) {
             cooklog_event("lcd", "PROFILE DELETE %s", s_profiles[idx].display);
             s_screen = NULL;
-            ui_load_screen(ui_profiles_create());
+            lv_async_call(async_show_profiles, NULL);
         } else {
             lv_label_set_text(s_lbl_status, "Delete failed");
         }
