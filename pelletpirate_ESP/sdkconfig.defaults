@@ -14,3 +14,6 @@ CONFIG_LV_FONT_MONTSERRAT_48=y
 
 # LVGL color settings - byte swap for SPI displays (big-endian wire format)
 CONFIG_LV_DRAW_SW_SUPPORT_RGB565_SWAPPED=y
+
+# WebSocket support for the WiFi dashboard
+CONFIG_HTTPD_WS_SUPPORT=y

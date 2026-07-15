@@ -5,13 +5,17 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PelletPirate</title>
 <style>
-body{background:#000;color:#eee;font-family:system-ui,-apple-system,sans-serif;text-align:center;margin:0;padding:24px}
-h1{color:#FF6B35;font-size:1.3rem;letter-spacing:3px;margin:0 0 24px}
+body{background:#000;color:#eee;font-family:system-ui,-apple-system,sans-serif;text-align:center;margin:0;padding:20px;-webkit-user-select:none;user-select:none}
+h1{color:#FF6B35;font-size:1.3rem;letter-spacing:3px;margin:0 0 20px}
 .lbl{color:#888;font-size:.85rem;letter-spacing:2px}
 .cur{font-size:5rem;font-weight:700;margin:.1em 0;line-height:1}
-.tgt{color:#FF6B35;font-size:2.2rem;font-weight:600;margin:.1em 0 .6em}
-.mode{color:#00D4AA;font-size:1.1rem;margin-top:12px}
+.tgt-row{display:flex;align-items:center;justify-content:center;gap:18px;margin:.2em 0 .6em}
+.tgt{color:#FF6B35;font-size:2.2rem;font-weight:600;min-width:130px}
+button{background:#000;color:#fff;border:2px solid #FF6B35;border-radius:8px;font-size:1.4rem;font-weight:600;width:64px;height:56px;touch-action:manipulation}
+button:active{background:#FF6B35}
+.mode{color:#00D4AA;font-size:1.1rem;margin-top:14px}
 .off{color:#555}
+.link{color:#555;font-size:.75rem;margin-top:22px}
 </style>
 </head>
 <body>
@@ -19,24 +23,66 @@ h1{color:#FF6B35;font-size:1.3rem;letter-spacing:3px;margin:0 0 24px}
 <div class="lbl">CURRENT</div>
 <div class="cur" id="gt">--</div>
 <div class="lbl">TARGET</div>
-<div class="tgt" id="tgt">--</div>
+<div class="tgt-row">
+  <button id="dn">&minus;5</button>
+  <div class="tgt" id="tgt">--</div>
+  <button id="up">+5</button>
+</div>
 <div class="mode off" id="mode">connecting&hellip;</div>
+<div class="link" id="link"></div>
 <script>
+var tgtVal = null, ws = null, pollTimer = null;
+
+function render(s){
+  document.getElementById('gt').textContent = Math.round(s.gt) + '°F';
+  if (tgtVal === null || !pending) {
+    tgtVal = s.tgt;
+    document.getElementById('tgt').textContent = s.tgt + '°F';
+  }
+  var m = document.getElementById('mode');
+  m.textContent = 'Mode: ' + s.mode;
+  m.className = 'mode' + (s.mode === 'Off' ? ' off' : '');
+}
+
 async function poll(){
   try{
-    const r = await fetch('/api/status');
-    const s = await r.json();
-    document.getElementById('gt').textContent = Math.round(s.gt) + '°F';
-    document.getElementById('tgt').textContent = s.tgt + '°F';
-    const m = document.getElementById('mode');
-    m.textContent = 'Mode: ' + s.mode;
-    m.className = 'mode' + (s.mode === 'Off' ? ' off' : '');
-  }catch(e){
-    document.getElementById('mode').textContent = 'reconnecting…';
-  }
+    var r = await fetch('/api/status');
+    render(await r.json());
+  }catch(e){}
 }
-setInterval(poll, 2000);
+
+function connectWS(){
+  ws = new WebSocket('ws://' + location.host + '/ws');
+  ws.onopen = function(){
+    document.getElementById('link').textContent = 'live';
+    if (pollTimer){ clearInterval(pollTimer); pollTimer = null; }
+  };
+  ws.onmessage = function(e){ render(JSON.parse(e.data)); };
+  ws.onclose = function(){
+    document.getElementById('link').textContent = 'reconnecting…';
+    if (!pollTimer) pollTimer = setInterval(poll, 3000);
+    setTimeout(connectWS, 3000);
+  };
+}
+
+// Target adjust: optimistic local update, debounced POST
+var pending = null;
+function bump(delta){
+  if (tgtVal === null) return;
+  tgtVal = Math.min(499, Math.max(100, tgtVal + delta));
+  document.getElementById('tgt').textContent = tgtVal + '°F';
+  if (pending) clearTimeout(pending);
+  pending = setTimeout(async function(){
+    try{ await fetch('/api/grill-target', { method:'POST', body:'' + tgtVal }); }
+    catch(e){}
+    pending = null;
+  }, 600);
+}
+document.getElementById('up').onclick = function(){ bump(5); };
+document.getElementById('dn').onclick = function(){ bump(-5); };
+
 poll();
+connectWS();
 </script>
 </body>
 </html>
