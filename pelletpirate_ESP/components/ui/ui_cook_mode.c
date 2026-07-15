@@ -10,6 +10,7 @@
 #include "ui_styles.h"
 #include "grill_state.h"
 #include "esp_log.h"
+#include <stdio.h>
 
 static const char *TAG = "ui_cookmode";
 
@@ -109,7 +110,9 @@ lv_obj_t *ui_cook_mode_create(void)
     y += 16;
 
     lv_obj_t *lbl_temp = lv_label_create(s_screen);
-    lv_label_set_text_fmt(lbl_temp, "%.0f\xC2\xB0""F", cur_temp);
+    char tbuf[16];
+    snprintf(tbuf, sizeof(tbuf), "%.0f\xC2\xB0""F", cur_temp);  // LVGL fmt has no %f
+    lv_label_set_text(lbl_temp, tbuf);
     lv_obj_set_style_text_font(lbl_temp, &lv_font_montserrat_48, 0);
     lv_obj_set_style_text_color(lbl_temp, lv_color_hex(0xFFFFFF), 0);
     lv_obj_align(lbl_temp, LV_ALIGN_TOP_MID, 0, y);

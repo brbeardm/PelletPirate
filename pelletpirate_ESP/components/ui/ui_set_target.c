@@ -179,7 +179,9 @@ lv_obj_t *ui_set_target_create(void)
     y += 16;
 
     s_lbl_current = lv_label_create(s_screen);
-    lv_label_set_text_fmt(s_lbl_current, "%.0f\xC2\xB0""F", cur_temp);
+    char tbuf[16];
+    snprintf(tbuf, sizeof(tbuf), "%.0f\xC2\xB0""F", cur_temp);  // LVGL fmt has no %f
+    lv_label_set_text(s_lbl_current, tbuf);
     lv_obj_set_style_text_font(s_lbl_current, &lv_font_montserrat_48, 0);
     lv_obj_set_style_text_color(s_lbl_current, lv_color_hex(0xFFFFFF), 0);
     lv_obj_align(s_lbl_current, LV_ALIGN_TOP_MID, 0, y);

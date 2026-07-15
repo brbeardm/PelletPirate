@@ -393,7 +393,9 @@ void ui_main_menu_update(void)
     grill_state_t *gs = grill_state_get();
 
     lv_label_set_text_fmt(s_lbl_mode, "Cook Mode: %s", grill_mode_name(gs->mode));
-    lv_label_set_text_fmt(s_lbl_current, "%.0f\xC2\xB0""F", gs->grill_temp);
+    char tbuf[16];
+    snprintf(tbuf, sizeof(tbuf), "%.0f\xC2\xB0""F", gs->grill_temp);  // LVGL fmt has no %f
+    lv_label_set_text(s_lbl_current, tbuf);
 
     if (!s_editing) {
         lv_label_set_text_fmt(s_lbl_target, "%d\xC2\xB0""F", gs->grill_target);

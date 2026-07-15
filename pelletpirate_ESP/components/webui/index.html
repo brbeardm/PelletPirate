@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PelletPirate</title>
+<style>
+body{background:#000;color:#eee;font-family:system-ui,-apple-system,sans-serif;text-align:center;margin:0;padding:24px}
+h1{color:#FF6B35;font-size:1.3rem;letter-spacing:3px;margin:0 0 24px}
+.lbl{color:#888;font-size:.85rem;letter-spacing:2px}
+.cur{font-size:5rem;font-weight:700;margin:.1em 0;line-height:1}
+.tgt{color:#FF6B35;font-size:2.2rem;font-weight:600;margin:.1em 0 .6em}
+.mode{color:#00D4AA;font-size:1.1rem;margin-top:12px}
+.off{color:#555}
+</style>
+</head>
+<body>
+<h1>PELLETPIRATE</h1>
+<div class="lbl">CURRENT</div>
+<div class="cur" id="gt">--</div>
+<div class="lbl">TARGET</div>
+<div class="tgt" id="tgt">--</div>
+<div class="mode off" id="mode">connecting&hellip;</div>
+<script>
+async function poll(){
+  try{
+    const r = await fetch('/api/status');
+    const s = await r.json();
+    document.getElementById('gt').textContent = Math.round(s.gt) + '°F';
+    document.getElementById('tgt').textContent = s.tgt + '°F';
+    const m = document.getElementById('mode');
+    m.textContent = 'Mode: ' + s.mode;
+    m.className = 'mode' + (s.mode === 'Off' ? ' off' : '');
+  }catch(e){
+    document.getElementById('mode').textContent = 'reconnecting…';
+  }
+}
+setInterval(poll, 2000);
+poll();
+</script>
+</body>
+</html>

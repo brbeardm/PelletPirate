@@ -17,6 +17,7 @@
 #include "grill_state.h"
 #include "max31865.h"
 #include "actuator.h"
+#include "webui.h"
 #include "ui.h"
 
 static const char *TAG = "pelletpirate";
@@ -179,5 +180,9 @@ void app_main(void)
     // LVGL takes over the display
     ESP_LOGI(TAG, "Starting LVGL...");
     ui_init();
+
+    // WiFi dashboard — async, LCD-first; failure never blocks the grill
+    webui_init();
+
     ESP_LOGI(TAG, "PelletPirate V2 running.");
 }

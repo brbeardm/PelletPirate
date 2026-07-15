@@ -358,7 +358,9 @@ static void timer_cb(lv_timer_t *timer) {
             if (s_digit_pos >= 3) {
                 s_work_target = (float)get_digit_value();
                 if (s_work_target > 0) {
-                    lv_label_set_text_fmt(s_lbl_target_val, "%.0f\xC2\xB0""F", s_work_target);
+                    char tbuf[16];
+                    snprintf(tbuf, sizeof(tbuf), "%.0f\xC2\xB0""F", s_work_target);  // LVGL fmt has no %f
+                    lv_label_set_text(s_lbl_target_val, tbuf);
                 } else {
                     lv_label_set_text(s_lbl_target_val, "0\xC2\xB0""F");
                 }
@@ -426,7 +428,9 @@ static void timer_cb(lv_timer_t *timer) {
                 s_digit_pos++;
                 if (s_digit_pos >= 3) {
                     s_work_alarm = (float)get_digit_value();
-                    lv_label_set_text_fmt(s_lbl_alarm_val, "%.0f\xC2\xB0""F", s_work_alarm);
+                    char abuf[16];
+                    snprintf(abuf, sizeof(abuf), "%.0f\xC2\xB0""F", s_work_alarm);  // LVGL fmt has no %f
+                    lv_label_set_text(s_lbl_alarm_val, abuf);
                     // → Pick alarm type
                     s_cursor = s_saved_alarm_idx >= 0 ? s_saved_alarm_idx : 0;
                     s_state = LVL3_PICK_ALARM;
