@@ -120,6 +120,26 @@ void grill_state_record_history(void)
     }
 }
 
+void grill_state_graph_record(void)
+{
+    // Caller must hold the lock. Runs continuously (preheat is data too).
+    uint32_t t = now_sec();
+    if (s_state.graph_count > 0 &&
+        t - s_state.last_graph_time < GRAPH_INTERVAL_SEC) return;
+    s_state.last_graph_time = t;
+
+    int idx = s_state.graph_index;
+    s_state.graph_grill[idx] = s_state.grill_temp;
+    s_state.graph_target[idx] =
+        (s_state.mode == GRILL_MODE_OFF) ? 0 : (int16_t)s_state.grill_target;
+    for (int i = 0; i < NUM_MEAT_PROBES; i++) {
+        s_state.graph_probe[i][idx] =
+            s_state.probes[i].enabled ? s_state.probes[i].current_temp : 0.0f;
+    }
+    s_state.graph_index = (idx + 1) % GRAPH_HISTORY_SIZE;
+    if (s_state.graph_count < GRAPH_HISTORY_SIZE) s_state.graph_count++;
+}
+
 int grill_state_get_est_minutes(int probe_idx)
 {
     if (probe_idx < 0 || probe_idx >= NUM_MEAT_PROBES) return -1;

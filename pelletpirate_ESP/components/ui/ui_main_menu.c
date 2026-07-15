@@ -14,6 +14,7 @@
 #include "ui_profiles.h"
 #include "ui_dashboard.h"
 #include "ui_settings.h"
+#include "ui_graphs.h"
 #include "grill_state.h"
 #include "encoder.h"
 #include "cooklog.h"
@@ -223,8 +224,8 @@ static void navigate_to(lv_event_t *e)
         next = ui_settings_create();
         break;
     case MENU_GRAPHS:
-        ESP_LOGI(TAG, "%s: coming soon", menu_labels[idx]);
-        return;
+        next = ui_graphs_create();
+        break;
     }
 
     if (next) {

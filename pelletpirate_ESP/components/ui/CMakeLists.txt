@@ -2,7 +2,7 @@
     SRCS "ui.c" "ui_styles.c" "ui_splash.c" "ui_main_menu.c"
          "ui_set_target.c" "ui_cook_mode.c" "ui_ignite.c"
          "ui_set_probes.c" "ui_dashboard.c" "ui_settings.c" "ui_profiles.c"
-         "ui_wifi.c" "logo_img.c"
+         "ui_wifi.c" "ui_graphs.c" "logo_img.c"
     INCLUDE_DIRS "include"
     REQUIRES lvgl hx8357d backlight encoder grill_state cooklog esp_timer webui
 )

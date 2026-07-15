@@ -71,6 +71,7 @@ static void temp_task(void *arg)
             gs->probes[i].current_temp = t[i + 1];
             in_use[i + 1] = gs->probes[i].enabled;
         }
+        grill_state_graph_record();  // rolling 1h ring for Graphs/web
         grill_state_unlock();
 
         // Audit-log fault transitions on channels that are actually in use

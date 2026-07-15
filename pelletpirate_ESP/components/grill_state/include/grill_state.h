@@ -23,6 +23,11 @@ typedef enum {
 #define TEMP_HISTORY_SIZE 12
 #define TEMP_HISTORY_INTERVAL_SEC 300  // 5 minutes
 
+// Rolling graph ring (grill + target + all probes) for the LCD Graphs
+// screen and GET /api/graph. Runs continuously, cooking or not.
+#define GRAPH_HISTORY_SIZE 120
+#define GRAPH_INTERVAL_SEC 30          // 120 x 30s = 1 hour window
+
 typedef struct {
     bool enabled;
     float current_temp;
@@ -91,6 +96,14 @@ typedef struct {
     alarm_state_t sensor_alarm;     // grill RTD fault forced a shutdown
     bool grill_reached_band;        // grill got within GRILL_INBAND_F of target this cook
 
+    // Graph ring (chronology: oldest at graph_index when full, else 0)
+    float graph_grill[GRAPH_HISTORY_SIZE];
+    float graph_probe[NUM_MEAT_PROBES][GRAPH_HISTORY_SIZE];
+    int16_t graph_target[GRAPH_HISTORY_SIZE];
+    int graph_count;
+    int graph_index;
+    uint32_t last_graph_time;
+
     // WiFi
     bool wifi_connected;
     bool wifi_ap_active;    // SoftAP setup mode ("PelletPirate-Setup") is up
@@ -114,6 +127,12 @@ const char *grill_mode_name(grill_mode_t mode);
  * Call this every TEMP_HISTORY_INTERVAL_SEC. Caller must hold the lock.
  */
 void grill_state_record_history(void);
+
+/**
+ * Record grill/target/probe temps into the graph ring (self-throttled to
+ * GRAPH_INTERVAL_SEC). Caller must hold the lock.
+ */
+void grill_state_graph_record(void);
 
 /**
  * Mark cook start/end (mode leaving/entering OFF). Resets per-cook probe

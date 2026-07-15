@@ -77,6 +77,8 @@ select{background:#111;color:#eee;border:2px solid #555;border-radius:8px;font-s
 <div class="modes" id="modes"></div>
 <div class="lbl">PROBES &middot; tap a probe to set up</div>
 <div class="probes" id="probes"></div>
+<div class="lbl" style="margin-top:18px">GRAPH &middot; last hour</div>
+<canvas id="gcv" width="660" height="300" style="width:100%;max-width:520px;margin-top:6px"></canvas>
 <div class="lbl" style="margin-top:18px">COOK PROFILES</div>
 <div style="margin:8px 0"><button class="sm" style="min-width:200px;border-color:#FF6B35;color:#FF6B35" onclick="saveProfile()">SAVE CURRENT COOK</button></div>
 <div id="profiles"></div>
@@ -86,6 +88,14 @@ select{background:#111;color:#eee;border:2px solid #555;border-radius:8px;font-s
 <div id="wifist" style="color:#888;font-size:.85rem;margin:6px 0">--</div>
 <div><button class="sm" style="min-width:200px" onclick="wOpen()">CHANGE WI-FI</button></div>
 <div class="link" id="link"></div>
+
+<div id="logov" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:15;padding:20px 8px;overflow-y:auto">
+  <h2 id="loghead" style="color:#FF6B35;font-size:.95rem;letter-spacing:1px;margin:0 0 10px"></h2>
+  <canvas id="lcv" width="700" height="380" style="width:100%;max-width:640px"></canvas>
+  <div class="ebtns">
+    <button class="sm" style="min-width:100px;height:50px" onclick="document.getElementById('logov').style.display='none'">CLOSE</button>
+  </div>
+</div>
 
 <div id="wifiov" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:15;padding:26px 18px;overflow-y:auto">
   <h2 style="color:#FF6B35;font-size:1.05rem;letter-spacing:2px;margin:0 0 12px">CHANGE WI-FI</h2>
@@ -392,6 +402,95 @@ async function eSave(){
   poll();
 }
 
+// --- Charting (shared by the live graph and cook-log charts) ---
+// series: [{c:color, pts:[[sec,temp],...]}]; temps <= 0 are gaps.
+function drawChart(cv, series, xlab0, xlab1){
+  var ctx = cv.getContext('2d'), W = cv.width, H = cv.height;
+  var L = 44, R = 8, T = 8, B = 24;
+  ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+  var ymin = 1e9, ymax = -1e9, xmin = 1e15, xmax = -1e15, i, j, p;
+  for (i = 0; i < series.length; i++) for (j = 0; j < series[i].pts.length; j++) {
+    p = series[i].pts[j];
+    if (p[1] <= 0) continue;
+    if (p[1] < ymin) ymin = p[1]; if (p[1] > ymax) ymax = p[1];
+    if (p[0] < xmin) xmin = p[0]; if (p[0] > xmax) xmax = p[0];
+  }
+  if (ymin > ymax) { ymin = 50; ymax = 300; xmin = 0; xmax = 3600; }
+  ymin = Math.floor(ymin / 25) * 25; ymax = Math.ceil(ymax / 25) * 25;
+  if (ymax - ymin < 50) ymax = ymin + 50;
+  if (xmax <= xmin) xmax = xmin + 1;
+  function X(x){ return L + (x - xmin) / (xmax - xmin) * (W - L - R); }
+  function Y(y){ return T + (ymax - y) / (ymax - ymin) * (H - T - B); }
+  ctx.strokeStyle = '#222'; ctx.fillStyle = '#777';
+  ctx.font = '16px system-ui'; ctx.textAlign = 'right'; ctx.lineWidth = 1;
+  for (i = 0; i <= 4; i++) {
+    var yv = ymin + (ymax - ymin) * i / 4, yy = Y(yv);
+    ctx.beginPath(); ctx.moveTo(L, yy); ctx.lineTo(W - R, yy); ctx.stroke();
+    ctx.fillText(Math.round(yv) + '°', L - 4, yy + 5);
+  }
+  ctx.textAlign = 'left'; ctx.fillText(xlab0, L, H - 6);
+  ctx.textAlign = 'right'; ctx.fillText(xlab1, W - R, H - 6);
+  for (i = 0; i < series.length; i++) {
+    ctx.strokeStyle = series[i].c; ctx.lineWidth = 2; ctx.beginPath();
+    var pen = false;
+    for (j = 0; j < series[i].pts.length; j++) {
+      p = series[i].pts[j];
+      if (p[1] <= 0) { pen = false; continue; }
+      if (pen) ctx.lineTo(X(p[0]), Y(p[1]));
+      else ctx.moveTo(X(p[0]), Y(p[1]));
+      pen = true;
+    }
+    ctx.stroke();
+  }
+}
+var SCOLORS = { g:'#FF6B35', t:'#666666', p:['#FF4444','#44FF44','#00D4AA','#FFCC00'] };
+
+async function loadGraph(){
+  try{
+    var r = await fetch('/api/graph');
+    var d = await r.json();
+    var series = [], k;
+    function mk(arr, color){
+      var pts = [];
+      for (var i = 0; i < arr.length; i++) pts.push([i * d.iv, arr[i]]);
+      series.push({ c: color, pts: pts });
+    }
+    mk(d.t, SCOLORS.t); mk(d.g, SCOLORS.g);
+    for (k = 0; k < 4; k++) mk(d.p[k], SCOLORS.p[k]);
+    var mins = Math.round((d.g.length - 1) * d.iv / 60);
+    drawChart(document.getElementById('gcv'), series, '-' + mins + ' min', 'now');
+  }catch(e){}
+}
+
+// Chart a cook CSV: header time,ev,mode,grill,tgt,u,fan,aug,ign,p1..p4,rssi,note
+async function chartLog(f){
+  document.getElementById('loghead').textContent = f;
+  document.getElementById('logov').style.display = 'block';
+  try{
+    var r = await fetch('/api/log?f=' + f);
+    var rows = (await r.text()).split('\n');
+    var g = [], t = [], ps = [[], [], [], []], t0 = null;
+    for (var i = 1; i < rows.length; i++) {
+      var c = rows[i].split(',');
+      if (c.length < 13) continue;
+      var sec;
+      if (c[0].charAt(0) === '+') sec = parseInt(c[0].slice(1), 10);
+      else { var ms = Date.parse(c[0].replace(' ', 'T')); if (isNaN(ms)) continue; sec = ms / 1000; }
+      if (t0 === null) t0 = sec;
+      sec -= t0;
+      g.push([sec, parseFloat(c[3])]); t.push([sec, parseFloat(c[4])]);
+      for (var k = 0; k < 4; k++) ps[k].push([sec, parseFloat(c[9 + k])]);
+    }
+    var series = [{ c: SCOLORS.t, pts: t }, { c: SCOLORS.g, pts: g }];
+    for (var k2 = 0; k2 < 4; k2++) series.push({ c: SCOLORS.p[k2], pts: ps[k2] });
+    var dur = g.length ? g[g.length - 1][0] : 0;
+    var dl = Math.floor(dur / 3600) + ':' + ('0' + Math.floor((dur % 3600) / 60)).slice(-2);
+    drawChart(document.getElementById('lcv'), series, '0:00', dl);
+  }catch(e){
+    document.getElementById('loghead').textContent = f + ' — failed to load';
+  }
+}
+
 async function loadLogs(){
   try{
     var r = await fetch('/api/log');
@@ -404,7 +503,9 @@ async function loadLogs(){
       var kb = (files[i].s / 1024).toFixed(1);
       html += '<div style="margin:4px 0"><a style="color:#00D4AA;font-size:.9rem" ' +
         'href="/api/log?f=' + files[i].n + '" download="' + files[i].n + '">' +
-        files[i].n + '</a> <span style="color:#555;font-size:.75rem">' + kb + ' KB</span></div>';
+        files[i].n + '</a> <span style="color:#555;font-size:.75rem">' + kb + ' KB</span> ' +
+        '<button class="sm" style="height:30px;font-size:.7rem" ' +
+        'onclick="chartLog(\'' + files[i].n + '\')">GRAPH</button></div>';
     }
     host.innerHTML = html;
   }catch(e){}
@@ -492,7 +593,9 @@ poll();
 connectWS();
 loadLogs();
 loadProfiles();
+loadGraph();
 setInterval(loadLogs, 60000);
+setInterval(loadGraph, 30000);
 </script>
 </body>
 </html>

@@ -377,6 +377,55 @@ static esp_err_t profile_delete_post_handler(httpd_req_t *req)
     return profiles_get_handler(req);
 }
 
+// GET /api/graph — rolling 1h temperature ring for the dashboard chart:
+// {"iv":30,"g":[grill...],"t":[target...],"p":[[p1...],[p2...],[p3...],[p4...]]}
+// Zeros mean no data (probe disabled / sensor fault) — client draws gaps.
+static esp_err_t graph_get_handler(httpd_req_t *req)
+{
+    int count;
+    static float grill[GRAPH_HISTORY_SIZE];
+    static float probe[NUM_MEAT_PROBES][GRAPH_HISTORY_SIZE];
+    static int16_t target[GRAPH_HISTORY_SIZE];
+
+    grill_state_lock();
+    grill_state_t *gs = grill_state_get();
+    count = gs->graph_count;
+    int start = (count >= GRAPH_HISTORY_SIZE) ? gs->graph_index : 0;
+    for (int n = 0; n < count; n++) {
+        int idx = (start + n) % GRAPH_HISTORY_SIZE;
+        grill[n] = gs->graph_grill[idx];
+        target[n] = gs->graph_target[idx];
+        for (int p = 0; p < NUM_MEAT_PROBES; p++)
+            probe[p][n] = gs->graph_probe[p][idx];
+    }
+    grill_state_unlock();
+
+    char *buf = malloc(8192);
+    if (!buf) {
+        httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "oom");
+        return ESP_FAIL;
+    }
+    int n = snprintf(buf, 8192, "{\"iv\":%d,\"g\":[", GRAPH_INTERVAL_SEC);
+    for (int i = 0; i < count && n < 8000; i++)
+        n += snprintf(buf + n, 8192 - n, "%s%.1f", i ? "," : "", grill[i]);
+    n += snprintf(buf + n, 8192 - n, "],\"t\":[");
+    for (int i = 0; i < count && n < 8000; i++)
+        n += snprintf(buf + n, 8192 - n, "%s%d", i ? "," : "", target[i]);
+    n += snprintf(buf + n, 8192 - n, "],\"p\":[");
+    for (int p = 0; p < NUM_MEAT_PROBES; p++) {
+        n += snprintf(buf + n, 8192 - n, "%s[", p ? "," : "");
+        for (int i = 0; i < count && n < 8000; i++)
+            n += snprintf(buf + n, 8192 - n, "%s%.1f", i ? "," : "", probe[p][i]);
+        n += snprintf(buf + n, 8192 - n, "]");
+    }
+    n += snprintf(buf + n, 8192 - n, "]}");
+
+    httpd_resp_set_type(req, "application/json");
+    esp_err_t err = httpd_resp_send(req, buf, n);
+    free(buf);
+    return err;
+}
+
 // GET /api/log — list cook files; GET /api/log?f=<name> — stream one CSV
 static esp_err_t log_get_handler(httpd_req_t *req)
 {
@@ -657,7 +706,7 @@ static void start_webserver(void)
 
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
     config.lru_purge_enable = true;
-    config.max_uri_handlers = 16;  // default 8 silently drops extras; we register 15
+    config.max_uri_handlers = 20;  // default 8 silently drops extras; we register 16
     config.stack_size = 8192;      // default 4k overflows in the wifi-scan handler
 
     if (httpd_start(&s_server, &config) != ESP_OK) {
@@ -690,6 +739,9 @@ static void start_webserver(void)
     const httpd_uri_t logs = {
         .uri = "/api/log", .method = HTTP_GET, .handler = log_get_handler,
     };
+    const httpd_uri_t graph = {
+        .uri = "/api/graph", .method = HTTP_GET, .handler = graph_get_handler,
+    };
     const httpd_uri_t prof_list = {
         .uri = "/api/profiles", .method = HTTP_GET, .handler = profiles_get_handler,
     };
@@ -720,6 +772,7 @@ static void start_webserver(void)
     httpd_register_uri_handler(s_server, &mode);
     httpd_register_uri_handler(s_server, &ack);
     httpd_register_uri_handler(s_server, &logs);
+    httpd_register_uri_handler(s_server, &graph);
     httpd_register_uri_handler(s_server, &prof_list);
     httpd_register_uri_handler(s_server, &prof_save);
     httpd_register_uri_handler(s_server, &prof_load);
