@@ -5,17 +5,25 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PelletPirate</title>
 <style>
-body{background:#000;color:#eee;font-family:system-ui,-apple-system,sans-serif;text-align:center;margin:0;padding:20px;-webkit-user-select:none;user-select:none}
-h1{color:#FF6B35;font-size:1.3rem;letter-spacing:3px;margin:0 0 20px}
-.lbl{color:#888;font-size:.85rem;letter-spacing:2px}
-.cur{font-size:5rem;font-weight:700;margin:.1em 0;line-height:1}
-.tgt-row{display:flex;align-items:center;justify-content:center;gap:18px;margin:.2em 0 .6em}
-.tgt{color:#FF6B35;font-size:2.2rem;font-weight:600;min-width:130px}
-button{background:#000;color:#fff;border:2px solid #FF6B35;border-radius:8px;font-size:1.4rem;font-weight:600;width:64px;height:56px;touch-action:manipulation}
+body{background:#000;color:#eee;font-family:system-ui,-apple-system,sans-serif;text-align:center;margin:0;padding:16px;-webkit-user-select:none;user-select:none}
+h1{color:#FF6B35;font-size:1.2rem;letter-spacing:3px;margin:0 0 14px}
+.lbl{color:#888;font-size:.8rem;letter-spacing:2px}
+.cur{font-size:4.2rem;font-weight:700;margin:.05em 0;line-height:1}
+.tgt-row{display:flex;align-items:center;justify-content:center;gap:16px;margin:.15em 0 .4em}
+.tgt{color:#FF6B35;font-size:2rem;font-weight:600;min-width:120px}
+button{background:#000;color:#fff;border:2px solid #FF6B35;border-radius:8px;font-size:1.25rem;font-weight:600;min-width:58px;height:52px;touch-action:manipulation}
 button:active{background:#FF6B35}
-.mode{color:#00D4AA;font-size:1.1rem;margin-top:14px}
+button.sm{font-size:.85rem;height:40px;min-width:52px;border-color:#555;color:#aaa}
+.mode{color:#00D4AA;font-size:1rem;margin:8px 0 14px}
 .off{color:#555}
-.link{color:#555;font-size:.75rem;margin-top:22px}
+.probes{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:520px;margin:0 auto}
+.card{border:1px solid #333;border-radius:10px;padding:10px 6px}
+.card .nm{color:#888;font-size:.75rem;letter-spacing:1px;min-height:1em}
+.card .pt{font-size:1.7rem;font-weight:700;margin:2px 0}
+.card .ptg{color:#44FF44;font-size:1rem;font-weight:600;min-width:64px}
+.card.dis .pt{color:#444}
+.card .prow{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px}
+.link{color:#555;font-size:.75rem;margin-top:18px}
 </style>
 </head>
 <body>
@@ -29,19 +37,55 @@ button:active{background:#FF6B35}
   <button id="up">+5</button>
 </div>
 <div class="mode off" id="mode">connecting&hellip;</div>
+<div class="lbl">PROBES</div>
+<div class="probes" id="probes"></div>
 <div class="link" id="link"></div>
 <script>
-var tgtVal = null, ws = null, pollTimer = null;
+var tgtVal = null, pending = null, ws = null, pollTimer = null;
+var pTgt = [null,null,null,null], pPend = [null,null,null,null];
+
+// Build the four probe cards once
+(function(){
+  var host = document.getElementById('probes'), html = '';
+  for (var i = 0; i < 4; i++) {
+    html += '<div class="card dis" id="c'+i+'">' +
+      '<div class="nm" id="nm'+i+'">PROBE '+(i+1)+'</div>' +
+      '<div class="pt" id="pt'+i+'">--</div>' +
+      '<div class="prow">' +
+        '<button class="sm" onclick="pBump('+i+',-5)">&minus;5</button>' +
+        '<div class="ptg" id="ptg'+i+'">OFF</div>' +
+        '<button class="sm" onclick="pBump('+i+',5)">+5</button>' +
+      '</div>' +
+      '<div class="prow"><button class="sm" onclick="pOff('+i+')">OFF</button></div>' +
+      '</div>';
+  }
+  host.innerHTML = html;
+})();
 
 function render(s){
   document.getElementById('gt').textContent = Math.round(s.gt) + '°F';
-  if (tgtVal === null || !pending) {
+  if (!pending) {
     tgtVal = s.tgt;
     document.getElementById('tgt').textContent = s.tgt + '°F';
   }
   var m = document.getElementById('mode');
   m.textContent = 'Mode: ' + s.mode;
   m.className = 'mode' + (s.mode === 'Off' ? ' off' : '');
+
+  if (s.p) for (var i = 0; i < 4; i++) {
+    var p = s.p[i];
+    var card = document.getElementById('c'+i);
+    card.className = 'card' + (p.en ? '' : ' dis');
+    document.getElementById('nm'+i).textContent =
+      'PROBE ' + (i+1) + (p.fd ? ' · ' + p.fd.toUpperCase() : '');
+    document.getElementById('pt'+i).textContent =
+      (p.en && p.t > 0) ? Math.round(p.t) + '°' : '--';
+    if (!pPend[i]) {
+      pTgt[i] = p.en ? p.tg : 0;
+      document.getElementById('ptg'+i).textContent =
+        (p.en && p.tg > 0) ? p.tg + '°' : 'OFF';
+    }
+  }
 }
 
 async function poll(){
@@ -65,8 +109,7 @@ function connectWS(){
   };
 }
 
-// Target adjust: optimistic local update, debounced POST
-var pending = null;
+// Grill target: optimistic local update, debounced POST
 function bump(delta){
   if (tgtVal === null) return;
   tgtVal = Math.min(499, Math.max(100, tgtVal + delta));
@@ -80,6 +123,28 @@ function bump(delta){
 }
 document.getElementById('up').onclick = function(){ bump(5); };
 document.getElementById('dn').onclick = function(){ bump(-5); };
+
+// Probe targets: -5/+5 (starts at 160 from OFF), OFF button clears
+function pPost(i, val){
+  if (pPend[i]) clearTimeout(pPend[i]);
+  pPend[i] = setTimeout(async function(){
+    try{ await fetch('/api/probe-target', { method:'POST', body:(i+1) + ' ' + val }); }
+    catch(e){}
+    pPend[i] = null;
+  }, 600);
+}
+function pBump(i, delta){
+  var v = pTgt[i] || 0;
+  v = v === 0 ? 160 : Math.min(499, Math.max(100, v + delta));
+  pTgt[i] = v;
+  document.getElementById('ptg'+i).textContent = v + '°';
+  pPost(i, v);
+}
+function pOff(i){
+  pTgt[i] = 0;
+  document.getElementById('ptg'+i).textContent = 'OFF';
+  pPost(i, 0);
+}
 
 poll();
 connectWS();

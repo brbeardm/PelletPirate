@@ -146,7 +146,13 @@ float max31865_get_temp_f(max31865_handle_t *handle)
     float temp_c = (-r0 * CVD_A +
                     sqrtf(r0 * r0 * CVD_A * CVD_A - 4.0f * r0 * CVD_B * (r0 - r))) /
                    (2.0f * r0 * CVD_B);
-    return temp_c * 9.0f / 5.0f + 32.0f;
+    float temp_f = temp_c * 9.0f / 5.0f + 32.0f;
+
+    // An unplugged probe can occasionally read a raw code of 0 without the
+    // fault bit set, computing to ~-410F. Clamp anything implausible to the
+    // 0.0 fault convention (Photon code did the same with a 0..500 window).
+    if (temp_f < -40.0f || temp_f > 600.0f) return 0.0f;
+    return temp_f;
 }
 
 void max31865_check_fault(max31865_handle_t *handle)

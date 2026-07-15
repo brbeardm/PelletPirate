@@ -36,14 +36,21 @@ static int build_status_json(char *buf, int len)
     grill_state_lock();
     grill_state_t *gs = grill_state_get();
     gs->wifi_rssi = rssi;
-    float gt = gs->grill_temp;
-    int tgt = gs->grill_target;
-    const char *mode = grill_mode_name(gs->mode);
-    grill_state_unlock();
 
-    return snprintf(buf, len,
-                    "{\"gt\":%.1f,\"tgt\":%d,\"mode\":\"%s\",\"rssi\":%d}",
-                    gt, tgt, mode, rssi);
+    int n = snprintf(buf, len,
+                     "{\"gt\":%.1f,\"tgt\":%d,\"mode\":\"%s\",\"rssi\":%d,\"p\":[",
+                     gs->grill_temp, gs->grill_target,
+                     grill_mode_name(gs->mode), rssi);
+    for (int i = 0; i < NUM_MEAT_PROBES && n < len; i++) {
+        probe_state_t *p = &gs->probes[i];
+        n += snprintf(buf + n, len - n,
+                      "%s{\"en\":%d,\"t\":%.1f,\"tg\":%d,\"fd\":\"%s\"}",
+                      i ? "," : "", p->enabled ? 1 : 0, p->current_temp,
+                      (int)p->target_temp, p->food_type);
+    }
+    if (n < len) n += snprintf(buf + n, len - n, "]}");
+    grill_state_unlock();
+    return n;
 }
 
 // --- HTTP handlers ---
@@ -55,9 +62,11 @@ static esp_err_t root_get_handler(httpd_req_t *req)
                            index_html_end - index_html_start);
 }
 
+#define STATUS_JSON_MAX 512
+
 static esp_err_t status_get_handler(httpd_req_t *req)
 {
-    char buf[160];
+    char buf[STATUS_JSON_MAX];
     build_status_json(buf, sizeof(buf));
     httpd_resp_set_type(req, "application/json");
     return httpd_resp_send(req, buf, HTTPD_RESP_USE_STRLEN);
@@ -86,6 +95,46 @@ static esp_err_t target_post_handler(httpd_req_t *req)
     grill_state_save_to_nvs();
     grill_state_unlock();
     ESP_LOGI(TAG, "web: grill target set to %d", t);
+
+    return status_get_handler(req);
+}
+
+// POST /api/probe-target — body is "<probe 1-4> <target>", e.g. "2 165".
+// Target 0 clears/disables the probe (same semantics as the LCD wizard,
+// including clearing food and alarm); a nonzero target on a disabled
+// probe re-enables it with its previous food/alarm settings.
+static esp_err_t probe_post_handler(httpd_req_t *req)
+{
+    char body[24] = { 0 };
+    int recv_len = req->content_len < (int)sizeof(body) - 1
+                       ? req->content_len : (int)sizeof(body) - 1;
+    int r = httpd_req_recv(req, body, recv_len);
+    if (r <= 0) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "empty body");
+        return ESP_FAIL;
+    }
+    int idx = 0, t = -1;
+    if (sscanf(body, "%d %d", &idx, &t) != 2 || idx < 1 || idx > NUM_MEAT_PROBES ||
+        t < 0 || (t != 0 && (t < 100 || t > 499))) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "want: <probe 1-4> <0|100-499>");
+        return ESP_FAIL;
+    }
+
+    grill_state_lock();
+    probe_state_t *p = &grill_state_get()->probes[idx - 1];
+    if (t == 0) {
+        p->enabled = false;
+        p->target_temp = 0;
+        p->alarm_temp = 0;
+        p->food_type[0] = '\0';
+        p->alarm_type[0] = '\0';
+    } else {
+        p->enabled = true;
+        p->target_temp = (float)t;
+    }
+    grill_state_save_to_nvs();
+    grill_state_unlock();
+    ESP_LOGI(TAG, "web: probe %d target set to %d", idx, t);
 
     return status_get_handler(req);
 }
@@ -150,7 +199,7 @@ static void ws_push_task(void *arg)
         vTaskDelay(pdMS_TO_TICKS(1000));
         if (!s_server) continue;
 
-        char buf[160];
+        char buf[STATUS_JSON_MAX];
         int len = build_status_json(buf, sizeof(buf));
 
         for (int i = 0; i < MAX_WS_CLIENTS; i++) {
@@ -194,6 +243,9 @@ static void start_webserver(void)
     const httpd_uri_t target = {
         .uri = "/api/grill-target", .method = HTTP_POST, .handler = target_post_handler,
     };
+    const httpd_uri_t probe = {
+        .uri = "/api/probe-target", .method = HTTP_POST, .handler = probe_post_handler,
+    };
     const httpd_uri_t ws = {
         .uri = "/ws", .method = HTTP_GET, .handler = ws_handler,
         .is_websocket = true,
@@ -201,6 +253,7 @@ static void start_webserver(void)
     httpd_register_uri_handler(s_server, &root);
     httpd_register_uri_handler(s_server, &status);
     httpd_register_uri_handler(s_server, &target);
+    httpd_register_uri_handler(s_server, &probe);
     httpd_register_uri_handler(s_server, &ws);
     ESP_LOGI(TAG, "HTTP server started (REST + WS)");
 }
