@@ -51,13 +51,14 @@ static int build_status_json(char *buf, int len)
     int n = snprintf(buf, len,
                      "{\"gt\":%.1f,\"tgt\":%d,\"mode\":\"%s\",\"rssi\":%d,"
                      "\"et\":%d,\"f\":%d,\"a\":%d,\"ig\":%d,"
-                     "\"al\":%d,\"alt\":\"%s\",\"p\":[",
+                     "\"al\":%d,\"alt\":\"%s\",\"pv\":%lu,\"p\":[",
                      gs->grill_temp, gs->grill_target,
                      grill_mode_name(gs->mode), rssi,
                      grill_state_get_elapsed_minutes(),
                      gs->fan_on ? 1 : 0, gs->auger_on ? 1 : 0,
                      gs->igniter_on ? 1 : 0,
-                     alarm ? 1 : 0, alarm_txt);
+                     alarm ? 1 : 0, alarm_txt,
+                     (unsigned long)profiles_revision());
     for (int i = 0; i < NUM_MEAT_PROBES && n < len; i++) {
         probe_state_t *p = &gs->probes[i];
         n += snprintf(buf + n, len - n,

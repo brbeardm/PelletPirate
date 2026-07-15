@@ -13,6 +13,13 @@ static const char *TAG = "profiles";
 
 #define BASE "/lfs"
 
+static uint32_t s_rev = 0;
+
+uint32_t profiles_revision(void)
+{
+    return s_rev;
+}
+
 // Build "prof_YYYYMMDD-HHMM_<Meat>.ppc" — date prefix keeps name-sort
 // chronological; meat name spaces become dashes for a clean filename.
 static void make_fname(char *buf, int len)
@@ -112,6 +119,7 @@ bool profiles_save_current(char *name_out, int len)
     fclose(f);
 
     if (name_out) make_display(fname, name_out, len);
+    s_rev++;
     ESP_LOGI(TAG, "profile saved: %s", fname);
     return true;
 }
@@ -127,6 +135,7 @@ bool profiles_delete(const char *fname)
         ESP_LOGE(TAG, "delete failed: %s", path);
         return false;
     }
+    s_rev++;
     ESP_LOGI(TAG, "profile deleted: %s", fname);
     return true;
 }

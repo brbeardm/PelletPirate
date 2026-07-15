@@ -9,6 +9,7 @@
  */
 
 #include <stdbool.h>
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -36,6 +37,12 @@ bool profiles_load(const char *fname);
 
 /** Delete a profile by filename. Returns false if missing or invalid name. */
 bool profiles_delete(const char *fname);
+
+/**
+ * Bumped on every successful save/delete (from LCD or web). Clients poll
+ * this via the status JSON to know when to re-fetch the profile list.
+ */
+uint32_t profiles_revision(void);
 
 #ifdef __cplusplus
 }

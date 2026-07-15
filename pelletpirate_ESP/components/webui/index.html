@@ -47,6 +47,10 @@ button.warn{border-color:#FF4444;color:#FF4444}
 .eval{color:#FF6B35;font-size:1.6rem;font-weight:600;min-width:96px}
 select{background:#111;color:#eee;border:2px solid #555;border-radius:8px;font-size:1.05rem;padding:10px;width:230px;margin:6px 0}
 .ebtns{display:flex;justify-content:center;gap:14px;margin-top:22px}
+#modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:20}
+.mbox{background:#111;border:2px solid #FF6B35;border-radius:12px;max-width:300px;margin:34vh auto 0;padding:22px 18px}
+.mbox .mtxt{font-size:1.05rem;line-height:1.45}
+.mbox .msub{color:#888;font-size:.85rem;margin-top:6px}
 </style>
 </head>
 <body>
@@ -106,6 +110,17 @@ select{background:#111;color:#eee;border:2px solid #555;border-radius:8px;font-s
   </div>
 </div>
 
+<div id="modal">
+  <div class="mbox">
+    <div class="mtxt" id="mtxt"></div>
+    <div class="msub" id="msub"></div>
+    <div class="ebtns">
+      <button id="mok" style="min-width:120px">OK</button>
+      <button class="sm" id="mcancel" style="min-width:100px;height:50px">CANCEL</button>
+    </div>
+  </div>
+</div>
+
 <script>
 // Keep in sync with ui_set_probes.c meat_types[] / alarm_types[]
 var MEATS = ['Brisket','Beef','Chicken','Fish','Lamb','Pork Butt','Turkey','Veg (for girls)','Wild Game'];
@@ -129,6 +144,27 @@ var tgtVal = null, pending = null, ws = null, pollTimer = null, curMode = '', la
   document.getElementById('emeat').innerHTML = m;
   document.getElementById('ealarm').innerHTML = a;
 })();
+
+// In-page confirm modal (replaces window.confirm) — resolves true/false
+var mResolve = null;
+function showConfirm(msg, sub, okLabel, danger){
+  return new Promise(function(res){
+    mResolve = res;
+    document.getElementById('mtxt').textContent = msg;
+    document.getElementById('msub').textContent = sub || '';
+    var ok = document.getElementById('mok');
+    ok.textContent = okLabel || 'OK';
+    ok.className = danger ? 'warn' : '';
+    document.getElementById('modal').style.display = 'block';
+  });
+}
+function mDone(v){
+  document.getElementById('modal').style.display = 'none';
+  if (mResolve){ var r = mResolve; mResolve = null; r(v); }
+}
+document.getElementById('mok').onclick = function(){ mDone(true); };
+document.getElementById('mcancel').onclick = function(){ mDone(false); };
+document.getElementById('modal').onclick = function(e){ if (e.target === this) mDone(false); };
 
 var TOKS = { 'smoke':'SMOKE', 'supersmoke':'SUPER', 'cook':'COOK', 'keepwarm':'WARM', 'reignite':'RE-IGN' };
 
@@ -155,8 +191,12 @@ function renderModes(mode){
   host.innerHTML = html;
 }
 
+var lastPv = null;
+
 function render(s){
   last = s;
+  // Profile list changed (LCD or web save/delete) — re-fetch it
+  if (s.pv !== undefined && s.pv !== lastPv) { lastPv = s.pv; loadProfiles(); }
   document.getElementById('gt').textContent = Math.round(s.gt) + '°F';
   if (!pending) {
     tgtVal = s.tgt;
@@ -238,8 +278,8 @@ document.getElementById('up').onclick = function(){ bump(5); };
 document.getElementById('dn').onclick = function(){ bump(-5); };
 
 async function setMode(tok){
-  if (tok === 'start' && !confirm('Start ignition?')) return;
-  if (tok === 'shutdown' && !confirm('Start shutdown burn-off?')) return;
+  if (tok === 'start' && !await showConfirm('Start ignition?', 'Fan, auger and igniter will fire', 'IGNITE')) return;
+  if (tok === 'shutdown' && !await showConfirm('Start shutdown burn-off?', '', 'SHUTDOWN', true)) return;
   try{ await fetch('/api/mode', { method:'POST', body: tok }); poll(); }
   catch(e){}
 }
@@ -332,12 +372,12 @@ async function saveProfile(){
   catch(e){}
 }
 async function loadProfile(f, d){
-  if (!confirm('Load "' + d + '"? This replaces the current target and probe setup.')) return;
+  if (!await showConfirm('Load "' + d + '"?', 'Replaces the current target and probe setup', 'LOAD')) return;
   try{ await fetch('/api/profile-load', { method:'POST', body: f }); poll(); }
   catch(e){}
 }
 async function delProfile(f, d){
-  if (!confirm('Delete "' + d + '"? This cannot be undone.')) return;
+  if (!await showConfirm('Delete "' + d + '"?', 'This cannot be undone', 'DELETE', true)) return;
   try{ await fetch('/api/profile-delete', { method:'POST', body: f }); loadProfiles(); }
   catch(e){}
 }
