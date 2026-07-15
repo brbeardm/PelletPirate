@@ -18,9 +18,12 @@
 #include "mdns.h"
 #include "grill_state.h"
 #include "nvs.h"
+#include "esp_timer.h"
 #include "sdkconfig.h"
 
 static const char *TAG = "webui";
+
+static void start_webserver(void);
 
 static httpd_handle_t s_server = NULL;
 static int s_retry_count = 0;
@@ -35,11 +38,17 @@ extern const uint8_t index_html_end[]   asm("_binary_index_html_end");
 
 // --- Status JSON (shared by GET /api/status and the WS push) ---
 
+static void json_escape(char *dst, int len, const char *src);
+
 static int build_status_json(char *buf, int len)
 {
     wifi_ap_record_t ap;
     int rssi = 0;
-    if (esp_wifi_sta_get_ap_info(&ap) == ESP_OK) rssi = ap.rssi;
+    char ssid_esc[40] = "";
+    if (esp_wifi_sta_get_ap_info(&ap) == ESP_OK) {
+        rssi = ap.rssi;
+        json_escape(ssid_esc, sizeof(ssid_esc), (const char *)ap.ssid);
+    }
 
     char alarm_txt[72] = "";
     bool alarm = grill_state_alarm_active();
@@ -52,14 +61,15 @@ static int build_status_json(char *buf, int len)
     int n = snprintf(buf, len,
                      "{\"gt\":%.1f,\"tgt\":%d,\"mode\":\"%s\",\"rssi\":%d,"
                      "\"et\":%d,\"f\":%d,\"a\":%d,\"ig\":%d,"
-                     "\"al\":%d,\"alt\":\"%s\",\"pv\":%lu,\"p\":[",
+                     "\"al\":%d,\"alt\":\"%s\",\"pv\":%lu,"
+                     "\"ssid\":\"%s\",\"p\":[",
                      gs->grill_temp, gs->grill_target,
                      grill_mode_name(gs->mode), rssi,
                      grill_state_get_elapsed_minutes(),
                      gs->fan_on ? 1 : 0, gs->auger_on ? 1 : 0,
                      gs->igniter_on ? 1 : 0,
                      alarm ? 1 : 0, alarm_txt,
-                     (unsigned long)profiles_revision());
+                     (unsigned long)profiles_revision(), ssid_esc);
     for (int i = 0; i < NUM_MEAT_PROBES && n < len; i++) {
         probe_state_t *p = &gs->probes[i];
         n += snprintf(buf + n, len - n,
@@ -419,6 +429,127 @@ static esp_err_t log_get_handler(httpd_req_t *req)
     return httpd_resp_send(req, buf, n);
 }
 
+// --- SoftAP setup fallback ---
+// If WiFi hasn't connected 25s after boot (wrong creds / new location),
+// raise an open AP so a phone can configure WiFi at http://192.168.4.1.
+// The AP drops a few seconds after the board joins a real network.
+
+#define SETUP_AP_SSID "PelletPirate-Setup"
+
+static bool s_ap_active = false;
+
+static void set_ap_flag(bool on)
+{
+    grill_state_lock();
+    grill_state_get()->wifi_ap_active = on;
+    grill_state_unlock();
+}
+
+static void start_softap(void)
+{
+    if (s_ap_active) return;
+    wifi_config_t ap = { 0 };
+    strcpy((char *)ap.ap.ssid, SETUP_AP_SSID);
+    ap.ap.ssid_len = strlen(SETUP_AP_SSID);
+    ap.ap.channel = 1;
+    ap.ap.authmode = WIFI_AUTH_OPEN;
+    ap.ap.max_connection = 2;
+    if (esp_wifi_set_mode(WIFI_MODE_APSTA) != ESP_OK ||
+        esp_wifi_set_config(WIFI_IF_AP, &ap) != ESP_OK) {
+        ESP_LOGE(TAG, "setup AP start failed");
+        return;
+    }
+    s_ap_active = true;
+    set_ap_flag(true);
+    start_webserver();  // no-op if already up
+    ESP_LOGI(TAG, "Setup AP up: '%s' -> http://192.168.4.1", SETUP_AP_SSID);
+}
+
+static void ap_stop_task(void *arg)
+{
+    vTaskDelay(pdMS_TO_TICKS(8000));  // let the AP client see the response
+    esp_wifi_set_mode(WIFI_MODE_STA);
+    s_ap_active = false;
+    set_ap_flag(false);
+    ESP_LOGI(TAG, "Setup AP stopped (station connected)");
+    vTaskDelete(NULL);
+}
+
+static void ap_check_cb(void *arg)
+{
+    grill_state_lock();
+    bool up = grill_state_get()->wifi_connected;
+    grill_state_unlock();
+    if (!up) start_softap();
+}
+
+// Apply new credentials shortly after replying so the HTTP response gets
+// out before the radio reconfigures (vital when serving via the setup AP).
+static char s_pending_ssid[33];
+static char s_pending_pass[65];
+
+static void wifi_apply_task(void *arg)
+{
+    vTaskDelay(pdMS_TO_TICKS(750));
+    webui_wifi_set_credentials(s_pending_ssid, s_pending_pass);
+    vTaskDelete(NULL);
+}
+
+// Copy src into dst escaping JSON-special characters (SSIDs are wild)
+static void json_escape(char *dst, int len, const char *src)
+{
+    int n = 0;
+    for (; *src && n < len - 3; src++) {
+        if (*src == '"' || *src == '\\') dst[n++] = '\\';
+        if ((unsigned char)*src < 0x20) continue;
+        dst[n++] = *src;
+    }
+    dst[n] = '\0';
+}
+
+// GET /api/wifi-scan — list nearby networks (blocking, ~2s)
+static esp_err_t wifi_scan_get_handler(httpd_req_t *req)
+{
+    webui_ap_t aps[12];
+    int count = webui_wifi_scan(aps, 12);
+    if (count < 0) {
+        httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "scan failed");
+        return ESP_FAIL;
+    }
+    char buf[768];
+    int n = snprintf(buf, sizeof(buf), "[");
+    for (int i = 0; i < count && n < (int)sizeof(buf) - 96; i++) {
+        char esc[72];
+        json_escape(esc, sizeof(esc), aps[i].ssid);
+        n += snprintf(buf + n, sizeof(buf) - n, "%s{\"s\":\"%s\",\"r\":%d,\"x\":%d}",
+                      i ? "," : "", esc, aps[i].rssi, aps[i].secure ? 1 : 0);
+    }
+    n += snprintf(buf + n, sizeof(buf) - n, "]");
+    httpd_resp_set_type(req, "application/json");
+    return httpd_resp_send(req, buf, n);
+}
+
+// POST /api/wifi-set — body is "ssid\npassword"; applied after the reply
+static esp_err_t wifi_set_post_handler(httpd_req_t *req)
+{
+    char body[100] = { 0 };
+    int recv_len = req->content_len < (int)sizeof(body) - 1
+                       ? req->content_len : (int)sizeof(body) - 1;
+    int r = httpd_req_recv(req, body, recv_len);
+    char *nl = r > 0 ? strchr(body, '\n') : NULL;
+    if (!nl || nl == body) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "want ssid\\npass");
+        return ESP_FAIL;
+    }
+    *nl = '\0';
+    strlcpy(s_pending_ssid, body, sizeof(s_pending_ssid));
+    strlcpy(s_pending_pass, nl + 1, sizeof(s_pending_pass));
+    xTaskCreate(wifi_apply_task, "wifi_apply", 4096, NULL, 3, NULL);
+    cooklog_event("web", "WIFI SET %s", s_pending_ssid);
+    httpd_resp_set_type(req, "application/json");
+    return httpd_resp_send(req, "{\"ok\":1}", HTTPD_RESP_USE_STRLEN);
+}
+
 // --- WebSocket ---
 
 static void ws_client_add(int fd)
@@ -507,7 +638,8 @@ static void start_webserver(void)
 
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
     config.lru_purge_enable = true;
-    config.max_uri_handlers = 16;  // default 8 silently drops extras; we register 13
+    config.max_uri_handlers = 16;  // default 8 silently drops extras; we register 15
+    config.stack_size = 8192;      // default 4k overflows in the wifi-scan handler
 
     if (httpd_start(&s_server, &config) != ESP_OK) {
         ESP_LOGE(TAG, "httpd_start failed");
@@ -551,6 +683,12 @@ static void start_webserver(void)
     const httpd_uri_t prof_delete = {
         .uri = "/api/profile-delete", .method = HTTP_POST, .handler = profile_delete_post_handler,
     };
+    const httpd_uri_t wifi_scan = {
+        .uri = "/api/wifi-scan", .method = HTTP_GET, .handler = wifi_scan_get_handler,
+    };
+    const httpd_uri_t wifi_set = {
+        .uri = "/api/wifi-set", .method = HTTP_POST, .handler = wifi_set_post_handler,
+    };
     const httpd_uri_t ws = {
         .uri = "/ws", .method = HTTP_GET, .handler = ws_handler,
         .is_websocket = true,
@@ -567,6 +705,8 @@ static void start_webserver(void)
     httpd_register_uri_handler(s_server, &prof_save);
     httpd_register_uri_handler(s_server, &prof_load);
     httpd_register_uri_handler(s_server, &prof_delete);
+    httpd_register_uri_handler(s_server, &wifi_scan);
+    httpd_register_uri_handler(s_server, &wifi_set);
     httpd_register_uri_handler(s_server, &ws);
     ESP_LOGI(TAG, "HTTP server started (REST + WS)");
 }
@@ -608,6 +748,11 @@ static void wifi_event_handler(void *arg, esp_event_base_t base,
             esp_netif_sntp_init(&sntp_cfg);
         }
 
+        // Setup AP no longer needed once we're on a real network
+        if (s_ap_active) {
+            xTaskCreate(ap_stop_task, "ap_stop", 2560, NULL, 3, NULL);
+        }
+
         start_webserver();
     }
 }
@@ -619,11 +764,35 @@ static void wifi_event_handler(void *arg, esp_event_base_t base,
 int webui_wifi_scan(webui_ap_t *out, int max)
 {
     wifi_scan_config_t sc = { 0 };  // active scan, all channels
-    if (esp_wifi_scan_start(&sc, true) != ESP_OK) return -1;
+    esp_err_t err = esp_wifi_scan_start(&sc, true);
+    bool paused_connect = false;
+    if (err != ESP_OK) {
+        // Unprovisioned boards sit in a connect-retry loop which blocks
+        // scanning — pause it, scan, and resume the retries afterwards.
+        esp_wifi_disconnect();
+        paused_connect = true;
+        vTaskDelay(pdMS_TO_TICKS(200));
+        err = esp_wifi_scan_start(&sc, true);
+    }
+    if (err != ESP_OK) {
+        if (paused_connect) esp_wifi_connect();
+        return -1;
+    }
 
+    // ~80B per record — heap, not stack (httpd workers have small stacks)
     uint16_t num = 20;
-    wifi_ap_record_t recs[20];
-    if (esp_wifi_scan_get_ap_records(&num, recs) != ESP_OK) return -1;
+    wifi_ap_record_t *recs = malloc(num * sizeof(wifi_ap_record_t));
+    if (!recs) {
+        esp_wifi_clear_ap_list();
+        if (paused_connect) esp_wifi_connect();
+        return -1;
+    }
+    esp_err_t rec_err = esp_wifi_scan_get_ap_records(&num, recs);
+    if (paused_connect) esp_wifi_connect();
+    if (rec_err != ESP_OK) {
+        free(recs);
+        return -1;
+    }
 
     int count = 0;
     for (int i = 0; i < num; i++) {
@@ -642,6 +811,7 @@ int webui_wifi_scan(webui_ap_t *out, int max)
         out[count].secure = (recs[i].authmode != WIFI_AUTH_OPEN);
         count++;
     }
+    free(recs);
 
     for (int i = 0; i < count - 1; i++) {
         for (int j = i + 1; j < count; j++) {
@@ -713,6 +883,7 @@ void webui_init(void)
         return;
     }
     esp_netif_create_default_wifi_sta();
+    esp_netif_create_default_wifi_ap();  // for the SoftAP setup fallback
 
     wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
     err = esp_wifi_init(&cfg);
@@ -746,6 +917,16 @@ void webui_init(void)
     }
 
     xTaskCreate(ws_push_task, "ws_push", 4096, NULL, 4, NULL);
+
+    // Raise the setup AP if we haven't connected within 25s of boot
+    const esp_timer_create_args_t ap_timer_args = {
+        .callback = ap_check_cb,
+        .name = "ap_check",
+    };
+    esp_timer_handle_t ap_timer;
+    if (esp_timer_create(&ap_timer_args, &ap_timer) == ESP_OK) {
+        esp_timer_start_once(ap_timer, 25 * 1000000ULL);
+    }
 
     ESP_LOGI(TAG, "WiFi station starting, SSID '%s'", (const char *)wifi_config.sta.ssid);
 }

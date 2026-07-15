@@ -143,12 +143,15 @@ static void bright_clicked(lv_event_t *e)
 
 static void wifi_info_refresh(lv_timer_t *timer)
 {
-    char buf[80];
+    char buf[96];
     grill_state_lock();
     grill_state_t *gs = grill_state_get();
     if (gs->wifi_connected && gs->wifi_ip[0]) {
         snprintf(buf, sizeof(buf), "Connected  %d dBm\nhttp://%s\npelletpirate.local",
                  gs->wifi_rssi, gs->wifi_ip);
+    } else if (gs->wifi_ap_active) {
+        snprintf(buf, sizeof(buf), "Setup mode - on your phone join\n"
+                                   "'PelletPirate-Setup' then open\nhttp://192.168.4.1");
     } else {
         snprintf(buf, sizeof(buf), "Not connected");
     }

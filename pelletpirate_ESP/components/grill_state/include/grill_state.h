@@ -91,6 +91,7 @@ typedef struct {
 
     // WiFi
     bool wifi_connected;
+    bool wifi_ap_active;    // SoftAP setup mode ("PelletPirate-Setup") is up
     int wifi_rssi;
     char wifi_ip[16];       // dotted-quad string, empty when disconnected
 
