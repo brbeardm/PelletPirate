@@ -116,6 +116,21 @@ bool profiles_save_current(char *name_out, int len)
     return true;
 }
 
+bool profiles_delete(const char *fname)
+{
+    if (!cooklog_fs_ready()) return false;
+    if (strncmp(fname, "prof_", 5) != 0 || strchr(fname, '/')) return false;
+
+    char path[64];
+    snprintf(path, sizeof(path), BASE "/%s", fname);
+    if (unlink(path) != 0) {
+        ESP_LOGE(TAG, "delete failed: %s", path);
+        return false;
+    }
+    ESP_LOGI(TAG, "profile deleted: %s", fname);
+    return true;
+}
+
 bool profiles_load(const char *fname)
 {
     if (!cooklog_fs_ready()) return false;

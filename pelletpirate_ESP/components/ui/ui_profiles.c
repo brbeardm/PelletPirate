@@ -1,8 +1,13 @@
 // Cook Profiles — save/load snapshots of grill target + probe configs.
 //
 // SAVE CURRENT COOK at top, then saved profiles newest-first (click to
-// load), Main at the bottom. Profiles are auto-named from date + first
-// configured meat; loading applies immediately and returns to the menu.
+// load, hold to arm delete then click to confirm; scrolling away cancels),
+// Main at the bottom. Profiles are auto-named from date + first configured
+// meat; loading applies immediately and returns to the menu.
+//
+// Rows use LV_EVENT_SHORT_CLICKED, not CLICKED: LVGL still fires CLICKED
+// on the release of a long press, which would confirm the delete that
+// same press just armed.
 
 #include "ui_profiles.h"
 #include "ui_main_menu.h"
@@ -23,6 +28,7 @@ static lv_obj_t *s_screen;
 static profile_info_t s_profiles[PROFILES_LIST_MAX];
 static int s_count;
 static lv_obj_t *s_lbl_status;
+static int s_confirm_idx = -1;  // row armed for delete, -1 = none
 
 static void go_main(lv_event_t *e)
 {
@@ -43,10 +49,43 @@ static void save_clicked(lv_event_t *e)
     }
 }
 
+static void profile_long_pressed(lv_event_t *e)
+{
+    int idx = (int)(intptr_t)lv_event_get_user_data(e);
+    if (idx < 0 || idx >= s_count || s_confirm_idx == idx) return;
+    s_confirm_idx = idx;
+    lv_obj_t *btn = lv_event_get_target(e);
+    lv_label_set_text(lv_obj_get_child(btn, 0), "DELETE?");
+    lv_obj_set_style_bg_color(btn, UI_COLOR_RED, LV_STATE_FOCUSED);
+    lv_label_set_text(s_lbl_status, "Click = delete, scroll away = keep");
+}
+
+static void profile_defocused(lv_event_t *e)
+{
+    int idx = (int)(intptr_t)lv_event_get_user_data(e);
+    if (s_confirm_idx != idx) return;
+    s_confirm_idx = -1;
+    lv_obj_t *btn = lv_event_get_target(e);
+    lv_label_set_text(lv_obj_get_child(btn, 0), s_profiles[idx].display);
+    lv_obj_set_style_bg_color(btn, UI_COLOR_ACCENT, LV_STATE_FOCUSED);
+    lv_label_set_text(s_lbl_status, "");
+}
+
 static void profile_clicked(lv_event_t *e)
 {
     int idx = (int)(intptr_t)lv_event_get_user_data(e);
     if (idx < 0 || idx >= s_count) return;
+    if (s_confirm_idx == idx) {
+        s_confirm_idx = -1;
+        if (profiles_delete(s_profiles[idx].fname)) {
+            cooklog_event("lcd", "PROFILE DELETE %s", s_profiles[idx].display);
+            s_screen = NULL;
+            ui_load_screen(ui_profiles_create());
+        } else {
+            lv_label_set_text(s_lbl_status, "Delete failed");
+        }
+        return;
+    }
     if (profiles_load(s_profiles[idx].fname)) {
         cooklog_event("lcd", "PROFILE LOAD %s", s_profiles[idx].display);
         ESP_LOGI(TAG, "loaded %s", s_profiles[idx].fname);
@@ -114,13 +153,24 @@ lv_obj_t *ui_profiles_create(void)
     y += 44;
 
     // Saved profiles, newest first
+    s_confirm_idx = -1;
     s_count = profiles_list(s_profiles, PROFILES_LIST_MAX);
     int shown = s_count < MAX_ROWS ? s_count : MAX_ROWS;
     for (int i = 0; i < shown; i++) {
         lv_obj_t *btn = make_row(y, s_profiles[i].display, false);
-        lv_obj_add_event_cb(btn, profile_clicked, LV_EVENT_CLICKED, (void *)(intptr_t)i);
+        lv_obj_add_event_cb(btn, profile_clicked, LV_EVENT_SHORT_CLICKED, (void *)(intptr_t)i);
+        lv_obj_add_event_cb(btn, profile_long_pressed, LV_EVENT_LONG_PRESSED, (void *)(intptr_t)i);
+        lv_obj_add_event_cb(btn, profile_defocused, LV_EVENT_DEFOCUSED, (void *)(intptr_t)i);
         if (g) lv_group_add_obj(g, btn);
         y += 40;
+    }
+    if (s_count > 0) {
+        // Bottom-right, opposite the Main button, so it never crowds the list
+        lv_obj_t *hint = lv_label_create(s_screen);
+        lv_label_set_text(hint, "Click = load  Hold = delete");
+        lv_obj_set_style_text_font(hint, &lv_font_montserrat_16, 0);
+        lv_obj_set_style_text_color(hint, UI_COLOR_TEXT_DIM, 0);
+        lv_obj_align(hint, LV_ALIGN_BOTTOM_RIGHT, -8, -18);
     }
     if (s_count == 0) {
         lv_obj_t *none = lv_label_create(s_screen);

@@ -346,6 +346,22 @@ static esp_err_t profile_load_post_handler(httpd_req_t *req)
     return status_get_handler(req);
 }
 
+// POST /api/profile-delete — body is the profile filename
+static esp_err_t profile_delete_post_handler(httpd_req_t *req)
+{
+    char body[PROFILE_NAME_MAX] = { 0 };
+    int recv_len = req->content_len < (int)sizeof(body) - 1
+                       ? req->content_len : (int)sizeof(body) - 1;
+    int r = httpd_req_recv(req, body, recv_len);
+    if (r <= 0 || !profiles_delete(body)) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "delete failed");
+        return ESP_FAIL;
+    }
+    ESP_LOGI(TAG, "web: profile deleted: %s", body);
+    cooklog_event("web", "PROFILE DELETE %s", body);
+    return profiles_get_handler(req);
+}
+
 // GET /api/log — list cook files; GET /api/log?f=<name> — stream one CSV
 static esp_err_t log_get_handler(httpd_req_t *req)
 {
@@ -489,7 +505,7 @@ static void start_webserver(void)
 
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
     config.lru_purge_enable = true;
-    config.max_uri_handlers = 16;  // default 8; we register 11 routes
+    config.max_uri_handlers = 16;  // default 8 silently drops extras; we register 13
 
     if (httpd_start(&s_server, &config) != ESP_OK) {
         ESP_LOGE(TAG, "httpd_start failed");
@@ -530,6 +546,9 @@ static void start_webserver(void)
     const httpd_uri_t prof_load = {
         .uri = "/api/profile-load", .method = HTTP_POST, .handler = profile_load_post_handler,
     };
+    const httpd_uri_t prof_delete = {
+        .uri = "/api/profile-delete", .method = HTTP_POST, .handler = profile_delete_post_handler,
+    };
     const httpd_uri_t ws = {
         .uri = "/ws", .method = HTTP_GET, .handler = ws_handler,
         .is_websocket = true,
@@ -545,6 +564,7 @@ static void start_webserver(void)
     httpd_register_uri_handler(s_server, &prof_list);
     httpd_register_uri_handler(s_server, &prof_save);
     httpd_register_uri_handler(s_server, &prof_load);
+    httpd_register_uri_handler(s_server, &prof_delete);
     httpd_register_uri_handler(s_server, &ws);
     ESP_LOGI(TAG, "HTTP server started (REST + WS)");
 }

@@ -34,6 +34,9 @@ bool profiles_save_current(char *name_out, int len);
 /** Load a profile by filename into grill_state (persists to NVS). */
 bool profiles_load(const char *fname);
 
+/** Delete a profile by filename. Returns false if missing or invalid name. */
+bool profiles_delete(const char *fname);
+
 #ifdef __cplusplus
 }
 #endif
