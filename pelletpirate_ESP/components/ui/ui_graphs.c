@@ -16,9 +16,10 @@
 
 #define REFRESH_MS 5000
 
-// Series palette: grill/target fixed, probes 1-4
-#define COL_GRILL  UI_COLOR_ACCENT           // orange
-#define COL_TARGET lv_color_hex(0x666666)    // dim gray
+// Series palette matches the dashboard's language: WHITE = current grill
+// temp, ORANGE = target (same as the big CURRENT number / target readout).
+#define COL_GRILL  lv_color_hex(0xFFFFFF)
+#define COL_TARGET UI_COLOR_ACCENT
 static const uint32_t PROBE_COLORS[NUM_MEAT_PROBES] = {
     0xFF4444, 0x44FF44, 0x00D4AA, 0xFFCC00   // red, green, teal, yellow
 };
@@ -40,6 +41,7 @@ static void refresh_chart(void)
     int16_t target[GRAPH_HISTORY_SIZE];
     bool enabled[NUM_MEAT_PROBES];
     char food[NUM_MEAT_PROBES][16];
+    int goal[NUM_MEAT_PROBES];
     int count;
 
     grill_state_lock();
@@ -56,6 +58,7 @@ static void refresh_chart(void)
     }
     for (int p = 0; p < NUM_MEAT_PROBES; p++) {
         enabled[p] = gs->probes[p].enabled;
+        goal[p] = (int)gs->probes[p].target_temp;
         snprintf(food[p], sizeof(food[p]), "%s", gs->probes[p].food_type);
     }
     grill_state_unlock();
@@ -105,11 +108,17 @@ static void refresh_chart(void)
     }
     lv_chart_refresh(s_chart);
 
-    // Probe legend entries (colored, only when enabled)
+    // Probe legend entries: "P1 Brisket 203°" — goal lives in the legend
+    // on the LCD (dashed goal lines would clutter a 320px chart)
     for (int p = 0; p < NUM_MEAT_PROBES; p++) {
         if (enabled[p]) {
-            lv_label_set_text_fmt(s_lbl_probe_leg[p], "P%d %s", p + 1,
-                                  food[p][0] ? food[p] : "");
+            if (goal[p] > 0) {
+                lv_label_set_text_fmt(s_lbl_probe_leg[p], "P%d %s %d\xC2\xB0",
+                                      p + 1, food[p][0] ? food[p] : "", goal[p]);
+            } else {
+                lv_label_set_text_fmt(s_lbl_probe_leg[p], "P%d %s", p + 1,
+                                      food[p][0] ? food[p] : "");
+            }
             lv_obj_clear_flag(s_lbl_probe_leg[p], LV_OBJ_FLAG_HIDDEN);
         } else {
             lv_obj_add_flag(s_lbl_probe_leg[p], LV_OBJ_FLAG_HIDDEN);

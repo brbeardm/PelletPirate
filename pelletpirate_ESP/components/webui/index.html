@@ -79,6 +79,7 @@ select{background:#111;color:#eee;border:2px solid #555;border-radius:8px;font-s
 <div class="probes" id="probes"></div>
 <div class="lbl" style="margin-top:18px">GRAPH &middot; last hour</div>
 <canvas id="gcv" width="660" height="300" style="width:100%;max-width:520px;margin-top:6px"></canvas>
+<div id="glegend" style="font-size:.78rem;margin-top:4px"></div>
 <div class="lbl" style="margin-top:18px">COOK PROFILES</div>
 <div style="margin:8px 0"><button class="sm" style="min-width:200px;border-color:#FF6B35;color:#FF6B35" onclick="saveProfile()">SAVE CURRENT COOK</button></div>
 <div id="profiles"></div>
@@ -92,6 +93,7 @@ select{background:#111;color:#eee;border:2px solid #555;border-radius:8px;font-s
 <div id="logov" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:15;padding:20px 8px;overflow-y:auto">
   <h2 id="loghead" style="color:#FF6B35;font-size:.95rem;letter-spacing:1px;margin:0 0 10px"></h2>
   <canvas id="lcv" width="700" height="380" style="width:100%;max-width:640px"></canvas>
+  <div id="llegend" style="font-size:.78rem;margin-top:4px"></div>
   <div class="ebtns">
     <button class="sm" style="min-width:100px;height:50px" onclick="document.getElementById('logov').style.display='none'">CLOSE</button>
   </div>
@@ -332,6 +334,8 @@ document.getElementById('tgt').onclick = function(){
 async function setMode(tok){
   if (tok === 'start' && !await showConfirm('Start ignition?', 'Fan, auger and igniter will fire', 'IGNITE')) return;
   if (tok === 'shutdown' && !await showConfirm('Start shutdown burn-off?', '', 'SHUTDOWN', true)) return;
+  if (tok === 'off' && curMode === 'Ignite' &&
+      !await showConfirm('Stop ignition?', 'The grill will shut off', 'STOP', true)) return;
   try{ await fetch('/api/mode', { method:'POST', body: tok }); poll(); }
   catch(e){}
 }
@@ -404,7 +408,9 @@ async function eSave(){
 
 // --- Charting (shared by the live graph and cook-log charts) ---
 // series: [{c:color, pts:[[sec,temp],...]}]; temps <= 0 are gaps.
-function drawChart(cv, series, xlab0, xlab1){
+// goals: [{y:temp, c:color}] — dashed threshold lines with a right label.
+function drawChart(cv, series, xlab0, xlab1, goals){
+  goals = goals || [];
   var ctx = cv.getContext('2d'), W = cv.width, H = cv.height;
   var L = 44, R = 8, T = 8, B = 24;
   ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
@@ -414,6 +420,10 @@ function drawChart(cv, series, xlab0, xlab1){
     if (p[1] <= 0) continue;
     if (p[1] < ymin) ymin = p[1]; if (p[1] > ymax) ymax = p[1];
     if (p[0] < xmin) xmin = p[0]; if (p[0] > xmax) xmax = p[0];
+  }
+  for (i = 0; i < goals.length; i++) {
+    if (goals[i].y < ymin) ymin = goals[i].y;
+    if (goals[i].y > ymax) ymax = goals[i].y;
   }
   if (ymin > ymax) { ymin = 50; ymax = 300; xmin = 0; xmax = 3600; }
   ymin = Math.floor(ymin / 25) * 25; ymax = Math.ceil(ymax / 25) * 25;
@@ -430,8 +440,18 @@ function drawChart(cv, series, xlab0, xlab1){
   }
   ctx.textAlign = 'left'; ctx.fillText(xlab0, L, H - 6);
   ctx.textAlign = 'right'; ctx.fillText(xlab1, W - R, H - 6);
+  // Goal thresholds: dashed line in the probe's color + temp at right edge
+  for (i = 0; i < goals.length; i++) {
+    var gy = Y(goals[i].y);
+    ctx.strokeStyle = goals[i].c; ctx.lineWidth = 1;
+    ctx.setLineDash([6, 5]);
+    ctx.beginPath(); ctx.moveTo(L, gy); ctx.lineTo(W - R, gy); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = goals[i].c; ctx.textAlign = 'right';
+    ctx.fillText(Math.round(goals[i].y) + '°', W - R - 2, gy - 4);
+  }
   for (i = 0; i < series.length; i++) {
-    ctx.strokeStyle = series[i].c; ctx.lineWidth = 2; ctx.beginPath();
+    ctx.strokeStyle = series[i].c; ctx.lineWidth = series[i].w || 2; ctx.beginPath();
     var pen = false;
     for (j = 0; j < series[i].pts.length; j++) {
       p = series[i].pts[j];
@@ -443,22 +463,51 @@ function drawChart(cv, series, xlab0, xlab1){
     ctx.stroke();
   }
 }
-var SCOLORS = { g:'#FF6B35', t:'#666666', p:['#FF4444','#44FF44','#00D4AA','#FFCC00'] };
+// Matches the dashboard: WHITE = current grill temp, ORANGE = target
+var SCOLORS = { g:'#FFFFFF', t:'#FF6B35', p:['#FF4444','#44FF44','#00D4AA','#FFCC00'] };
+
+// probes: [{name:'Brisket', goal:203} or null x4] -> legend html + goal list
+function buildLegend(el, probes){
+  var html = '<span style="color:' + SCOLORS.g + '">&#9632; GRILL</span> &nbsp; ' +
+             '<span style="color:' + SCOLORS.t + '">&#9632; TARGET</span>';
+  for (var i = 0; i < 4; i++) {
+    if (!probes[i]) continue;
+    html += ' &nbsp; <span style="color:' + SCOLORS.p[i] + '">&#9632; P' + (i + 1) +
+      (probes[i].name ? ':' + esc(probes[i].name) : '') +
+      (probes[i].goal > 0 ? ' <span style="opacity:.7">&#8594;' + probes[i].goal + '°</span>' : '') +
+      '</span>';
+  }
+  el.innerHTML = html;
+}
+function goalsOf(probes){
+  var gl = [];
+  for (var i = 0; i < 4; i++) {
+    if (probes[i] && probes[i].goal > 0) gl.push({ y: probes[i].goal, c: SCOLORS.p[i] });
+  }
+  return gl;
+}
 
 async function loadGraph(){
   try{
     var r = await fetch('/api/graph');
     var d = await r.json();
     var series = [], k;
-    function mk(arr, color){
+    function mk(arr, color, w){
       var pts = [];
       for (var i = 0; i < arr.length; i++) pts.push([i * d.iv, arr[i]]);
-      series.push({ c: color, pts: pts });
+      series.push({ c: color, pts: pts, w: w });
     }
-    mk(d.t, SCOLORS.t); mk(d.g, SCOLORS.g);
+    mk(d.t, SCOLORS.t); mk(d.g, SCOLORS.g, 4);   // grill: thick white
     for (k = 0; k < 4; k++) mk(d.p[k], SCOLORS.p[k]);
+    // Names + goals come from live status (probe setup)
+    var probes = [null, null, null, null];
+    if (last && last.p) for (k = 0; k < 4; k++) {
+      if (last.p[k].en) probes[k] = { name: last.p[k].fd, goal: last.p[k].tg };
+    }
     var mins = Math.round((d.g.length - 1) * d.iv / 60);
-    drawChart(document.getElementById('gcv'), series, '-' + mins + ' min', 'now');
+    drawChart(document.getElementById('gcv'), series, '-' + mins + ' min', 'now',
+              goalsOf(probes));
+    buildLegend(document.getElementById('glegend'), probes);
   }catch(e){}
 }
 
@@ -470,9 +519,16 @@ async function chartLog(f){
     var r = await fetch('/api/log?f=' + f);
     var rows = (await r.text()).split('\n');
     var g = [], t = [], ps = [[], [], [], []], t0 = null;
+    var probes = [null, null, null, null];
     for (var i = 1; i < rows.length; i++) {
       var c = rows[i].split(',');
       if (c.length < 13) continue;
+      // Probe setup events carry names + goals: "PROBE 1 cfg tg=203 al=190 Brisket/Wrap"
+      var m = rows[i].match(/PROBE (\d) cfg tg=(\d+) al=\d+ ([^\/,]*)/);
+      if (m) {
+        var pi = parseInt(m[1], 10) - 1, tg = parseInt(m[2], 10);
+        probes[pi] = (tg > 0) ? { name: m[3].trim(), goal: tg } : null;
+      }
       var sec;
       if (c[0].charAt(0) === '+') sec = parseInt(c[0].slice(1), 10);
       else { var ms = Date.parse(c[0].replace(' ', 'T')); if (isNaN(ms)) continue; sec = ms / 1000; }
@@ -481,11 +537,19 @@ async function chartLog(f){
       g.push([sec, parseFloat(c[3])]); t.push([sec, parseFloat(c[4])]);
       for (var k = 0; k < 4; k++) ps[k].push([sec, parseFloat(c[9 + k])]);
     }
-    var series = [{ c: SCOLORS.t, pts: t }, { c: SCOLORS.g, pts: g }];
+    // Probes that logged real temps but never a cfg event still get a legend slot
+    for (var k1 = 0; k1 < 4; k1++) {
+      if (probes[k1]) continue;
+      for (var j1 = 0; j1 < ps[k1].length; j1++) {
+        if (ps[k1][j1][1] > 0) { probes[k1] = { name: '', goal: 0 }; break; }
+      }
+    }
+    var series = [{ c: SCOLORS.t, pts: t }, { c: SCOLORS.g, pts: g, w: 4 }];
     for (var k2 = 0; k2 < 4; k2++) series.push({ c: SCOLORS.p[k2], pts: ps[k2] });
     var dur = g.length ? g[g.length - 1][0] : 0;
     var dl = Math.floor(dur / 3600) + ':' + ('0' + Math.floor((dur % 3600) / 60)).slice(-2);
-    drawChart(document.getElementById('lcv'), series, '0:00', dl);
+    drawChart(document.getElementById('lcv'), series, '0:00', dl, goalsOf(probes));
+    buildLegend(document.getElementById('llegend'), probes);
   }catch(e){
     document.getElementById('loghead').textContent = f + ' — failed to load';
   }

@@ -1,10 +1,10 @@
-// Start Now — Ignite
+// Start Now — Ignite (and Stop Ignite)
 //
-// Two-step confirmation:
-// 1. Click START NOW - IGNITE on main menu → arrives here
-// 2. Cook Mode shows current mode until confirmed
-// 3. Press Start Ignite → starts ignition, returns to main menu
-// Auto-disables if grill temp > 115°F
+// Two-step confirmation in both directions:
+// - Grill off: Start Ignite button begins ignition (disabled above 115°F)
+// - Already igniting: the same screen offers a red Stop Ignite instead,
+//   so an accidental menu click can't kill an ignition in progress
+// Either action returns to the main menu.
 
 #include "ui_ignite.h"
 #include "ui_main_menu.h"
@@ -48,6 +48,21 @@ static void do_ignite(lv_event_t *e)
     go_main(e);
 }
 
+static void do_stop(lv_event_t *e)
+{
+    ESP_LOGI(TAG, "IGNITE STOPPED");
+    grill_state_lock();
+    grill_state_t *gs = grill_state_get();
+    gs->mode = GRILL_MODE_OFF;
+    gs->fan_on = false;
+    gs->auger_on = false;
+    gs->igniter_on = false;
+    grill_state_unlock();
+    cooklog_event("lcd", "MODE Ignite>Off (stop)");
+
+    go_main(e);
+}
+
 lv_obj_t *ui_ignite_create(void)
 {
     s_screen = lv_obj_create(NULL);
@@ -63,6 +78,7 @@ lv_obj_t *ui_ignite_create(void)
     int cur_target = gs->grill_target;
     grill_mode_t cur_mode = gs->mode;
     bool too_hot = cur_temp >= IGNITE_DISABLE_TEMP;
+    bool igniting = (cur_mode == GRILL_MODE_START);
     grill_state_unlock();
 
     int y = 4;
@@ -108,7 +124,14 @@ lv_obj_t *ui_ignite_create(void)
     y += 50;
 
     // Info text — montserrat_20
-    if (too_hot) {
+    if (igniting) {
+        lbl = lv_label_create(s_screen);
+        lv_label_set_text(lbl, "IGNITION IN PROGRESS\nPress STOP IGNITE to cancel");
+        lv_obj_set_style_text_font(lbl, &lv_font_montserrat_20, 0);
+        lv_obj_set_style_text_color(lbl, UI_COLOR_RED, 0);
+        lv_obj_set_style_text_align(lbl, LV_TEXT_ALIGN_CENTER, 0);
+        lv_obj_align(lbl, LV_ALIGN_CENTER, 0, 20);
+    } else if (too_hot) {
         lbl = lv_label_create(s_screen);
         lv_label_set_text(lbl, "GRILL TOO HOT\nIgnite disabled above 115\xC2\xB0""F");
         lv_obj_set_style_text_font(lbl, &lv_font_montserrat_20, 0);
@@ -150,27 +173,30 @@ lv_obj_t *ui_ignite_create(void)
     lv_obj_center(l1);
     if (g) lv_group_add_obj(g, btn_main);
 
-    // Start Ignite button — solid orange + white text when focused
-    if (!too_hot) {
+    // Action button: Stop Ignite (red) while igniting, else Start Ignite
+    if (igniting || !too_hot) {
+        lv_color_t accent = igniting ? UI_COLOR_RED : UI_COLOR_ACCENT;
         lv_obj_t *btn_ign = lv_button_create(s_screen);
         lv_obj_set_size(btn_ign, 170, 38);
         lv_obj_align(btn_ign, LV_ALIGN_BOTTOM_RIGHT, -8, -8);
         lv_obj_set_style_bg_color(btn_ign, lv_color_hex(0x000000), 0);
         lv_obj_set_style_bg_opa(btn_ign, LV_OPA_COVER, 0);
-        lv_obj_set_style_border_color(btn_ign, UI_COLOR_ACCENT, 0);
+        lv_obj_set_style_border_color(btn_ign, accent, 0);
         lv_obj_set_style_border_width(btn_ign, 2, 0);
         lv_obj_set_style_radius(btn_ign, 4, 0);
         lv_obj_set_style_shadow_width(btn_ign, 0, 0);
-        lv_obj_set_style_bg_color(btn_ign, UI_COLOR_ACCENT, LV_STATE_FOCUSED);
+        lv_obj_set_style_bg_color(btn_ign, accent, LV_STATE_FOCUSED);
         lv_obj_set_style_bg_opa(btn_ign, LV_OPA_COVER, LV_STATE_FOCUSED);
-        lv_obj_add_event_cb(btn_ign, do_ignite, LV_EVENT_CLICKED, NULL);
+        lv_obj_add_event_cb(btn_ign, igniting ? do_stop : do_ignite,
+                            LV_EVENT_CLICKED, NULL);
         lv_obj_t *l2 = lv_label_create(btn_ign);
-        lv_label_set_text(l2, "Start Ignite");
+        lv_label_set_text(l2, igniting ? "Stop Ignite" : "Start Ignite");
         lv_obj_set_style_text_font(l2, &lv_font_montserrat_16, 0);
         lv_obj_set_style_text_color(l2, lv_color_hex(0xFFFFFF), 0);
         lv_obj_center(l2);
         if (g) lv_group_add_obj(g, btn_ign);
-        lv_group_focus_obj(btn_ign);
+        // Start defaults focused; Stop does NOT (Main is the safe default)
+        if (!igniting) lv_group_focus_obj(btn_ign);
     }
 
     return s_screen;

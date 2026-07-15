@@ -130,8 +130,9 @@ void grill_state_graph_record(void)
 
     int idx = s_state.graph_index;
     s_state.graph_grill[idx] = s_state.grill_temp;
-    s_state.graph_target[idx] =
-        (s_state.mode == GRILL_MODE_OFF) ? 0 : (int16_t)s_state.grill_target;
+    // Target is recorded even when Off — its trend over the cook shows how
+    // the pitmaster managed the fire, and it must always be on the chart.
+    s_state.graph_target[idx] = (int16_t)s_state.grill_target;
     for (int i = 0; i < NUM_MEAT_PROBES; i++) {
         s_state.graph_probe[i][idx] =
             s_state.probes[i].enabled ? s_state.probes[i].current_temp : 0.0f;

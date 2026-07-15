@@ -181,27 +181,11 @@ static void navigate_to(lv_event_t *e)
     case MENU_SET_TARGET:
         start_target_edit();
         return;  // don't navigate — edit in place
-    case MENU_IGNITE: {
-        grill_state_lock();
-        grill_mode_t im = grill_state_get()->mode;
-        grill_state_unlock();
-        if (im == GRILL_MODE_START) {
-            // STOP — kill ignition immediately, no confirmation needed
-            ESP_LOGI(TAG, "IGNITE STOPPED");
-            grill_state_lock();
-            grill_state_t *gs2 = grill_state_get();
-            gs2->mode = GRILL_MODE_OFF;
-            gs2->fan_on = false;
-            gs2->auger_on = false;
-            gs2->igniter_on = false;
-            grill_state_unlock();
-            cooklog_event("lcd", "MODE Ignite>Off (stop)");
-            ui_main_menu_update();
-            return;
-        }
+    case MENU_IGNITE:
+        // Both directions confirm on the ignite screen — a stray click
+        // must never kill (or start) an ignition directly from the menu
         next = ui_ignite_create();
         break;
-    }
     case MENU_COOK_MODE: {
         grill_state_lock();
         grill_mode_t m = grill_state_get()->mode;
