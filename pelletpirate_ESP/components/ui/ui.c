@@ -64,6 +64,12 @@ static void lvgl_encoder_read_cb(lv_indev_t *indev, lv_indev_data_t *data)
 
 void ui_load_screen(lv_obj_t *new_screen)
 {
+    // Group edit mode (used by the WiFi keyboard) must never leak into the
+    // next screen — in edit mode rotation goes to the focused widget
+    // instead of moving focus, freezing all row navigation.
+    lv_group_t *g = lv_group_get_default();
+    if (g) lv_group_set_editing(g, false);
+
     lv_obj_t *old = lv_screen_active();
     lv_scr_load(new_screen);
     if (old && old != new_screen) {

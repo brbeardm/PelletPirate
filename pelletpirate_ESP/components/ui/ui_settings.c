@@ -5,6 +5,7 @@
 
 #include "ui_settings.h"
 #include "ui_main_menu.h"
+#include "ui_wifi.h"
 #include "ui.h"
 #include "ui_styles.h"
 #include "backlight.h"
@@ -20,6 +21,7 @@ static lv_obj_t *s_screen;
 static lv_obj_t *s_btn_bright;
 static lv_obj_t *s_lbl_bright_val;
 static lv_obj_t *s_btn_main;
+static lv_obj_t *s_btn_wifi;
 static lv_obj_t *s_lbl_wifi;
 static lv_timer_t *s_wifi_timer = NULL;
 static lv_obj_t *s_btn_log;
@@ -38,6 +40,7 @@ static void setup_group(void)
     lv_group_set_wrap(g, false);
     lv_group_add_obj(g, s_btn_bright);
     lv_group_add_obj(g, s_btn_log);
+    lv_group_add_obj(g, s_btn_wifi);
     lv_group_add_obj(g, s_btn_main);
 }
 
@@ -161,6 +164,13 @@ static void go_main(lv_event_t *e)
     ui_load_screen(menu);
 }
 
+static void go_wifi(lv_event_t *e)
+{
+    if (s_wifi_timer) { lv_timer_delete(s_wifi_timer); s_wifi_timer = NULL; }
+    s_screen = NULL;
+    ui_load_screen(ui_wifi_create());
+}
+
 lv_obj_t *ui_settings_create(void)
 {
     s_screen = lv_obj_create(NULL);
@@ -263,6 +273,31 @@ lv_obj_t *ui_settings_create(void)
     lv_obj_set_pos(s_lbl_wifi, 14, y);
     wifi_info_refresh(NULL);
     s_wifi_timer = lv_timer_create(wifi_info_refresh, 2000, NULL);
+    y += 68;  // info label is up to 3 lines
+
+    // WI-FI SETUP row — scan/select/password screen
+    s_btn_wifi = lv_button_create(s_screen);
+    lv_obj_set_size(s_btn_wifi, 304, 36);
+    lv_obj_set_pos(s_btn_wifi, 8, y);
+    lv_obj_set_style_bg_color(s_btn_wifi, lv_color_hex(0x000000), 0);
+    lv_obj_set_style_bg_opa(s_btn_wifi, LV_OPA_COVER, 0);
+    lv_obj_set_style_border_color(s_btn_wifi, UI_COLOR_ACCENT, 0);
+    lv_obj_set_style_border_width(s_btn_wifi, 2, 0);
+    lv_obj_set_style_border_opa(s_btn_wifi, LV_OPA_TRANSP, 0);
+    lv_obj_set_style_radius(s_btn_wifi, 4, 0);
+    lv_obj_set_style_pad_left(s_btn_wifi, 6, 0);
+    lv_obj_set_style_pad_top(s_btn_wifi, 2, 0);
+    lv_obj_set_style_pad_bottom(s_btn_wifi, 2, 0);
+    lv_obj_set_style_shadow_width(s_btn_wifi, 0, 0);
+    lv_obj_set_style_border_opa(s_btn_wifi, LV_OPA_COVER, LV_STATE_FOCUSED);
+    lv_obj_set_style_bg_color(s_btn_wifi, UI_COLOR_ACCENT, LV_STATE_FOCUSED);
+    lv_obj_add_event_cb(s_btn_wifi, go_wifi, LV_EVENT_CLICKED, NULL);
+
+    lv_obj_t *lw = lv_label_create(s_btn_wifi);
+    lv_label_set_text(lw, "WI-FI SETUP");
+    lv_obj_set_style_text_font(lw, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_color(lw, lv_color_hex(0xFFFFFF), 0);
+    lv_obj_align(lw, LV_ALIGN_LEFT_MID, 0, 0);
 
     // Main button
     s_btn_main = lv_button_create(s_screen);

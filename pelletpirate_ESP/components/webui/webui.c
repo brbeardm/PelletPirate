@@ -17,6 +17,7 @@
 #include "esp_log.h"
 #include "mdns.h"
 #include "grill_state.h"
+#include "nvs.h"
 #include "sdkconfig.h"
 
 static const char *TAG = "webui";
@@ -611,6 +612,93 @@ static void wifi_event_handler(void *arg, esp_event_base_t base,
     }
 }
 
+// --- WiFi setup support (LCD Settings > WI-FI SETUP) ---
+
+#define WIFI_NVS_NS "wificfg"
+
+int webui_wifi_scan(webui_ap_t *out, int max)
+{
+    wifi_scan_config_t sc = { 0 };  // active scan, all channels
+    if (esp_wifi_scan_start(&sc, true) != ESP_OK) return -1;
+
+    uint16_t num = 20;
+    wifi_ap_record_t recs[20];
+    if (esp_wifi_scan_get_ap_records(&num, recs) != ESP_OK) return -1;
+
+    int count = 0;
+    for (int i = 0; i < num; i++) {
+        if (recs[i].ssid[0] == '\0') continue;
+        int j;
+        for (j = 0; j < count; j++) {
+            if (strcmp(out[j].ssid, (const char *)recs[i].ssid) == 0) break;
+        }
+        if (j < count) {
+            if (recs[i].rssi > out[j].rssi) out[j].rssi = recs[i].rssi;
+            continue;
+        }
+        if (count >= max) continue;
+        strlcpy(out[count].ssid, (const char *)recs[i].ssid, sizeof(out[count].ssid));
+        out[count].rssi = recs[i].rssi;
+        out[count].secure = (recs[i].authmode != WIFI_AUTH_OPEN);
+        count++;
+    }
+
+    for (int i = 0; i < count - 1; i++) {
+        for (int j = i + 1; j < count; j++) {
+            if (out[j].rssi > out[i].rssi) {
+                webui_ap_t tmp = out[i];
+                out[i] = out[j];
+                out[j] = tmp;
+            }
+        }
+    }
+    ESP_LOGI(TAG, "WiFi scan: %d networks", count);
+    return count;
+}
+
+void webui_wifi_set_credentials(const char *ssid, const char *pass)
+{
+    nvs_handle_t h;
+    if (nvs_open(WIFI_NVS_NS, NVS_READWRITE, &h) == ESP_OK) {
+        nvs_set_str(h, "ssid", ssid);
+        nvs_set_str(h, "pass", pass);
+        nvs_commit(h);
+        nvs_close(h);
+    } else {
+        ESP_LOGE(TAG, "wifi creds NVS open failed");
+    }
+
+    wifi_config_t wc = { 0 };
+    strlcpy((char *)wc.sta.ssid, ssid, sizeof(wc.sta.ssid));
+    strlcpy((char *)wc.sta.password, pass, sizeof(wc.sta.password));
+    esp_wifi_set_config(WIFI_IF_STA, &wc);
+    s_retry_count = 0;
+
+    ESP_LOGI(TAG, "WiFi credentials set, connecting to '%s'", ssid);
+    // If connected, disconnect fires the event handler which reconnects
+    // with the new config; if idle/retrying, connect directly (the extra
+    // call is harmless either way).
+    esp_wifi_disconnect();
+    esp_wifi_connect();
+}
+
+// Overwrite Kconfig defaults with NVS credentials if WiFi setup saved any
+static void wifi_load_nvs_creds(wifi_config_t *wc)
+{
+    nvs_handle_t h;
+    if (nvs_open(WIFI_NVS_NS, NVS_READONLY, &h) != ESP_OK) return;
+    char ssid[33], pass[65];
+    size_t sl = sizeof(ssid), pl = sizeof(pass);
+    if (nvs_get_str(h, "ssid", ssid, &sl) == ESP_OK && ssid[0]) {
+        strlcpy((char *)wc->sta.ssid, ssid, sizeof(wc->sta.ssid));
+        wc->sta.password[0] = '\0';
+        if (nvs_get_str(h, "pass", pass, &pl) == ESP_OK) {
+            strlcpy((char *)wc->sta.password, pass, sizeof(wc->sta.password));
+        }
+    }
+    nvs_close(h);
+}
+
 void webui_init(void)
 {
     // Local timezone for human-readable cook-log timestamps
@@ -640,6 +728,7 @@ void webui_init(void)
             sizeof(wifi_config.sta.ssid));
     strlcpy((char *)wifi_config.sta.password, CONFIG_PELLETPIRATE_WIFI_PASSWORD,
             sizeof(wifi_config.sta.password));
+    wifi_load_nvs_creds(&wifi_config);
 
     esp_wifi_set_mode(WIFI_MODE_STA);
     esp_wifi_set_config(WIFI_IF_STA, &wifi_config);
@@ -658,5 +747,5 @@ void webui_init(void)
 
     xTaskCreate(ws_push_task, "ws_push", 4096, NULL, 4, NULL);
 
-    ESP_LOGI(TAG, "WiFi station starting, SSID '%s'", CONFIG_PELLETPIRATE_WIFI_SSID);
+    ESP_LOGI(TAG, "WiFi station starting, SSID '%s'", (const char *)wifi_config.sta.ssid);
 }
