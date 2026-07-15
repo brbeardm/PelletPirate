@@ -72,6 +72,8 @@ select{background:#111;color:#eee;border:2px solid #555;border-radius:8px;font-s
 <div class="modes" id="modes"></div>
 <div class="lbl">PROBES &middot; tap a probe to set up</div>
 <div class="probes" id="probes"></div>
+<div class="lbl" style="margin-top:18px">COOK LOGS</div>
+<div id="logs" style="margin-top:6px"></div>
 <div class="link" id="link"></div>
 
 <div id="editor">
@@ -286,8 +288,28 @@ async function eSave(){
   poll();
 }
 
+async function loadLogs(){
+  try{
+    var r = await fetch('/api/log');
+    var files = await r.json();
+    var host = document.getElementById('logs');
+    if (!files.length) { host.innerHTML = '<span style="color:#555;font-size:.8rem">no cooks logged yet</span>'; return; }
+    files.sort(function(a,b){ return a.n < b.n ? 1 : -1; });
+    var html = '';
+    for (var i = 0; i < files.length; i++) {
+      var kb = (files[i].s / 1024).toFixed(1);
+      html += '<div style="margin:4px 0"><a style="color:#00D4AA;font-size:.9rem" ' +
+        'href="/api/log?f=' + files[i].n + '" download="' + files[i].n + '">' +
+        files[i].n + '</a> <span style="color:#555;font-size:.75rem">' + kb + ' KB</span></div>';
+    }
+    host.innerHTML = html;
+  }catch(e){}
+}
+
 poll();
 connectWS();
+loadLogs();
+setInterval(loadLogs, 60000);
 </script>
 </body>
 </html>
