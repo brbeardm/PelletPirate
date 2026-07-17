@@ -1,9 +1,14 @@
-# PelletPirate V2 custom partition table (4MB flash)
-# NVS offset/size unchanged from the default table so saved settings survive.
-# factory grown 1MB -> 1.5MB for the WiFi stack; littlefs carved for future
-# cook logging (unused until the logging feature lands).
-# Name,   Type, SubType, Offset,  Size
-nvs,      data, nvs,     0x9000,  24K
-phy_init, data, phy,     0xf000,  4K
-factory,  app,  factory, 0x10000, 1536K
-storage,  data, spiffs,  ,        2496K
+# PelletPirate V2 OTA partition table (4MB flash)
+# Two 1.5MB app slots + otadata enable web OTA (/update page). Storage
+# shrinks 2.44MB -> 896K (~6-7 long cooks before rotation; threshold in
+# cooklog.c adjusted to match).
+# NVS keeps its exact offset/size, so WiFi creds and settings SURVIVE the
+# repartition flash. phy_init moves (RF cal regenerates automatically) and
+# storage moves (existing cook logs + profiles are LOST — download first).
+# Name,   Type, SubType, Offset,   Size
+nvs,      data, nvs,     0x9000,   24K
+otadata,  data, ota,     0xf000,   8K
+phy_init, data, phy,     0x11000,  4K
+ota_0,    app,  ota_0,   0x20000,  1536K
+ota_1,    app,  ota_1,   0x1A0000, 1536K
+storage,  data, spiffs,  0x320000, 896K

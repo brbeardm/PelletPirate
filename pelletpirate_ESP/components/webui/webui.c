@@ -15,6 +15,8 @@
 #include "esp_netif.h"
 #include "esp_http_server.h"
 #include "esp_log.h"
+#include "esp_ota_ops.h"
+#include "esp_system.h"
 #include "mdns.h"
 #include "grill_state.h"
 #include "nvs.h"
@@ -400,30 +402,44 @@ static esp_err_t graph_get_handler(httpd_req_t *req)
     }
     grill_state_unlock();
 
-    char *buf = malloc(8192);
-    if (!buf) {
-        httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "oom");
-        return ESP_FAIL;
-    }
-    int n = snprintf(buf, 8192, "{\"iv\":%d,\"g\":[", GRAPH_INTERVAL_SEC);
-    for (int i = 0; i < count && n < 8000; i++)
-        n += snprintf(buf + n, 8192 - n, "%s%.1f", i ? "," : "", grill[i]);
-    n += snprintf(buf + n, 8192 - n, "],\"t\":[");
-    for (int i = 0; i < count && n < 8000; i++)
-        n += snprintf(buf + n, 8192 - n, "%s%d", i ? "," : "", target[i]);
-    n += snprintf(buf + n, 8192 - n, "],\"p\":[");
-    for (int p = 0; p < NUM_MEAT_PROBES; p++) {
-        n += snprintf(buf + n, 8192 - n, "%s[", p ? "," : "");
-        for (int i = 0; i < count && n < 8000; i++)
-            n += snprintf(buf + n, 8192 - n, "%s%.1f", i ? "," : "", probe[p][i]);
-        n += snprintf(buf + n, 8192 - n, "]");
-    }
-    n += snprintf(buf + n, 8192 - n, "]}");
-
+    // Stream in small chunks. The previous single 8KB malloc was the
+    // largest avoidable transient on an already-tight heap (~30KB free
+    // baseline) — enough to starve mDNS when a dashboard poll landed on
+    // top of other activity.
     httpd_resp_set_type(req, "application/json");
-    esp_err_t err = httpd_resp_send(req, buf, n);
-    free(buf);
-    return err;
+    char buf[512];
+    int n = snprintf(buf, sizeof(buf), "{\"iv\":%d,\"g\":[", GRAPH_INTERVAL_SEC);
+#define GRAPH_FLUSH() do { \
+        if (n > (int)sizeof(buf) - 64) { \
+            if (httpd_resp_send_chunk(req, buf, n) != ESP_OK) return ESP_FAIL; \
+            n = 0; \
+        } \
+    } while (0)
+    for (int i = 0; i < count; i++) {
+        n += snprintf(buf + n, sizeof(buf) - n, "%s%.1f", i ? "," : "", grill[i]);
+        GRAPH_FLUSH();
+    }
+    n += snprintf(buf + n, sizeof(buf) - n, "],\"t\":[");
+    GRAPH_FLUSH();
+    for (int i = 0; i < count; i++) {
+        n += snprintf(buf + n, sizeof(buf) - n, "%s%d", i ? "," : "", target[i]);
+        GRAPH_FLUSH();
+    }
+    n += snprintf(buf + n, sizeof(buf) - n, "],\"p\":[");
+    for (int p = 0; p < NUM_MEAT_PROBES; p++) {
+        n += snprintf(buf + n, sizeof(buf) - n, "%s[", p ? "," : "");
+        GRAPH_FLUSH();
+        for (int i = 0; i < count; i++) {
+            n += snprintf(buf + n, sizeof(buf) - n, "%s%.1f", i ? "," : "", probe[p][i]);
+            GRAPH_FLUSH();
+        }
+        n += snprintf(buf + n, sizeof(buf) - n, "]");
+        GRAPH_FLUSH();
+    }
+    n += snprintf(buf + n, sizeof(buf) - n, "]}");
+#undef GRAPH_FLUSH
+    if (n > 0 && httpd_resp_send_chunk(req, buf, n) != ESP_OK) return ESP_FAIL;
+    return httpd_resp_send_chunk(req, NULL, 0);
 }
 
 // GET /api/log — list cook files; GET /api/log?f=<name> — stream one CSV
@@ -479,6 +495,123 @@ static esp_err_t log_get_handler(httpd_req_t *req)
     n += snprintf(buf + n, sizeof(buf) - n, "]");
     httpd_resp_set_type(req, "application/json");
     return httpd_resp_send(req, buf, n);
+}
+
+// --- OTA firmware update ---
+// POST /api/ota with the raw .bin as the body writes the next app slot and
+// reboots. Refused while the grill is running unless ?force=1 — a forced
+// mid-cook OTA reboots the controller for ~20s and relies on the power-loss
+// auto-resume to pick the cook back up. GET /update serves the upload page.
+// Bootloader rollback is enabled: if the new image dies before main.c marks
+// it valid (60s of healthy uptime), the next boot reverts to this one.
+
+static void ota_reboot_task(void *arg)
+{
+    vTaskDelay(pdMS_TO_TICKS(1500));  // let the HTTP response reach the client
+    esp_restart();
+}
+
+static esp_err_t ota_post_handler(httpd_req_t *req)
+{
+    grill_state_lock();
+    grill_mode_t mode = grill_state_get()->mode;
+    grill_state_unlock();
+
+    char query[32] = "", fv[4] = "";
+    bool force = false;
+    if (httpd_req_get_url_query_str(req, query, sizeof(query)) == ESP_OK &&
+        httpd_query_key_value(query, "force", fv, sizeof(fv)) == ESP_OK) {
+        force = (fv[0] == '1');
+    }
+    if (mode != GRILL_MODE_OFF && !force) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST,
+                            "grill is running - stop it first (or use force)");
+        return ESP_FAIL;
+    }
+    if (req->content_len <= 0) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "empty body");
+        return ESP_FAIL;
+    }
+
+    const esp_partition_t *dst = esp_ota_get_next_update_partition(NULL);
+    if (!dst) {
+        httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "no OTA partition");
+        return ESP_FAIL;
+    }
+    if (req->content_len > (int)dst->size) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "image larger than slot");
+        return ESP_FAIL;
+    }
+    ESP_LOGI(TAG, "OTA: %d bytes -> %s%s", req->content_len, dst->label,
+             force ? " (FORCED while running)" : "");
+
+    esp_ota_handle_t ota = 0;
+    if (esp_ota_begin(dst, OTA_WITH_SEQUENTIAL_WRITES, &ota) != ESP_OK) {
+        httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "ota begin failed");
+        return ESP_FAIL;
+    }
+
+    char *buf = malloc(4096);
+    if (!buf) {
+        esp_ota_abort(ota);
+        httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "oom");
+        return ESP_FAIL;
+    }
+    int remaining = req->content_len;
+    while (remaining > 0) {
+        int want = remaining < 4096 ? remaining : 4096;
+        int r = httpd_req_recv(req, buf, want);
+        if (r <= 0) {
+            free(buf);
+            esp_ota_abort(ota);
+            ESP_LOGE(TAG, "OTA: receive failed with %d bytes left", remaining);
+            httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "receive failed");
+            return ESP_FAIL;
+        }
+        if (esp_ota_write(ota, buf, r) != ESP_OK) {
+            free(buf);
+            esp_ota_abort(ota);
+            httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "flash write failed");
+            return ESP_FAIL;
+        }
+        remaining -= r;
+    }
+    free(buf);
+
+    esp_err_t err = esp_ota_end(ota);   // validates the whole image
+    if (err == ESP_OK) err = esp_ota_set_boot_partition(dst);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "OTA: finalize failed: %s", esp_err_to_name(err));
+        httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "invalid image");
+        return ESP_FAIL;
+    }
+
+    ESP_LOGW(TAG, "OTA complete -> %s, rebooting", dst->label);
+    httpd_resp_set_type(req, "application/json");
+    httpd_resp_send(req, "{\"ok\":1}", HTTPD_RESP_USE_STRLEN);
+    xTaskCreate(ota_reboot_task, "ota_reboot", 2048, NULL, 5, NULL);
+    return ESP_OK;
+}
+
+static const char UPDATE_HTML[] =
+"<!doctype html><html><head><meta name=viewport content='width=device-width,initial-scale=1'>"
+"<title>PelletPirate OTA</title></head>"
+"<body style='font-family:sans-serif;background:#111;color:#eee;padding:20px'>"
+"<h2>Firmware update</h2>"
+"<p>Upload <code>pelletpirate_esp.bin</code>. Grill should be Off.</p>"
+"<input type=file id=f accept='.bin'> <button onclick='up()'>Upload</button><br><br>"
+"<label><input type=checkbox id=fc> force while cooking (brief reboot, cook auto-resumes)</label>"
+"<p id=s></p>"
+"<script>function up(){var f=document.getElementById('f').files[0];if(!f){s.textContent='pick a file';return}"
+"var x=new XMLHttpRequest();x.open('POST','/api/ota'+(document.getElementById('fc').checked?'?force=1':''));"
+"x.upload.onprogress=function(e){s.textContent='uploading '+Math.round(100*e.loaded/e.total)+'%'};"
+"x.onload=function(){s.textContent=x.status==200?'OK — rebooting, give it ~30s':'FAILED: '+x.responseText};"
+"x.onerror=function(){s.textContent='upload error'};x.send(f)}</script></body></html>";
+
+static esp_err_t update_get_handler(httpd_req_t *req)
+{
+    httpd_resp_set_type(req, "text/html");
+    return httpd_resp_send(req, UPDATE_HTML, HTTPD_RESP_USE_STRLEN);
 }
 
 // --- SoftAP setup fallback ---
@@ -695,7 +828,12 @@ static void ws_push_task(void *arg)
 
         if (++tick >= 60) {
             tick = 0;
-            ESP_LOGI(TAG, "free heap: %lu bytes", (unsigned long)esp_get_free_heap_size());
+            // min-ever watermark is the number that matters: transient
+            // spikes (scan buffers, chart polls) starve mDNS long before
+            // the steady-state figure looks bad
+            ESP_LOGI(TAG, "free heap: %lu bytes (min ever %lu)",
+                     (unsigned long)esp_get_free_heap_size(),
+                     (unsigned long)esp_get_minimum_free_heap_size());
         }
     }
 }
@@ -706,7 +844,7 @@ static void start_webserver(void)
 
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
     config.lru_purge_enable = true;
-    config.max_uri_handlers = 20;  // default 8 silently drops extras; we register 16
+    config.max_uri_handlers = 20;  // default 8 silently drops extras; we register 18
     config.stack_size = 8192;      // default 4k overflows in the wifi-scan handler
 
     if (httpd_start(&s_server, &config) != ESP_OK) {
@@ -764,6 +902,12 @@ static void start_webserver(void)
         .uri = "/ws", .method = HTTP_GET, .handler = ws_handler,
         .is_websocket = true,
     };
+    const httpd_uri_t ota = {
+        .uri = "/api/ota", .method = HTTP_POST, .handler = ota_post_handler,
+    };
+    const httpd_uri_t update = {
+        .uri = "/update", .method = HTTP_GET, .handler = update_get_handler,
+    };
     httpd_register_uri_handler(s_server, &root);
     httpd_register_uri_handler(s_server, &status);
     httpd_register_uri_handler(s_server, &target);
@@ -780,7 +924,9 @@ static void start_webserver(void)
     httpd_register_uri_handler(s_server, &wifi_scan);
     httpd_register_uri_handler(s_server, &wifi_set);
     httpd_register_uri_handler(s_server, &ws);
-    ESP_LOGI(TAG, "HTTP server started (REST + WS)");
+    httpd_register_uri_handler(s_server, &ota);
+    httpd_register_uri_handler(s_server, &update);
+    ESP_LOGI(TAG, "HTTP server started (REST + WS + OTA), 18/20 routes");
 }
 
 // --- WiFi events ---

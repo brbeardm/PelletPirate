@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
+#include <errno.h>
 #include <time.h>
 #include <sys/time.h>
 #include <dirent.h>
@@ -20,7 +21,9 @@ static const char *TAG = "cooklog";
 #define LOG_BASE_PATH   "/lfs"
 #define NVS_NAMESPACE   "pelletpirate"
 #define NVS_KEY_IV      "log_iv"
-#define ROTATE_MIN_FREE (300 * 1024)
+// Sized for the OTA partition table's ~896KB storage partition (was 300KB
+// against the old 2.4MB one) — keeps ~6-7 long cooks before rotation.
+#define ROTATE_MIN_FREE (150 * 1024)
 #define PENDING_MAX     8
 #define ROW_MAX         160
 
@@ -36,6 +39,19 @@ static int s_pending_count = 0;
 
 // Suppress the task's auto MODE event briefly after an attributed one
 static int64_t s_mode_evt_suppress_until = 0;
+
+// fflush alone only reaches the VFS layer; LittleFS commits nothing durable
+// until fsync. Without this every row is lost on power-cut (the 0-byte /
+// missing cook files from the first real cook, 2026-07-16/17).
+// Call with s_mutex held.
+static void flush_and_sync(void)
+{
+    if (!s_file) return;
+    if (fflush(s_file) != 0 || fsync(fileno(s_file)) != 0) {
+        ESP_LOGE(TAG, "log write/sync FAILED for %s (errno %d) — data at risk",
+                 s_fname, errno);
+    }
+}
 
 static void fmt_time(char *buf, int len)
 {
@@ -131,7 +147,7 @@ static void open_cook_file(void)
         fputs(s_pending[i], s_file);
     }
     s_pending_count = 0;
-    fflush(s_file);
+    flush_and_sync();
     ESP_LOGI(TAG, "cook log started: %s", s_fname);
 }
 
@@ -164,7 +180,7 @@ void cooklog_event(const char *source, const char *fmt, ...)
     xSemaphoreTake(s_mutex, portMAX_DELAY);
     if (s_file) {
         fputs(row, s_file);
-        fflush(s_file);
+        flush_and_sync();
     } else if (s_pending_count < PENDING_MAX) {
         strlcpy(s_pending[s_pending_count++], row, ROW_MAX);
     } else {
@@ -235,7 +251,7 @@ static void cooklog_task(void *arg)
             char row[ROW_MAX];
             build_row(row, sizeof(row), 'S', "");
             xSemaphoreTake(s_mutex, portMAX_DELAY);
-            if (s_file) { fputs(row, s_file); fflush(s_file); }
+            if (s_file) { fputs(row, s_file); flush_and_sync(); }
             xSemaphoreGive(s_mutex);
         }
 

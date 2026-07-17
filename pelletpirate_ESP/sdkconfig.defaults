@@ -1,9 +1,13 @@
 CONFIG_IDF_TARGET="esp32"
 CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
 
-# Custom partition table: 1.5MB app + 2.4MB LittleFS (see partitions.csv)
+# Custom partition table: 2x1.5MB OTA app slots + 896K LittleFS (partitions.csv)
 CONFIG_PARTITION_TABLE_CUSTOM=y
 CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions.csv"
+
+# OTA rollback: a freshly-OTA'd image that dies before main.c marks it valid
+# (60s healthy uptime) reverts to the previous slot on the next boot
+CONFIG_BOOTLOADER_APP_ROLLBACK_ENABLE=y
 
 # LVGL fonts
 CONFIG_LV_FONT_MONTSERRAT_16=y

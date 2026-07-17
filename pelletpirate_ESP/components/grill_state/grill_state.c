@@ -438,3 +438,37 @@ void grill_state_load_from_nvs(void)
     nvs_close(handle);
     ESP_LOGI(TAG, "Settings loaded from NVS, target=%d", s_state.grill_target);
 }
+
+// --- Power-loss cook resume ---
+// The actuator persists the running mode+target on every transition (and on
+// mid-cook target changes); after an unexpected reboot main.c consults this
+// to resume a cook in progress. A clean OFF overwrites it, so nothing stale
+// survives a normal end-of-cook.
+
+void grill_state_persist_run(grill_mode_t mode, int target)
+{
+    nvs_handle_t h;
+    if (nvs_open(NVS_NAMESPACE, NVS_READWRITE, &h) != ESP_OK) return;
+    nvs_set_u8(h, "run_mode", (uint8_t)mode);
+    nvs_set_i32(h, "run_tgt", (int32_t)target);
+    esp_err_t err = nvs_commit(h);
+    nvs_close(h);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "persist run mode failed: %s", esp_err_to_name(err));
+    }
+}
+
+bool grill_state_load_run(grill_mode_t *mode, int *target)
+{
+    nvs_handle_t h;
+    if (nvs_open(NVS_NAMESPACE, NVS_READONLY, &h) != ESP_OK) return false;
+    uint8_t m = 0;
+    int32_t t = 0;
+    bool ok = (nvs_get_u8(h, "run_mode", &m) == ESP_OK) &&
+              (nvs_get_i32(h, "run_tgt", &t) == ESP_OK);
+    nvs_close(h);
+    if (!ok || m >= GRILL_MODE_COUNT) return false;
+    *mode = (grill_mode_t)m;
+    *target = (int)t;
+    return true;
+}

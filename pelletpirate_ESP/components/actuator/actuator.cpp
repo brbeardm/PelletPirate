@@ -57,6 +57,12 @@ static const double IGNITER_MAX_ON_SEC = 1200.0;  // 20 min safety timeout
 static const double SHUTDOWN_BURNOFF_SEC = 900.0; // 15 min (V2 spec; Photon used 600)
 static const double RTD_FAULT_SHUTDOWN_SEC = 30.0; // grill sensor dead this long -> burn-off
 
+// Flame-out: sensor healthy but the fire died. Conservative on purpose —
+// wind gusts and lid-opens cause 30-40F dips that recover well inside 10
+// minutes, and the igniter auto-assist (below 115F) gets its chance first.
+static const double FLAMEOUT_DROP_F = 60.0;  // this far below target...
+static const double FLAMEOUT_SEC = 600.0;    // ...for this long -> burn-off
+
 // --- Enhancement constants ---
 static const double FAN_CYCLE_SEC = 30.0;   // burst period (zero-cross friendly)
 static const double FAN_BAND_F = 10.0;      // pulse fan when within +/- this of target
@@ -83,7 +89,9 @@ static burst_state s_fan = {};
 static double s_igniter_on_since = 0;       // 0 = igniter off
 static double s_active_since = 0;           // when we last left OFF (0 = in OFF)
 static double s_fault_since = 0;            // grill RTD reading 0.0 in an active mode
+static double s_flameout_since = 0;         // temp sustained far below target
 static grill_mode_t s_prev_mode = GRILL_MODE_OFF;
+static int s_prev_target = -1;              // for mid-cook target persist
 
 // Physical pin states, for transition-only logging
 static bool s_pin_fan = false, s_pin_aug = false, s_pin_ign = false;
@@ -141,6 +149,7 @@ static void actuator_task(void *arg)
         float temp = gs->grill_temp;
         int target = gs->grill_target;
         uint32_t shutdown_start = gs->shutdown_start_time;
+        bool reached_band = gs->grill_reached_band;
         grill_state_unlock();
 
         // Mode-entry housekeeping
@@ -148,6 +157,10 @@ static void actuator_task(void *arg)
             ESP_LOGI(TAG, "mode %s -> %s (temp=%.0fF target=%d)",
                      grill_mode_name(s_prev_mode), grill_mode_name(mode), temp, target);
             s_fault_since = 0;  // each mode gets a fresh sensor-fault grace period
+            s_flameout_since = 0;
+            // Power-loss resume record: every transition, including auto ones
+            // and clean OFF (which overwrites any stale cook state)
+            grill_state_persist_run(mode, target);
             if (mode == GRILL_MODE_COOK || mode == GRILL_MODE_KEEP_WARM) {
                 s_pid->setTarget(target, 0);  // reset integrator (Photon SetMode=Hold)
                 s_u = U_MIN;                  // start at maintenance level
@@ -175,6 +188,13 @@ static void actuator_task(void *arg)
             }
             s_prev_mode = mode;
         }
+
+        // Mid-cook target changes must reach the resume record too, or a
+        // power loss would resume at a stale target
+        if (mode != GRILL_MODE_OFF && s_prev_target != -1 && target != s_prev_target) {
+            grill_state_persist_run(mode, target);
+        }
+        s_prev_target = target;
 
         bool fan = false, aug = false, ign = false;
         grill_mode_t new_mode = mode;
@@ -271,6 +291,29 @@ static void actuator_task(void *arg)
 
         default:
             break;
+        }
+
+        // Flame-out: the cook reached the band, the sensor is healthy, yet
+        // temp has fallen and stayed far below target. The igniter assist
+        // (below 115F) already had its chance to relight; stop feeding
+        // pellets into a dead pot and burn off. The temp-drop alarm banner
+        // fired at -30F on the way down, so the user was already warned.
+        if ((mode == GRILL_MODE_COOK || mode == GRILL_MODE_KEEP_WARM) &&
+            !sensor_fault && reached_band &&
+            temp < (float)target - FLAMEOUT_DROP_F) {
+            if (s_flameout_since == 0) {
+                s_flameout_since = now;
+                ESP_LOGW(TAG, "possible flame-out: %.0fF vs target %d — watching %.0fs",
+                         temp, target, FLAMEOUT_SEC);
+            } else if ((now - s_flameout_since) > FLAMEOUT_SEC) {
+                ESP_LOGE(TAG, "SAFETY: flame-out suspected (%.0fF, %.0fF below target "
+                         "for %.0f s) — forcing SHUTDOWN",
+                         temp, (float)target - temp, now - s_flameout_since);
+                cooklog_event("auto", "FLAME-OUT suspected (%.0fF) - forced SHUTDOWN", temp);
+                new_mode = GRILL_MODE_SHUTDOWN;
+            }
+        } else {
+            s_flameout_since = 0;
         }
 
         // Anti-surge stagger: on a cold start, hold auger and igniter back

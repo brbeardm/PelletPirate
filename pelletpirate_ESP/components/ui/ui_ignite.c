@@ -1,7 +1,10 @@
 // Start Now — Ignite (and Stop Ignite)
 //
 // Two-step confirmation in both directions:
-// - Grill off: Start Ignite button begins ignition (disabled above 115°F)
+// - Grill off & cold: Start Ignite button begins ignition
+// - Grill off & still hot (>115°F, e.g. after a power outage): the button
+//   becomes Resume Cook — enters START, which the actuator immediately
+//   promotes to COOK; the igniter element stays inhibited above 115°F
 // - Already igniting: the same screen offers a red Stop Ignite instead,
 //   so an accidental menu click can't kill an ignition in progress
 // Either action returns to the main menu.
@@ -30,20 +33,16 @@ static void do_ignite(lv_event_t *e)
 {
     grill_state_lock();
     grill_state_t *gs = grill_state_get();
+    bool hot = (gs->grill_temp >= IGNITE_DISABLE_TEMP);
 
-    if (gs->grill_temp >= IGNITE_DISABLE_TEMP) {
-        ESP_LOGW(TAG, "Grill too hot — ignite disabled");
-        grill_state_unlock();
-        return;
-    }
-
-    ESP_LOGI(TAG, "IGNITION STARTED");
-    gs->mode = GRILL_MODE_START;
+    ESP_LOGI(TAG, "%s", hot ? "HOT RESTART - resuming cook" : "IGNITION STARTED");
+    gs->mode = GRILL_MODE_START;   // actuator promotes to COOK if already hot
     gs->fan_on = true;
     gs->auger_on = true;
-    gs->igniter_on = true;
+    gs->igniter_on = !hot;
     grill_state_unlock();
-    cooklog_event("lcd", "MODE Off>Ignite (start)");
+    cooklog_event("lcd", hot ? "MODE Off>Ignite (hot restart)"
+                             : "MODE Off>Ignite (start)");
 
     go_main(e);
 }
@@ -133,9 +132,9 @@ lv_obj_t *ui_ignite_create(void)
         lv_obj_align(lbl, LV_ALIGN_CENTER, 0, 20);
     } else if (too_hot) {
         lbl = lv_label_create(s_screen);
-        lv_label_set_text(lbl, "GRILL TOO HOT\nIgnite disabled above 115\xC2\xB0""F");
+        lv_label_set_text(lbl, "GRILL STILL HOT\nResume Cook goes straight to\nCook mode (igniter stays off)");
         lv_obj_set_style_text_font(lbl, &lv_font_montserrat_20, 0);
-        lv_obj_set_style_text_color(lbl, UI_COLOR_RED, 0);
+        lv_obj_set_style_text_color(lbl, UI_COLOR_ACCENT, 0);
         lv_obj_set_style_text_align(lbl, LV_TEXT_ALIGN_CENTER, 0);
         lv_obj_align(lbl, LV_ALIGN_CENTER, 0, 20);
     } else {
@@ -173,8 +172,9 @@ lv_obj_t *ui_ignite_create(void)
     lv_obj_center(l1);
     if (g) lv_group_add_obj(g, btn_main);
 
-    // Action button: Stop Ignite (red) while igniting, else Start Ignite
-    if (igniting || !too_hot) {
+    // Action button: Stop Ignite (red) while igniting, else Start Ignite /
+    // Resume Cook (hot restart after power loss — no lockout)
+    {
         lv_color_t accent = igniting ? UI_COLOR_RED : UI_COLOR_ACCENT;
         lv_obj_t *btn_ign = lv_button_create(s_screen);
         lv_obj_set_size(btn_ign, 170, 38);
@@ -190,7 +190,8 @@ lv_obj_t *ui_ignite_create(void)
         lv_obj_add_event_cb(btn_ign, igniting ? do_stop : do_ignite,
                             LV_EVENT_CLICKED, NULL);
         lv_obj_t *l2 = lv_label_create(btn_ign);
-        lv_label_set_text(l2, igniting ? "Stop Ignite" : "Start Ignite");
+        lv_label_set_text(l2, igniting ? "Stop Ignite"
+                              : (too_hot ? "Resume Cook" : "Start Ignite"));
         lv_obj_set_style_text_font(l2, &lv_font_montserrat_16, 0);
         lv_obj_set_style_text_color(l2, lv_color_hex(0xFFFFFF), 0);
         lv_obj_center(l2);

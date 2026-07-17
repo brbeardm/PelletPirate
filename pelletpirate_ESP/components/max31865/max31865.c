@@ -27,7 +27,10 @@ static const float CVD_B = -0.0000005775f;
 
 // Config register values (Photon code used the same)
 #define CONFIG_RUN    0xD0   // Vbias on, auto conversion, 3-wire RTD
-#define CONFIG_CLRFLT 0x82   // Vbias on, clear fault status
+// Fault clear must RETAIN Vbias/auto/3-wire (D7/D6/D4) and only add D1;
+// the Photon code's 0x82 dropped to 2-wire + conversions-off for 10ms
+// every clear, out of spec per datasheet "Fault Status Clear (D1)".
+#define CONFIG_CLRFLT 0xD2
 
 // One shared CS-less device for all MAX31865s on the bus
 static spi_device_handle_t s_spi = NULL;
@@ -166,18 +169,21 @@ float max31865_get_temp_f(max31865_handle_t *handle)
         return 0.0f;
     }
 
-    uint8_t lsb = 0;
-    if (!comm_check(handle, read_reg(handle, MAX31865_REG_RTD_LSB, &lsb), "RTD read"))
+    // Burst-read MSB+LSB in ONE transaction (address auto-increments).
+    // Two separate reads can tear: auto-conversion updates the result
+    // registers at ~60Hz, and a mixed MSB/LSB pair is off by up to ~33C.
+    uint8_t tx[3] = { MAX31865_REG_RTD_MSB, 0x00, 0x00 };
+    uint8_t rx[3] = { 0 };
+    if (!comm_check(handle, max_xfer(handle, tx, rx, 3), "RTD read"))
         return 0.0f;
+    uint8_t msb = rx[1];
+    uint8_t lsb = rx[2];
     if (lsb & 0x01) {
         // LSB fault bit set without FAULT_STATUS detail — clear it the
         // same way or it can latch and read 0.0F forever
         clear_fault_and_rerun(handle);
         return 0.0f;
     }
-    uint8_t msb = 0;
-    if (!comm_check(handle, read_reg(handle, MAX31865_REG_RTD_MSB, &msb), "RTD read"))
-        return 0.0f;
 
     // 15-bit RTD code -> resistance -> temperature (math identical to Photon)
     float rtd_code = (float)(((uint16_t)msb << 7) | (lsb >> 1));

@@ -156,6 +156,15 @@ esp_err_t grill_state_save_to_nvs(void);
 void grill_state_load_from_nvs(void);
 
 /**
+ * Persist / recall the running mode+target for power-loss resume.
+ * The actuator writes on every mode transition and mid-cook target change;
+ * main.c reads once at boot to decide whether to resume a cook.
+ * load returns false if nothing was ever saved.
+ */
+void grill_state_persist_run(grill_mode_t mode, int target);
+bool grill_state_load_run(grill_mode_t *mode, int *target);
+
+/**
  * Get estimated minutes remaining for a probe based on rolling average.
  * Returns -1 if not enough data to estimate.
  */

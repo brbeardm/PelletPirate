@@ -11,6 +11,7 @@
 #include "esp_log.h"
 #include "esp_timer.h"
 #include "esp_task_wdt.h"
+#include "esp_ota_ops.h"
 #include "driver/gpio.h"
 #include "hx8357d.h"
 #include "backlight.h"
@@ -49,6 +50,10 @@ static void temp_task(void *arg)
     float hist[5][3];
     int samples = 0;
     bool was_fault[5] = { false };
+    // Only channels that produced a valid reading this session get FAULT/OK
+    // audit events — an enabled probe with nothing in the jack would
+    // otherwise write one bogus FAULT row into every cook log
+    bool seen_valid[5] = { false };
 
     while (1) {
         esp_task_wdt_reset();
@@ -78,7 +83,8 @@ static void temp_task(void *arg)
         // (empty meat-probe jacks read 0.0F permanently — that's normal)
         for (int i = 0; i < 5; i++) {
             bool fault = (t[i] <= 0.0f);
-            if (in_use[i] && fault != was_fault[i]) {
+            if (!fault) seen_valid[i] = true;
+            if (in_use[i] && seen_valid[i] && fault != was_fault[i]) {
                 cooklog_event("auto", "RTD %s %s", s_rtd_name[i],
                               fault ? "FAULT" : "OK");
             }
@@ -92,6 +98,55 @@ static void temp_task(void *arg)
     }
 }
 
+// After an unexpected reboot (power outage, OTA apply), resume a cook that
+// was in progress. Waits for the median filter to deliver a real grill
+// reading, then: SHUTDOWN always resumes (the burn-off must finish — fan
+// on, no fuel, regardless of temp); active cook modes resume only if the
+// grill is still hot enough that the fire is plausibly alive. A cold grill
+// never self-ignites — that decision needs a human at the grill.
+static void resume_task(void *arg)
+{
+    grill_mode_t saved = GRILL_MODE_OFF;
+    int target = 0;
+    if (!grill_state_load_run(&saved, &target) || saved == GRILL_MODE_OFF) {
+        vTaskDelete(NULL);
+    }
+
+    float temp = 0.0f;
+    for (int i = 0; i < 15 && temp <= 0.0f; i++) {   // up to ~30s for a reading
+        vTaskDelay(pdMS_TO_TICKS(2000));
+        grill_state_lock();
+        temp = grill_state_get()->grill_temp;
+        grill_state_unlock();
+    }
+
+    if (saved == GRILL_MODE_SHUTDOWN) {
+        ESP_LOGW(TAG, "resume: power lost during SHUTDOWN — restarting burn-off");
+        grill_state_lock();
+        grill_state_get()->mode = GRILL_MODE_SHUTDOWN;
+        grill_state_unlock();
+        cooklog_event("auto", "RESUME Shutdown after power loss (%.0fF)", temp);
+    } else if (temp >= IGNITE_DISABLE_TEMP) {
+        // Ignite that was interrupted resumes as Cook — above 115F the
+        // actuator would promote it immediately anyway
+        grill_mode_t m = (saved == GRILL_MODE_START) ? GRILL_MODE_COOK : saved;
+        ESP_LOGW(TAG, "resume: grill still %.0fF — resuming %s at %dF",
+                 temp, grill_mode_name(m), target);
+        grill_state_lock();
+        grill_state_t *gs = grill_state_get();
+        gs->mode = m;
+        gs->grill_target = target;
+        grill_state_unlock();
+        cooklog_event("auto", "RESUME %s after power loss (%.0fF)",
+                      grill_mode_name(m), temp);
+    } else {
+        ESP_LOGW(TAG, "resume: cook was active (%s) but grill reads %.0fF — "
+                 "not auto-igniting, start manually", grill_mode_name(saved), temp);
+        grill_state_persist_run(GRILL_MODE_OFF, target);
+    }
+    vTaskDelete(NULL);
+}
+
 #define BACKLIGHT_CTRL_GPIO 17  // TPS61165 CTRL (backlight enable)
 #define HEARTBEAT_LED_GPIO  2   // Onboard blue LED on DevKitC
 
@@ -100,6 +155,21 @@ static void heartbeat_timer_cb(void *arg)
     static bool led_on = false;
     led_on = !led_on;
     gpio_set_level(HEARTBEAT_LED_GPIO, led_on);
+}
+
+// OTA rollback: an OTA'd image must prove itself before it becomes the
+// default. 60s of uptime means the watchdogged control/temp tasks are
+// alive — good enough; if we crash or hang before this fires, the next
+// boot reverts to the previous firmware.
+static void ota_mark_valid_cb(void *arg)
+{
+    const esp_partition_t *running = esp_ota_get_running_partition();
+    esp_ota_img_states_t st;
+    if (esp_ota_get_state_partition(running, &st) == ESP_OK &&
+        st == ESP_OTA_IMG_PENDING_VERIFY) {
+        esp_ota_mark_app_valid_cancel_rollback();
+        ESP_LOGI(TAG, "OTA image marked valid (60s healthy)");
+    }
 }
 
 void app_main(void)
@@ -206,6 +276,19 @@ void app_main(void)
 
     // Fan/auger/igniter control (reads grill_state, drives the triac outputs)
     actuator_init();
+
+    // Power-loss cook resume (one-shot; deletes itself when decided)
+    xTaskCreate(resume_task, "resume", 3072, NULL, 3, NULL);
+
+    // OTA self-check: mark this image valid after 60s of healthy uptime
+    const esp_timer_create_args_t ota_valid_args = {
+        .callback = ota_mark_valid_cb,
+        .name = "ota_valid",
+    };
+    esp_timer_handle_t ota_valid_timer;
+    if (esp_timer_create(&ota_valid_args, &ota_valid_timer) == ESP_OK) {
+        esp_timer_start_once(ota_valid_timer, 60 * 1000000ULL);
+    }
 
     // LVGL takes over the display
     ESP_LOGI(TAG, "Starting LVGL...");
