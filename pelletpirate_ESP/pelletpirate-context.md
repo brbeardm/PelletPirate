@@ -266,3 +266,18 @@ than deleting them.
     final log rows (the log records truth; the MODE Shutdown>Off event
     is the cook-end marker; unplugged probes already blank naturally).
     Clusters with alarm items 3/9/10/11 for one OTA batch.
+
+## Backlog status (2026-07-18): items 1-14 and 16-18 IMPLEMENTED in b4127a0
+Built clean, 1.51MB / 62KB free in the OTA slot. NOT yet flashed/OTA'd —
+deploy via /update when ready. Item 15 (hopper low switch) = V3 hardware.
+Follow-ups noted during implementation:
+- Fan 2s burst cycle needs a LISTENING TEST on the real fan (item 5
+  fallback: FAN_MIN_DUTY=1.0 or back to 30s).
+- Bounded-P smoke: target now acts as the smoke band center — set a low
+  target (~170) for classic Traeger-style smoke temps.
+- Profile engine v1 gaps (deliberate): no LCD program-picker screen yet
+  (web runs programs; LCD can ack gates via the banner); program files
+  re-read (not snapshotted) on power-loss resume; terminal temp/time
+  steps simply hold (use an 'end' step for the green completion notice).
+- Dashboard layout: actuator pills top-right, next-goal + cook-start
+  bottom-right — verify visually on hardware, may need nudging.
