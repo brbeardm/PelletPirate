@@ -173,3 +173,25 @@ than deleting them.
     "Next Goal ET" beside elapsed time on both UIs — soonest upcoming
     goal across enabled probes ("Next: P2 Pork 203 ~0:45"), recomputed
     as goals are reached. Web-first.
+13. Pellet-starvation early warning (firmware) — detect "auger pegged AND
+    temp diving" in COOK (e.g. u >= 0.95 sustained AND temp fell >= 20F
+    over 4 min) -> distinct RED alarm "CHECK PELLETS" + cooklog event,
+    ~10 min ahead of the flame-out shutdown. Catches ALL fuel-delivery
+    failures (empty hopper, pellet bridging, auger jam, shear pin, motor)
+    — reactive last line vs item 15's proactive gauge. Signature
+    validated by the 2026-07-18 07:36-07:48 pellet-out (u=1.00, 260->215
+    in 4 min). OTA-deployable to V2 immediately.
+14. Push notifications to phone (HIGHEST VALUE) — alarms only exist on
+    the LCD banner and an open web page; the 04:38 Wrap alarm and 07:48
+    flame-out rang into a sleeping house. Fire every alarm (red action,
+    green goal, starvation, hopper-low) as a phone push. Simplest:
+    ntfy.sh (free, no account, plain HTTP POST; user subscribes to a
+    topic). Needs Kconfig/NVS topic setting, POST on alarm transitions,
+    settings UI (web-first). Multiplier for items 3/9/13/15.
+15. V3 hardware: hopper low-level switch — the prevention layer (warns
+    hours ahead; "HOPPER LOW" push at 2AM -> dump a bag -> non-event).
+    Prefer a mechanical paddle/lever microswitch (pellet dust fouls IR
+    optics); V3 PCB adds one protected GPIO input (pullup + ESD/RC) and
+    a connector for the hopper harness. Firmware: yellow HOPPER LOW
+    alarm + push via item 14. Blind to bridging/jams — item 13 covers
+    those (fuel gauge vs check-engine light; keep both).
