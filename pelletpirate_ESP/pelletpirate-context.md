@@ -195,3 +195,14 @@ than deleting them.
     a connector for the hopper harness. Firmware: yellow HOPPER LOW
     alarm + push via item 14. Blind to bridging/jams — item 13 covers
     those (fuel gauge vs check-engine light; keep both).
+16. Bounded-P hybrid smoke mode — keep the feast/famine smolder engine
+    (smoke is made by the ember-die-down/refeed cycle; a PID would smooth
+    the fire clean and kill the smoke), but modulate the famine length
+    within a band from temp error: below floor -> shorten pause toward
+    P=2; above ceiling -> stretch toward P=5. Target = floor/ceiling
+    band, NOT a setpoint. Preserves smoke while bounding drift. Current
+    constants: SMOKE P=2, SUPER P=4, off = 45+P*10 s, 15 s on
+    (actuator.cpp). Fan stays constant-on in smoke modes — never pulse
+    the fan off for extra smolder (creosote flavor + auger burn-back
+    risk). Smoke modes intentionally keep only the sub-115F igniter
+    assist as their safety net.
