@@ -155,3 +155,12 @@ than deleting them.
     alarm whose premise the recompute invalidates. Side benefit: the
     flame-out shutdown shares this flag and stops misfiring during
     target-raise climbs too. Orthogonal to item 3 (lid-open dips) — both.
+11. Ack disables probe action alarm (one-shot) — today ALARM_ACKED
+    re-arms once the probe cools 5F below threshold; wrapping the meat
+    dips the probe during handling and the alarm re-fires for meat
+    already dealt with (happened live: pork-butt Wrap@165, 2026-07-17).
+    Fix: acking a PROBE action alarm disables it (clear alarm_temp or
+    latch a done state, persist to NVS; UI shows it as spent until a new
+    alarm is set). Grill temp-drop and sensor-fault alarms KEEP their
+    re-arm behavior — those are condition-based safety alerts, not
+    one-shot actions. Item 9's green goal alert: one-shot the same way.
