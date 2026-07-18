@@ -8,6 +8,7 @@
 body{background:#000;color:#eee;font-family:system-ui,-apple-system,sans-serif;text-align:center;margin:0;padding:14px;-webkit-user-select:none;user-select:none}
 h1{color:#FF6B35;font-size:1.15rem;letter-spacing:3px;margin:0 0 10px}
 .alarm{display:none;background:#FF4444;color:#fff;font-weight:700;padding:12px 8px;border-radius:8px;margin:0 0 12px;font-size:1rem}
+.alarm.green{background:#22AA44}
 .alarm .hint{font-weight:400;font-size:.75rem;opacity:.85}
 .lbl{color:#888;font-size:.78rem;letter-spacing:2px}
 .cur{font-size:4rem;font-weight:700;margin:.05em 0;line-height:1}
@@ -69,6 +70,7 @@ select{background:#111;color:#eee;border:2px solid #555;border-radius:8px;font-s
 </div>
 <div class="mode off" id="mode">connecting&hellip;</div>
 <div class="et" id="et"></div>
+<div class="et" id="ng" style="color:#00D4AA"></div>
 <div class="acts">
   <div class="act" id="af">FAN</div>
   <div class="act" id="aa">AUGER</div>
@@ -80,11 +82,42 @@ select{background:#111;color:#eee;border:2px solid #555;border-radius:8px;font-s
 <div class="lbl" style="margin-top:18px">GRAPH &middot; last hour</div>
 <canvas id="gcv" width="660" height="300" style="width:100%;max-width:520px;margin-top:6px"></canvas>
 <div id="glegend" style="font-size:.78rem;margin-top:4px"></div>
+<div class="lbl" style="margin-top:18px">COOK PROGRAMS</div>
+<div id="pgstat" style="display:none;border:1px solid #00D4AA;border-radius:10px;max-width:420px;margin:8px auto;padding:8px">
+  <div style="color:#00D4AA;font-size:.95rem;font-weight:600" id="pgname"></div>
+  <div style="color:#888;font-size:.8rem;margin:4px 0" id="pgstep"></div>
+  <div>
+    <button class="sm" id="pgresume" style="display:none;border-color:#00D4AA;color:#00D4AA" onclick="pgResume()">RESUME</button>
+    <button class="sm warn" onclick="pgStop()">STOP PROGRAM</button>
+  </div>
+</div>
+<div id="pglist" style="margin:6px 0"></div>
+<div id="pgeditor" style="display:none;margin:8px auto;max-width:420px">
+  <input id="pgename" type="text" autocomplete="off" autocapitalize="off" placeholder="name (letters, -, _)"
+    style="background:#111;color:#eee;border:2px solid #555;border-radius:8px;font-size:.9rem;padding:8px;width:200px;margin-bottom:6px">
+  <textarea id="pgetext" rows="9" spellcheck="false"
+    style="background:#111;color:#eee;border:2px solid #555;border-radius:8px;font-size:.8rem;font-family:monospace;padding:8px;width:95%"></textarea>
+  <div style="color:#555;font-size:.7rem;margin:4px 0">step=&lt;mode&gt;,&lt;target&gt;,&lt;exit&gt;,&lt;value&gt;,&lt;note&gt; &middot; modes: supersmoke smoke cook keepwarm gate &middot; exits: temp time ack end</div>
+  <div class="ebtns" style="margin-top:8px">
+    <button class="sm" style="min-width:100px" onclick="pgSave()">SAVE</button>
+    <button class="sm" style="min-width:80px" onclick="document.getElementById('pgeditor').style.display='none'">CLOSE</button>
+  </div>
+  <div id="pgemsg" style="color:#FF4444;font-size:.8rem;min-height:1.1em"></div>
+</div>
+
 <div class="lbl" style="margin-top:18px">COOK PROFILES</div>
 <div style="margin:8px 0"><button class="sm" style="min-width:200px;border-color:#FF6B35;color:#FF6B35" onclick="saveProfile()">SAVE CURRENT COOK</button></div>
 <div id="profiles"></div>
 <div class="lbl" style="margin-top:18px">COOK LOGS</div>
 <div id="logs" style="margin-top:6px"></div>
+<div class="lbl" style="margin-top:18px">PHONE ALERTS</div>
+<div style="color:#888;font-size:.75rem;margin:4px auto;max-width:400px">Install the free <b>ntfy</b> app, subscribe to a topic name, enter the same topic here — every alarm buzzes your phone (even at 4 AM)</div>
+<div style="margin:6px 0">
+  <input id="ntopic" type="text" autocomplete="off" autocapitalize="off" placeholder="topic e.g. pirate-grill-4711"
+    style="background:#111;color:#eee;border:2px solid #555;border-radius:8px;font-size:.95rem;padding:9px;width:210px">
+  <button class="sm" style="height:42px" onclick="ntSave()">SAVE &amp; TEST</button>
+</div>
+<div id="ntmsg" style="color:#00D4AA;font-size:.8rem;min-height:1.1em"></div>
 <div class="lbl" style="margin-top:18px">WI-FI</div>
 <div id="wifist" style="color:#888;font-size:.85rem;margin:6px 0">--</div>
 <div><button class="sm" style="min-width:200px" onclick="wOpen()">CHANGE WI-FI</button></div>
@@ -242,9 +275,29 @@ function render(s){
   m.className = 'mode' + (s.mode === 'Off' ? ' off' : '');
   if (s.mode !== curMode) { curMode = s.mode; renderModes(s.mode); }
 
-  document.getElementById('et').textContent =
-    (s.mode !== 'Off' && s.et > 0)
-      ? 'ET ' + Math.floor(s.et/60) + ':' + ('0'+(s.et%60)).slice(-2) : '';
+  // ET + the cook's fixed start timestamp (survives mode changes and,
+  // with firmware log continuation, power outages too)
+  var etTxt = '';
+  if (s.mode !== 'Off' && s.et > 0)
+    etTxt = 'ET ' + Math.floor(s.et/60) + ':' + ('0'+(s.et%60)).slice(-2);
+  if (s.mode !== 'Off' && s.cs > 0) {
+    var d = new Date(s.cs * 1000);
+    etTxt += (etTxt ? ' · ' : '') + 'Start ' + (d.getMonth()+1) + '/' + d.getDate() +
+      ' ' + d.toLocaleTimeString([], {hour:'numeric', minute:'2-digit'});
+  }
+  document.getElementById('et').textContent = etTxt;
+
+  // Soonest upcoming goal across enabled probes
+  var ng = '', ngBest = -1, ngIdx = -1;
+  if (s.p) for (var q = 0; q < 4; q++) {
+    var pp = s.p[q];
+    if (pp.en && pp.t > 0 && pp.tg > 0 && pp.t < pp.tg && pp.es >= 0 &&
+        (ngBest < 0 || pp.es < ngBest)) { ngBest = pp.es; ngIdx = q; }
+  }
+  if (ngBest >= 0)
+    ng = 'Next goal: P' + (ngIdx+1) + (s.p[ngIdx].fd ? ' ' + s.p[ngIdx].fd : '') +
+         ' ' + s.p[ngIdx].tg + '° ~' + Math.floor(ngBest/60) + ':' + ('0'+(ngBest%60)).slice(-2);
+  document.getElementById('ng').textContent = ng;
 
   document.getElementById('af').className = 'act' + (s.f ? ' on' : '');
   document.getElementById('aa').className = 'act' + (s.a ? ' on' : '');
@@ -253,10 +306,14 @@ function render(s){
   var ab = document.getElementById('alarm');
   if (s.al) {
     document.getElementById('altxt').textContent = s.alt;
+    // Green = goal reached (good news); red = action/safety
+    ab.className = 'alarm' + (s.alc === 1 ? ' green' : '');
     ab.style.display = 'block';
   } else {
     ab.style.display = 'none';
   }
+
+  pgRender(s);
 
   if (s.p) for (var i = 0; i < 4; i++) {
     var p = s.p[i];
@@ -270,6 +327,7 @@ function render(s){
       inf = '<span class="g">goal ' + p.tg + '°</span>';
       if (p.am > 0) inf += ' · <span class="r">' + p.am + '° ' + (p.at || 'alarm') + '</span>';
       if (p.es >= 0) inf += '<br>~' + p.es + ' min';
+      else if (p.es === -2) inf += '<br><span style="opacity:.7">stalled</span>';
     } else {
       inf = 'not set';
     }
@@ -608,6 +666,103 @@ async function delProfile(f, d){
   catch(e){}
 }
 
+// --- Cook programs (profile engine: driver + passengers) ---
+function pgRender(s){
+  var box = document.getElementById('pgstat');
+  if (s.pg) {
+    box.style.display = 'block';
+    document.getElementById('pgname').textContent =
+      s.pg.n + (s.pg.pa ? ' — PAUSED (manual control)' : '') + ' · driver P' + s.pg.d;
+    document.getElementById('pgstep').textContent =
+      'Step ' + s.pg.s + '/' + s.pg.c + ': ' + s.pg.tx;
+    document.getElementById('pgresume').style.display = s.pg.pa ? '' : 'none';
+  } else {
+    box.style.display = 'none';
+  }
+}
+async function pgList(){
+  try{
+    var r = await fetch('/api/programs');
+    var ps = await r.json();
+    var html = '';
+    for (var i = 0; i < ps.length; i++) {
+      var fac = ps[i].charAt(0) === '*';
+      var nm = fac ? ps[i].slice(1) : ps[i];
+      html += '<div style="margin:5px 0"><button class="sm" style="min-width:170px' +
+        (fac ? ';border-color:#FF6B35' : '') + '" onclick="pgRun(\'' + nm + '\')">' +
+        (fac ? '&#9733; ' : '') + nm + '</button> ' +
+        '<button class="sm" style="min-width:52px" onclick="pgEdit(\'' + nm + '\',' + fac + ')">' +
+        (fac ? 'VIEW' : 'EDIT') + '</button></div>';
+    }
+    html += '<div style="margin:8px 0"><button class="sm" onclick="pgEdit(null,false)">NEW PROGRAM</button></div>';
+    document.getElementById('pglist').innerHTML = html;
+  }catch(e){}
+}
+async function pgRun(nm){
+  // Driver = which probe the program listens to (the star of the cook)
+  var drv = prompt('Driver probe for "' + nm + '"? (1-4 — the meat this program follows)', '1');
+  if (!drv) return;
+  drv = parseInt(drv, 10);
+  if (!(drv >= 1 && drv <= 4)) return;
+  if (!await showConfirm('Run "' + nm + '" with driver P' + drv + '?',
+      'The program takes over pit mode and target', 'RUN')) return;
+  try{
+    var r = await fetch('/api/prog-run', { method:'POST', body: nm + ' ' + drv });
+    if (!r.ok) alert(await r.text());
+    poll();
+  }catch(e){}
+}
+async function pgStop(){
+  if (!await showConfirm('Stop the program?', 'The pit stays in its current mode', 'STOP', true)) return;
+  try{ await fetch('/api/prog-stop', { method:'POST' }); poll(); }catch(e){}
+}
+async function pgResume(){
+  try{ await fetch('/api/prog-resume', { method:'POST' }); poll(); }catch(e){}
+}
+async function pgEdit(nm, fac){
+  var ed = document.getElementById('pgeditor');
+  document.getElementById('pgemsg').textContent = fac ? 'Factory template — save under a new name to customize' : '';
+  if (nm) {
+    try{
+      var r = await fetch('/api/prog?f=' + nm);
+      document.getElementById('pgetext').value = await r.text();
+      document.getElementById('pgename').value = fac ? nm + '_2' : nm;
+    }catch(e){ return; }
+  } else {
+    document.getElementById('pgename').value = '';
+    document.getElementById('pgetext').value = 'ver=1\nstep=cook,225,temp,160,\nstep=gate,0,ack,0,WRAP NOW\nstep=cook,250,temp,203,\nstep=keepwarm,165,end,0,DONE\n';
+  }
+  ed.style.display = 'block';
+}
+async function pgSave(){
+  var nm = document.getElementById('pgename').value.trim();
+  var tx = document.getElementById('pgetext').value;
+  var m = document.getElementById('pgemsg');
+  try{
+    var r = await fetch('/api/prog-put', { method:'POST', body: nm + '\n' + tx });
+    if (r.ok) { m.textContent = ''; document.getElementById('pgeditor').style.display = 'none'; pgList(); }
+    else m.textContent = await r.text();
+  }catch(e){ m.textContent = 'save failed'; }
+}
+
+// --- Phone alerts (ntfy) ---
+async function ntLoad(){
+  try{
+    var r = await fetch('/api/ntfy');
+    var d = await r.json();
+    document.getElementById('ntopic').value = d.t || '';
+  }catch(e){}
+}
+async function ntSave(){
+  var t = document.getElementById('ntopic').value.trim();
+  var m = document.getElementById('ntmsg');
+  try{
+    var r = await fetch('/api/ntfy', { method:'POST', body: t });
+    if (r.ok) m.textContent = t ? 'Saved — test push sent, check your phone' : 'Alerts disabled';
+    else m.textContent = 'Rejected: letters, digits, - and _ only';
+  }catch(e){ m.textContent = 'Save failed — try again'; }
+}
+
 // --- WiFi setup ---
 function esc(t){ return t.replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
 var wSsid = '';
@@ -658,6 +813,8 @@ connectWS();
 loadLogs();
 loadProfiles();
 loadGraph();
+ntLoad();
+pgList();
 setInterval(loadLogs, 60000);
 setInterval(loadGraph, 30000);
 </script>

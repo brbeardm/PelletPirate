@@ -1,5 +1,6 @@
 #include "grill_state.h"
 #include <string.h>
+#include <time.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/semphr.h"
 #include "esp_timer.h"
@@ -30,6 +31,8 @@ static uint32_t now_sec(void)
     return (uint32_t)(esp_timer_get_time() / 1000000ULL);
 }
 
+static void grill_jack_load_from_nvs(void);
+
 void grill_state_init(void)
 {
     s_mutex = xSemaphoreCreateMutex();
@@ -49,6 +52,7 @@ void grill_state_init(void)
 
     // Try to load saved settings from NVS
     grill_state_load_from_nvs();
+    grill_jack_load_from_nvs();
 
     // cook_start_time stays 0 until the actuator sees the mode leave OFF
     // (grill_state_cook_started); ET/EST and history are per-cook.
@@ -85,17 +89,30 @@ void grill_state_cook_started(void)
     // probe baselines so ET/EST reflect this cook, not the last one.
     s_state.cook_start_time = now_sec();
     s_state.last_history_time = now_sec();
+    // Wall clock for display/log continuity — only if it wasn't already
+    // restored by the power-loss resume path (which sets it first)
+    if (s_state.cook_start_wall == 0) {
+        time_t now = time(NULL);
+        struct tm tm;
+        localtime_r(&now, &tm);
+        s_state.cook_start_wall = (tm.tm_year + 1900 >= 2020) ? (int64_t)now : 0;
+    }
     for (int i = 0; i < NUM_MEAT_PROBES; i++) {
         s_state.probes[i].start_temp = s_state.probes[i].current_temp;
         s_state.probes[i].history_count = 0;
         s_state.probes[i].history_index = 0;
+        // One-shot alarms (action + goal) get a fresh life each cook
+        s_state.probe_alarm[i] = ALARM_IDLE;
+        s_state.goal_alarm[i] = ALARM_IDLE;
     }
+    s_state.pellet_alarm = ALARM_IDLE;
 }
 
 void grill_state_cook_ended(void)
 {
     // Caller must hold the lock.
     s_state.cook_start_time = 0;
+    s_state.cook_start_wall = 0;
 }
 
 void grill_state_record_history(void)
@@ -171,8 +188,10 @@ int grill_state_get_est_minutes(int probe_idx)
     // Rate in degrees per minute
     float rate = temp_change / minutes_span;
 
-    // If rate is zero or negative (stall or cooling), can't estimate
-    if (rate <= 0.05f) return -1;  // less than 3°F/hour = stalled
+    // Stall gets its own return value: "9:53 remaining" computed from a
+    // 2.5F/hr crawl is honest math but useless prediction — the UI shows
+    // "stall" instead of an absurd number.
+    if (rate <= 0.05f) return -2;  // less than 3°F/hour = stalled
 
     // Remaining degrees
     float remaining = p->target_temp - p->current_temp;
@@ -185,9 +204,38 @@ int grill_state_get_est_minutes(int probe_idx)
     return est;
 }
 
+int grill_state_next_goal_minutes(int *probe_idx)
+{
+    // Soonest upcoming goal across enabled probes that haven't reached
+    // theirs yet. Caller must hold the lock (same as get_est_minutes).
+    int best = -1;
+    for (int i = 0; i < NUM_MEAT_PROBES; i++) {
+        probe_state_t *p = &s_state.probes[i];
+        if (!p->enabled || p->target_temp <= 0) continue;
+        if (p->current_temp <= 0 || p->current_temp >= p->target_temp) continue;
+        int est = grill_state_get_est_minutes(i);
+        if (est >= 0 && (best < 0 || est < best)) {
+            best = est;
+            if (probe_idx) *probe_idx = i;
+        }
+    }
+    return best;
+}
+
 int grill_state_get_elapsed_minutes(void)
 {
     if (s_state.cook_start_time == 0) return 0;
+    // Prefer wall clock when we have a synced cook-start timestamp: it
+    // survives power-loss resume (monotonic time restarts at reboot and
+    // would lie about a cook that began before the outage).
+    if (s_state.cook_start_wall > 0) {
+        time_t now = time(NULL);
+        struct tm tm;
+        localtime_r(&now, &tm);
+        if (tm.tm_year + 1900 >= 2020 && (int64_t)now > s_state.cook_start_wall) {
+            return (int)(((int64_t)now - s_state.cook_start_wall) / 60);
+        }
+    }
     uint32_t elapsed = now_sec() - s_state.cook_start_time;
     return (int)(elapsed / 60);
 }
@@ -207,57 +255,89 @@ void grill_state_alarms_update(void)
 {
     grill_state_lock();
 
-    // Probe alarms: fire at/above alarm_temp; re-arm after acknowledge
-    // once the probe cools ALARM_PROBE_HYST_F below the threshold.
-    // current_temp == 0 means fault/unplugged — never fire on that.
+    // Probe alarms (action, RED) and goal alerts (target reached, GREEN).
+    // Both are ONE-SHOT: fire once, ack retires them (ALARM_DONE) until
+    // the next cook — a probe pulled from wrapped meat into hot pit air
+    // must not re-ring for an act already performed. Both stand down
+    // entirely outside cooking modes (probes dangling in burn-off air
+    // read pit temp, not meat). current_temp == 0 = fault, never fire.
+    bool cooking = mode_is_cooking(s_state.mode);
     for (int i = 0; i < NUM_MEAT_PROBES; i++) {
         probe_state_t *p = &s_state.probes[i];
-        bool armed = p->enabled && p->alarm_temp > 0 && p->current_temp > 0;
 
-        if (!armed) {
-            s_state.probe_alarm[i] = ALARM_IDLE;
+        if (!cooking || !p->enabled || p->current_temp <= 0) {
+            if (!cooking) {
+                s_state.probe_alarm[i] = ALARM_IDLE;
+                s_state.goal_alarm[i] = ALARM_IDLE;
+            }
             continue;
         }
-        switch (s_state.probe_alarm[i]) {
-        case ALARM_IDLE:
-            if (p->current_temp >= p->alarm_temp) {
-                s_state.probe_alarm[i] = ALARM_ACTIVE;
-                ESP_LOGW(TAG, "ALARM: probe %d reached %.0fF (alarm %.0fF, type '%s')",
-                         i + 1, p->current_temp, p->alarm_temp, p->alarm_type);
-            }
-            break;
-        case ALARM_ACKED:
-            if (p->current_temp < p->alarm_temp - ALARM_PROBE_HYST_F) {
-                s_state.probe_alarm[i] = ALARM_IDLE;  // re-armed
-            }
-            break;
-        default:
-            break;
+        if (s_state.probe_alarm[i] == ALARM_IDLE &&
+            p->alarm_temp > 0 && p->current_temp >= p->alarm_temp) {
+            s_state.probe_alarm[i] = ALARM_ACTIVE;
+            ESP_LOGW(TAG, "ALARM: probe %d reached %.0fF (alarm %.0fF, type '%s')",
+                     i + 1, p->current_temp, p->alarm_temp, p->alarm_type);
+        }
+        if (s_state.goal_alarm[i] == ALARM_IDLE &&
+            p->target_temp > 0 && p->current_temp >= p->target_temp) {
+            s_state.goal_alarm[i] = ALARM_ACTIVE;
+            ESP_LOGW(TAG, "GOAL: probe %d (%s) reached %.0fF (goal %.0fF)",
+                     i + 1, p->food_type, p->current_temp, p->target_temp);
         }
     }
 
     // Grill temp-drop alarm: only meaningful in holding modes, and only
     // after the grill has actually reached the target band once (so it
     // never fires during warm-up). Mirrors the Photon tempMonitorOn logic.
+    static int s_drop_prev_target = -1;
+    static uint32_t s_drop_below_since = 0;
     if (!mode_is_cooking(s_state.mode)) {
         s_state.grill_alarm = ALARM_IDLE;
         s_state.grill_reached_band = false;
+        s_drop_below_since = 0;
     } else {
         float t = s_state.grill_temp;
         float target = (float)s_state.grill_target;
+        bool inband = (t > 0 && t >= target - GRILL_INBAND_F);
 
-        if (t > 0 && t >= target - GRILL_INBAND_F) {
-            s_state.grill_reached_band = true;
-            if (s_state.grill_alarm == ALARM_ACKED) {
-                s_state.grill_alarm = ALARM_IDLE;  // recovered — re-arm
+        // The flag must be honest about WHICH target's band was reached:
+        // raising 225->250 at 220F used to fire "temp drop" instantly on
+        // stale evidence. On any target change, re-evaluate against the
+        // NEW target; a large raise clears the flag (climb phase, alarm
+        // silent until the new band is genuinely reached) and retires an
+        // active alarm whose premise the move just invalidated.
+        if (s_state.grill_target != s_drop_prev_target) {
+            s_drop_prev_target = s_state.grill_target;
+            s_state.grill_reached_band = inband;
+            s_drop_below_since = 0;
+            if (!inband && s_state.grill_alarm == ALARM_ACTIVE) {
+                ESP_LOGI(TAG, "temp-drop alarm cleared: target moved to %d, re-arming at band",
+                         s_state.grill_target);
+                s_state.grill_alarm = ALARM_IDLE;
             }
         }
-        if (s_state.grill_reached_band && t > 0 &&
-            t < target - GRILL_DROP_BAND_F &&
-            s_state.grill_alarm == ALARM_IDLE) {
-            s_state.grill_alarm = ALARM_ACTIVE;
-            ESP_LOGE(TAG, "ALARM: grill temp dropped to %.0fF (target %d) — fire out?",
-                     t, s_state.grill_target);
+
+        if (inband) {
+            s_state.grill_reached_band = true;
+            if (s_state.grill_alarm != ALARM_IDLE) {
+                // Recovered into band — the drop is over, whether the user
+                // acked it or never saw it. Re-arm silently.
+                s_state.grill_alarm = ALARM_IDLE;
+            }
+        }
+        // Dwell: a lid-open or wind gust dips 30-40F and recovers well
+        // inside a minute; only a sustained drop fires the alarm.
+        if (s_state.grill_reached_band && t > 0 && t < target - GRILL_DROP_BAND_F) {
+            if (s_drop_below_since == 0) {
+                s_drop_below_since = now_sec();
+            } else if (now_sec() - s_drop_below_since >= GRILL_DROP_DWELL_S &&
+                       s_state.grill_alarm == ALARM_IDLE) {
+                s_state.grill_alarm = ALARM_ACTIVE;
+                ESP_LOGE(TAG, "ALARM: grill temp %.0fF, %ds below target %d band — fire out?",
+                         t, GRILL_DROP_DWELL_S, s_state.grill_target);
+            }
+        } else {
+            s_drop_below_since = 0;
         }
     }
 
@@ -270,8 +350,11 @@ bool grill_state_alarm_active(void)
     grill_state_lock();
     if (s_state.grill_alarm == ALARM_ACTIVE) active = true;
     if (s_state.sensor_alarm == ALARM_ACTIVE) active = true;
+    if (s_state.pellet_alarm == ALARM_ACTIVE) active = true;
+    if (s_state.prog_alarm == ALARM_ACTIVE) active = true;
     for (int i = 0; i < NUM_MEAT_PROBES && !active; i++) {
         if (s_state.probe_alarm[i] == ALARM_ACTIVE) active = true;
+        if (s_state.goal_alarm[i] == ALARM_ACTIVE) active = true;
     }
     grill_state_unlock();
     return active;
@@ -282,19 +365,22 @@ bool grill_state_alarm_text(char *buf, int len)
     bool found = false;
     grill_state_lock();
 
-    // Sensor fault outranks everything — the controller is flying blind
-    // and has forced a shutdown burn-off
+    // Priority: safety > fuel > pit > probe action > goal (good news last)
     if (s_state.sensor_alarm == ALARM_ACTIVE) {
         snprintf(buf, len, "GRILL SENSOR FAULT - SHUTTING DOWN");
         found = true;
-    } else
-    // Grill drop outranks probe alarms — it means the cook is at risk
-    if (s_state.grill_alarm == ALARM_ACTIVE) {
+    } else if (s_state.pellet_alarm == ALARM_ACTIVE) {
+        snprintf(buf, len, "CHECK PELLETS - auger max, temp falling");
+        found = true;
+    } else if (s_state.grill_alarm == ALARM_ACTIVE) {
         snprintf(buf, len, "GRILL TEMP DROP: %.0f\xC2\xB0""F (target %d\xC2\xB0""F)",
                  s_state.grill_temp, s_state.grill_target);
         found = true;
+    } else if (s_state.prog_alarm == ALARM_ACTIVE && !s_state.prog_alarm_green) {
+        snprintf(buf, len, "%s", s_state.prog_alarm_text);
+        found = true;
     } else {
-        for (int i = 0; i < NUM_MEAT_PROBES; i++) {
+        for (int i = 0; i < NUM_MEAT_PROBES && !found; i++) {
             if (s_state.probe_alarm[i] == ALARM_ACTIVE) {
                 probe_state_t *p = &s_state.probes[i];
                 if (p->alarm_type[0] != '\0') {
@@ -305,8 +391,20 @@ bool grill_state_alarm_text(char *buf, int len)
                              i + 1, p->current_temp);
                 }
                 found = true;
-                break;
             }
+        }
+        for (int i = 0; i < NUM_MEAT_PROBES && !found; i++) {
+            if (s_state.goal_alarm[i] == ALARM_ACTIVE) {
+                probe_state_t *p = &s_state.probes[i];
+                snprintf(buf, len, "%s DONE! P%d at %.0f\xC2\xB0""F",
+                         p->food_type[0] ? p->food_type : "PROBE", i + 1,
+                         p->current_temp);
+                found = true;
+            }
+        }
+        if (!found && s_state.prog_alarm == ALARM_ACTIVE) {   // green program notice
+            snprintf(buf, len, "%s", s_state.prog_alarm_text);
+            found = true;
         }
     }
 
@@ -314,15 +412,39 @@ bool grill_state_alarm_text(char *buf, int len)
     return found;
 }
 
+int grill_state_alarm_class(void)
+{
+    int cls = ALARM_CLASS_NONE;
+    grill_state_lock();
+    bool red = (s_state.grill_alarm == ALARM_ACTIVE) ||
+               (s_state.sensor_alarm == ALARM_ACTIVE) ||
+               (s_state.pellet_alarm == ALARM_ACTIVE) ||
+               (s_state.prog_alarm == ALARM_ACTIVE && !s_state.prog_alarm_green);
+    bool green = (s_state.prog_alarm == ALARM_ACTIVE && s_state.prog_alarm_green);
+    for (int i = 0; i < NUM_MEAT_PROBES; i++) {
+        if (s_state.probe_alarm[i] == ALARM_ACTIVE) red = true;
+        if (s_state.goal_alarm[i] == ALARM_ACTIVE) green = true;
+    }
+    grill_state_unlock();
+    if (red) cls = ALARM_CLASS_RED;
+    else if (green) cls = ALARM_CLASS_GREEN;
+    return cls;
+}
+
 void grill_state_alarm_ack(void)
 {
     grill_state_lock();
+    // Condition-based alarms re-arm when their condition clears
     if (s_state.grill_alarm == ALARM_ACTIVE) s_state.grill_alarm = ALARM_ACKED;
     if (s_state.sensor_alarm == ALARM_ACTIVE) s_state.sensor_alarm = ALARM_ACKED;
+    if (s_state.pellet_alarm == ALARM_ACTIVE) s_state.pellet_alarm = ALARM_ACKED;
+    if (s_state.prog_alarm == ALARM_ACTIVE) s_state.prog_alarm = ALARM_ACKED;  // gate pass
+    // One-shot alarms are spent: the alarm did its job (wrap performed,
+    // meat pulled) — it must not re-ring when the probe dips during
+    // handling and climbs again. Fresh life at the next cook.
     for (int i = 0; i < NUM_MEAT_PROBES; i++) {
-        if (s_state.probe_alarm[i] == ALARM_ACTIVE) {
-            s_state.probe_alarm[i] = ALARM_ACKED;
-        }
+        if (s_state.probe_alarm[i] == ALARM_ACTIVE) s_state.probe_alarm[i] = ALARM_DONE;
+        if (s_state.goal_alarm[i] == ALARM_ACTIVE) s_state.goal_alarm[i] = ALARM_DONE;
     }
     grill_state_unlock();
     ESP_LOGI(TAG, "Alarms acknowledged");
@@ -439,6 +561,51 @@ void grill_state_load_from_nvs(void)
     ESP_LOGI(TAG, "Settings loaded from NVS, target=%d", s_state.grill_target);
 }
 
+// --- Grill jack assignment (Settings > GRILL JACK) ---
+// Which physical TRS jack carries the pit RTD. All five jacks are wired
+// identically, so this is purely a mapping choice. Guarded: the grill
+// channel drives PID/igniter-inhibit/fault-shutdown, so remapping is only
+// allowed while the grill is Off, and applied atomically by temp_task.
+
+static int s_grill_jack = 0;   // 0-4 = J1-J5, default J1
+
+int grill_state_get_grill_jack(void)
+{
+    return s_grill_jack;
+}
+
+bool grill_state_set_grill_jack(int jack)
+{
+    if (jack < 0 || jack > 4) return false;
+    grill_state_lock();
+    bool off = (s_state.mode == GRILL_MODE_OFF);
+    if (off) s_grill_jack = jack;
+    grill_state_unlock();
+    if (!off) {
+        ESP_LOGW(TAG, "grill jack change refused — grill is running");
+        return false;
+    }
+    nvs_handle_t h;
+    if (nvs_open(NVS_NAMESPACE, NVS_READWRITE, &h) == ESP_OK) {
+        nvs_set_u8(h, "grill_jack", (uint8_t)jack);
+        nvs_commit(h);
+        nvs_close(h);
+    }
+    ESP_LOGI(TAG, "grill RTD assigned to jack J%d", jack + 1);
+    return true;
+}
+
+static void grill_jack_load_from_nvs(void)
+{
+    nvs_handle_t h;
+    uint8_t j = 0;
+    if (nvs_open(NVS_NAMESPACE, NVS_READONLY, &h) == ESP_OK) {
+        nvs_get_u8(h, "grill_jack", &j);
+        nvs_close(h);
+    }
+    s_grill_jack = (j <= 4) ? (int)j : 0;
+}
+
 // --- Power-loss cook resume ---
 // The actuator persists the running mode+target on every transition (and on
 // mid-cook target changes); after an unexpected reboot main.c consults this
@@ -447,10 +614,15 @@ void grill_state_load_from_nvs(void)
 
 void grill_state_persist_run(grill_mode_t mode, int target)
 {
+    grill_state_lock();
+    int64_t wall = s_state.cook_start_wall;
+    grill_state_unlock();
+
     nvs_handle_t h;
     if (nvs_open(NVS_NAMESPACE, NVS_READWRITE, &h) != ESP_OK) return;
     nvs_set_u8(h, "run_mode", (uint8_t)mode);
     nvs_set_i32(h, "run_tgt", (int32_t)target);
+    nvs_set_i64(h, "run_wall", wall);
     esp_err_t err = nvs_commit(h);
     nvs_close(h);
     if (err != ESP_OK) {
@@ -458,17 +630,20 @@ void grill_state_persist_run(grill_mode_t mode, int target)
     }
 }
 
-bool grill_state_load_run(grill_mode_t *mode, int *target)
+bool grill_state_load_run(grill_mode_t *mode, int *target, int64_t *cook_start_wall)
 {
     nvs_handle_t h;
     if (nvs_open(NVS_NAMESPACE, NVS_READONLY, &h) != ESP_OK) return false;
     uint8_t m = 0;
     int32_t t = 0;
+    int64_t w = 0;
     bool ok = (nvs_get_u8(h, "run_mode", &m) == ESP_OK) &&
               (nvs_get_i32(h, "run_tgt", &t) == ESP_OK);
+    nvs_get_i64(h, "run_wall", &w);   // optional (older firmware records)
     nvs_close(h);
     if (!ok || m >= GRILL_MODE_COUNT) return false;
     *mode = (grill_mode_t)m;
     *target = (int)t;
+    if (cook_start_wall) *cook_start_wall = w;
     return true;
 }

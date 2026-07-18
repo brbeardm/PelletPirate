@@ -64,9 +64,28 @@ static const double FLAMEOUT_DROP_F = 60.0;  // this far below target...
 static const double FLAMEOUT_SEC = 600.0;    // ...for this long -> burn-off
 
 // --- Enhancement constants ---
-static const double FAN_CYCLE_SEC = 30.0;   // burst period (zero-cross friendly)
+// 2s burst period: at 50% duty that's 1s on / 1s off — the impeller never
+// spins down, giving quasi-continuous reduced airflow (integral-cycle
+// control; the MOC3063 zero-cross driver forbids real PWM/phase-angle).
+// Was 30s, which audibly stopped the fan for 15s stretches. LISTENING
+// TEST REQUIRED on the real fan: if it hums/surges, fall back to 30s or
+// set FAN_MIN_DUTY=1.0.
+static const double FAN_CYCLE_SEC = 2.0;
 static const double FAN_BAND_F = 10.0;      // pulse fan when within +/- this of target
 static const double FAN_MIN_DUTY = 0.5;
+
+// Fuel starvation detector (COOK/KEEP_WARM): auger pegged while temp
+// dives = fuel not reaching the fire (empty hopper, bridging, jam).
+// Signature from the 2026-07-18 pellet-out: u=1.00, 260->215F in 4 min.
+static const double STARVE_U_MIN = 0.95;      // auger effectively pegged
+static const double STARVE_DROP_F = 20.0;     // temp fell this much...
+static const double STARVE_WINDOW_SEC = 240;  // ...within this window
+// Bounded-P hybrid smoke: keep the feast/famine smolder engine but nudge
+// the famine length so temp stays near the target band. Target acts as a
+// band center, NOT a setpoint (set it low, ~170, for classic smoke temps).
+static const int SMOKE_P_MIN = 1, SMOKE_P_MAX = 6;
+static const double SMOKE_BAND_F = 15.0;      // deadband around target
+static const double SMOKE_ADJ_SEC = 90.0;     // one P step per this interval
 
 // Anti-surge stagger on cold start (leaving OFF): fan first, then auger,
 // then igniter. Motor inrush lasts ~0.5-1s, so 2s stages let each load's
@@ -92,6 +111,16 @@ static double s_fault_since = 0;            // grill RTD reading 0.0 in an activ
 static double s_flameout_since = 0;         // temp sustained far below target
 static grill_mode_t s_prev_mode = GRILL_MODE_OFF;
 static int s_prev_target = -1;              // for mid-cook target persist
+
+// Starvation detector: temp ring sampled every 30s, oldest-vs-now
+#define STARVE_RING 8                       // 8 x 30s = 4 min window
+static float s_starve_ring[STARVE_RING] = {0};
+static int s_starve_idx = 0, s_starve_count = 0;
+static double s_starve_last_sample = 0;
+
+// Bounded-P smoke state
+static int s_smoke_p_offset = 0;
+static double s_smoke_last_adj = 0;
 
 // Physical pin states, for transition-only logging
 static bool s_pin_fan = false, s_pin_aug = false, s_pin_ign = false;
@@ -158,9 +187,8 @@ static void actuator_task(void *arg)
                      grill_mode_name(s_prev_mode), grill_mode_name(mode), temp, target);
             s_fault_since = 0;  // each mode gets a fresh sensor-fault grace period
             s_flameout_since = 0;
-            // Power-loss resume record: every transition, including auto ones
-            // and clean OFF (which overwrites any stale cook state)
-            grill_state_persist_run(mode, target);
+            s_starve_count = 0; s_starve_idx = 0;   // fresh starvation window
+            s_smoke_p_offset = 0; s_smoke_last_adj = now;
             if (mode == GRILL_MODE_COOK || mode == GRILL_MODE_KEEP_WARM) {
                 s_pid->setTarget(target, 0);  // reset integrator (Photon SetMode=Hold)
                 s_u = U_MIN;                  // start at maintenance level
@@ -186,6 +214,10 @@ static void actuator_task(void *arg)
                 grill_state_unlock();
                 shutdown_start = (uint32_t)now;
             }
+            // Power-loss resume record: every transition, including auto ones
+            // and clean OFF (which overwrites any stale cook state). Written
+            // AFTER cook_started so the wall-clock start rides along.
+            grill_state_persist_run(mode, target);
             s_prev_mode = mode;
         }
 
@@ -242,7 +274,23 @@ static void actuator_task(void *arg)
 
         case GRILL_MODE_SMOKE:
         case GRILL_MODE_SUPER_SMOKE: {
-            int p = (mode == GRILL_MODE_SMOKE) ? P_SETTING_SMOKE : P_SETTING_SUPER;
+            // Bounded-P hybrid: the feast/famine cycle IS the smoke engine
+            // (fresh pellets smoldering on dying embers), so never PID this —
+            // instead nudge the famine length one step at a time when temp
+            // drifts outside target±band. Base P preserves each mode's
+            // character; offset is bounded so it stays a smoke mode.
+            int base = (mode == GRILL_MODE_SMOKE) ? P_SETTING_SMOKE : P_SETTING_SUPER;
+            if (temp > 0 && target > 0 && (now - s_smoke_last_adj) >= SMOKE_ADJ_SEC) {
+                s_smoke_last_adj = now;
+                if (temp < target - SMOKE_BAND_F && base + s_smoke_p_offset > SMOKE_P_MIN) {
+                    s_smoke_p_offset--;   // too cold: shorter famine, more fuel
+                } else if (temp > target + SMOKE_BAND_F && base + s_smoke_p_offset < SMOKE_P_MAX) {
+                    s_smoke_p_offset++;   // too hot: longer famine
+                }
+            }
+            int p = base + s_smoke_p_offset;
+            if (p < SMOKE_P_MIN) p = SMOKE_P_MIN;
+            if (p > SMOKE_P_MAX) p = SMOKE_P_MAX;
             double off = 45.0 + p * 10.0;
             double cyc = SMOKE_ON_SEC + off;
             aug = burst_cycle(&s_auger, now, cyc, SMOKE_ON_SEC / cyc);
@@ -314,6 +362,40 @@ static void actuator_task(void *arg)
             }
         } else {
             s_flameout_since = 0;
+        }
+
+        // Fuel starvation early warning — fires ~10 min before the flame-out
+        // shutdown would. Auger pegged + temp diving = fuel isn't reaching
+        // the fire (empty hopper, bridged pellets, jammed auger). Alarm
+        // only; the flame-out shutdown remains the enforcement layer.
+        if ((mode == GRILL_MODE_COOK || mode == GRILL_MODE_KEEP_WARM) && !sensor_fault) {
+            if (now - s_starve_last_sample >= 30.0) {
+                s_starve_last_sample = now;
+                s_starve_ring[s_starve_idx] = temp;
+                s_starve_idx = (s_starve_idx + 1) % STARVE_RING;
+                if (s_starve_count < STARVE_RING) s_starve_count++;
+            }
+            if (s_starve_count >= STARVE_RING) {
+                float oldest = s_starve_ring[s_starve_idx];  // next write slot = oldest
+                bool starving = (s_u >= STARVE_U_MIN) &&
+                                (temp <= oldest - (float)STARVE_DROP_F);
+                grill_state_lock();
+                alarm_state_t pa = gs->pellet_alarm;
+                if (starving && pa == ALARM_IDLE) {
+                    gs->pellet_alarm = ALARM_ACTIVE;
+                } else if (!starving && pa == ALARM_ACKED) {
+                    gs->pellet_alarm = ALARM_IDLE;   // refilled/recovered — re-arm
+                }
+                grill_state_unlock();
+                if (starving && pa == ALARM_IDLE) {
+                    ESP_LOGE(TAG, "PELLET STARVATION suspected: u=%.2f, %.0fF -> %.0fF over %.0fs",
+                             s_u, oldest, temp, STARVE_WINDOW_SEC);
+                    cooklog_event("auto", "CHECK PELLETS: auger max, temp %.0fF falling", temp);
+                }
+            }
+        } else {
+            s_starve_count = 0;
+            s_starve_idx = 0;
         }
 
         // Anti-surge stagger: on a cold start, hold auger and igniter back

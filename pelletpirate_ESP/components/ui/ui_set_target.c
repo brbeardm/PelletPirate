@@ -98,6 +98,10 @@ static void do_save(lv_event_t *e)
 static void digit_edit_timer_cb(lv_timer_t *timer)
 {
     if (!s_screen || s_active_digit >= 3) return;
+    if (ui_encoder_swallowed()) {   // alarm-ack gesture owns the encoder
+        encoder_get_diff(); encoder_get_button_event();
+        return;
+    }
 
     int diff = encoder_get_diff();
     if (diff > 0) {

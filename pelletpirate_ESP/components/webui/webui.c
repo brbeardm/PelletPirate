@@ -15,10 +15,13 @@
 #include "esp_netif.h"
 #include "esp_http_server.h"
 #include "esp_log.h"
+#include "lwip/sockets.h"
+#include "lwip/netdb.h"
 #include "esp_ota_ops.h"
 #include "esp_system.h"
 #include "mdns.h"
 #include "grill_state.h"
+#include "cookprog.h"
 #include "nvs.h"
 #include "esp_timer.h"
 #include "sdkconfig.h"
@@ -58,6 +61,7 @@ static int build_status_json(char *buf, int len)
     char alarm_txt[72] = "";
     bool alarm = grill_state_alarm_active();
     if (alarm) grill_state_alarm_text(alarm_txt, sizeof(alarm_txt));
+    int alarm_class = grill_state_alarm_class();  // before the state lock (takes it itself)
 
     grill_state_lock();
     grill_state_t *gs = grill_state_get();
@@ -65,15 +69,16 @@ static int build_status_json(char *buf, int len)
 
     int n = snprintf(buf, len,
                      "{\"gt\":%.1f,\"tgt\":%d,\"mode\":\"%s\",\"rssi\":%d,"
-                     "\"et\":%d,\"f\":%d,\"a\":%d,\"ig\":%d,"
-                     "\"al\":%d,\"alt\":\"%s\",\"pv\":%lu,"
+                     "\"et\":%d,\"cs\":%lld,\"f\":%d,\"a\":%d,\"ig\":%d,"
+                     "\"al\":%d,\"alc\":%d,\"alt\":\"%s\",\"pv\":%lu,"
                      "\"ssid\":\"%s\",\"p\":[",
                      gs->grill_temp, gs->grill_target,
                      grill_mode_name(gs->mode), rssi,
                      grill_state_get_elapsed_minutes(),
+                     (long long)gs->cook_start_wall,
                      gs->fan_on ? 1 : 0, gs->auger_on ? 1 : 0,
                      gs->igniter_on ? 1 : 0,
-                     alarm ? 1 : 0, alarm_txt,
+                     alarm ? 1 : 0, alarm_class, alarm_txt,
                      (unsigned long)profiles_revision(), ssid_esc);
     for (int i = 0; i < NUM_MEAT_PROBES && n < len; i++) {
         probe_state_t *p = &gs->probes[i];
@@ -84,8 +89,24 @@ static int build_status_json(char *buf, int len)
                       (int)p->target_temp, grill_state_get_est_minutes(i),
                       (int)p->alarm_temp, p->alarm_type, p->food_type);
     }
-    if (n < len) n += snprintf(buf + n, len - n, "]}");
+    if (n < len) n += snprintf(buf + n, len - n, "]");
     grill_state_unlock();
+
+    // Profile engine status (after releasing the state lock — the engine
+    // has its own mutex)
+    cookprog_status_t pg;
+    cookprog_get_status(&pg);
+    if (pg.running && n < len) {
+        char nm[40], stx[80];
+        json_escape(nm, sizeof(nm), pg.name);
+        json_escape(stx, sizeof(stx), pg.step_text);
+        n += snprintf(buf + n, len - n,
+                      ",\"pg\":{\"n\":\"%s\",\"s\":%d,\"c\":%d,\"d\":%d,"
+                      "\"pa\":%d,\"tx\":\"%s\"}",
+                      nm, pg.step + 1, pg.step_count, pg.driver + 1,
+                      pg.paused ? 1 : 0, stx);
+    }
+    if (n < len) n += snprintf(buf + n, len - n, "}");
     return n;
 }
 
@@ -98,7 +119,7 @@ static esp_err_t root_get_handler(httpd_req_t *req)
                            index_html_end - index_html_start);
 }
 
-#define STATUS_JSON_MAX 896
+#define STATUS_JSON_MAX 1024
 
 static esp_err_t status_get_handler(httpd_req_t *req)
 {
@@ -497,6 +518,292 @@ static esp_err_t log_get_handler(httpd_req_t *req)
     return httpd_resp_send(req, buf, n);
 }
 
+// --- Cook programs (profile engine, item 17) ---
+
+// GET /api/programs — names; '*' prefix marks read-only factory templates
+static esp_err_t prog_list_handler(httpd_req_t *req)
+{
+    char names[12][COOKPROG_NAME_MAX];
+    int count = cookprog_list(names, 12);
+    char buf[512];
+    int n = snprintf(buf, sizeof(buf), "[");
+    for (int i = 0; i < count && n < (int)sizeof(buf) - 48; i++) {
+        char esc[40];
+        json_escape(esc, sizeof(esc), names[i]);
+        n += snprintf(buf + n, sizeof(buf) - n, "%s\"%s\"", i ? "," : "", esc);
+    }
+    n += snprintf(buf + n, sizeof(buf) - n, "]");
+    httpd_resp_set_type(req, "application/json");
+    return httpd_resp_send(req, buf, n);
+}
+
+// GET /api/prog?f=<name> — raw program text (works for factory + user)
+static esp_err_t prog_get_handler(httpd_req_t *req)
+{
+    char query[64], name[40];
+    if (httpd_req_get_url_query_str(req, query, sizeof(query)) != ESP_OK ||
+        httpd_query_key_value(query, "f", name, sizeof(name)) != ESP_OK) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "want ?f=name");
+        return ESP_FAIL;
+    }
+    const char *clean = (name[0] == '*') ? name + 1 : name;
+    char text[1024];
+    if (!cookprog_read(clean, text, sizeof(text))) {
+        httpd_resp_send_err(req, HTTPD_404_NOT_FOUND, "no such program");
+        return ESP_FAIL;
+    }
+    httpd_resp_set_type(req, "text/plain");
+    return httpd_resp_send(req, text, HTTPD_RESP_USE_STRLEN);
+}
+
+// POST /api/prog-put — body "name\ncontent". Empty content deletes.
+static esp_err_t prog_put_handler(httpd_req_t *req)
+{
+    char body[1152] = { 0 };
+    int recv_len = req->content_len < (int)sizeof(body) - 1
+                       ? req->content_len : (int)sizeof(body) - 1;
+    int r = httpd_req_recv(req, body, recv_len);
+    char *nl = r > 0 ? strchr(body, '\n') : NULL;
+    if (!nl || nl == body) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "want name\\ncontent");
+        return ESP_FAIL;
+    }
+    *nl = '\0';
+    if (!cookprog_write(body, nl + 1)) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST,
+                            "rejected (factory template, bad name, or no valid steps)");
+        return ESP_FAIL;
+    }
+    return prog_list_handler(req);
+}
+
+// POST /api/prog-run — body "name driver" (driver 1-4)
+static esp_err_t prog_run_handler(httpd_req_t *req)
+{
+    char body[48] = { 0 };
+    int recv_len = req->content_len < (int)sizeof(body) - 1
+                       ? req->content_len : (int)sizeof(body) - 1;
+    int r = httpd_req_recv(req, body, recv_len);
+    char name[40] = "";
+    int driver = 0;
+    if (r <= 0 || sscanf(body, "%39s %d", name, &driver) != 2 ||
+        driver < 1 || driver > NUM_MEAT_PROBES) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "want: <name> <driver 1-4>");
+        return ESP_FAIL;
+    }
+    if (!cookprog_run(name, driver - 1, "web")) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST,
+                            "start failed (unknown program or one already running)");
+        return ESP_FAIL;
+    }
+    return status_get_handler(req);
+}
+
+static esp_err_t prog_stop_handler(httpd_req_t *req)
+{
+    cookprog_stop("web");
+    return status_get_handler(req);
+}
+
+static esp_err_t prog_resume_handler(httpd_req_t *req)
+{
+    if (!cookprog_resume_manual()) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "nothing paused");
+        return ESP_FAIL;
+    }
+    return status_get_handler(req);
+}
+
+// --- Phone push notifications (ntfy.sh) ---
+// Every alarm transition fires a push to http://ntfy.sh/<topic>. The user
+// subscribes to the same topic in the ntfy app (free, no account). Topic
+// lives in NVS; empty = disabled. This is what turns a 4 AM Wrap alarm
+// from a banner in an empty backyard into a phone buzz.
+
+#define NTFY_NVS_KEY "ntfy_topic"
+
+static char s_ntfy_topic[48] = "";
+
+static void ntfy_load(void)
+{
+    nvs_handle_t h;
+    if (nvs_open("pelletpirate", NVS_READONLY, &h) == ESP_OK) {
+        size_t len = sizeof(s_ntfy_topic);
+        if (nvs_get_str(h, NTFY_NVS_KEY, s_ntfy_topic, &len) != ESP_OK) {
+            s_ntfy_topic[0] = '\0';
+        }
+        nvs_close(h);
+    }
+}
+
+// Minimal raw-socket HTTP POST: esp_http_client would pull ~80KB of
+// TLS machinery into an app partition with none to spare, and ntfy
+// accepts plain HTTP on port 80.
+static void ntfy_send(const char *msg)
+{
+    if (s_ntfy_topic[0] == '\0') return;
+
+    struct addrinfo hints = { .ai_family = AF_INET, .ai_socktype = SOCK_STREAM };
+    struct addrinfo *res = NULL;
+    if (getaddrinfo("ntfy.sh", "80", &hints, &res) != 0 || !res) {
+        ESP_LOGW(TAG, "ntfy: DNS lookup failed");
+        return;
+    }
+    int s = socket(res->ai_family, res->ai_socktype, 0);
+    if (s < 0) { freeaddrinfo(res); return; }
+    struct timeval tv = { .tv_sec = 5 };
+    setsockopt(s, SOL_SOCKET, SO_SNDTIMEO, &tv, sizeof(tv));
+    setsockopt(s, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv));
+    if (connect(s, res->ai_addr, res->ai_addrlen) != 0) {
+        ESP_LOGW(TAG, "ntfy: connect failed");
+        close(s);
+        freeaddrinfo(res);
+        return;
+    }
+    freeaddrinfo(res);
+
+    char req[384];
+    int n = snprintf(req, sizeof(req),
+                     "POST /%s HTTP/1.1\r\n"
+                     "Host: ntfy.sh\r\n"
+                     "Title: PelletPirate\r\n"
+                     "Content-Type: text/plain\r\n"
+                     "Content-Length: %d\r\n"
+                     "Connection: close\r\n\r\n%s",
+                     s_ntfy_topic, (int)strlen(msg), msg);
+    bool ok = (n > 0 && n < (int)sizeof(req) && send(s, req, n, 0) == n);
+    if (ok) {
+        char resp[64];
+        recv(s, resp, sizeof(resp), 0);   // wait for the server's verdict
+        ESP_LOGI(TAG, "ntfy push: %s", msg);
+    } else {
+        ESP_LOGW(TAG, "ntfy: send failed");
+    }
+    close(s);
+}
+
+// Watch every alarm source for →ACTIVE transitions and push each one
+// individually (the aggregate banner can mask a second alarm firing
+// while a first is still up).
+static void push_task(void *arg)
+{
+    alarm_state_t pv_probe[NUM_MEAT_PROBES] = { ALARM_IDLE };
+    alarm_state_t pv_goal[NUM_MEAT_PROBES] = { ALARM_IDLE };
+    alarm_state_t pv_grill = ALARM_IDLE, pv_sensor = ALARM_IDLE, pv_pellet = ALARM_IDLE;
+    alarm_state_t pv_prog = ALARM_IDLE;
+
+    while (1) {
+        vTaskDelay(pdMS_TO_TICKS(1000));
+        if (s_ntfy_topic[0] == '\0') continue;
+
+        alarm_state_t probe[NUM_MEAT_PROBES], goal[NUM_MEAT_PROBES];
+        alarm_state_t grill_a, sensor_a, pellet_a, prog_a;
+        float ptemp[NUM_MEAT_PROBES], gtemp;
+        int gtarget;
+        char food[NUM_MEAT_PROBES][16], atype[NUM_MEAT_PROBES][16];
+        char progtxt[48];
+
+        grill_state_lock();
+        grill_state_t *gs = grill_state_get();
+        for (int i = 0; i < NUM_MEAT_PROBES; i++) {
+            probe[i] = gs->probe_alarm[i];
+            goal[i] = gs->goal_alarm[i];
+            ptemp[i] = gs->probes[i].current_temp;
+            strlcpy(food[i], gs->probes[i].food_type, sizeof(food[i]));
+            strlcpy(atype[i], gs->probes[i].alarm_type, sizeof(atype[i]));
+        }
+        grill_a = gs->grill_alarm;
+        sensor_a = gs->sensor_alarm;
+        pellet_a = gs->pellet_alarm;
+        prog_a = gs->prog_alarm;
+        strlcpy(progtxt, gs->prog_alarm_text, sizeof(progtxt));
+        gtemp = gs->grill_temp;
+        gtarget = gs->grill_target;
+        grill_state_unlock();
+
+        char msg[128];
+        if (sensor_a == ALARM_ACTIVE && pv_sensor != ALARM_ACTIVE) {
+            ntfy_send("GRILL SENSOR FAULT - forced shutdown burn-off");
+        }
+        if (pellet_a == ALARM_ACTIVE && pv_pellet != ALARM_ACTIVE) {
+            snprintf(msg, sizeof(msg), "CHECK PELLETS - auger max, temp falling (%dF)",
+                     (int)gtemp);
+            ntfy_send(msg);
+        }
+        if (grill_a == ALARM_ACTIVE && pv_grill != ALARM_ACTIVE) {
+            snprintf(msg, sizeof(msg), "Grill temp drop: %dF (target %dF) - fire out?",
+                     (int)gtemp, gtarget);
+            ntfy_send(msg);
+        }
+        for (int i = 0; i < NUM_MEAT_PROBES; i++) {
+            if (probe[i] == ALARM_ACTIVE && pv_probe[i] != ALARM_ACTIVE) {
+                snprintf(msg, sizeof(msg), "P%d %.15s %dF - %.15s!", i + 1,
+                         food[i][0] ? food[i] : "probe", (int)ptemp[i],
+                         atype[i][0] ? atype[i] : "alarm");
+                ntfy_send(msg);
+            }
+            if (goal[i] == ALARM_ACTIVE && pv_goal[i] != ALARM_ACTIVE) {
+                snprintf(msg, sizeof(msg), "%.15s DONE! P%d at %dF",
+                         food[i][0] ? food[i] : "Probe", i + 1, (int)ptemp[i]);
+                ntfy_send(msg);
+            }
+            pv_probe[i] = probe[i];
+            pv_goal[i] = goal[i];
+        }
+        if (prog_a == ALARM_ACTIVE && pv_prog != ALARM_ACTIVE) {
+            snprintf(msg, sizeof(msg), "%.47s", progtxt);   // gates + completions
+            ntfy_send(msg);
+        }
+        pv_grill = grill_a;
+        pv_sensor = sensor_a;
+        pv_pellet = pellet_a;
+        pv_prog = prog_a;
+    }
+}
+
+// GET /api/ntfy — current topic; POST /api/ntfy — save topic (empty
+// disables) and send a test push
+static esp_err_t ntfy_get_handler(httpd_req_t *req)
+{
+    char buf[128];
+    char esc[64];
+    json_escape(esc, sizeof(esc), s_ntfy_topic);
+    snprintf(buf, sizeof(buf), "{\"t\":\"%s\"}", esc);
+    httpd_resp_set_type(req, "application/json");
+    return httpd_resp_send(req, buf, HTTPD_RESP_USE_STRLEN);
+}
+
+static esp_err_t ntfy_post_handler(httpd_req_t *req)
+{
+    char body[48] = { 0 };
+    int recv_len = req->content_len < (int)sizeof(body) - 1
+                       ? req->content_len : (int)sizeof(body) - 1;
+    int r = httpd_req_recv(req, body, recv_len);
+    if (r < 0) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "bad body");
+        return ESP_FAIL;
+    }
+    // Topic = URL path segment: keep it strictly safe characters
+    for (char *c = body; *c; c++) {
+        if (!((*c >= 'a' && *c <= 'z') || (*c >= 'A' && *c <= 'Z') ||
+              (*c >= '0' && *c <= '9') || *c == '-' || *c == '_')) {
+            httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST,
+                                "topic: letters/digits/-/_ only");
+            return ESP_FAIL;
+        }
+    }
+    strlcpy(s_ntfy_topic, body, sizeof(s_ntfy_topic));
+    nvs_handle_t h;
+    if (nvs_open("pelletpirate", NVS_READWRITE, &h) == ESP_OK) {
+        nvs_set_str(h, NTFY_NVS_KEY, s_ntfy_topic);
+        nvs_commit(h);
+        nvs_close(h);
+    }
+    ESP_LOGI(TAG, "ntfy topic set to '%s'", s_ntfy_topic);
+    if (s_ntfy_topic[0]) ntfy_send("Notifications enabled - you're connected!");
+    return ntfy_get_handler(req);
+}
+
 // --- OTA firmware update ---
 // POST /api/ota with the raw .bin as the body writes the next app slot and
 // reboots. Refused while the grill is running unless ?force=1 — a forced
@@ -844,7 +1151,7 @@ static void start_webserver(void)
 
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
     config.lru_purge_enable = true;
-    config.max_uri_handlers = 20;  // default 8 silently drops extras; we register 18
+    config.max_uri_handlers = 28;  // default 8 silently drops extras; we register 26
     config.stack_size = 8192;      // default 4k overflows in the wifi-scan handler
 
     if (httpd_start(&s_server, &config) != ESP_OK) {
@@ -908,6 +1215,30 @@ static void start_webserver(void)
     const httpd_uri_t update = {
         .uri = "/update", .method = HTTP_GET, .handler = update_get_handler,
     };
+    const httpd_uri_t ntfy_g = {
+        .uri = "/api/ntfy", .method = HTTP_GET, .handler = ntfy_get_handler,
+    };
+    const httpd_uri_t ntfy_p = {
+        .uri = "/api/ntfy", .method = HTTP_POST, .handler = ntfy_post_handler,
+    };
+    const httpd_uri_t prog_ls = {
+        .uri = "/api/programs", .method = HTTP_GET, .handler = prog_list_handler,
+    };
+    const httpd_uri_t prog_gt = {
+        .uri = "/api/prog", .method = HTTP_GET, .handler = prog_get_handler,
+    };
+    const httpd_uri_t prog_pt = {
+        .uri = "/api/prog-put", .method = HTTP_POST, .handler = prog_put_handler,
+    };
+    const httpd_uri_t prog_rn = {
+        .uri = "/api/prog-run", .method = HTTP_POST, .handler = prog_run_handler,
+    };
+    const httpd_uri_t prog_sp = {
+        .uri = "/api/prog-stop", .method = HTTP_POST, .handler = prog_stop_handler,
+    };
+    const httpd_uri_t prog_rs = {
+        .uri = "/api/prog-resume", .method = HTTP_POST, .handler = prog_resume_handler,
+    };
     httpd_register_uri_handler(s_server, &root);
     httpd_register_uri_handler(s_server, &status);
     httpd_register_uri_handler(s_server, &target);
@@ -926,7 +1257,15 @@ static void start_webserver(void)
     httpd_register_uri_handler(s_server, &ws);
     httpd_register_uri_handler(s_server, &ota);
     httpd_register_uri_handler(s_server, &update);
-    ESP_LOGI(TAG, "HTTP server started (REST + WS + OTA), 18/20 routes");
+    httpd_register_uri_handler(s_server, &ntfy_g);
+    httpd_register_uri_handler(s_server, &ntfy_p);
+    httpd_register_uri_handler(s_server, &prog_ls);
+    httpd_register_uri_handler(s_server, &prog_gt);
+    httpd_register_uri_handler(s_server, &prog_pt);
+    httpd_register_uri_handler(s_server, &prog_rn);
+    httpd_register_uri_handler(s_server, &prog_sp);
+    httpd_register_uri_handler(s_server, &prog_rs);
+    ESP_LOGI(TAG, "HTTP server started (REST + WS + OTA + push + programs), 26/28 routes");
 }
 
 // --- WiFi events ---
@@ -1135,6 +1474,10 @@ void webui_init(void)
     }
 
     xTaskCreate(ws_push_task, "ws_push", 4096, NULL, 4, NULL);
+
+    // Phone push notifications on alarm transitions
+    ntfy_load();
+    xTaskCreate(push_task, "ntfy_push", 4096, NULL, 3, NULL);
 
     // Raise the setup AP if we haven't connected within 25s of boot
     const esp_timer_create_args_t ap_timer_args = {

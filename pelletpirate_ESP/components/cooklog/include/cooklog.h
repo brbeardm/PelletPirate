@@ -38,6 +38,13 @@ void cooklog_event(const char *source, const char *fmt, ...)
 /** True when the LittleFS partition mounted (profiles share it). */
 bool cooklog_fs_ready(void);
 
+/**
+ * Power-loss continuation: call before re-entering an active mode on the
+ * resume path. The next cook-file open appends to the interrupted cook's
+ * CSV (with a "POWER LOSS - resumed" event row) instead of starting new.
+ */
+void cooklog_mark_resume(void);
+
 #ifdef __cplusplus
 }
 #endif

@@ -7,6 +7,7 @@
 #include "ui_dashboard.h"
 #include "hx8357d.h"
 #include "encoder.h"
+#include "backlight.h"
 #include "grill_state.h"
 #include "cooklog.h"
 
@@ -41,9 +42,26 @@ static void lvgl_flush_cb(lv_display_t *disp, const lv_area_t *area, uint8_t *px
 // When true, LVGL encoder callback is disabled — screen polls encoder directly
 static bool s_encoder_direct = false;
 
+// Alarm-ack input isolation + idle dimming state (details below)
+static lv_obj_t *s_alarm_banner = NULL;
+static int64_t s_enc_suppress_until = 0;
+static bool s_backlight_dimmed = false;
+
 void ui_encoder_set_direct(bool direct)
 {
     s_encoder_direct = direct;
+}
+
+// True while encoder input belongs to the alarm-ack gesture (banner up +
+// button held, or inside the post-ack settle window). Direct-mode screens
+// poll the encoder themselves and MUST check this first, draining events
+// when it returns true — otherwise the ack hold leaks a click/long-press
+// into the screen (the original item-4 bug lived on the dashboard).
+bool ui_encoder_swallowed(void)
+{
+    bool banner_up = s_alarm_banner && !lv_obj_has_flag(s_alarm_banner, LV_OBJ_FLAG_HIDDEN);
+    return esp_timer_get_time() < s_enc_suppress_until ||
+           (banner_up && encoder_button_pressed());
 }
 
 // LVGL encoder read callback
@@ -55,7 +73,30 @@ static void lvgl_encoder_read_cb(lv_indev_t *indev, lv_indev_data_t *data)
         data->state = LV_INDEV_STATE_RELEASED;
         return;
     }
+
+    // Ack isolation: while the alarm banner is up and the button is held,
+    // the input belongs entirely to the ack gesture — LVGL must never see
+    // the press (its CLICKED fires on long-press RELEASE and would leak
+    // into whatever is focused, e.g. jumping into a temp edit). After the
+    // ack fires, everything is swallowed for a settle window too.
+    bool banner_up = s_alarm_banner && !lv_obj_has_flag(s_alarm_banner, LV_OBJ_FLAG_HIDDEN);
+    if (esp_timer_get_time() < s_enc_suppress_until ||
+        (banner_up && encoder_button_pressed())) {
+        encoder_get_diff();   // drain rotation so it can't replay later
+        data->enc_diff = 0;
+        data->state = LV_INDEV_STATE_RELEASED;
+        return;
+    }
+
     int diff = encoder_get_diff();
+
+    // Idle dim: the input that wakes the screen is consumed by the wake
+    if (s_backlight_dimmed && (diff != 0 || encoder_button_pressed())) {
+        data->enc_diff = 0;
+        data->state = LV_INDEV_STATE_RELEASED;
+        return;
+    }
+
     if (diff > 0) diff = 1;
     else if (diff < 0) diff = -1;
     data->enc_diff = diff;
@@ -93,15 +134,16 @@ static void on_splash_complete(void)
 
 // --- Alarm banner ---
 // Overlay on lv_layer_top() so it shows above every screen and survives
-// screen changes. Ack: hold the encoder button ~1.2s while the banner is
-// visible (uses encoder_button_pressed() state, which does not consume
-// events — note the active screen may also act on the press).
+// screen changes. RED = action/safety alarms, GREEN = goal reached (good
+// news). Ack: hold the encoder button ~1.2s while the banner is visible;
+// the read callback isolates the whole gesture from the active screen and
+// swallows input for a settle window afterwards.
 
-static lv_obj_t *s_alarm_banner = NULL;
 static lv_obj_t *s_alarm_label = NULL;
 static int64_t s_ack_hold_start = 0;
 
 #define ALARM_ACK_HOLD_US (1200 * 1000)
+#define ACK_SETTLE_US     (1500 * 1000)   // post-ack input swallow window
 
 static void alarm_banner_create(void)
 {
@@ -138,10 +180,13 @@ static void ui_alarm_update(void)
         lv_label_set_text(s_alarm_label, full);
     }
 
-    // Blink between red and dark red so it reads as an alert
+    // Blink between bright and dark so it reads as an alert.
+    // Green = goal reached (dinner news), red = something needs you.
+    bool green = (grill_state_alarm_class() == ALARM_CLASS_GREEN);
     bool bright = (lv_tick_get() / 600) % 2 == 0;
     lv_obj_set_style_bg_color(s_alarm_banner,
-        bright ? UI_COLOR_RED : lv_color_hex(0x661111), 0);
+        green ? (bright ? UI_COLOR_GREEN : lv_color_hex(0x0A4A0A))
+              : (bright ? UI_COLOR_RED : lv_color_hex(0x661111)), 0);
     lv_obj_clear_flag(s_alarm_banner, LV_OBJ_FLAG_HIDDEN);
 
     // Hold-to-acknowledge
@@ -152,9 +197,40 @@ static void ui_alarm_update(void)
             grill_state_alarm_ack();
             cooklog_event("lcd", "ALARM ACK");
             s_ack_hold_start = 0;
+            // Swallow everything (incl. the release and any rotation
+            // during the hold) so the ack can't bleed into the screen
+            s_enc_suppress_until = esp_timer_get_time() + ACK_SETTLE_US;
         }
     } else {
         s_ack_hold_start = 0;
+    }
+}
+
+// --- Idle dimming ---
+// Dim to 25% after 5 minutes without encoder input; any touch restores
+// (and that touch is consumed by the wake). Dimming never goes to zero:
+// TPS61165 CTRL low >2.5ms is shutdown, and a grill display should stay
+// glanceable from across the patio anyway.
+
+#define IDLE_DIM_AFTER_US (5LL * 60 * 1000 * 1000)
+#define IDLE_DIM_PCT 25
+
+static int s_dim_saved_pct = -1;
+
+static void ui_idle_dim_update(void)
+{
+    bool idle = encoder_idle_us() > IDLE_DIM_AFTER_US;
+    if (idle && !s_backlight_dimmed) {
+        int cur = backlight_get_percent();
+        if (cur > IDLE_DIM_PCT) {
+            s_dim_saved_pct = cur;
+            backlight_set_percent(IDLE_DIM_PCT);
+            s_backlight_dimmed = true;
+        }
+    } else if (!idle && s_backlight_dimmed) {
+        backlight_set_percent(s_dim_saved_pct > 0 ? s_dim_saved_pct : 100);
+        s_backlight_dimmed = false;
+        s_dim_saved_pct = -1;
     }
 }
 
@@ -166,6 +242,7 @@ static void lvgl_task(void *arg)
         ui_main_menu_update();
         ui_dashboard_update();
         ui_alarm_update();
+        ui_idle_dim_update();
         lv_timer_handler();
         vTaskDelay(pdMS_TO_TICKS(16));  // ~60fps
     }

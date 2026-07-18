@@ -25,6 +25,7 @@ static volatile encoder_btn_event_t s_btn_event = ENCODER_BTN_NONE;
 static int64_t s_btn_press_time = 0;
 static bool s_btn_was_pressed = false;
 static bool s_long_press_fired = false;
+static volatile int64_t s_last_activity = 0;   // any rotation or press (us)
 
 // PEC16-4215F-S0024: 24 detents, 24 pulses per revolution
 // Each detent = one full quadrature cycle = 4 counted edges
@@ -38,6 +39,7 @@ static void button_poll_task(void *arg)
     while (1) {
         bool pressed = (gpio_get_level(ENCODER_PIN_BTN) == 0);
         s_btn_pressed = pressed;
+        if (pressed) s_last_activity = esp_timer_get_time();
 
         if (pressed && !s_btn_was_pressed) {
             s_btn_press_time = esp_timer_get_time();
@@ -122,6 +124,7 @@ void encoder_init(void)
     ESP_ERROR_CHECK(pcnt_unit_clear_count(s_pcnt_unit));
     ESP_ERROR_CHECK(pcnt_unit_start(s_pcnt_unit));
 
+    s_last_activity = esp_timer_get_time();   // boot counts as activity
     xTaskCreatePinnedToCore(button_poll_task, "encoder_btn", 2048, NULL, 5, NULL, 1);
     ESP_LOGI(TAG, "Encoder initialized, PCNT quadrature (A=%d B=%d BTN=%d), state A=%d B=%d BTN=%d",
              ENCODER_PIN_A, ENCODER_PIN_B, ENCODER_PIN_BTN,
@@ -139,8 +142,14 @@ int encoder_get_diff(void)
     int detents = delta / STEPS_PER_DETENT;
     if (detents != 0) {
         s_reported_count += detents * STEPS_PER_DETENT;
+        s_last_activity = esp_timer_get_time();
     }
     return detents;
+}
+
+int64_t encoder_idle_us(void)
+{
+    return esp_timer_get_time() - s_last_activity;
 }
 
 bool encoder_button_pressed(void)

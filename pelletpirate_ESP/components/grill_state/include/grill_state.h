@@ -61,11 +61,20 @@ typedef enum {
     ALARM_IDLE = 0,   // not armed, or armed and below threshold
     ALARM_ACTIVE,     // fired, unacknowledged
     ALARM_ACKED,      // acknowledged; re-arms when condition clears
+    ALARM_DONE,       // one-shot alarms (probe action, goal): fired, acked,
+                      // and spent — never re-arms until the next cook
 } alarm_state_t;
+
+// Alarm class for banner styling: goal alerts are good news
+#define ALARM_CLASS_NONE  0
+#define ALARM_CLASS_GREEN 1   // only goal-reached alerts active
+#define ALARM_CLASS_RED   2   // any action/safety alarm active
 
 #define ALARM_PROBE_HYST_F  5.0f   // probe re-arms this far below its alarm temp
 #define GRILL_DROP_BAND_F   30.0f  // grill alarm: temp below target by this much
 #define GRILL_INBAND_F      15.0f  // "at temp" band that arms drop detection
+#define GRILL_DROP_DWELL_S  60     // sustained below-band time before drop fires
+                                   // (lid-opens recover well inside this)
 
 typedef struct {
     // Mode
@@ -91,10 +100,23 @@ typedef struct {
     uint32_t last_history_time;     // last time temp history was sampled
 
     // Alarms
-    alarm_state_t probe_alarm[NUM_MEAT_PROBES];
-    alarm_state_t grill_alarm;      // grill temp-drop alarm
-    alarm_state_t sensor_alarm;     // grill RTD fault forced a shutdown
+    alarm_state_t probe_alarm[NUM_MEAT_PROBES];   // action alarms (Wrap etc.) - RED, one-shot
+    alarm_state_t goal_alarm[NUM_MEAT_PROBES];    // goal reached (target_temp) - GREEN, one-shot
+    alarm_state_t grill_alarm;      // grill temp-drop alarm - RED, re-arming
+    alarm_state_t sensor_alarm;     // grill RTD fault forced a shutdown - RED
+    alarm_state_t pellet_alarm;     // fuel starvation suspected (auger pegged, temp diving) - RED
+    // Profile engine notices: gates ("WRAP NOW", RED, ack = continue) and
+    // completion ("BRISKET_BOSS COMPLETE", GREEN). Text/color owned by the
+    // cookprog engine; ack flows through the normal alarm ack.
+    alarm_state_t prog_alarm;
+    bool prog_alarm_green;
+    char prog_alarm_text[48];
     bool grill_reached_band;        // grill got within GRILL_INBAND_F of target this cook
+
+    // Cook start wall-clock (epoch seconds; 0 = unknown/not cooking).
+    // Unlike cook_start_time (monotonic, for ET math) this survives
+    // reboots via NVS and is for display ("Start: 7/17 11:19 AM").
+    int64_t cook_start_wall;
 
     // Graph ring (chronology: oldest at graph_index when full, else 0)
     float graph_grill[GRAPH_HISTORY_SIZE];
@@ -162,13 +184,29 @@ void grill_state_load_from_nvs(void);
  * load returns false if nothing was ever saved.
  */
 void grill_state_persist_run(grill_mode_t mode, int target);
-bool grill_state_load_run(grill_mode_t *mode, int *target);
+bool grill_state_load_run(grill_mode_t *mode, int *target, int64_t *cook_start_wall);
 
 /**
  * Get estimated minutes remaining for a probe based on rolling average.
- * Returns -1 if not enough data to estimate.
+ * Returns -1 if not enough data, -2 if the probe is STALLED (climbing
+ * slower than ~3°F/hour — a linear estimate would be absurd).
  */
 int grill_state_get_est_minutes(int probe_idx);
+
+/**
+ * Soonest upcoming goal across enabled probes (minutes), or -1 if none
+ * estimable. probe_idx (optional) receives which probe. Caller must hold
+ * the state lock.
+ */
+int grill_state_next_goal_minutes(int *probe_idx);
+
+/**
+ * Which physical jack (0-4 = J1-J5) carries the GRILL RTD. Stored in NVS;
+ * change only while the grill is Off — the grill channel drives PID,
+ * igniter inhibit and the fault shutdown.
+ */
+int grill_state_get_grill_jack(void);
+bool grill_state_set_grill_jack(int jack);   // false if refused (not Off)
 
 /**
  * Get elapsed cook time in minutes.
@@ -186,6 +224,13 @@ void grill_state_alarms_update(void);
  * True if any alarm is ACTIVE (fired and unacknowledged).
  */
 bool grill_state_alarm_active(void);
+
+/**
+ * ALARM_CLASS_RED if any action/safety alarm is active, ALARM_CLASS_GREEN
+ * if only goal-reached alerts are active, else ALARM_CLASS_NONE.
+ * Drives banner color on both UIs (green = good news).
+ */
+int grill_state_alarm_class(void);
 
 /**
  * Write a human-readable description of the highest-priority active alarm

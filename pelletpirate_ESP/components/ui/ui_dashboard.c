@@ -13,14 +13,18 @@
 #include "encoder.h"
 #include "esp_log.h"
 #include <stdio.h>
+#include <time.h>
 
 static const char *TAG = "ui_dash";
 
 static lv_obj_t *s_screen;
 static lv_obj_t *s_lbl_mode;
+static lv_obj_t *s_lbl_act[3];      // FAN/AUG/IGN status, top-right
 static lv_obj_t *s_lbl_current;
 static lv_obj_t *s_lbl_target;
 static lv_obj_t *s_lbl_adjust;
+static lv_obj_t *s_lbl_next_goal;   // "Next: P2 0:45", bottom-right
+static lv_obj_t *s_lbl_cook_start;  // "Start 7/17 11:19 AM", bottom-right
 static lv_obj_t *s_btn_main;
 
 typedef struct {
@@ -107,6 +111,10 @@ static void open_probe_setup(int probe_idx)
 static void dash_encoder_timer_cb(lv_timer_t *timer)
 {
     if (!s_screen) return;
+    if (ui_encoder_swallowed()) {   // alarm-ack gesture owns the encoder
+        encoder_get_diff(); encoder_get_button_event();
+        return;
+    }
     int diff = encoder_get_diff();
     encoder_btn_event_t btn = encoder_get_button_event();
 
@@ -178,6 +186,16 @@ lv_obj_t *ui_dashboard_create(void)
     lv_obj_set_style_text_font(s_lbl_mode, &lv_font_montserrat_16, 0);
     lv_obj_set_style_text_color(s_lbl_mode, UI_COLOR_ACCENT, 0);
     lv_obj_set_pos(s_lbl_mode, 8, y);
+
+    // Actuator status, same row right-aligned: FAN AUG IGN, colored when on
+    static const char *act_names[3] = { "FAN", "AUG", "IGN" };
+    for (int i = 0; i < 3; i++) {
+        s_lbl_act[i] = lv_label_create(s_screen);
+        lv_label_set_text(s_lbl_act[i], act_names[i]);
+        lv_obj_set_style_text_font(s_lbl_act[i], &lv_font_montserrat_16, 0);
+        lv_obj_set_style_text_color(s_lbl_act[i], UI_COLOR_TEXT_DIM, 0);
+        lv_obj_align(s_lbl_act[i], LV_ALIGN_TOP_RIGHT, -8 - (2 - i) * 46, y);
+    }
     y += 20;
 
     // CURRENT
@@ -307,6 +325,19 @@ lv_obj_t *ui_dashboard_create(void)
     lv_obj_set_style_text_color(l1, lv_color_hex(0xFFFFFF), 0);
     lv_obj_center(l1);
 
+    // Bottom-right stack: soonest goal countdown + fixed cook start time
+    s_lbl_next_goal = lv_label_create(s_screen);
+    lv_obj_set_style_text_font(s_lbl_next_goal, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_color(s_lbl_next_goal, UI_COLOR_ACCENT2, 0);
+    lv_obj_align(s_lbl_next_goal, LV_ALIGN_BOTTOM_RIGHT, -8, -22);
+    lv_label_set_text(s_lbl_next_goal, "");
+
+    s_lbl_cook_start = lv_label_create(s_screen);
+    lv_obj_set_style_text_font(s_lbl_cook_start, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_color(s_lbl_cook_start, UI_COLOR_TEXT_DIM, 0);
+    lv_obj_align(s_lbl_cook_start, LV_ALIGN_BOTTOM_RIGHT, -8, -4);
+    lv_label_set_text(s_lbl_cook_start, "");
+
     ui_encoder_set_direct(true);
     encoder_get_button_event();
     encoder_get_diff();
@@ -328,6 +359,14 @@ void ui_dashboard_update(void)
     lv_label_set_text_fmt(s_lbl_mode, "Cook Mode: %s", grill_mode_name(gs->mode));
 
     char buf[48];
+
+    // Actuator pills: green = running (igniter red), dim = off (item 2)
+    lv_obj_set_style_text_color(s_lbl_act[0],
+        gs->fan_on ? UI_COLOR_GREEN : UI_COLOR_TEXT_DIM, 0);
+    lv_obj_set_style_text_color(s_lbl_act[1],
+        gs->auger_on ? UI_COLOR_GREEN : UI_COLOR_TEXT_DIM, 0);
+    lv_obj_set_style_text_color(s_lbl_act[2],
+        gs->igniter_on ? UI_COLOR_RED : UI_COLOR_TEXT_DIM, 0);
     snprintf(buf, sizeof(buf), "%d\xC2\xB0""F", (int)gs->grill_temp);
     lv_label_set_text(s_lbl_current, buf);
 
@@ -374,6 +413,10 @@ void ui_dashboard_update(void)
                 int pct = total > 0 ? (elapsed * 100 / total) : 0;
                 if (pct > 100) pct = 100;
                 lv_bar_set_value(s_probes[i].bar, pct, LV_ANIM_OFF);
+            } else if (est == -2) {
+                // Honest about the stall instead of projecting 10 hours
+                lv_label_set_text(s_probes[i].lbl_est, "EST: stall");
+                lv_bar_set_value(s_probes[i].bar, 50, LV_ANIM_OFF);
             } else {
                 lv_label_set_text(s_probes[i].lbl_est, "EST: --:--");
                 lv_bar_set_value(s_probes[i].bar, 0, LV_ANIM_OFF);
@@ -393,6 +436,28 @@ void ui_dashboard_update(void)
             lv_obj_set_style_bg_color(s_probes[i].bar, UI_COLOR_TEXT_DIM, LV_PART_MAIN);
             lv_obj_set_style_bg_color(s_probes[i].bar, UI_COLOR_TEXT_DIM, LV_PART_INDICATOR);
         }
+    }
+
+    // Next goal countdown + cook start (items 12b/8)
+    int ng_probe = -1;
+    int ng = grill_state_next_goal_minutes(&ng_probe);
+    if (ng >= 0) {
+        char tbuf[16];
+        format_time(tbuf, sizeof(tbuf), ng);
+        lv_label_set_text_fmt(s_lbl_next_goal, "Next: P%d %s", ng_probe + 1, tbuf);
+    } else {
+        lv_label_set_text(s_lbl_next_goal, "");
+    }
+
+    if (gs->cook_start_wall > 0) {
+        time_t cs = (time_t)gs->cook_start_wall;
+        struct tm tm;
+        localtime_r(&cs, &tm);
+        char ts[40];
+        strftime(ts, sizeof(ts), "Start %m/%d %I:%M %p", &tm);
+        lv_label_set_text(s_lbl_cook_start, ts);
+    } else {
+        lv_label_set_text(s_lbl_cook_start, "");
     }
 
     // Record history periodically

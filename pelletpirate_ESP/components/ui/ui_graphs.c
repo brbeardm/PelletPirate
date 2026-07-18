@@ -129,6 +129,10 @@ static void refresh_chart(void)
 static void timer_cb(lv_timer_t *t)
 {
     if (!s_screen) return;
+    if (ui_encoder_swallowed()) {   // alarm-ack gesture owns the encoder
+        encoder_get_diff(); encoder_get_button_event();
+        return;
+    }
 
     // Any encoder activity exits (single-purpose viewing screen)
     encoder_btn_event_t btn = encoder_get_button_event();

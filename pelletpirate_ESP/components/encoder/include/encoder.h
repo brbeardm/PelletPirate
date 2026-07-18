@@ -43,4 +43,10 @@ bool encoder_button_pressed(void);
  */
 encoder_btn_event_t encoder_get_button_event(void);
 
+/**
+ * Microseconds since the last rotation or button press (boot counts as
+ * activity). Drives the LCD idle-dimming timer.
+ */
+int64_t encoder_idle_us(void);
+
 #endif

@@ -113,6 +113,10 @@ static void finish_editing(bool save)
 static void edit_timer_cb(lv_timer_t *timer)
 {
     if (!s_editing) return;
+    if (ui_encoder_swallowed()) {   // alarm-ack gesture owns the encoder
+        encoder_get_diff(); encoder_get_button_event();
+        return;
+    }
 
     int diff = encoder_get_diff();
     if (diff > 0) {

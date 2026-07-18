@@ -26,6 +26,8 @@ static lv_obj_t *s_lbl_wifi;
 static lv_timer_t *s_wifi_timer = NULL;
 static lv_obj_t *s_btn_log;
 static lv_obj_t *s_lbl_log_val;
+static lv_obj_t *s_btn_jack;
+static lv_obj_t *s_lbl_jack_val;
 
 // Brightness adjust state
 static bool s_adjusting = false;
@@ -40,8 +42,37 @@ static void setup_group(void)
     lv_group_set_wrap(g, false);
     lv_group_add_obj(g, s_btn_bright);
     lv_group_add_obj(g, s_btn_log);
+    lv_group_add_obj(g, s_btn_jack);
     lv_group_add_obj(g, s_btn_wifi);
     lv_group_add_obj(g, s_btn_main);
+}
+
+static void update_jack_display(void)
+{
+    grill_state_lock();
+    bool off = (grill_state_get()->mode == GRILL_MODE_OFF);
+    grill_state_unlock();
+    char buf[16];
+    snprintf(buf, sizeof(buf), off ? "J%d" : "J%d (run)",
+             grill_state_get_grill_jack() + 1);
+    lv_label_set_text(s_lbl_jack_val, buf);
+}
+
+// Click cycles the grill RTD's jack J1..J5. Refused while the grill runs —
+// the grill channel drives PID/igniter/fault-shutdown and must never be
+// remapped mid-cook.
+static void jack_clicked(lv_event_t *e)
+{
+    int next = (grill_state_get_grill_jack() + 1) % 5;
+    grill_state_set_grill_jack(next);   // no-op unless mode is Off
+    update_jack_display();
+}
+
+static void jack_focus_cb(lv_event_t *e)
+{
+    lv_obj_set_style_text_color(s_lbl_jack_val,
+        lv_event_get_code(e) == LV_EVENT_FOCUSED ? lv_color_hex(0x000000)
+                                                 : UI_COLOR_ACCENT, 0);
 }
 
 static void update_log_display(void)
@@ -107,6 +138,10 @@ static void finish_adjust(void)
 static void adjust_timer_cb(lv_timer_t *timer)
 {
     if (!s_adjusting) return;
+    if (ui_encoder_swallowed()) {   // alarm-ack gesture owns the encoder
+        encoder_get_diff(); encoder_get_button_event();
+        return;
+    }
 
     int diff = encoder_get_diff();
     if (diff != 0) {
@@ -301,6 +336,41 @@ lv_obj_t *ui_settings_create(void)
     lv_obj_set_style_text_font(lw, &lv_font_montserrat_20, 0);
     lv_obj_set_style_text_color(lw, lv_color_hex(0xFFFFFF), 0);
     lv_obj_align(lw, LV_ALIGN_LEFT_MID, 0, 0);
+    y += 48;
+
+    // GRILL JACK row — which physical jack carries the pit RTD.
+    // Click cycles J1..J5; only takes effect while the grill is Off.
+    s_btn_jack = lv_button_create(s_screen);
+    lv_obj_set_size(s_btn_jack, 304, 36);
+    lv_obj_set_pos(s_btn_jack, 8, y);
+    lv_obj_set_style_bg_color(s_btn_jack, lv_color_hex(0x000000), 0);
+    lv_obj_set_style_bg_opa(s_btn_jack, LV_OPA_COVER, 0);
+    lv_obj_set_style_border_color(s_btn_jack, UI_COLOR_ACCENT, 0);
+    lv_obj_set_style_border_width(s_btn_jack, 2, 0);
+    lv_obj_set_style_border_opa(s_btn_jack, LV_OPA_TRANSP, 0);
+    lv_obj_set_style_radius(s_btn_jack, 4, 0);
+    lv_obj_set_style_pad_left(s_btn_jack, 6, 0);
+    lv_obj_set_style_pad_right(s_btn_jack, 6, 0);
+    lv_obj_set_style_pad_top(s_btn_jack, 2, 0);
+    lv_obj_set_style_pad_bottom(s_btn_jack, 2, 0);
+    lv_obj_set_style_shadow_width(s_btn_jack, 0, 0);
+    lv_obj_set_style_border_opa(s_btn_jack, LV_OPA_COVER, LV_STATE_FOCUSED);
+    lv_obj_set_style_bg_color(s_btn_jack, UI_COLOR_ACCENT, LV_STATE_FOCUSED);
+    lv_obj_add_event_cb(s_btn_jack, jack_clicked, LV_EVENT_CLICKED, NULL);
+    lv_obj_add_event_cb(s_btn_jack, jack_focus_cb, LV_EVENT_FOCUSED, NULL);
+    lv_obj_add_event_cb(s_btn_jack, jack_focus_cb, LV_EVENT_DEFOCUSED, NULL);
+
+    lv_obj_t *lj = lv_label_create(s_btn_jack);
+    lv_label_set_text(lj, "GRILL JACK");
+    lv_obj_set_style_text_font(lj, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_color(lj, lv_color_hex(0xFFFFFF), 0);
+    lv_obj_align(lj, LV_ALIGN_LEFT_MID, 0, 0);
+
+    s_lbl_jack_val = lv_label_create(s_btn_jack);
+    lv_obj_set_style_text_font(s_lbl_jack_val, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_color(s_lbl_jack_val, UI_COLOR_ACCENT, 0);
+    lv_obj_align(s_lbl_jack_val, LV_ALIGN_RIGHT_MID, 0, 0);
+    update_jack_display();
 
     // Main button
     s_btn_main = lv_button_create(s_screen);

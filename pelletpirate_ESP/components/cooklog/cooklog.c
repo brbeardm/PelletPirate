@@ -21,6 +21,8 @@ static const char *TAG = "cooklog";
 #define LOG_BASE_PATH   "/lfs"
 #define NVS_NAMESPACE   "pelletpirate"
 #define NVS_KEY_IV      "log_iv"
+#define NVS_KEY_ACTIVE  "log_actv"   // filename of the open cook log (for
+                                     // power-loss continuation)
 // Sized for the OTA partition table's ~896KB storage partition (was 300KB
 // against the old 2.4MB one) — keeps ~6-7 long cooks before rotation.
 #define ROTATE_MIN_FREE (150 * 1024)
@@ -36,6 +38,26 @@ static SemaphoreHandle_t s_mutex;
 // Pre-cook events buffered until the file opens
 static char s_pending[PENDING_MAX][ROW_MAX];
 static int s_pending_count = 0;
+
+// Power-loss continuation: set by cooklog_mark_resume() (main.c resume
+// path) before the resumed mode goes active — the next file open appends
+// to the interrupted cook's CSV instead of starting a new one.
+static bool s_resume_pending = false;
+
+static void nvs_set_active(const char *fname)
+{
+    nvs_handle_t h;
+    if (nvs_open(NVS_NAMESPACE, NVS_READWRITE, &h) != ESP_OK) return;
+    if (fname) nvs_set_str(h, NVS_KEY_ACTIVE, fname);
+    else nvs_erase_key(h, NVS_KEY_ACTIVE);
+    nvs_commit(h);
+    nvs_close(h);
+}
+
+void cooklog_mark_resume(void)
+{
+    s_resume_pending = true;
+}
 
 // Suppress the task's auto MODE event briefly after an attributed one
 static int64_t s_mode_evt_suppress_until = 0;
@@ -105,6 +127,10 @@ static void rotate_if_needed(void)
         struct dirent *de;
         while ((de = readdir(dir)) != NULL) {
             if (strncmp(de->d_name, "cook_", 5) != 0) continue;
+            // Never rotate out the file an interrupted cook may resume into
+            // (s_fname keeps the full path; compare basenames)
+            const char *active = strrchr(s_fname, '/');
+            if (active && strcmp(de->d_name, active + 1) == 0) continue;
             if (oldest[0] == '\0' || strcmp(de->d_name, oldest) < 0) {
                 strlcpy(oldest, de->d_name, sizeof(oldest));
             }
@@ -122,6 +148,34 @@ static void rotate_if_needed(void)
 
 static void open_cook_file(void)
 {
+    // Power-loss continuation: reopen the interrupted cook's file in
+    // append mode so one cook stays one CSV. Every row was fsync'd, so
+    // the file holds everything up to the outage.
+    if (s_resume_pending) {
+        s_resume_pending = false;
+        char prev[48] = "";
+        size_t len = sizeof(prev);
+        nvs_handle_t h;
+        if (nvs_open(NVS_NAMESPACE, NVS_READONLY, &h) == ESP_OK) {
+            nvs_get_str(h, NVS_KEY_ACTIVE, prev, &len);
+            nvs_close(h);
+        }
+        if (prev[0] != '\0') {
+            FILE *f = fopen(prev, "a");
+            if (f) {
+                s_file = f;
+                strlcpy(s_fname, prev, sizeof(s_fname));
+                char ts[24];
+                fmt_time(ts, sizeof(ts));
+                fprintf(s_file, "%s,E,Off,,,,,,,,,,,,POWER LOSS - resumed\n", ts);
+                flush_and_sync();
+                ESP_LOGW(TAG, "cook log CONTINUED after power loss: %s", s_fname);
+                return;
+            }
+            ESP_LOGW(TAG, "resume log %s missing — starting a new file", prev);
+        }
+    }
+
     rotate_if_needed();
 
     time_t now = time(NULL);
@@ -148,6 +202,7 @@ static void open_cook_file(void)
     }
     s_pending_count = 0;
     flush_and_sync();
+    nvs_set_active(s_fname);
     ESP_LOGI(TAG, "cook log started: %s", s_fname);
 }
 
@@ -156,6 +211,7 @@ static void close_cook_file(void)
     if (!s_file) return;
     fclose(s_file);
     s_file = NULL;
+    nvs_set_active(NULL);   // clean end — nothing to continue
     ESP_LOGI(TAG, "cook log closed: %s", s_fname);
 }
 
@@ -195,17 +251,26 @@ static void cooklog_task(void *arg)
 {
     grill_mode_t prev_mode = GRILL_MODE_OFF;
     bool prev_ign = false, prev_fan = false, prev_alarm = false;
+    alarm_state_t prev_goal[NUM_MEAT_PROBES] = { ALARM_IDLE };
     int64_t last_sample = 0;
 
     while (1) {
         vTaskDelay(pdMS_TO_TICKS(1000));
         if (!s_mounted) continue;
 
+        alarm_state_t goal[NUM_MEAT_PROBES];
+        float gtemp[NUM_MEAT_PROBES];
+        char gfood[NUM_MEAT_PROBES][16];
         grill_state_lock();
         grill_state_t *gs = grill_state_get();
         grill_mode_t mode = gs->mode;
         bool ign = gs->igniter_on;
         bool fan = gs->fan_on;
+        for (int i = 0; i < NUM_MEAT_PROBES; i++) {
+            goal[i] = gs->goal_alarm[i];
+            gtemp[i] = gs->probes[i].current_temp;
+            strlcpy(gfood[i], gs->probes[i].food_type, sizeof(gfood[i]));
+        }
         grill_state_unlock();
         bool alarm = grill_state_alarm_active();
         bool active = (mode != GRILL_MODE_OFF);
@@ -239,6 +304,15 @@ static void cooklog_task(void *arg)
             char txt[64] = "";
             grill_state_alarm_text(txt, sizeof(txt));
             cooklog_event("auto", "ALARM: %s", txt);
+        }
+        // Goal crossings get their own attributed rows — the aggregate
+        // ALARM transition above can be masked by an alarm already active
+        for (int i = 0; i < NUM_MEAT_PROBES; i++) {
+            if (goal[i] == ALARM_ACTIVE && prev_goal[i] != ALARM_ACTIVE && s_file) {
+                cooklog_event("auto", "GOAL P%d %s reached %.0fF", i + 1,
+                              gfood[i][0] ? gfood[i] : "probe", gtemp[i]);
+            }
+            prev_goal[i] = goal[i];
         }
         prev_ign = ign;
         prev_fan = fan;

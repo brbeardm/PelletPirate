@@ -291,6 +291,10 @@ static void update_all(void) {
 
 static void timer_cb(lv_timer_t *timer) {
     if (!s_screen) return;
+    if (ui_encoder_swallowed()) {   // alarm-ack gesture owns the encoder
+        encoder_get_diff(); encoder_get_button_event();
+        return;
+    }
     int diff = encoder_get_diff();
     encoder_btn_event_t btn = encoder_get_button_event();
 

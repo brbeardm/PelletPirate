@@ -21,6 +21,7 @@
 #include "actuator.h"
 #include "webui.h"
 #include "cooklog.h"
+#include "cookprog.h"
 #include "ui.h"
 
 static const char *TAG = "pelletpirate";
@@ -58,9 +59,20 @@ static void temp_task(void *arg)
     while (1) {
         esp_task_wdt_reset();
 
+        // Jack assignment: logical channel 0 (grill) reads whichever jack
+        // Settings selected; meat probes fill the remaining jacks in J
+        // order. The map is rebuilt every cycle so a change (only allowed
+        // while Off) applies atomically between full scans.
+        int gj = grill_state_get_grill_jack();
+        int map[5];
+        map[0] = gj;
+        for (int j = 0, k = 1; j < 5; j++) {
+            if (j != gj) map[k++] = j;
+        }
+
         float t[5];
         for (int i = 0; i < 5; i++) {
-            float raw = max31865_get_temp_f(&s_rtd[i]);
+            float raw = max31865_get_temp_f(&s_rtd[map[i]]);
             hist[i][samples % 3] = raw;
             t[i] = (samples >= 2) ? med3(hist[i][0], hist[i][1], hist[i][2]) : raw;
         }
@@ -108,7 +120,8 @@ static void resume_task(void *arg)
 {
     grill_mode_t saved = GRILL_MODE_OFF;
     int target = 0;
-    if (!grill_state_load_run(&saved, &target) || saved == GRILL_MODE_OFF) {
+    int64_t wall = 0;
+    if (!grill_state_load_run(&saved, &target, &wall) || saved == GRILL_MODE_OFF) {
         vTaskDelete(NULL);
     }
 
@@ -122,6 +135,7 @@ static void resume_task(void *arg)
 
     if (saved == GRILL_MODE_SHUTDOWN) {
         ESP_LOGW(TAG, "resume: power lost during SHUTDOWN — restarting burn-off");
+        cooklog_mark_resume();
         grill_state_lock();
         grill_state_get()->mode = GRILL_MODE_SHUTDOWN;
         grill_state_unlock();
@@ -132,10 +146,12 @@ static void resume_task(void *arg)
         grill_mode_t m = (saved == GRILL_MODE_START) ? GRILL_MODE_COOK : saved;
         ESP_LOGW(TAG, "resume: grill still %.0fF — resuming %s at %dF",
                  temp, grill_mode_name(m), target);
+        cooklog_mark_resume();   // continue the interrupted cook's CSV
         grill_state_lock();
         grill_state_t *gs = grill_state_get();
         gs->mode = m;
         gs->grill_target = target;
+        gs->cook_start_wall = wall;   // ET/display keep the original start
         grill_state_unlock();
         cooklog_event("auto", "RESUME %s after power loss (%.0fF)",
                       grill_mode_name(m), temp);
@@ -260,6 +276,9 @@ void app_main(void)
 
     // Cook audit logging to the LittleFS partition
     cooklog_init();
+
+    // Cook profile engine (needs the LittleFS mount from cooklog_init)
+    cookprog_init();
 
     // Init the 5 RTD converters on the shared SPI bus and start polling.
     // A failed channel logs an error and reads as 0.0F; the rest keep going.
