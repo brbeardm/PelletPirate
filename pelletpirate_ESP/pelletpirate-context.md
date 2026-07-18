@@ -164,3 +164,12 @@ than deleting them.
     alarm is set). Grill temp-drop and sensor-fault alarms KEEP their
     re-arm behavior — those are condition-based safety alerts, not
     one-shot actions. Item 9's green goal alert: one-shot the same way.
+12. EST review + "Next Goal ET" — probe EST felt frozen and showed 9:53
+    near end of cook. Root cause: linear extrapolation of last-hour rate
+    (5-min samples); during a stall (~2.5F/hr) it honestly projects ~10h,
+    then collapses when the stall breaks. (a) Improve EST: weight recent
+    rate higher, show a "stalled" indicator instead of absurd hours, or
+    stall-aware heuristic; at minimum make it visibly update. (b) NEW:
+    "Next Goal ET" beside elapsed time on both UIs — soonest upcoming
+    goal across enabled probes ("Next: P2 Pork 203 ~0:45"), recomputed
+    as goals are reached. Web-first.
