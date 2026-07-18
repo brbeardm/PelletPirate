@@ -143,3 +143,15 @@ than deleting them.
    ack/hysteresis pattern), green styling on LCD banner + web alarm bar,
    distinct cooklog event ("GOAL probe N reached X"), and graceful
    coexistence when both fire close together.
+10. BUG (fix design approved): temp-drop alarm fires on target raise —
+    make grill_reached_band honest. The flag latches "reached temp" but
+    not for WHICH target; raising 225->250 at 220F fires GRILL TEMP DROP
+    instantly on stale evidence (fired live twice, 2026-07-17). Fix: in
+    grill_state_alarms_update, track previous target; on any target
+    change recompute grill_reached_band = (temp within GRILL_INBAND_F of
+    the NEW target). Large raise -> flag clears -> climb phase (alarm
+    silent until the new band is genuinely reached); small bump or lower
+    -> protection continues seamlessly. Also auto-clear an ACTIVE drop
+    alarm whose premise the recompute invalidates. Side benefit: the
+    flame-out shutdown shares this flag and stops misfiring during
+    target-raise climbs too. Orthogonal to item 3 (lid-open dips) — both.
