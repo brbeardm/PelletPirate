@@ -53,7 +53,8 @@ static void update_jack_display(void)
     bool off = (grill_state_get()->mode == GRILL_MODE_OFF);
     grill_state_unlock();
     char buf[16];
-    snprintf(buf, sizeof(buf), off ? "J%d" : "J%d (run)",
+    // Product language: jacks are P1-P5 on the panel (J1-J5 is PCB talk)
+    snprintf(buf, sizeof(buf), off ? "P%d" : "P%d (run)",
              grill_state_get_grill_jack() + 1);
     lv_label_set_text(s_lbl_jack_val, buf);
 }
@@ -361,7 +362,7 @@ lv_obj_t *ui_settings_create(void)
     lv_obj_add_event_cb(s_btn_jack, jack_focus_cb, LV_EVENT_DEFOCUSED, NULL);
 
     lv_obj_t *lj = lv_label_create(s_btn_jack);
-    lv_label_set_text(lj, "GRILL JACK");
+    lv_label_set_text(lj, "GRILL PROBE JACK");
     lv_obj_set_style_text_font(lj, &lv_font_montserrat_20, 0);
     lv_obj_set_style_text_color(lj, lv_color_hex(0xFFFFFF), 0);
     lv_obj_align(lj, LV_ALIGN_LEFT_MID, 0, 0);

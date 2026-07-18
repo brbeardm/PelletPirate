@@ -591,7 +591,7 @@ bool grill_state_set_grill_jack(int jack)
         nvs_commit(h);
         nvs_close(h);
     }
-    ESP_LOGI(TAG, "grill RTD assigned to jack J%d", jack + 1);
+    ESP_LOGI(TAG, "grill RTD assigned to probe jack P%d", jack + 1);
     return true;
 }
 
