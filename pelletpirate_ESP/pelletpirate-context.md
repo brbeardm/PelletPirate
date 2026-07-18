@@ -254,3 +254,15 @@ than deleting them.
     - Chicken_Crispy: Smoke 45min | Cook 375 -> drv>=165 | green
       "PULL NOW", deliberately NO KeepWarm (holding steams the skin).
       (high-setpoint step + no-hold terminal)
+18. Probe alarms stand down outside cooking modes — the grill temp-drop
+    alarm is mode-gated (mode_is_cooking(), goes IDLE in Shutdown/Off)
+    but PROBE alarms have no mode gate: probes pulled from the meat and
+    left plugged in during Shutdown dangle in 200-300F pit air and
+    (re)fire their thresholds while the user is inside slicing. Fix:
+    same mode gate on the probe alarm loop (2-3 lines in
+    grill_state_alarms_update). Decided against at the same time: do
+    NOT zero target/probe configs at shutdown (settings persist;
+    profiles manage them) and do NOT write synthetic zeros into the
+    final log rows (the log records truth; the MODE Shutdown>Off event
+    is the cook-end marker; unplugged probes already blank naturally).
+    Clusters with alarm items 3/9/10/11 for one OTA batch.
