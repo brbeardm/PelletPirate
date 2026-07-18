@@ -206,3 +206,51 @@ than deleting them.
     the fan off for extra smolder (creosote flavor + auger burn-back
     risk). Smoke modes intentionally keep only the sub-115F igniter
     assist as their safety net.
+17. Cook profile engine (driver + passengers) + factory profiles —
+    nailed down 2026-07-18. One pit, one program: a profile is an
+    ordered list of pit steps (mode+target, exit condition, transition
+    type) with exactly ONE driver probe assigned at start; conditions
+    read "driver" (not a hardcoded jack — pairs with item 6). All other
+    probes are passengers: their goals/alarms (items 9/11/14) fire
+    independently but never touch the pit.
+    Engine rules:
+    - Sequencer ONLY: sets mode/target through the same guarded
+      interface as the UIs. Zero new safety surface; actuator stays
+      authoritative (flame-out, igniter inhibit, fault shutdown apply
+      unchanged).
+    - Exit types: driver temp threshold, elapsed TIME (ribs), and GATES
+      (fire alarm + hold pit until human acks — wrapping is physical).
+    - Conditions LATCH one-way: a wrap-dip cannot un-complete a step.
+    - Manual mode/target change pauses the profile visibly ("manual
+      control"); resuming is an explicit action. Human always wins.
+    - Driver probe fault: hold current step + alarm. Never advance
+      blind, never shutdown (pit control is still healthy).
+    - Run state (profile + step index + snapshot of steps) persists in
+      NVS beside run_mode/run_tgt: survives power loss and OTA reboots;
+      editing/deleting the file never affects a running snapshot.
+    Surfaces: authoring is WEB-ONLY; select/run/monitor/ack gates from
+    BOTH web and LCD encoder (list+click+ack only). Dashboard shows
+    "Profile: X - Step 2/4: Cook 225 until P1>=160 (now 151)" plus Next
+    Goal ET (item 12). Every transition = cooklog event + push (14).
+    Storage: user library = LittleFS key=value files extending .ppc
+    (existing profiles remain valid one-step programs; format-version
+    key for migration). OTA never touches the storage partition, so the
+    user library survives all firmware updates (only a repartition
+    wipes it). Web export/import buttons: backup, board2<->board3
+    transfer, shareable recipe files.
+    Factory templates: embedded READ-ONLY in the firmware image (added/
+    updated via OTA, never written to storage; copy-to-library to
+    customize). Four factory profiles, each exercising an engine
+    feature:
+    - Brisket_Boss: SuperSmoke -> drv>=140 | Cook 225 -> drv>=160 |
+      GATE "WRAP NOW" | Cook 250 -> drv>=203 | KeepWarm + green DONE.
+      (temp ladder + gate; the canonical journey)
+    - PorkButt_Solo: SuperSmoke -> drv>=150 | Cook 250 -> drv>=165 |
+      GATE "WRAP" | Cook 275 -> drv>=203 | KeepWarm + green DONE.
+      (same skeleton, hotter numbers — profiles are data, not code)
+    - Ribs_Champ: Smoke 3h (TIME) | GATE "WRAP + LIQUID" | Cook 225 2h |
+      GATE "UNWRAP + SAUCE" | Cook 250 1h | green "RIBS DONE - check
+      bend", no hold. (time exits + two human gates)
+    - Chicken_Crispy: Smoke 45min | Cook 375 -> drv>=165 | green
+      "PULL NOW", deliberately NO KeepWarm (holding steams the skin).
+      (high-setpoint step + no-hold terminal)
