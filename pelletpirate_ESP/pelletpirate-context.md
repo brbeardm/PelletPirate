@@ -83,3 +83,63 @@ FPC1 other pins: 1 = LED- (backlight cathode, to TPS61165 FB via 4.99R sense),
    IO25/IO14/IO16 (visible at FPC pins 28/31/33), GPIO toggle IO18/IO23
    (FPC 32/29), and a MISO loopback test (jumper FPC 30 to 29, drive IO23,
    read IO19, report over serial).
+
+## Firmware Backlog (started 2026-07-17, post-OTA batch 37081be)
+
+Running bug/enhancement list. Mark items done with the commit hash rather
+than deleting them.
+
+1. LCD idle dimming — dim to 50%/25% (or off) after encoder inactivity,
+   restore on encoder turn. Backlight component already does LEDC 10-100%
+   with NVS-saved level; this is an inactivity timer + temporary override.
+   TPS61165 rule still applies: CTRL low >2.5ms = shutdown, so dim rather
+   than drive to zero.
+2. Fan/Auger/Igniter on/off status on the LCD cook dashboard — web has
+   actuator pills already; state lives in grill_state (fan_on/auger_on/
+   igniter_on). LCD layout addition only.
+3. Review Grill Temp Drop alarm — fires at 30F below target after reaching
+   band; too eager for lid-open/wind dips (real example: fired 18:03
+   2026-07-17, grill self-recovered, alarm nagged until acked 19:13).
+   Consider dwell time, wider band, and/or auto-clear on recovery. Review
+   together with the flame-out shutdown (target-60F / 10 min) as two tiers.
+4. BUG: encoder alarm-ack bleed-through — hold-to-ack also emits a click
+   into whatever is focused (jumps into temp edit etc.). LVGL fires CLICKED
+   on long-press release (same mechanism as the profiles-delete lesson —
+   it uses SHORT_CLICKED for this reason). Fix: after ack, swallow ALL
+   encoder input for ~1-2s; ignore rotation while the button is held.
+5. Fan burst cycle 30s -> 2s (in-band Cook modulation) — fan audibly stops
+   for 15s stretches. MOC3063 zero-cross rules out PWM/phase-angle, but
+   2s integral-cycle bursts keep the impeller spinning (quasi-continuous
+   reduced speed). One constant (FAN_CYCLE_SEC, actuator.cpp); MUST
+   listening-test the real fan for hum/surging. Fallback: FAN_MIN_DUTY=1.0
+   (always on in band). True variable speed = V3 hardware (MOC3052
+   random-phase + zero-cross detect, or DC blower).
+6. Settings: probe/jack assignment — assign which physical jack (J1-J5) is
+   the GRILL probe; remap meat probes accordingly. Map is hardcoded today
+   (main.c s_rtd_cs[5] = {27,13,5,26,21} = J1..J5, index 0 = grill). Store
+   in NVS, apply in temp_task indexing, LCD Settings UI (+ web parity).
+   SAFETY: grill channel drives PID/igniter-inhibit/fault-shutdown — remap
+   only while mode==Off, applied atomically.
+7. Continue the same log file across power-loss resume — today a resume
+   opens a NEW CSV (one cook = several files) and ET/EST/graph reset.
+   Persist active filename + cook wall-clock start in NVS beside
+   run_mode/run_tgt; on resume reopen in append mode with a
+   "POWER LOSS - resumed" event row; restore ET. Wrinkles: SNTP not synced
+   yet at reopen (brief boot-relative timestamps acceptable); rotation must
+   never delete the active file.
+8. Cook start timestamp on Web + LCD — "Mode: Cook - Start: 7/17/2026
+   11:19 AM" next to the mode on both UIs. Start = wall clock at the
+   Off->active transition, FIXED across mode changes and (with item 7)
+   across power loss. Duration of the smoke is a headline BBQ stat: start
+   to SHUTDOWN-complete. Existing grill_state cook_start_time is
+   monotonic-based (for ET) — add a wall-clock sibling, persist to NVS,
+   surface in status JSON + LCD dashboard; backfill gracefully if ignition
+   precedes SNTP sync.
+9. Goal-reached alert, GREEN, distinct from RED action alarm — only
+   alarm_temp fires today (target_temp is EST/display only); probe 2's
+   155F goal passed silently 2026-07-17. Crossing target_temp should fire
+   its own alert with a GREEN banner (done = good news); action alarms
+   (Wrap/Baste/...) stay RED. Needs per-probe goal-alarm state (same
+   ack/hysteresis pattern), green styling on LCD banner + web alarm bar,
+   distinct cooklog event ("GOAL probe N reached X"), and graceful
+   coexistence when both fire close together.
