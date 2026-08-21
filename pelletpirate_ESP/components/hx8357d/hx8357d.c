@@ -5,6 +5,7 @@
 #include "driver/gpio.h"
 #include "esp_log.h"
 #include "esp_heap_caps.h"
+#include "boardpins.h"
 #include "hx8357d.h"
 
 static const char *TAG = "hx8357d";
@@ -56,7 +57,7 @@ DRAM_ATTR static const lcd_init_cmd_t hx8357d_init_cmds[] = {
         0x00, 0x01
     }, 34},
     {CMD_COLMOD, {0x55}, 1},
-    {CMD_MADCTL, {0xC0}, 1},  // MY+MX (panel is natively BGR, no BGR bit needed)
+    {CMD_MADCTL, {BOARD_LCD_MADCTL}, 1},  // mounting orientation per board (boardpins.h)
 
     // Display inversion on (some panels need this for correct polarity)
     {0x21, {0}, 0},

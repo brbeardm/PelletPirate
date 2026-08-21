@@ -201,7 +201,7 @@ int grill_state_get_est_minutes(int probe_idx);
 int grill_state_next_goal_minutes(int *probe_idx);
 
 /**
- * Which physical jack (0-4 = J1-J5) carries the GRILL RTD. Stored in NVS;
+ * Which panel jack (0-4 = P1-P5) carries the GRILL RTD. Stored in NVS;
  * change only while the grill is Off — the grill channel drives PID,
  * igniter inhibit and the fault shutdown.
  */

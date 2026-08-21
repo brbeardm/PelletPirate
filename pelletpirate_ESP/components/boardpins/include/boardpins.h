@@ -28,11 +28,18 @@
 #define BOARD_LCD_DC        18
 #define BOARD_LCD_RST       15
 
-#define BOARD_MAX1_CS        4  // J1 grill probe
-#define BOARD_MAX2_CS       12  // J2 meat 1
-#define BOARD_MAX3_CS       21  // J3 meat 2
-#define BOARD_MAX4_CS       47  // J4 meat 3
-#define BOARD_MAX5_CS       48  // J5 meat 4
+// V4 enclosure mounts the LCD upside down relative to V2: MY+MX cleared
+// rotates the output 180 degrees (panel is natively BGR on both boards).
+#define BOARD_LCD_MADCTL    0x00
+
+// MAX31865 chip selects indexed by FRONT-PANEL jack label (P1-P5, the
+// product language everywhere in firmware). The V4 enclosure mounts the
+// board flipped, so panel order is the REVERSE of PCB refs: P1=J5 ... P5=J1.
+#define BOARD_JACK_P1_CS    48  // J5 / MAX5
+#define BOARD_JACK_P2_CS    47  // J4 / MAX4
+#define BOARD_JACK_P3_CS    21  // J3 / MAX3
+#define BOARD_JACK_P4_CS    12  // J2 / MAX2
+#define BOARD_JACK_P5_CS     4  // J1 / MAX1
 
 #define BOARD_ENCODER_A      5  // 10k pullups on board (R32-R34)
 #define BOARD_ENCODER_B      6
@@ -71,11 +78,14 @@
 #define BOARD_LCD_DC        14
 #define BOARD_LCD_RST       16
 
-#define BOARD_MAX1_CS       27
-#define BOARD_MAX2_CS       13
-#define BOARD_MAX3_CS        5
-#define BOARD_MAX4_CS       26
-#define BOARD_MAX5_CS       21
+#define BOARD_LCD_MADCTL    0xC0  // MY+MX — V2 mounting orientation
+
+// V2 panel labels match PCB refs: P1=J1 ... P5=J5.
+#define BOARD_JACK_P1_CS    27  // J1 / MAX1
+#define BOARD_JACK_P2_CS    13  // J2 / MAX2
+#define BOARD_JACK_P3_CS     5  // J3 / MAX3
+#define BOARD_JACK_P4_CS    26  // J4 / MAX4
+#define BOARD_JACK_P5_CS    21  // J5 / MAX5
 
 #define BOARD_ENCODER_A     34  // input-only GPIOs; pullups on board
 #define BOARD_ENCODER_B     35

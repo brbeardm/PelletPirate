@@ -379,8 +379,13 @@ void ui_dashboard_update(void)
     int elapsed = grill_state_get_elapsed_minutes();
 
     for (int i = 0; i < NUM_MEAT_PROBES; i++) {
-        if (gs->probes[i].enabled && gs->probes[i].target_temp > 0) {
-            lv_label_set_text_fmt(s_probes[i].lbl_name, "%d %s", i + 1, gs->probes[i].food_type);
+        // 0.0F is the no-probe/fault convention, so a nonzero reading means
+        // an RTD is physically in the jack — show its temp whether or not a
+        // cook is set up on it. Goal/ET/EST/progress stay cook-gated below.
+        bool plugged = gs->probes[i].current_temp > 0.0f;
+        if (gs->probes[i].enabled || plugged) {
+            const char *food = gs->probes[i].food_type[0] ? gs->probes[i].food_type : "Probe";
+            lv_label_set_text_fmt(s_probes[i].lbl_name, "%d %s", i + 1, food);
             snprintf(buf, sizeof(buf), "%d\xC2\xB0""F", (int)gs->probes[i].current_temp);
             lv_label_set_text(s_probes[i].lbl_temp, buf);
 
@@ -392,39 +397,49 @@ void ui_dashboard_update(void)
                 lv_label_set_text(s_probes[i].lbl_alarm, "");
             }
 
-            snprintf(buf, sizeof(buf), "%d\xC2\xB0""F", (int)gs->probes[i].target_temp);
-            lv_label_set_text(s_probes[i].lbl_goal, buf);
+            if (gs->probes[i].enabled && gs->probes[i].target_temp > 0) {
+                snprintf(buf, sizeof(buf), "%d\xC2\xB0""F", (int)gs->probes[i].target_temp);
+                lv_label_set_text(s_probes[i].lbl_goal, buf);
 
-            // ET/EST
-            int est = grill_state_get_est_minutes(i);
-            char et_buf[16], est_buf[16];
+                // ET/EST
+                int est = grill_state_get_est_minutes(i);
+                char et_buf[16], est_buf[16];
 
-            format_time(et_buf, sizeof(et_buf), elapsed);
-            snprintf(buf, sizeof(buf), "ET: %s", et_buf);
-            lv_label_set_text(s_probes[i].lbl_et, buf);
+                format_time(et_buf, sizeof(et_buf), elapsed);
+                snprintf(buf, sizeof(buf), "ET: %s", et_buf);
+                lv_label_set_text(s_probes[i].lbl_et, buf);
 
-            if (est >= 0) {
-                format_time(est_buf, sizeof(est_buf), est);
-                snprintf(buf, sizeof(buf), "EST: %s", est_buf);
-                lv_label_set_text(s_probes[i].lbl_est, buf);
+                if (est >= 0) {
+                    format_time(est_buf, sizeof(est_buf), est);
+                    snprintf(buf, sizeof(buf), "EST: %s", est_buf);
+                    lv_label_set_text(s_probes[i].lbl_est, buf);
 
-                // Progress bar: ET / (ET + EST) as percentage
-                int total = elapsed + est;
-                int pct = total > 0 ? (elapsed * 100 / total) : 0;
-                if (pct > 100) pct = 100;
-                lv_bar_set_value(s_probes[i].bar, pct, LV_ANIM_OFF);
-            } else if (est == -2) {
-                // Honest about the stall instead of projecting 10 hours
-                lv_label_set_text(s_probes[i].lbl_est, "EST: stall");
-                lv_bar_set_value(s_probes[i].bar, 50, LV_ANIM_OFF);
+                    // Progress bar: ET / (ET + EST) as percentage
+                    int total = elapsed + est;
+                    int pct = total > 0 ? (elapsed * 100 / total) : 0;
+                    if (pct > 100) pct = 100;
+                    lv_bar_set_value(s_probes[i].bar, pct, LV_ANIM_OFF);
+                } else if (est == -2) {
+                    // Honest about the stall instead of projecting 10 hours
+                    lv_label_set_text(s_probes[i].lbl_est, "EST: stall");
+                    lv_bar_set_value(s_probes[i].bar, 50, LV_ANIM_OFF);
+                } else {
+                    lv_label_set_text(s_probes[i].lbl_est, "EST: --:--");
+                    lv_bar_set_value(s_probes[i].bar, 0, LV_ANIM_OFF);
+                }
+
+                // the "not set" branch dims the bar indicator
+                lv_obj_set_style_bg_color(s_probes[i].bar, UI_COLOR_GREEN, LV_PART_INDICATOR);
+                lv_obj_clear_flag(s_probes[i].bar, LV_OBJ_FLAG_HIDDEN);
+                lv_obj_clear_flag(s_probes[i].lbl_et, LV_OBJ_FLAG_HIDDEN);
+                lv_obj_clear_flag(s_probes[i].lbl_est, LV_OBJ_FLAG_HIDDEN);
             } else {
-                lv_label_set_text(s_probes[i].lbl_est, "EST: --:--");
+                // Enabled, no goal set: live temp only
+                lv_label_set_text(s_probes[i].lbl_goal, "");
+                lv_label_set_text(s_probes[i].lbl_et, "");
+                lv_label_set_text(s_probes[i].lbl_est, "");
                 lv_bar_set_value(s_probes[i].bar, 0, LV_ANIM_OFF);
             }
-
-            lv_obj_clear_flag(s_probes[i].bar, LV_OBJ_FLAG_HIDDEN);
-            lv_obj_clear_flag(s_probes[i].lbl_et, LV_OBJ_FLAG_HIDDEN);
-            lv_obj_clear_flag(s_probes[i].lbl_est, LV_OBJ_FLAG_HIDDEN);
         } else {
             lv_label_set_text_fmt(s_probes[i].lbl_name, "%d not set", i + 1);
             lv_label_set_text(s_probes[i].lbl_temp, "0\xC2\xB0""F");

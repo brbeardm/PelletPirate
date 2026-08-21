@@ -567,7 +567,7 @@ void grill_state_load_from_nvs(void)
 // channel drives PID/igniter-inhibit/fault-shutdown, so remapping is only
 // allowed while the grill is Off, and applied atomically by temp_task.
 
-static int s_grill_jack = 0;   // 0-4 = J1-J5, default J1
+static int s_grill_jack = 0;   // 0-4 = panel jacks P1-P5, default P1
 
 int grill_state_get_grill_jack(void)
 {

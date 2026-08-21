@@ -27,10 +27,11 @@
 
 static const char *TAG = "pelletpirate";
 
-// MAX31865 chip selects: MAX1..MAX5 (V2 schematic)
-// Provisional channel map: MAX1 = grill RTD, MAX2-5 = meat probes 1-4
+// MAX31865 chip selects indexed by front-panel jack label P1-P5 — the same
+// 0-4 index grill_state and Settings use. Panel-to-PCB order is per-board
+// (V4's panel is reversed); boardpins.h owns that mapping.
 static const int s_rtd_cs[5] = {
-    BOARD_MAX1_CS, BOARD_MAX2_CS, BOARD_MAX3_CS, BOARD_MAX4_CS, BOARD_MAX5_CS
+    BOARD_JACK_P1_CS, BOARD_JACK_P2_CS, BOARD_JACK_P3_CS, BOARD_JACK_P4_CS, BOARD_JACK_P5_CS
 };
 static max31865_handle_t s_rtd[5];
 

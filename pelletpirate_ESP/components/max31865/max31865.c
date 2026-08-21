@@ -44,6 +44,16 @@ static esp_err_t max_xfer(max31865_handle_t *h, const uint8_t *tx, uint8_t *rx, 
     };
     esp_err_t err = spi_device_acquire_bus(h->spi, portMAX_DELAY);
     if (err != ESP_OK) return err;
+    // Settle the clock in mode 3 BEFORE asserting CS. Coming from LCD
+    // traffic (mode 0, clock idles low) the peripheral flips the clock to
+    // idle-high at the start of our first transaction; with CS already low
+    // the MAX counts that rise as a data edge and misframes the transfer
+    // (S3/V4: config readback 0x00 at init, garbage all-bits fault dumps
+    // once LVGL starts). One dummy byte with every MAX deselected absorbs
+    // the flip; the LCD's hardware CS is inactive so nobody hears it.
+    uint8_t settle = 0x00;
+    spi_transaction_t st = { .length = 8, .tx_buffer = &settle };
+    spi_device_polling_transmit(h->spi, &st);
     gpio_set_level(h->pin_cs, 0);
     err = spi_device_polling_transmit(h->spi, &t);
     gpio_set_level(h->pin_cs, 1);
@@ -103,10 +113,22 @@ esp_err_t max31865_init(max31865_handle_t *handle, const max31865_config_t *conf
 
     // Same bring-up sequence as the Photon code: write run config, read it
     // back to verify communication, then set fault thresholds wide open.
-    esp_err_t werr = write_reg(handle, MAX31865_REG_CONFIG, CONFIG_RUN);
-    vTaskDelay(pdMS_TO_TICKS(10));
+    // On the S3 (V4 board) the first transaction after spi_bus_add_device
+    // reads back 0x00 — observed on both first boots 2026-08-21, always on
+    // whichever CS initializes first. A throwaway read absorbs it; retry
+    // the handshake instead of declaring the chip dead on one bad readback.
     uint8_t cfg = 0;
-    esp_err_t rerr = read_reg(handle, MAX31865_REG_CONFIG, &cfg);
+    read_reg(handle, MAX31865_REG_CONFIG, &cfg);   // throwaway first xfer
+    esp_err_t werr = ESP_OK, rerr = ESP_OK;
+    for (int attempt = 1; attempt <= 3; attempt++) {
+        werr = write_reg(handle, MAX31865_REG_CONFIG, CONFIG_RUN);
+        vTaskDelay(pdMS_TO_TICKS(10));
+        cfg = 0;
+        rerr = read_reg(handle, MAX31865_REG_CONFIG, &cfg);
+        if (werr == ESP_OK && rerr == ESP_OK && cfg == CONFIG_RUN) break;
+        ESP_LOGW(TAG, "CS %d: init attempt %d readback 0x%02X, retrying",
+                 handle->pin_cs, attempt, cfg);
+    }
     if (werr != ESP_OK || rerr != ESP_OK) {
         ESP_LOGE(TAG, "CS %d: SPI error during init (%s/%s)",
                  handle->pin_cs, esp_err_to_name(werr), esp_err_to_name(rerr));
