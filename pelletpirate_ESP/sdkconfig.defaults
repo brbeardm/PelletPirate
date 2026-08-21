@@ -1,9 +1,10 @@
-CONFIG_IDF_TARGET="esp32"
-CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
+# Common defaults for BOTH boards. Target-specific settings (flash size,
+# partition table, PSRAM, console) live in sdkconfig.defaults.esp32 (V2)
+# and sdkconfig.defaults.esp32s3 (V4) — ESP-IDF layers the matching
+# per-target file on top of this one when generating a fresh sdkconfig.
 
-# Custom partition table: 2x1.5MB OTA app slots + 896K LittleFS (partitions.csv)
+# Custom partition table (filename set per target)
 CONFIG_PARTITION_TABLE_CUSTOM=y
-CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions.csv"
 
 # OTA rollback: a freshly-OTA'd image that dies before main.c marks it valid
 # (60s healthy uptime) reverts to the previous slot on the next boot

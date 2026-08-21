@@ -1,0 +1,15 @@
+# V4 board: ESP32-S3-WROOM-1U-N16R8 soldered on PCB
+# 16MB quad flash, 8MB octal PSRAM, native USB-Serial-JTAG console
+CONFIG_ESPTOOLPY_FLASHSIZE_16MB=y
+
+# 2x 3MB OTA app slots + ~9.9MB LittleFS
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions_s3.csv"
+
+# Octal PSRAM (R8) — malloc can spill into it
+CONFIG_SPIRAM=y
+CONFIG_SPIRAM_MODE_OCT=y
+CONFIG_SPIRAM_SPEED_80M=y
+CONFIG_SPIRAM_USE_MALLOC=y
+
+# UART0 pads are unconnected on V4 — console goes over the native USB port
+CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=y

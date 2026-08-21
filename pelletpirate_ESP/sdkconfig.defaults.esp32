@@ -1,0 +1,5 @@
+# V2 board: ESP32-DevKitC-32E, 4MB flash, UART0 console
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
+
+# 2x 1.5MB OTA app slots + 896K LittleFS
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions.csv"

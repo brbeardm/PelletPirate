@@ -5,10 +5,11 @@
 #include "nvs_flash.h"
 #include "nvs.h"
 #include "esp_log.h"
+#include "boardpins.h"
 
 static const char *TAG = "backlight";
 
-#define BACKLIGHT_GPIO      17
+#define BACKLIGHT_GPIO      BOARD_BACKLIGHT_GPIO
 #define BACKLIGHT_FREQ_HZ   25000   // TPS61165 PWM dimming band is 5-100 kHz
 #define BACKLIGHT_RES       LEDC_TIMER_10_BIT
 #define BACKLIGHT_DUTY_MAX  1023

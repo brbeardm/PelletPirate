@@ -3,12 +3,12 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include "boardpins.h"
 
-// PelletPirate V2 encoder pins (PEC16-4215F-S0024)
-// All input-only GPIOs on ESP32
-#define ENCODER_PIN_A   34
-#define ENCODER_PIN_B   35
-#define ENCODER_PIN_BTN 36
+// Encoder pins (PEC16-4215F-S0024) — per-board map in boardpins.h
+#define ENCODER_PIN_A   BOARD_ENCODER_A
+#define ENCODER_PIN_B   BOARD_ENCODER_B
+#define ENCODER_PIN_BTN BOARD_ENCODER_BTN
 
 typedef enum {
     ENCODER_BTN_NONE,

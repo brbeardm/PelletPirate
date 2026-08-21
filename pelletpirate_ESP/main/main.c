@@ -13,6 +13,7 @@
 #include "esp_task_wdt.h"
 #include "esp_ota_ops.h"
 #include "driver/gpio.h"
+#include "boardpins.h"
 #include "hx8357d.h"
 #include "backlight.h"
 #include "encoder.h"
@@ -28,7 +29,9 @@ static const char *TAG = "pelletpirate";
 
 // MAX31865 chip selects: MAX1..MAX5 (V2 schematic)
 // Provisional channel map: MAX1 = grill RTD, MAX2-5 = meat probes 1-4
-static const int s_rtd_cs[5] = { 27, 13, 5, 26, 21 };
+static const int s_rtd_cs[5] = {
+    BOARD_MAX1_CS, BOARD_MAX2_CS, BOARD_MAX3_CS, BOARD_MAX4_CS, BOARD_MAX5_CS
+};
 static max31865_handle_t s_rtd[5];
 
 // Median of the last 3 raw samples per channel: one glitched SPI read or
@@ -163,8 +166,8 @@ static void resume_task(void *arg)
     vTaskDelete(NULL);
 }
 
-#define BACKLIGHT_CTRL_GPIO 17  // TPS61165 CTRL (backlight enable)
-#define HEARTBEAT_LED_GPIO  2   // Onboard blue LED on DevKitC
+#define BACKLIGHT_CTRL_GPIO BOARD_BACKLIGHT_GPIO  // TPS61165 CTRL (backlight enable)
+#define HEARTBEAT_LED_GPIO  BOARD_HEARTBEAT_GPIO  // DevKit LED on V2; NC module pad on V4
 
 static void heartbeat_timer_cb(void *arg)
 {
@@ -247,12 +250,12 @@ void app_main(void)
     // LCD first — boot splash for immediate visual feedback
     hx8357d_config_t lcd_cfg = {
         .spi_host = SPI2_HOST,
-        .pin_mosi = 23,
-        .pin_sclk = 18,
-        .pin_miso = 19,
-        .pin_cs   = 25,
-        .pin_dc   = 14,
-        .pin_rst  = 16,
+        .pin_mosi = BOARD_SPI_MOSI,
+        .pin_sclk = BOARD_SPI_SCLK,
+        .pin_miso = BOARD_SPI_MISO,
+        .pin_cs   = BOARD_LCD_CS,
+        .pin_dc   = BOARD_LCD_DC,
+        .pin_rst  = BOARD_LCD_RST,
         .spi_clock_speed_hz = 4 * 1000 * 1000,
     };
 

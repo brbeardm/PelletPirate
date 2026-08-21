@@ -7,17 +7,19 @@
 // DoAugerControl / checkIgniter / SetMode) — see actuator.cpp header
 // for the carryover/enhancement summary.
 //
-// GPIO map (V2 board): FAN=IO4, IGNITER=IO32, AUGER=IO33.
+// GPIO map lives in boardpins.h (V2 vs V4 per IDF target).
 // All three MUST be parked LOW at the very start of app_main() (done in
 // main.c) — floating triac-driver inputs are unacceptable on AC.
+
+#include "boardpins.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define ACTUATOR_FAN_GPIO     4
-#define ACTUATOR_IGNITER_GPIO 32
-#define ACTUATOR_AUGER_GPIO   33
+#define ACTUATOR_FAN_GPIO     BOARD_FAN_GPIO
+#define ACTUATOR_IGNITER_GPIO BOARD_IGNITER_GPIO
+#define ACTUATOR_AUGER_GPIO   BOARD_AUGER_GPIO
 
 /**
  * Configure the three output GPIOs (LOW) and start the 1 Hz control task.
