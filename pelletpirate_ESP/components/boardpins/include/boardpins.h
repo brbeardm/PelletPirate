@@ -28,8 +28,9 @@
 #define BOARD_LCD_DC        18
 #define BOARD_LCD_RST       15
 
-// V4 enclosure mounts the LCD upside down relative to V2: MY+MX cleared
-// rotates the output 180 degrees (panel is natively BGR on both boards).
+// The enclosure mounts the LCD upside down relative to the original V2
+// case: MY+MX cleared rotates the output 180 degrees (panel is natively
+// BGR on both boards). V2 boards adopted this same orientation 2026-08-23.
 #define BOARD_LCD_MADCTL    0x00
 
 // MAX31865 chip selects indexed by FRONT-PANEL jack label (P1-P5, the
@@ -78,14 +79,18 @@
 #define BOARD_LCD_DC        14
 #define BOARD_LCD_RST       16
 
-#define BOARD_LCD_MADCTL    0xC0  // MY+MX — V2 mounting orientation
+// V2 boards moved to the V4-style enclosure orientation 2026-08-23:
+// LCD flipped 180 (MY+MX cleared) same as V4. Original V2 case value
+// was 0xC0.
+#define BOARD_LCD_MADCTL    0x00
 
-// V2 panel labels match PCB refs: P1=J1 ... P5=J5.
-#define BOARD_JACK_P1_CS    27  // J1 / MAX1
-#define BOARD_JACK_P2_CS    13  // J2 / MAX2
+// Same enclosure flip reverses the front-panel jack order vs PCB refs,
+// matching V4: P1=J5 ... P5=J1. (Original V2 case: P1=J1 ... P5=J5.)
+#define BOARD_JACK_P1_CS    21  // J5 / MAX5
+#define BOARD_JACK_P2_CS    26  // J4 / MAX4
 #define BOARD_JACK_P3_CS     5  // J3 / MAX3
-#define BOARD_JACK_P4_CS    26  // J4 / MAX4
-#define BOARD_JACK_P5_CS    21  // J5 / MAX5
+#define BOARD_JACK_P4_CS    13  // J2 / MAX2
+#define BOARD_JACK_P5_CS    27  // J1 / MAX1
 
 #define BOARD_ENCODER_A     34  // input-only GPIOs; pullups on board
 #define BOARD_ENCODER_B     35
