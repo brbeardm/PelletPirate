@@ -1,8 +1,8 @@
 # PelletPirate V2 Controller — User's Manual
 
-**Firmware:** esp32-v2 branch, build `9be74ae` or later
+**Firmware:** esp32-v2 branch, build `4a09097` or later
 **Applies to:** PelletPirate V2 control board (ESP32-DevKitC), 3.5" LCD + rotary encoder, web dashboard
-**Document revision:** 1.0 — July 2026
+**Document revision:** 1.1 — August 2026 (probe jack order, plug-and-show probes)
 
 ---
 
@@ -93,6 +93,16 @@ One probe jack is designated the **grill probe** — it measures pit
 temperature and drives all temperature control and safety logic. By
 default this is jack **P1**, but it is assignable (Section 12.4). The
 remaining four jacks are **meat probes 1–4**.
+
+> **Probe jack numbering (firmware `4a09097`, August 2026):** the
+> P1–P5 numbers on the front panel are the truth — always go by them.
+> For anyone servicing the board: as of this firmware the panel numbers
+> run **opposite** the printed circuit board references, matching the
+> current enclosure orientation — panel **P1 = PCB J5**, P2 = J4,
+> P3 = J3, P4 = J2, **P5 = J1**. (Earlier firmware numbered the jacks
+> in PCB order. If your probes appear under reversed numbers after a
+> firmware update, this changeover is why — just follow the panel
+> labels.)
 
 ---
 
@@ -295,6 +305,11 @@ Top to bottom:
   the alarm (red) and goal (green) temperatures, and a progress bar
   showing elapsed time (ET) vs. estimated time remaining (EST).
   Click a probe row to open its setup.
+
+  **Plug-and-show:** a probe physically plugged into any jack shows its
+  number and live temperature on the LCD immediately — no setup needed.
+  Goals, alarms, meat type, and ET/EST appear once you configure the
+  probe for a cook.
 - **Bottom-right:**
   - **Next: P2 0:45** — the *soonest upcoming goal* across all probes:
     which meat finishes next and roughly when.
