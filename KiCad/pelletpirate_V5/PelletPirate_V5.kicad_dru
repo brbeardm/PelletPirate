@@ -1,0 +1,35 @@
+(version 1)
+
+  (rule "FPC1-internal-fine-pitch"
+  (condition "A.memberOfFootprint('FPC1') && B.memberOfFootprint('FPC1')")
+  (constraint clearance (min 0.13mm)))
+
+  (rule "PS1-edge"
+  (condition "A.memberOfFootprint('PS1') || B.memberOfFootprint('PS1')")
+  (constraint edge_clearance (min 0.25mm)))
+
+  (rule "PS1 internal manufacturer footprint"
+  (condition "A.memberOfFootprint('PS1') && B.memberOfFootprint('PS1')")
+  (constraint clearance)
+  (severity ignore))
+
+  # ================= BASE: 2.5 mm mains-domain <-> SELV / GND =================
+  # V5: Net-(U3-IN2) crutch clauses removed — the MAINS_SENSE netclass pattern
+  # is fixed in this project (was typo'd in V4).
+  (rule "MAINS-to-SELV-fwd"
+  (condition "(A.NetClass=='MAINS_INPUT' || A.NetClass=='MAINS_GATE' || A.NetClass=='MAINS_SENSE' || A.NetClass=='AC_LOAD_SHARED' || A.NetClass=='AC_LOAD_IGNITER' || A.NetClass=='AC_LOAD_LOW') && (B.NetClass=='SELV_12V' || B.NetClass=='SELV_3V3' || B.NetClass=='SELV_SIGNAL' || B.NetClass=='RTD_ANALOG' || B.NetClass=='LED_BACKLIGHT' || B.NetClass=='LCD_FPC' || B.NetClass=='USB' || B.NetName=='GND')")
+  (constraint clearance (min 2.5mm)))
+
+  (rule "MAINS-to-SELV-rev"
+  (condition "(B.NetClass=='MAINS_INPUT' || B.NetClass=='MAINS_GATE' || B.NetClass=='MAINS_SENSE' || B.NetClass=='AC_LOAD_SHARED' || B.NetClass=='AC_LOAD_IGNITER' || B.NetClass=='AC_LOAD_LOW') && (A.NetClass=='SELV_12V' || A.NetClass=='SELV_3V3' || A.NetClass=='SELV_SIGNAL' || A.NetClass=='RTD_ANALOG' || A.NetClass=='LED_BACKLIGHT' || A.NetClass=='LCD_FPC' || A.NetClass=='USB' || A.NetName=='GND')")
+  (constraint clearance (min 2.5mm)))
+
+  # ========== EXEMPTION 1: pad-to-pad INSIDE a barrier package ==========
+  (rule "barrier-internal-exempt"
+  (condition "(A.memberOfFootprint('MOC1') && B.memberOfFootprint('MOC1')) || (A.memberOfFootprint('MOC2') && B.memberOfFootprint('MOC2')) || (A.memberOfFootprint('MOC3') && B.memberOfFootprint('MOC3')) || (A.memberOfFootprint('U3') && B.memberOfFootprint('U3')) || (A.memberOfFootprint('T1') && B.memberOfFootprint('T1')) || (A.memberOfFootprint('T2') && B.memberOfFootprint('T2')) || (A.memberOfFootprint('T3') && B.memberOfFootprint('T3'))")
+  (constraint clearance (min 0.25mm)))
+
+  # ===== EXEMPTION 2: any item crossing a barrier component courtyard =====
+  (rule "barrier-courtyard-exempt"
+  (condition "((A.NetClass=='MAINS_INPUT' || A.NetClass=='MAINS_GATE' || A.NetClass=='MAINS_SENSE' || A.NetClass=='AC_LOAD_SHARED' || A.NetClass=='AC_LOAD_IGNITER' || A.NetClass=='AC_LOAD_LOW') && (B.NetClass=='SELV_12V' || B.NetClass=='SELV_3V3' || B.NetClass=='SELV_SIGNAL' || B.NetClass=='RTD_ANALOG' || B.NetClass=='LED_BACKLIGHT' || B.NetClass=='LCD_FPC' || B.NetClass=='USB' || B.NetName=='GND')) && (A.intersectsCourtyard('MOC1') || B.intersectsCourtyard('MOC1') || A.intersectsCourtyard('MOC2') || B.intersectsCourtyard('MOC2') || A.intersectsCourtyard('MOC3') || B.intersectsCourtyard('MOC3') || A.intersectsCourtyard('U3') || B.intersectsCourtyard('U3'))")
+  (constraint clearance (min 0.4mm)))

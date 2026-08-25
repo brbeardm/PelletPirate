@@ -496,7 +496,7 @@
       {
         "bus_width": 12,
         "clearance": 0.2,
-        "diff_pair_gap": 0.25,
+        "diff_pair_gap": 0.2,
         "diff_pair_via_gap": 0.25,
         "diff_pair_width": 0.2,
         "line_style": 0,
@@ -511,6 +511,216 @@
         "via_diameter": 0.6,
         "via_drill": 0.3,
         "wire_width": 6
+      },
+      {
+        "clearance": 0.635,
+        "diff_pair_gap": 0.2,
+        "diff_pair_width": 0.25,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "AC_LOAD_IGNITER",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 3,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 1.5,
+        "tuning_profile": "",
+        "via_diameter": 1.2,
+        "via_drill": 0.6
+      },
+      {
+        "clearance": 0.635,
+        "diff_pair_gap": 0.2,
+        "diff_pair_width": 0.25,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "AC_LOAD_LOW",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 2,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 1.0,
+        "tuning_profile": "",
+        "via_diameter": 1.2,
+        "via_drill": 0.6
+      },
+      {
+        "clearance": 0.635,
+        "diff_pair_gap": 0.2,
+        "diff_pair_width": 0.25,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "AC_LOAD_SHARED",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 4,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 1.5,
+        "tuning_profile": "",
+        "via_diameter": 1.5,
+        "via_drill": 0.8
+      },
+      {
+        "clearance": 1.0,
+        "diff_pair_gap": 0.2,
+        "diff_pair_width": 0.25,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "EARTH",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 6,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 1.5,
+        "tuning_profile": "",
+        "via_diameter": 1.2,
+        "via_drill": 0.6
+      },
+      {
+        "clearance": 0.2,
+        "diff_pair_gap": 0.2,
+        "diff_pair_width": 0.2,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "LCD_FPC",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 7,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.2,
+        "tuning_profile": "",
+        "via_diameter": 0.6,
+        "via_drill": 0.3
+      },
+      {
+        "clearance": 0.25,
+        "diff_pair_gap": 0.2,
+        "diff_pair_width": 0.25,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "LED_BACKLIGHT",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 10,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.5,
+        "tuning_profile": "",
+        "via_diameter": 0.8,
+        "via_drill": 0.4
+      },
+      {
+        "clearance": 0.51,
+        "diff_pair_gap": 0.2,
+        "diff_pair_width": 0.25,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "MAINS_GATE",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 1,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.4,
+        "tuning_profile": "",
+        "via_diameter": 0.8,
+        "via_drill": 0.4
+      },
+      {
+        "clearance": 1.0,
+        "diff_pair_gap": 0.2,
+        "diff_pair_width": 0.25,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "MAINS_INPUT",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 5,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 1.0,
+        "tuning_profile": "",
+        "via_diameter": 1.2,
+        "via_drill": 0.6
+      },
+      {
+        "clearance": 0.8,
+        "diff_pair_gap": 0.2,
+        "diff_pair_width": 0.25,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "MAINS_SENSE",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 0,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.4,
+        "tuning_profile": "",
+        "via_diameter": 0.8,
+        "via_drill": 0.4
+      },
+      {
+        "clearance": 0.25,
+        "diff_pair_gap": 0.2,
+        "diff_pair_width": 0.25,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "RTD_ANALOG",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 8,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.25,
+        "tuning_profile": "",
+        "via_diameter": 0.6,
+        "via_drill": 0.3
+      },
+      {
+        "clearance": 0.25,
+        "diff_pair_gap": 0.2,
+        "diff_pair_width": 0.25,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "SELV_12V",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 11,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.5,
+        "tuning_profile": "",
+        "via_diameter": 0.8,
+        "via_drill": 0.4
+      },
+      {
+        "clearance": 0.2,
+        "diff_pair_gap": 0.2,
+        "diff_pair_width": 0.25,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "SELV_3V3",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 12,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.3,
+        "tuning_profile": "",
+        "via_diameter": 0.7,
+        "via_drill": 0.35
+      },
+      {
+        "clearance": 0.2,
+        "diff_pair_gap": 0.2,
+        "diff_pair_width": 0.25,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "SELV_SIGNAL",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 13,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.25,
+        "tuning_profile": "",
+        "via_diameter": 0.6,
+        "via_drill": 0.3
+      },
+      {
+        "clearance": 0.15,
+        "diff_pair_gap": 0.2,
+        "diff_pair_width": 0.25,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "USB",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 9,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.25,
+        "tuning_profile": "",
+        "via_diameter": 0.6,
+        "via_drill": 0.3
       }
     ],
     "meta": {
@@ -518,7 +728,368 @@
     },
     "net_colors": null,
     "netclass_assignments": null,
-    "netclass_patterns": []
+    "netclass_patterns": [
+      {
+        "netclass": "AC_LOAD_SHARED",
+        "pattern": "/AC-LOAD"
+      },
+      {
+        "netclass": "AC_LOAD_SHARED",
+        "pattern": "/AC-NEUTRAL"
+      },
+      {
+        "netclass": "AC_LOAD_SHARED",
+        "pattern": "Net-(WirePad1-Pin_1)"
+      },
+      {
+        "netclass": "AC_LOAD_IGNITER",
+        "pattern": "Net-(T1-A1)"
+      },
+      {
+        "netclass": "AC_LOAD_LOW",
+        "pattern": "Net-(T2-A1)"
+      },
+      {
+        "netclass": "AC_LOAD_LOW",
+        "pattern": "Net-(T3-A1)"
+      },
+      {
+        "netclass": "AC_LOAD_LOW",
+        "pattern": "Net-(C1-Pad1)"
+      },
+      {
+        "netclass": "AC_LOAD_LOW",
+        "pattern": "Net-(C2-Pad1)"
+      },
+      {
+        "netclass": "AC_LOAD_LOW",
+        "pattern": "Net-(C3-Pad1)"
+      },
+      {
+        "netclass": "MAINS_INPUT",
+        "pattern": "Net-(PS1-+V(CAP))"
+      },
+      {
+        "netclass": "MAINS_INPUT",
+        "pattern": "Net-(PS1--V(CAP))"
+      },
+      {
+        "netclass": "MAINS_INPUT",
+        "pattern": "Net-(PS1-AC(L))"
+      },
+      {
+        "netclass": "MAINS_INPUT",
+        "pattern": "Net-(PS1-AC(N))"
+      },
+      {
+        "netclass": "MAINS_GATE",
+        "pattern": "Net-(MOC1-Pad6)"
+      },
+      {
+        "netclass": "MAINS_GATE",
+        "pattern": "Net-(MOC2-Pad6)"
+      },
+      {
+        "netclass": "MAINS_GATE",
+        "pattern": "Net-(MOC3-Pad6)"
+      },
+      {
+        "netclass": "MAINS_GATE",
+        "pattern": "Net-(T1-G)"
+      },
+      {
+        "netclass": "MAINS_GATE",
+        "pattern": "Net-(T2-G)"
+      },
+      {
+        "netclass": "MAINS_GATE",
+        "pattern": "Net-(T3-G)"
+      },
+      {
+        "netclass": "MAINS_SENSE",
+        "pattern": "Net-(U3-IN1)"
+      },
+      {
+        "netclass": "MAINS_SENSE",
+        "pattern": "Net-(U3-IN2)"
+      },
+      {
+        "netclass": "EARTH",
+        "pattern": "Earth"
+      },
+      {
+        "netclass": "SELV_12V",
+        "pattern": "+12V"
+      },
+      {
+        "netclass": "SELV_12V",
+        "pattern": "Net-(PS1-+VO)"
+      },
+      {
+        "netclass": "SELV_12V",
+        "pattern": "Net-(PS2-SW)"
+      },
+      {
+        "netclass": "SELV_12V",
+        "pattern": "Net-(PS2-VBST)"
+      },
+      {
+        "netclass": "SELV_3V3",
+        "pattern": "+3.3V"
+      },
+      {
+        "netclass": "LED_BACKLIGHT",
+        "pattern": "/LED+"
+      },
+      {
+        "netclass": "LED_BACKLIGHT",
+        "pattern": "/LED-"
+      },
+      {
+        "netclass": "LED_BACKLIGHT",
+        "pattern": "Net-(PS3-SW)"
+      },
+      {
+        "netclass": "LED_BACKLIGHT",
+        "pattern": "Net-(PS3-COMP)"
+      },
+      {
+        "netclass": "USB",
+        "pattern": "/USB-C_D+"
+      },
+      {
+        "netclass": "USB",
+        "pattern": "/USB-C_D-"
+      },
+      {
+        "netclass": "USB",
+        "pattern": "/USB_D+"
+      },
+      {
+        "netclass": "USB",
+        "pattern": "/USB_D-"
+      },
+      {
+        "netclass": "USB",
+        "pattern": "VBUS"
+      },
+      {
+        "netclass": "USB",
+        "pattern": "Net-(J8-CC1)"
+      },
+      {
+        "netclass": "USB",
+        "pattern": "Net-(J8-CC2)"
+      },
+      {
+        "netclass": "LCD_FPC",
+        "pattern": "/LCD_CS"
+      },
+      {
+        "netclass": "LCD_FPC",
+        "pattern": "/LCD_DC"
+      },
+      {
+        "netclass": "LCD_FPC",
+        "pattern": "/LCD_RST"
+      },
+      {
+        "netclass": "RTD_ANALOG",
+        "pattern": "Net-(J1-Ring)"
+      },
+      {
+        "netclass": "RTD_ANALOG",
+        "pattern": "Net-(J1-Sleeve)"
+      },
+      {
+        "netclass": "RTD_ANALOG",
+        "pattern": "Net-(J1-Tip)"
+      },
+      {
+        "netclass": "RTD_ANALOG",
+        "pattern": "Net-(J2-Ring)"
+      },
+      {
+        "netclass": "RTD_ANALOG",
+        "pattern": "Net-(J2-Sleeve)"
+      },
+      {
+        "netclass": "RTD_ANALOG",
+        "pattern": "Net-(J2-Tip)"
+      },
+      {
+        "netclass": "RTD_ANALOG",
+        "pattern": "Net-(J3-Ring)"
+      },
+      {
+        "netclass": "RTD_ANALOG",
+        "pattern": "Net-(J3-Sleeve)"
+      },
+      {
+        "netclass": "RTD_ANALOG",
+        "pattern": "Net-(J3-Tip)"
+      },
+      {
+        "netclass": "RTD_ANALOG",
+        "pattern": "Net-(J4-Ring)"
+      },
+      {
+        "netclass": "RTD_ANALOG",
+        "pattern": "Net-(J4-Sleeve)"
+      },
+      {
+        "netclass": "RTD_ANALOG",
+        "pattern": "Net-(J4-Tip)"
+      },
+      {
+        "netclass": "RTD_ANALOG",
+        "pattern": "Net-(J5-Ring)"
+      },
+      {
+        "netclass": "RTD_ANALOG",
+        "pattern": "Net-(J5-Sleeve)"
+      },
+      {
+        "netclass": "RTD_ANALOG",
+        "pattern": "Net-(J5-Tip)"
+      },
+      {
+        "netclass": "RTD_ANALOG",
+        "pattern": "Net-(MAX1-BIAS)"
+      },
+      {
+        "netclass": "RTD_ANALOG",
+        "pattern": "Net-(MAX1-ISENSOR)"
+      },
+      {
+        "netclass": "RTD_ANALOG",
+        "pattern": "Net-(MAX2-BIAS)"
+      },
+      {
+        "netclass": "RTD_ANALOG",
+        "pattern": "Net-(MAX2-ISENSOR)"
+      },
+      {
+        "netclass": "RTD_ANALOG",
+        "pattern": "Net-(MAX3-BIAS)"
+      },
+      {
+        "netclass": "RTD_ANALOG",
+        "pattern": "Net-(MAX3-ISENSOR)"
+      },
+      {
+        "netclass": "RTD_ANALOG",
+        "pattern": "Net-(MAX4-BIAS)"
+      },
+      {
+        "netclass": "RTD_ANALOG",
+        "pattern": "Net-(MAX4-ISENSOR)"
+      },
+      {
+        "netclass": "RTD_ANALOG",
+        "pattern": "Net-(MAX5-BIAS)"
+      },
+      {
+        "netclass": "RTD_ANALOG",
+        "pattern": "Net-(MAX5-ISENSOR)"
+      },
+      {
+        "netclass": "SELV_SIGNAL",
+        "pattern": "/ALL_SCLK"
+      },
+      {
+        "netclass": "SELV_SIGNAL",
+        "pattern": "/ALL_SDI"
+      },
+      {
+        "netclass": "SELV_SIGNAL",
+        "pattern": "/ALL_SDO"
+      },
+      {
+        "netclass": "SELV_SIGNAL",
+        "pattern": "/AUGER_IO"
+      },
+      {
+        "netclass": "SELV_SIGNAL",
+        "pattern": "/FAN_IO"
+      },
+      {
+        "netclass": "SELV_SIGNAL",
+        "pattern": "/IGNITER_IO"
+      },
+      {
+        "netclass": "SELV_SIGNAL",
+        "pattern": "/LED_PWM"
+      },
+      {
+        "netclass": "SELV_SIGNAL",
+        "pattern": "/ZC_DET"
+      },
+      {
+        "netclass": "SELV_SIGNAL",
+        "pattern": "/Encoder_Btn"
+      },
+      {
+        "netclass": "SELV_SIGNAL",
+        "pattern": "/Encoder_OutA"
+      },
+      {
+        "netclass": "SELV_SIGNAL",
+        "pattern": "/Encoder_OutB"
+      },
+      {
+        "netclass": "SELV_SIGNAL",
+        "pattern": "/MAX1_CS"
+      },
+      {
+        "netclass": "SELV_SIGNAL",
+        "pattern": "/MAX2_CS"
+      },
+      {
+        "netclass": "SELV_SIGNAL",
+        "pattern": "/MAX3_CS"
+      },
+      {
+        "netclass": "SELV_SIGNAL",
+        "pattern": "/MAX4_CS"
+      },
+      {
+        "netclass": "SELV_SIGNAL",
+        "pattern": "/MAX5_CS"
+      },
+      {
+        "netclass": "SELV_SIGNAL",
+        "pattern": "Net-(ESP1-*)"
+      },
+      {
+        "netclass": "SELV_SIGNAL",
+        "pattern": "Net-(MOC1-Pad1)"
+      },
+      {
+        "netclass": "SELV_SIGNAL",
+        "pattern": "Net-(MOC2-Pad1)"
+      },
+      {
+        "netclass": "SELV_SIGNAL",
+        "pattern": "Net-(MOC3-Pad1)"
+      },
+      {
+        "netclass": "SELV_SIGNAL",
+        "pattern": "Net-(J9-Pin_1)"
+      },
+      {
+        "netclass": "SELV_SIGNAL",
+        "pattern": "Net-(LED1-Pad2)"
+      },
+      {
+        "netclass": "SELV_SIGNAL",
+        "pattern": "Net-(PS2-EN)"
+      },
+      {
+        "netclass": "SELV_SIGNAL",
+        "pattern": "Net-(PS2-VFB)"
+      }
+    ]
   },
   "pcbnew": {
     "last_paths": {
@@ -537,7 +1108,7 @@
       "method": 0,
       "sort_order": 0
     },
-    "bom_export_filename": "${PROJECTNAME}.csv",
+    "bom_export_filename": "C:\\DEVELOPMENT\\pelletpirate\\KiCad\\PelletPirate_V4\\PelletPirate_V4_BOM.csv",
     "bom_fmt_presets": [],
     "bom_fmt_settings": {
       "field_delimiter": ",",
@@ -599,12 +1170,168 @@
           "label": "Datasheet",
           "name": "Datasheet",
           "show": true
+        },
+        {
+          "group_by": false,
+          "label": "CREATOR",
+          "name": "CREATOR",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Check_prices",
+          "name": "Check_prices",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "DigiKey_Part_Number",
+          "name": "DigiKey_Part_Number",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "LINK",
+          "name": "LINK",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "MANUFACTURER",
+          "name": "MANUFACTURER",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "MAXIMUM_PACKAGE_HEIGHT",
+          "name": "MAXIMUM_PACKAGE_HEIGHT",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "MAXIMUM_PACKAGE_HIEGHT",
+          "name": "MAXIMUM_PACKAGE_HIEGHT",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "MF",
+          "name": "MF",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "MP",
+          "name": "MP",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "PARTREV",
+          "name": "PARTREV",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Package",
+          "name": "Package",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Price",
+          "name": "Price",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Purchase-URL",
+          "name": "Purchase-URL",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "SNAPEDA_PACKAGE_ID",
+          "name": "SNAPEDA_PACKAGE_ID",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "STANDARD",
+          "name": "STANDARD",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Sim.Device",
+          "name": "Sim.Device",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Sim.Library",
+          "name": "Sim.Library",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Sim.Name",
+          "name": "Sim.Name",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Sim.Params",
+          "name": "Sim.Params",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Sim.Pins",
+          "name": "Sim.Pins",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "SnapEDA_Link",
+          "name": "SnapEDA_Link",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "System",
+          "name": "System",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "VERIFIER",
+          "name": "VERIFIER",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Availability",
+          "name": "Availability",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Description",
+          "name": "Description",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "#",
+          "name": "${ITEM_NUMBER}",
+          "show": false
         }
       ],
       "filter_string": "",
       "group_symbols": true,
       "include_excluded_from_bom": true,
-      "name": "Default Editing",
+      "name": "",
       "sort_asc": true,
       "sort_field": "Reference"
     },
@@ -649,7 +1376,7 @@
         "uuid": "0182ac56-03c6-4c14-8ead-12e31828f094"
       }
     ],
-    "used_designators": "#FLG5,R10-12,R32-47,J7-9,ESP1,T4,#PWR5,#PWR15-16,#PWR50,#PWR54-63,S1-2,MOC4,LED1,C17,C37-43,U1,U3,WirePad6",
+    "used_designators": "#FLG5,R10-12,R32-47,J7-11,ESP1,T4,#PWR5,#PWR15-16,#PWR50,#PWR54-63,S1-2,MOC4,LED1,C17,C37-43,U1,U3,WirePad6",
     "variants": []
   },
   "sheets": [
