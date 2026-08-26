@@ -8731,7 +8731,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "TB007-508-02BE:TB007-508-02BE"
+		(symbol "TB002-500-02BE:TB002-500-02BE"
 			(pin_names
 				(offset 1.016)
 			)
@@ -8751,7 +8751,7 @@
 					(justify left bottom)
 				)
 			)
-			(property "Value" "TB007-508-02BE"
+			(property "Value" "TB002-500-02BE"
 				(at -5.08 -5.08 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -8762,7 +8762,7 @@
 					(justify left bottom)
 				)
 			)
-			(property "Footprint" "TB007-508-02BE:CUI_TB007-508-02BE"
+			(property "Footprint" "TB002-500-02BE:CUI_TB002-500-02BE"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -8785,7 +8785,7 @@
 					)
 				)
 			)
-			(property "Description" "2~24 Poles, Screw Type, Horizontal, 5.08 Pitch, 24~12 (AWG), Terminal Block Connector"
+			(property "Description" "2~24 Poles, Screw Type, Horizontal, 5.0 Pitch, 22~12 (AWG), Terminal Block Connector"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -8833,7 +8833,7 @@
 					(justify bottom)
 				)
 			)
-			(property "Check_prices" "https://www.snapeda.com/parts/TB007%20-508-02BE/Same+Sky/view-part/?ref=eda"
+			(property "Check_prices" "https://www.snapeda.com/parts/TB002-500-02BE/Same+Sky/view-part/?ref=eda"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -8857,7 +8857,7 @@
 					(justify bottom)
 				)
 			)
-			(property "SnapEDA_Link" "https://www.snapeda.com/parts/TB007%20-508-02BE/Same+Sky/view-part/?ref=snap"
+			(property "SnapEDA_Link" "https://www.snapeda.com/parts/TB002-500-02BE/Same+Sky/view-part/?ref=snap"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -8869,7 +8869,7 @@
 					(justify bottom)
 				)
 			)
-			(property "MP" "TB007 -508-02BE"
+			(property "MP" "TB002-500-02BE"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -8905,7 +8905,7 @@
 					(justify bottom)
 				)
 			)
-			(symbol "TB007-508-02BE_0_0"
+			(symbol "TB002-500-02BE_0_0"
 				(rectangle
 					(start -5.08 -2.54)
 					(end 5.08 5.08)
@@ -9576,7 +9576,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "USB4105-GF-A-flyman:USB4105-GF-A_fly"
+		(symbol "USB4145-03-0070-C_REVA2:USB4145-03-0070-C_REVA2"
 			(pin_names
 				(offset 1.016)
 			)
@@ -9585,28 +9585,30 @@
 			(on_board yes)
 			(in_pos_files yes)
 			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "J8"
-				(at 0 17.78 0)
+			(property "Reference" "J"
+				(at -12.7 10.922 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
+					(justify left bottom)
 				)
 			)
-			(property "Value" "USB4105-GF-A_fly"
-				(at 0 15.24 0)
+			(property "Value" "USB4145-03-0070-C_REVA2"
+				(at -12.7 -15.24 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
+					(justify left bottom)
 				)
 			)
-			(property "Footprint" "USB_try2:GCT_USB4105-GF-A_flyman"
-				(at -20.32 -10.668 0)
+			(property "Footprint" "USB4145-03-0070-C_REVA2:GCT_USB4145-03-0070-C_REVA2"
+				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -9628,8 +9630,8 @@
 					)
 				)
 			)
-			(property "Description" "USB-C (USB TYPE-C) USB 2.0 Receptacle Connector 24 (16+8 Dummy) Position Surface Mount, Right Angle; Through Hole"
-				(at 6.35 19.304 0)
+			(property "Description" "Type C USB 2.0 Connector"
+				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -9640,8 +9642,8 @@
 					(justify bottom)
 				)
 			)
-			(property "MF" "GCT"
-				(at -31.242 9.906 0)
+			(property "MF" "Global Connector Technology"
+				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -9652,8 +9654,8 @@
 					(justify bottom)
 				)
 			)
-			(property "MAXIMUM_PACKAGE_HEIGHT" "3.31 mm"
-				(at 21.336 -14.986 0)
+			(property "MAXIMUM_PACKAGE_HEIGHT" "7.66mm"
+				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -9665,7 +9667,7 @@
 				)
 			)
 			(property "Package" "None"
-				(at 18.542 15.494 0)
+				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -9677,7 +9679,7 @@
 				)
 			)
 			(property "Price" "None"
-				(at -37.592 6.858 0)
+				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -9688,8 +9690,8 @@
 					(justify bottom)
 				)
 			)
-			(property "Check_prices" "https://www.snapeda.com/parts/USB4105-GF-A/Global+Connector+Technology/view-part/?ref=eda"
-				(at 5.08 -16.764 0)
+			(property "Check_prices" "https://www.snapeda.com/parts/USB4145-03-0070-C/Global+Connector+Technology/view-part/?ref=eda"
+				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -9701,7 +9703,7 @@
 				)
 			)
 			(property "STANDARD" "Manufacturer Recommendations"
-				(at 3.556 21.336 0)
+				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -9712,8 +9714,8 @@
 					(justify bottom)
 				)
 			)
-			(property "PARTREV" "B4"
-				(at 13.716 -15.494 0)
+			(property "PARTREV" "A2"
+				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -9724,8 +9726,8 @@
 					(justify bottom)
 				)
 			)
-			(property "SnapEDA_Link" "https://www.snapeda.com/parts/USB4105-GF-A/Global+Connector+Technology/view-part/?ref=snap"
-				(at 3.556 -19.304 0)
+			(property "SnapEDA_Link" "https://www.snapeda.com/parts/USB4145-03-0070-C/Global+Connector+Technology/view-part/?ref=snap"
+				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -9736,20 +9738,8 @@
 					(justify bottom)
 				)
 			)
-			(property "MP" "USB4105-GF-A"
-				(at 0 -13.97 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-				)
-			)
-			(property "Availability" "In Stock"
-				(at 24.13 18.034 0)
+			(property "MP" "USB4145-03-0070-C"
+				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -9761,7 +9751,7 @@
 				)
 			)
 			(property "MANUFACTURER" "GCT"
-				(at -27.178 14.986 0)
+				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(hide yes)
@@ -9772,10 +9762,34 @@
 					(justify bottom)
 				)
 			)
-			(symbol "USB4105-GF-A_fly_0_0"
+			(property "Availability" "In Stock"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify bottom)
+				)
+			)
+			(property "SNAPEDA_PN" "USB4145-03-0070-C"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify bottom)
+				)
+			)
+			(symbol "USB4145-03-0070-C_REVA2_0_0"
 				(rectangle
-					(start -15.367 13.716)
-					(end 15.113 -11.684)
+					(start -12.7 -12.7)
+					(end 12.7 10.16)
 					(stroke
 						(width 0.254)
 						(type default)
@@ -9784,8 +9798,44 @@
 						(type background)
 					)
 				)
+				(pin power_in line
+					(at -17.78 -5.08 0)
+					(length 5.08)
+					(name "GND_A"
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+					(number "A1"
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -17.78 7.62 0)
+					(length 5.08)
+					(name "VBUS_A"
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+					(number "A4"
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+				)
 				(pin bidirectional line
-					(at -20.32 5.08 0)
+					(at -17.78 5.08 0)
 					(length 5.08)
 					(name "CC1"
 						(effects
@@ -9803,7 +9853,7 @@
 					)
 				)
 				(pin bidirectional line
-					(at -20.32 2.54 0)
+					(at -17.78 2.54 0)
 					(length 5.08)
 					(name "DP1"
 						(effects
@@ -9821,7 +9871,7 @@
 					)
 				)
 				(pin bidirectional line
-					(at -20.32 0 0)
+					(at -17.78 0 0)
 					(length 5.08)
 					(name "DN1"
 						(effects
@@ -9839,7 +9889,7 @@
 					)
 				)
 				(pin bidirectional line
-					(at -20.32 -2.54 0)
+					(at -17.78 -2.54 0)
 					(length 5.08)
 					(name "SBU1"
 						(effects
@@ -9857,17 +9907,17 @@
 					)
 				)
 				(pin power_in line
-					(at 20.32 -7.62 180)
+					(at -17.78 7.62 0)
 					(length 5.08)
 					(hide yes)
-					(name "GND"
+					(name "VBUS_A"
 						(effects
 							(font
 								(size 1.016 1.016)
 							)
 						)
 					)
-					(number "B1_A12"
+					(number "A9"
 						(effects
 							(font
 								(size 1.016 1.016)
@@ -9876,17 +9926,53 @@
 					)
 				)
 				(pin power_in line
-					(at 20.32 10.16 180)
+					(at -17.78 -5.08 0)
 					(length 5.08)
 					(hide yes)
-					(name "VBUS"
+					(name "GND_A"
 						(effects
 							(font
 								(size 1.016 1.016)
 							)
 						)
 					)
-					(number "B4_A9"
+					(number "A12"
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 17.78 -5.08 180)
+					(length 5.08)
+					(name "GND_B"
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+					(number "B1"
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 17.78 7.62 180)
+					(length 5.08)
+					(name "VBUS_B"
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+					(number "B4"
 						(effects
 							(font
 								(size 1.016 1.016)
@@ -9895,7 +9981,7 @@
 					)
 				)
 				(pin bidirectional line
-					(at 20.32 5.08 180)
+					(at 17.78 -2.54 180)
 					(length 5.08)
 					(name "CC2"
 						(effects
@@ -9913,7 +9999,7 @@
 					)
 				)
 				(pin bidirectional line
-					(at 20.32 2.54 180)
+					(at 17.78 0 180)
 					(length 5.08)
 					(name "DP2"
 						(effects
@@ -9931,7 +10017,7 @@
 					)
 				)
 				(pin bidirectional line
-					(at 20.32 0 180)
+					(at 17.78 2.54 180)
 					(length 5.08)
 					(name "DN2"
 						(effects
@@ -9949,7 +10035,7 @@
 					)
 				)
 				(pin bidirectional line
-					(at 20.32 -2.54 180)
+					(at 17.78 5.08 180)
 					(length 5.08)
 					(name "SBU2"
 						(effects
@@ -9967,17 +10053,17 @@
 					)
 				)
 				(pin power_in line
-					(at 20.32 -10.16 180)
+					(at 17.78 7.62 180)
 					(length 5.08)
 					(hide yes)
-					(name "GND"
+					(name "VBUS_B"
 						(effects
 							(font
 								(size 1.016 1.016)
 							)
 						)
 					)
-					(number "SH2"
+					(number "B9"
 						(effects
 							(font
 								(size 1.016 1.016)
@@ -9986,17 +10072,17 @@
 					)
 				)
 				(pin power_in line
-					(at 20.32 -10.16 180)
+					(at 17.78 -5.08 180)
 					(length 5.08)
 					(hide yes)
-					(name "GND"
+					(name "GND_B"
 						(effects
 							(font
 								(size 1.016 1.016)
 							)
 						)
 					)
-					(number "SH3"
+					(number "B12"
 						(effects
 							(font
 								(size 1.016 1.016)
@@ -10004,38 +10090,36 @@
 						)
 					)
 				)
-				(pin power_in line
-					(at 20.32 -10.16 180)
+				(pin passive line
+					(at -17.78 -10.16 0)
+					(length 5.08)
+					(name "SHIELD"
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+					(number "S1"
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -17.78 -10.16 0)
 					(length 5.08)
 					(hide yes)
-					(name "GND"
+					(name "SHIELD"
 						(effects
 							(font
 								(size 1.016 1.016)
 							)
 						)
 					)
-					(number "SH4"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-			)
-			(symbol "USB4105-GF-A_fly_1_0"
-				(pin power_in line
-					(at 20.32 -7.62 180)
-					(length 5.08)
-					(name "GND"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "A1_B12"
+					(number "S2"
 						(effects
 							(font
 								(size 1.016 1.016)
@@ -10043,17 +10127,18 @@
 						)
 					)
 				)
-				(pin power_in line
-					(at 20.32 10.16 180)
+				(pin passive line
+					(at -17.78 -10.16 0)
 					(length 5.08)
-					(name "VBUS"
+					(hide yes)
+					(name "SHIELD"
 						(effects
 							(font
 								(size 1.016 1.016)
 							)
 						)
 					)
-					(number "A4_B9"
+					(number "S3"
 						(effects
 							(font
 								(size 1.016 1.016)
@@ -10061,17 +10146,18 @@
 						)
 					)
 				)
-				(pin power_in line
-					(at 20.32 -10.16 180)
+				(pin passive line
+					(at -17.78 -10.16 0)
 					(length 5.08)
-					(name "GND"
+					(hide yes)
+					(name "SHIELD"
 						(effects
 							(font
 								(size 1.016 1.016)
 							)
 						)
 					)
-					(number "SH1"
+					(number "S4"
 						(effects
 							(font
 								(size 1.016 1.016)
@@ -11952,6 +12038,12 @@
 		(uuid "228d0103-a0f8-4c00-b14a-c0e343882b0c")
 	)
 	(junction
+		(at 314.96 222.25)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "245d1b3b-a58a-4fe9-90d1-473fbf72f2a4")
+	)
+	(junction
 		(at 410.21 208.28)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -12034,12 +12126,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "3a63748c-6a85-4ae2-b878-b21f5e1b3c1b")
-	)
-	(junction
-		(at 363.22 210.82)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "3ac81aa4-ccc2-4fb8-8290-68e34d97108b")
 	)
 	(junction
 		(at 123.19 92.71)
@@ -12220,6 +12306,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "5d7ce809-3959-4d54-b7e3-3508d2b5c05b")
+	)
+	(junction
+		(at 181.61 238.76)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "5f36d3d6-d70c-4ce9-b79a-5bf4554f0a6b")
 	)
 	(junction
 		(at 69.85 311.15)
@@ -12546,6 +12638,12 @@
 		(uuid "b272ff7a-4e4f-4b5f-900e-eed277c6793b")
 	)
 	(junction
+		(at 309.88 222.25)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "b2b4bc7e-deaa-4152-9b16-73e98383a9a2")
+	)
+	(junction
 		(at 123.19 77.47)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -12756,12 +12854,6 @@
 		(uuid "e6c02254-e934-4600-8455-cc6dcd207909")
 	)
 	(junction
-		(at 181.61 238.76)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "eab18db2-e157-496c-8d41-9d142f87307e")
-	)
-	(junction
 		(at 82.55 181.61)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -12810,16 +12902,16 @@
 		(uuid "ff6eb75a-81a2-4768-8e19-bceeba559bea")
 	)
 	(no_connect
+		(at 351.79 195.58)
+		(uuid "0308b600-ed11-4b44-b52e-f2b93bbcb3ed")
+	)
+	(no_connect
 		(at 196.85 281.94)
 		(uuid "1956ac8d-69c4-498c-995a-bb9eab7c522c")
 	)
 	(no_connect
 		(at 417.83 26.67)
 		(uuid "2867858a-93a9-4598-a352-cd40d1d66574")
-	)
-	(no_connect
-		(at 356.87 203.2)
-		(uuid "3365c11d-e88d-43fe-b27e-aa18aef3a178")
 	)
 	(no_connect
 		(at 199.39 173.99)
@@ -12890,12 +12982,12 @@
 		(uuid "cf566c5e-7c6c-4ae5-a163-cb4b298aa17d")
 	)
 	(no_connect
-		(at 199.39 184.15)
-		(uuid "dd2eac83-0c3c-4f93-83df-53b6d1b77a86")
+		(at 229.87 212.09)
+		(uuid "d77d4739-c07b-47ae-b4c7-b46159f607f4")
 	)
 	(no_connect
-		(at 229.87 204.47)
-		(uuid "dea6deb5-c638-4918-a651-4d370b0f392f")
+		(at 199.39 184.15)
+		(uuid "dd2eac83-0c3c-4f93-83df-53b6d1b77a86")
 	)
 	(no_connect
 		(at 417.83 73.66)
@@ -12964,16 +13056,6 @@
 			(type default)
 		)
 		(uuid "0447da45-c1ec-4b79-97b4-b26e9720b568")
-	)
-	(wire
-		(pts
-			(xy 374.65 195.58) (xy 356.87 195.58)
-		)
-		(stroke
-			(width 0.381)
-			(type default)
-		)
-		(uuid "04587a01-0657-420e-ab5a-b9e44528574d")
 	)
 	(wire
 		(pts
@@ -13057,7 +13139,7 @@
 	)
 	(wire
 		(pts
-			(xy 377.19 179.07) (xy 377.19 198.12)
+			(xy 377.19 179.07) (xy 377.19 200.66)
 		)
 		(stroke
 			(width 0.381)
@@ -13347,7 +13429,7 @@
 	)
 	(wire
 		(pts
-			(xy 308.61 179.07) (xy 377.19 179.07)
+			(xy 306.07 179.07) (xy 377.19 179.07)
 		)
 		(stroke
 			(width 0.381)
@@ -13607,6 +13689,16 @@
 	)
 	(wire
 		(pts
+			(xy 238.76 204.47) (xy 229.87 204.47)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1a783393-baf3-404f-9125-5eb08c8bcd6d")
+	)
+	(wire
+		(pts
 			(xy 448.31 196.85) (xy 452.12 196.85)
 		)
 		(stroke
@@ -13764,16 +13856,6 @@
 			(type default)
 		)
 		(uuid "20075715-5ae7-45a0-b3a6-b1a77096fa13")
-	)
-	(wire
-		(pts
-			(xy 378.46 200.66) (xy 356.87 200.66)
-		)
-		(stroke
-			(width 0.381)
-			(type default)
-		)
-		(uuid "20e1e7d2-f95d-4ae1-8cdc-27670c9b3cf4")
 	)
 	(wire
 		(pts
@@ -14027,6 +14109,16 @@
 	)
 	(wire
 		(pts
+			(xy 378.46 175.26) (xy 378.46 198.12)
+		)
+		(stroke
+			(width 0.381)
+			(type default)
+		)
+		(uuid "293cbbe4-b9ca-42e2-8305-b7d4855c58eb")
+	)
+	(wire
+		(pts
 			(xy 170.18 191.77) (xy 170.18 199.39)
 		)
 		(stroke
@@ -14227,23 +14319,13 @@
 	)
 	(wire
 		(pts
-			(xy 308.61 198.12) (xy 316.23 198.12)
+			(xy 306.07 198.12) (xy 316.23 198.12)
 		)
 		(stroke
 			(width 0.381)
 			(type default)
 		)
 		(uuid "30d1e06f-c977-42b1-8bee-8f685e28b493")
-	)
-	(wire
-		(pts
-			(xy 363.22 210.82) (xy 363.22 208.28)
-		)
-		(stroke
-			(width 0.381)
-			(type default)
-		)
-		(uuid "30e50548-2298-490e-9391-d95f78f450e0")
 	)
 	(wire
 		(pts
@@ -14617,6 +14699,16 @@
 	)
 	(wire
 		(pts
+			(xy 374.65 203.2) (xy 351.79 203.2)
+		)
+		(stroke
+			(width 0.381)
+			(type default)
+		)
+		(uuid "3f65cf5c-4877-4b35-a864-276a018c4dfc")
+	)
+	(wire
+		(pts
 			(xy 279.4 222.25) (xy 284.48 222.25)
 		)
 		(stroke
@@ -14837,7 +14929,7 @@
 	)
 	(wire
 		(pts
-			(xy 298.45 222.25) (xy 363.22 222.25)
+			(xy 298.45 222.25) (xy 309.88 222.25)
 		)
 		(stroke
 			(width 0.381)
@@ -15057,6 +15149,16 @@
 	)
 	(wire
 		(pts
+			(xy 316.23 210.82) (xy 314.96 210.82)
+		)
+		(stroke
+			(width 0.381)
+			(type default)
+		)
+		(uuid "5309112b-df60-4060-9a03-3c968766266c")
+	)
+	(wire
+		(pts
 			(xy 57.15 212.09) (xy 57.15 218.44)
 		)
 		(stroke
@@ -15107,6 +15209,16 @@
 	)
 	(wire
 		(pts
+			(xy 374.65 181.61) (xy 374.65 203.2)
+		)
+		(stroke
+			(width 0.381)
+			(type default)
+		)
+		(uuid "54b3a8f0-a95a-4503-91cb-4acff295491f")
+	)
+	(wire
+		(pts
 			(xy 66.04 181.61) (xy 66.04 185.42)
 		)
 		(stroke
@@ -15124,16 +15236,6 @@
 			(type default)
 		)
 		(uuid "5563be76-8025-4bce-a580-4f917200fef0")
-	)
-	(wire
-		(pts
-			(xy 363.22 222.25) (xy 363.22 210.82)
-		)
-		(stroke
-			(width 0.381)
-			(type default)
-		)
-		(uuid "56912cc7-3bd3-4e02-b4a0-1fb5afabf72e")
 	)
 	(wire
 		(pts
@@ -15717,16 +15819,6 @@
 	)
 	(wire
 		(pts
-			(xy 363.22 208.28) (xy 356.87 208.28)
-		)
-		(stroke
-			(width 0.381)
-			(type default)
-		)
-		(uuid "6c5bca36-a853-4d04-a8db-bfcb08327562")
-	)
-	(wire
-		(pts
 			(xy 468.63 44.45) (xy 468.63 38.1)
 		)
 		(stroke
@@ -15844,6 +15936,16 @@
 			(type default)
 		)
 		(uuid "70b795bb-5138-4aa6-b6bb-14b5f4a133a1")
+	)
+	(wire
+		(pts
+			(xy 309.88 205.74) (xy 309.88 222.25)
+		)
+		(stroke
+			(width 0.381)
+			(type default)
+		)
+		(uuid "70d7266d-ae0a-4f61-9051-5fc9530b90eb")
 	)
 	(wire
 		(pts
@@ -16077,6 +16179,16 @@
 	)
 	(wire
 		(pts
+			(xy 316.23 205.74) (xy 309.88 205.74)
+		)
+		(stroke
+			(width 0.381)
+			(type default)
+		)
+		(uuid "7b668516-99b5-4e4b-97b6-ee9fe0ac3fbd")
+	)
+	(wire
+		(pts
 			(xy 232.41 274.32) (xy 232.41 281.94)
 		)
 		(stroke
@@ -16084,6 +16196,16 @@
 			(type default)
 		)
 		(uuid "7c992df7-706e-445c-8baa-4cc25cc090fd")
+	)
+	(wire
+		(pts
+			(xy 351.79 205.74) (xy 351.79 222.25)
+		)
+		(stroke
+			(width 0.381)
+			(type default)
+		)
+		(uuid "7cf6f7f2-78be-43e3-9d0b-3f206a188490")
 	)
 	(wire
 		(pts
@@ -16607,6 +16729,16 @@
 	)
 	(wire
 		(pts
+			(xy 377.19 200.66) (xy 351.79 200.66)
+		)
+		(stroke
+			(width 0.381)
+			(type default)
+		)
+		(uuid "91a9858a-aee1-4171-9ea0-97f4df5e8b32")
+	)
+	(wire
+		(pts
 			(xy 452.12 218.44) (xy 452.12 219.71)
 		)
 		(stroke
@@ -16797,13 +16929,13 @@
 	)
 	(wire
 		(pts
-			(xy 377.19 198.12) (xy 356.87 198.12)
+			(xy 309.88 222.25) (xy 314.96 222.25)
 		)
 		(stroke
 			(width 0.381)
 			(type default)
 		)
-		(uuid "9ddb80db-687a-4677-b157-77bffbc0099e")
+		(uuid "9df92574-670f-4c24-94f9-e475d81adeea")
 	)
 	(wire
 		(pts
@@ -17127,7 +17259,7 @@
 	)
 	(wire
 		(pts
-			(xy 311.15 200.66) (xy 311.15 175.26)
+			(xy 308.61 200.66) (xy 308.61 175.26)
 		)
 		(stroke
 			(width 0.381)
@@ -17367,16 +17499,6 @@
 	)
 	(wire
 		(pts
-			(xy 378.46 175.26) (xy 378.46 200.66)
-		)
-		(stroke
-			(width 0.381)
-			(type default)
-		)
-		(uuid "b384380e-db7d-470d-a580-3992dd51b81a")
-	)
-	(wire
-		(pts
 			(xy 247.65 274.32) (xy 247.65 281.94)
 		)
 		(stroke
@@ -17417,16 +17539,6 @@
 	)
 	(wire
 		(pts
-			(xy 363.22 210.82) (xy 356.87 210.82)
-		)
-		(stroke
-			(width 0.381)
-			(type default)
-		)
-		(uuid "b517b606-1757-4c09-b71a-5268712b0900")
-	)
-	(wire
-		(pts
 			(xy 448.31 73.66) (xy 452.12 73.66)
 		)
 		(stroke
@@ -17437,7 +17549,7 @@
 	)
 	(wire
 		(pts
-			(xy 311.15 200.66) (xy 316.23 200.66)
+			(xy 308.61 200.66) (xy 316.23 200.66)
 		)
 		(stroke
 			(width 0.381)
@@ -17917,7 +18029,7 @@
 	)
 	(wire
 		(pts
-			(xy 311.15 175.26) (xy 378.46 175.26)
+			(xy 308.61 175.26) (xy 378.46 175.26)
 		)
 		(stroke
 			(width 0.381)
@@ -17964,6 +18076,16 @@
 			(type default)
 		)
 		(uuid "cd2e7d2d-0690-45c0-8173-0e5523c1329a")
+	)
+	(wire
+		(pts
+			(xy 314.96 210.82) (xy 314.96 222.25)
+		)
+		(stroke
+			(width 0.381)
+			(type default)
+		)
+		(uuid "ce902500-6fca-4dea-b2a9-0f414baa98f9")
 	)
 	(wire
 		(pts
@@ -18187,7 +18309,7 @@
 	)
 	(wire
 		(pts
-			(xy 308.61 198.12) (xy 308.61 179.07)
+			(xy 306.07 198.12) (xy 306.07 179.07)
 		)
 		(stroke
 			(width 0.381)
@@ -18327,16 +18449,6 @@
 	)
 	(wire
 		(pts
-			(xy 360.68 190.5) (xy 356.87 190.5)
-		)
-		(stroke
-			(width 0.381)
-			(type default)
-		)
-		(uuid "e0e59bf8-a3f7-466e-acbc-13c8508ab6a5")
-	)
-	(wire
-		(pts
 			(xy 199.39 276.86) (xy 199.39 281.94)
 		)
 		(stroke
@@ -18364,6 +18476,16 @@
 			(type default)
 		)
 		(uuid "e23a4946-2264-46f3-bd8f-622f56b1a3f8")
+	)
+	(wire
+		(pts
+			(xy 378.46 198.12) (xy 351.79 198.12)
+		)
+		(stroke
+			(width 0.381)
+			(type default)
+		)
+		(uuid "e2961b6f-eba3-48f4-bbf7-0be26fe1f230")
 	)
 	(wire
 		(pts
@@ -18514,6 +18636,16 @@
 			(type default)
 		)
 		(uuid "e8962f8e-bf83-4377-ac0f-c952c27e9cfb")
+	)
+	(wire
+		(pts
+			(xy 314.96 222.25) (xy 351.79 222.25)
+		)
+		(stroke
+			(width 0.381)
+			(type default)
+		)
+		(uuid "e8e56df9-a86e-4335-9ade-3d5d0ad2afa0")
 	)
 	(wire
 		(pts
@@ -18714,16 +18846,6 @@
 			(type default)
 		)
 		(uuid "f0b078bb-4060-4dfb-b6d1-81291f3c8ad6")
-	)
-	(wire
-		(pts
-			(xy 374.65 181.61) (xy 374.65 195.58)
-		)
-		(stroke
-			(width 0.381)
-			(type default)
-		)
-		(uuid "f12bcbff-6a6c-46e7-a739-00a463616493")
 	)
 	(wire
 		(pts
@@ -19115,7 +19237,7 @@
 		(uuid "0667db8e-6b39-404d-9d7e-da99e9584174")
 	)
 	(label "USB-C_D+"
-		(at 308.61 179.07 180)
+		(at 306.07 179.07 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -19245,7 +19367,7 @@
 		(uuid "3731a630-f46a-4074-98cd-7a7f211ff765")
 	)
 	(label "USB-C_D-"
-		(at 311.15 175.26 180)
+		(at 308.61 175.26 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -19396,7 +19518,7 @@
 		)
 		(uuid "643d164c-1938-4cff-9a68-bdbeca6abfaa")
 	)
-	(label "MAX3_CS"
+	(label "MAX1_CS"
 		(at 238.76 184.15 0)
 		(effects
 			(font
@@ -19407,6 +19529,18 @@
 			(justify left bottom)
 		)
 		(uuid "675f468d-2bf0-4a4b-a00c-0f14dc3712e8")
+	)
+	(label "MAX3_CS"
+		(at 238.76 204.47 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+		(uuid "6c16c9b1-2901-4ab4-9e88-faf9b51d1f50")
 	)
 	(label "IGNITER_IO"
 		(at 24.13 137.16 180)
@@ -19421,18 +19555,6 @@
 		(uuid "75c104d2-937d-4eb2-a541-66af5112d7e7")
 	)
 	(label "MAX4_CS"
-		(at 229.87 212.09 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-				(thickness 0.254)
-				(bold yes)
-			)
-			(justify left bottom)
-		)
-		(uuid "75d778fd-2b46-4b8c-bf9d-cc47c2b56286")
-	)
-	(label "MAX2_CS"
 		(at 195.58 209.55 180)
 		(effects
 			(font
@@ -19467,12 +19589,12 @@
 		(uuid "7e27e9cf-4e9d-45b2-83a8-b545a4a547d5")
 	)
 	(label "VBUS"
-		(at 360.68 190.5 0)
+		(at 316.23 193.04 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "834726e1-dd9a-48a1-acc2-8ce621040f4e")
 	)
@@ -19621,7 +19743,7 @@
 		)
 		(uuid "acacf5a5-4b76-4b6b-baac-95cd66cedd73")
 	)
-	(label "MAX5_CS"
+	(label "MAX2_CS"
 		(at 229.87 214.63 0)
 		(effects
 			(font
@@ -19632,6 +19754,16 @@
 			(justify left bottom)
 		)
 		(uuid "b29525e5-a8af-4f15-b5a6-1d2b94be8b4e")
+	)
+	(label "VBUS"
+		(at 351.79 193.04 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "b2d74164-07c1-485a-af6d-80c9652679e2")
 	)
 	(label "LED-"
 		(at 254 90.17 180)
@@ -19703,7 +19835,7 @@
 		)
 		(uuid "c7b82957-a654-4d1e-8a99-bee3380d3a5c")
 	)
-	(label "MAX1_CS"
+	(label "MAX5_CS"
 		(at 199.39 189.23 180)
 		(effects
 			(font
@@ -28544,6 +28676,197 @@
 		)
 	)
 	(symbol
+		(lib_id "TB002-500-02BE:TB002-500-02BE")
+		(at 171.45 241.3 0)
+		(mirror y)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "7ec858ea-c245-4562-ac1f-15507d78b079")
+		(property "Reference" "J10"
+			(at 171.45 231.14 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TB002-500-02BE"
+			(at 171.45 233.68 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "SameSky_Screw_Terminal:CUI_TB002-500-02BE"
+			(at 171.45 241.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "Datasheet" ""
+			(at 171.45 241.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "2~24 Poles, Screw Type, Horizontal, 5.0 Pitch, 22~12 (AWG), Terminal Block Connector"
+			(at 171.45 241.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "MF" "Same Sky"
+			(at 171.45 241.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "Package" "None"
+			(at 171.45 241.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "Price" "None"
+			(at 171.45 241.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "Check_prices" "https://www.snapeda.com/parts/TB002-500-02BE/Same+Sky/view-part/?ref=eda"
+			(at 171.45 241.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "STANDARD" "Manufacturer Recommendations"
+			(at 171.45 241.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "SnapEDA_Link" "https://www.snapeda.com/parts/TB002-500-02BE/Same+Sky/view-part/?ref=snap"
+			(at 171.45 241.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "MP" "TB002-500-02BE"
+			(at 171.45 241.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "Availability" "In Stock"
+			(at 171.45 241.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "MANUFACTURER" "CUI"
+			(at 171.45 241.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(pin "1"
+			(uuid "a5179c95-c2e9-4470-a77c-829d1691db53")
+		)
+		(pin "2"
+			(uuid "b8794bd9-3c65-4ad6-bead-f89ee79580fb")
+		)
+		(instances
+			(project "PelletPirate_V5"
+				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
+					(reference "J10")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "H11AA1M_Opto_FanPulse:H11AA1M")
 		(at 55.88 302.26 0)
 		(unit 1)
@@ -28900,197 +29223,6 @@
 			(project "PelletPirate_V5"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C20")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "TB007-508-02BE:TB007-508-02BE")
-		(at 171.45 241.3 0)
-		(mirror y)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "84341360-61d6-46c5-9f54-c369a33c87e7")
-		(property "Reference" "J9"
-			(at 171.45 231.14 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "TB007-508-02BE"
-			(at 171.45 233.68 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "SameSky_Screw_Terminal:CUI_TB007-508-02BE"
-			(at 171.45 241.3 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-			)
-		)
-		(property "Datasheet" ""
-			(at 171.45 241.3 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "2~24 Poles, Screw Type, Horizontal, 5.08 Pitch, 24~12 (AWG), Terminal Block Connector"
-			(at 171.45 241.3 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-			)
-		)
-		(property "MF" "Same Sky"
-			(at 171.45 241.3 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-			)
-		)
-		(property "Package" "None"
-			(at 171.45 241.3 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-			)
-		)
-		(property "Price" "None"
-			(at 171.45 241.3 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-			)
-		)
-		(property "Check_prices" "https://www.snapeda.com/parts/TB007%20-508-02BE/Same+Sky/view-part/?ref=eda"
-			(at 171.45 241.3 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-			)
-		)
-		(property "STANDARD" "Manufacturer Recommendations"
-			(at 171.45 241.3 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-			)
-		)
-		(property "SnapEDA_Link" "https://www.snapeda.com/parts/TB007%20-508-02BE/Same+Sky/view-part/?ref=snap"
-			(at 171.45 241.3 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-			)
-		)
-		(property "MP" "TB007 -508-02BE"
-			(at 171.45 241.3 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-			)
-		)
-		(property "Availability" "In Stock"
-			(at 171.45 241.3 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-			)
-		)
-		(property "MANUFACTURER" "CUI"
-			(at 171.45 241.3 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-			)
-		)
-		(pin "2"
-			(uuid "ac6f72bd-6a0a-4a28-82a5-ccba468d348a")
-		)
-		(pin "1"
-			(uuid "311d318d-2bd7-4199-9ac0-bfccd1ff6cda")
-		)
-		(instances
-			(project "PelletPirate_V5"
-				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
-					(reference "J9")
 					(unit 1)
 				)
 			)
@@ -29759,175 +29891,6 @@
 			(project "PelletPirate_V5"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR024")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "USB4105-GF-A-flyman:USB4105-GF-A_fly")
-		(at 336.55 200.66 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "901a4af1-cc79-4155-8000-3a6e4d75efd8")
-		(property "Reference" "J8"
-			(at 336.55 183.896 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "USB4105-GF-A_fly"
-			(at 336.55 185.42 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "USB_try2:GCT_USB4105-GF-A_flyman"
-			(at 316.23 211.328 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-			)
-		)
-		(property "Datasheet" ""
-			(at 336.55 200.66 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "USB-C (USB TYPE-C) USB 2.0 Receptacle Connector 24 (16+8 Dummy) Position Surface Mount, Right Angle; Through Hole"
-			(at 342.9 181.356 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-			)
-		)
-		(property "MF" "GCT"
-			(at 305.308 190.754 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-			)
-		)
-		(property "MP" "USB4105-GF-A"
-			(at 336.55 214.63 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-			)
-		)
-		(property "LINK" "https://www.digikey.com/en/products/detail/gct/USB4105-GF-A/11198441"
-			(at 336.55 200.66 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "System" "ESP"
-			(at 336.55 200.66 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "A6"
-			(uuid "c720df92-3528-47de-8ad3-303ce5c2ade5")
-		)
-		(pin "B5"
-			(uuid "141c0152-04ad-448c-b8b9-b83875925070")
-		)
-		(pin "SH2"
-			(uuid "1fbfe771-7d1e-4e23-bd1f-88c2026ec8db")
-		)
-		(pin "B7"
-			(uuid "4ab8b1b6-79cb-4d9c-a2b8-77df5ba3935f")
-		)
-		(pin "SH3"
-			(uuid "8c86de26-8d63-4d7f-abe2-9bc8774d9272")
-		)
-		(pin "A7"
-			(uuid "564de4bd-bb93-4f0d-9f14-e599fb7e6a15")
-		)
-		(pin "SH4"
-			(uuid "811a5f18-d957-45d3-b059-dfe7e7515dfe")
-		)
-		(pin "A5"
-			(uuid "c6edfe46-1f72-41e0-8d6b-dcc14b3ee052")
-		)
-		(pin "B4_A9"
-			(uuid "7684833f-d8c4-4bb0-a406-bb8f053f24f0")
-		)
-		(pin "B6"
-			(uuid "1cb1af62-4bbd-47bc-b59f-3d6c5f2d60fe")
-		)
-		(pin "A1_B12"
-			(uuid "1ff0b5ed-f626-4f3c-856c-d27e2aeb23a1")
-		)
-		(pin "A4_B9"
-			(uuid "72fd7c56-2c76-473c-8989-7214f2af71a8")
-		)
-		(pin "A8"
-			(uuid "c76d08fc-9ec5-4141-9913-e20accf9d2e8")
-		)
-		(pin "B1_A12"
-			(uuid "8d4df036-b64c-40ee-95f9-032bd66d1ac5")
-		)
-		(pin "SH1"
-			(uuid "b59575bc-e08c-48fe-9c92-e92411412ee6")
-		)
-		(pin "B8"
-			(uuid "6ffb85d7-5836-407d-95ee-877968ba5c94")
-		)
-		(instances
-			(project "PelletPirate_V5"
-				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
-					(reference "J8")
 					(unit 1)
 				)
 			)
@@ -32862,6 +32825,286 @@
 			(project "PelletPirate_V5"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "#PWR034")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "USB4145-03-0070-C_REVA2:USB4145-03-0070-C_REVA2")
+		(at 334.01 200.66 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "b036f978-830a-4050-8a97-51008c5a2254")
+		(property "Reference" "J9"
+			(at 334.01 185.42 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "USB4145-03-0070-C_REVA2"
+			(at 334.01 187.96 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "USB_try2:GCT_USB4145-03-0070-C_REVA2"
+			(at 334.01 200.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "Datasheet" ""
+			(at 334.01 200.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Type C USB 2.0 Connector"
+			(at 334.01 200.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "MF" "Global Connector Technology"
+			(at 334.01 200.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "MAXIMUM_PACKAGE_HEIGHT" "7.66mm"
+			(at 334.01 200.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "Package" "None"
+			(at 334.01 200.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "Price" "None"
+			(at 334.01 200.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "Check_prices" "https://www.snapeda.com/parts/USB4145-03-0070-C/Global+Connector+Technology/view-part/?ref=eda"
+			(at 334.01 200.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "STANDARD" "Manufacturer Recommendations"
+			(at 334.01 200.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "PARTREV" "A2"
+			(at 334.01 200.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "SnapEDA_Link" "https://www.snapeda.com/parts/USB4145-03-0070-C/Global+Connector+Technology/view-part/?ref=snap"
+			(at 334.01 200.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "MP" "USB4145-03-0070-C"
+			(at 334.01 200.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "MANUFACTURER" "GCT"
+			(at 334.01 200.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "Availability" "In Stock"
+			(at 334.01 200.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "SNAPEDA_PN" "USB4145-03-0070-C"
+			(at 334.01 200.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(pin "A8"
+			(uuid "853a48f2-eac8-4fcb-8c2b-bd1970b87c00")
+		)
+		(pin "B6"
+			(uuid "b827bf3b-e121-4af2-937b-d68e183b4c3e")
+		)
+		(pin "B5"
+			(uuid "6cfdbee9-b4ec-4f1c-a0a8-f41e46be4533")
+		)
+		(pin "A12"
+			(uuid "2f6905f1-1cfb-4df6-a29d-4b248dcfddff")
+		)
+		(pin "A6"
+			(uuid "8f2b207f-c3af-4456-850a-1d28d6663a04")
+		)
+		(pin "A5"
+			(uuid "f4ac35cd-5a05-41fd-8e1c-0beed7453396")
+		)
+		(pin "A7"
+			(uuid "64ac75af-63ea-4b63-b400-54beb5caccf9")
+		)
+		(pin "B8"
+			(uuid "d4f8b763-cb7b-4604-bdb4-dbe2b85c0e6f")
+		)
+		(pin "S2"
+			(uuid "1f3e5bb1-5233-48a2-9a56-c3abf78692f9")
+		)
+		(pin "S3"
+			(uuid "64145d58-235c-4ee8-bf56-5290a8349b2a")
+		)
+		(pin "A1"
+			(uuid "2ba1e4da-2428-46af-a75f-26655bd96982")
+		)
+		(pin "A9"
+			(uuid "aa50682e-53a0-447d-9d2a-f8ed3d539321")
+		)
+		(pin "B7"
+			(uuid "76420de9-fd4a-4e00-86e2-c277997d0a40")
+		)
+		(pin "B9"
+			(uuid "bb7e8bd8-5382-4a88-ae41-e50586f14ad5")
+		)
+		(pin "A4"
+			(uuid "73d79325-242c-49a0-a3ae-179cea1823a9")
+		)
+		(pin "B1"
+			(uuid "839b4b31-f747-48dc-a7b3-6b4bc6aae4bc")
+		)
+		(pin "B4"
+			(uuid "283edda8-ff49-4526-bc1f-cfc9fbe82d2f")
+		)
+		(pin "B12"
+			(uuid "8c0fea02-2d7e-4140-ad55-a36fbb510acd")
+		)
+		(pin "S1"
+			(uuid "0165c775-5739-4d90-93ac-6370b37028dc")
+		)
+		(pin "S4"
+			(uuid "3c9466c7-60f7-43d2-970d-e72e9319ce4e")
+		)
+		(instances
+			(project "PelletPirate_V5"
+				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
+					(reference "J9")
 					(unit 1)
 				)
 			)
