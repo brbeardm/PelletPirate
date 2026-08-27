@@ -34267,7 +34267,7 @@
 				)
 			)
 		)
-		(property "Footprint" "USB_try2:GCT_USB4145-03-0070-C_REVA2"
+		(property "Footprint" "USB_try2:GCT_USB4145-03-0170-C"
 			(at 334.01 200.66 0)
 			(hide yes)
 			(show_name no)

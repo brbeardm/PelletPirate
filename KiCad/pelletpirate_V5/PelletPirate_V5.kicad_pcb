@@ -1727,7 +1727,7 @@
 		)
 		(property "Value" "AUGER(L)"
 			(at 0 -3 0)
-			(layer "F.Fab")
+			(layer "F.SilkS")
 			(uuid "6419994e-37cf-452a-a3bb-dbc3ecd46f16")
 			(effects
 				(font
@@ -2172,7 +2172,7 @@
 		(descr "Resistor SMD 2512 (6332 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "resistor")
 		(property "Reference" "R2"
-			(at -0.8 2.5 0)
+			(at -0.0375 2.5 0)
 			(layer "F.SilkS")
 			(uuid "955d99f1-4c64-4793-b089-ea5309fdec65")
 			(effects
@@ -2331,7 +2331,7 @@
 		(descr "CP, Radial series, Radial, pin pitch=5.00mm, diameter=10mm, height=16mm, Electrolytic Capacitor")
 		(tags "CP Radial series Radial pin pitch 5.00mm diameter 10mm height 16mm Electrolytic Capacitor")
 		(property "Reference" "C13"
-			(at 6.967677 5.4 90)
+			(at -1.457323 4.925 0)
 			(layer "F.SilkS")
 			(uuid "d415a334-11a0-42cc-83fe-a1eaf7f5b894")
 			(effects
@@ -4461,7 +4461,7 @@
 		(uuid "32e83a62-be56-4ee1-a96f-4d90605e32e3")
 		(at 126.95 72.875 90)
 		(property "Reference" "J9"
-			(at -1.6 4.25 90)
+			(at -3.25 -3.55 90)
 			(layer "F.SilkS")
 			(uuid "b1042e9d-373b-4aa8-bb7f-465349bf62e9")
 			(effects
@@ -5079,7 +5079,7 @@
 		(descr "C, Rect series, Radial, pin pitch=10.00mm, length*width=13*6mm^2, Capacitor, http://www.wima.com/EN/WIMA_FKS_3.pdf, http://www.wima.com/EN/WIMA_MKS_4.pdf")
 		(tags "C Rect series Radial pin pitch 10.00mm length 13mm width 6mm Capacitor")
 		(property "Reference" "C4"
-			(at -2.6 -2.5 180)
+			(at -2.6 2.525 180)
 			(layer "F.SilkS")
 			(uuid "a9f6da02-8e78-43dc-8bbf-a57fa617c204")
 			(effects
@@ -5422,7 +5422,7 @@
 		(descr "Resistor SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "resistor")
 		(property "Reference" "R5"
-			(at 7.2 -0.4 0)
+			(at 1.8625 -1.875 0)
 			(layer "F.SilkS")
 			(uuid "452cd103-9a0e-4410-9431-6eed26be3f3b")
 			(effects
@@ -6437,7 +6437,7 @@
 			)
 		)
 		(property "Value" "EARTH"
-			(at -3.95 0.35 0)
+			(at -3.125 -0.05 90)
 			(layer "F.SilkS")
 			(uuid "561628e0-c36d-4568-bce4-fceb38f73a97")
 			(effects
@@ -7181,7 +7181,7 @@
 		(descr "C, Disc series, Radial, pin pitch=7.50mm, diameter*width=7.5*5.0mm^2, Capacitor, http://www.vishay.com/docs/28535/vy2series.pdf")
 		(tags "C Disc series Radial pin pitch 7.50mm diameter 7.5mm width 5.0mm Capacitor")
 		(property "Reference" "C5"
-			(at 1.9 3.35 90)
+			(at -0.775 1.975 0)
 			(layer "F.SilkS")
 			(uuid "a8d33b66-1838-4d51-9075-90ffe93c6586")
 			(effects
@@ -7395,7 +7395,7 @@
 		(descr "C, Disc series, Radial, pin pitch=7.50mm, diameter*width=7.5*5.0mm^2, Capacitor, http://www.vishay.com/docs/28535/vy2series.pdf")
 		(tags "C Disc series Radial pin pitch 7.50mm diameter 7.5mm width 5.0mm Capacitor")
 		(property "Reference" "C6"
-			(at 7.7 -3.5 90)
+			(at -0.75 1.875 0)
 			(layer "F.SilkS")
 			(uuid "40f46058-3843-414a-8a78-6b6523714d87")
 			(effects
@@ -8648,7 +8648,7 @@
 		(uuid "8c595f5e-2a86-4099-b3ad-18c2d04c1043")
 		(at 125.3 121.525 90)
 		(property "Reference" "F1"
-			(at -13.775 -4.05 0)
+			(at 12.275 -3 0)
 			(layer "F.SilkS")
 			(uuid "352555fd-a292-4d51-b6c4-5ab951c39223")
 			(effects
@@ -8990,7 +8990,7 @@
 		(descr "Fiducial, circular marking, 1mm bare copper, 2mm soldermask opening (Level A)")
 		(tags "fiducial")
 		(property "Reference" "FID5"
-			(at 0 -1.95 0)
+			(at 0.225 -1.825 0)
 			(layer "F.SilkS")
 			(uuid "ae80ad80-ac33-4b05-bc51-64233e1e89e4")
 			(effects
@@ -10160,7 +10160,7 @@
 		(descr "CP, Radial series, Radial, pin pitch=3.50mm, diameter=8mm, height=12mm, Electrolytic Capacitor")
 		(tags "CP Radial series Radial pin pitch 3.50mm diameter 8mm height 12mm Electrolytic Capacitor")
 		(property "Reference" "C15"
-			(at 6.4 3 0)
+			(at 6.075 3.5 0)
 			(layer "F.SilkS")
 			(uuid "6c292395-57e9-444b-8349-97423e69d2a6")
 			(effects
@@ -12925,7 +12925,7 @@
 		(descr "Resistor SMD 2512 (6332 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "resistor")
 		(property "Reference" "R1"
-			(at -0.5375 2.5 0)
+			(at -0.8125 2.5 0)
 			(layer "F.SilkS")
 			(uuid "61281b04-0e9c-46bd-9442-5af22c906edb")
 			(effects
@@ -13084,7 +13084,7 @@
 		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "resistor")
 		(property "Reference" "R37"
-			(at 2.675 -0.1 270)
+			(at -0.2 1.245 270)
 			(layer "F.SilkS")
 			(uuid "58c7b814-920e-42e3-935b-a828a88f7075")
 			(effects
@@ -15152,12 +15152,12 @@
 			)
 		)
 	)
-	(footprint "USB_try2:GCT_USB4145-03-0070-C_REVA2"
+	(footprint "USB_try2:GCT_USB4145-03-0170-C"
 		(layer "F.Cu")
 		(uuid "d72ebf44-11d4-4c97-babb-25a3633642a1")
 		(at 133.785 75.5 90)
 		(property "Reference" "J8"
-			(at -4.45 3.115 90)
+			(at -4.75 -2.885 90)
 			(layer "F.SilkS")
 			(uuid "6bea33ad-19fd-4b14-887d-d7d4581a33b0")
 			(effects
@@ -15206,7 +15206,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "6a264450-7c34-4b59-8172-766e5f96b4e7")
+			(uuid "17608ac3-218a-479b-b037-78871bcc472c")
 			(effects
 				(font
 					(size 1 1)
@@ -15219,7 +15219,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "1e049285-3123-4b3a-a044-9dad1511fdff")
+			(uuid "43ae79f4-ec64-47ff-be80-7bf47516db28")
 			(effects
 				(font
 					(size 1 1)
@@ -15232,7 +15232,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "57173b22-9169-4ab8-99a4-86150961ce11")
+			(uuid "c2a2a64a-aecb-4c0c-b3c7-92d801e669bf")
 			(effects
 				(font
 					(size 1 1)
@@ -15245,7 +15245,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "dc958ac2-4ca0-499f-afb3-4d9da78642bb")
+			(uuid "6bcdca1e-6708-4c5b-8777-dc436857c44d")
 			(effects
 				(font
 					(size 1 1)
@@ -15258,7 +15258,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "c5f92f0c-c901-473f-869a-6b062d040744")
+			(uuid "e6517c1d-791f-47b6-93fb-a27ed0a5df8a")
 			(effects
 				(font
 					(size 1 1)
@@ -15271,7 +15271,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "8064fe76-185f-4505-9078-25a7a443c475")
+			(uuid "ba1eb5fe-d26c-42f5-93e6-30bfc896210a")
 			(effects
 				(font
 					(size 1 1)
@@ -15284,7 +15284,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "57c9ff05-b8ff-4b52-b1f7-a4855ed38360")
+			(uuid "d3a76f5d-914a-4d0b-9213-ea2c5614f537")
 			(effects
 				(font
 					(size 1 1)
@@ -15297,7 +15297,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "78ca54f3-198a-4242-936c-8b4af5d2e63a")
+			(uuid "6f6fc802-eb4d-464d-a2b6-2f6bbe7d9631")
 			(effects
 				(font
 					(size 1 1)
@@ -15310,7 +15310,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "0eb91261-64b9-4357-9616-6527eb030000")
+			(uuid "436b3567-4312-47a7-a1ee-cc85e7fb6869")
 			(effects
 				(font
 					(size 1 1)
@@ -15323,7 +15323,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "42faa7ce-4e48-4055-bd7f-f342ffafc3b3")
+			(uuid "f8e2147a-da1b-4d6c-a367-5c1f4ebd78b9")
 			(effects
 				(font
 					(size 1 1)
@@ -15336,7 +15336,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "9b87e043-deba-4244-88ad-636b2684c965")
+			(uuid "4d8b4678-6162-45cc-9d73-3bd1dee68f70")
 			(effects
 				(font
 					(size 1 1)
@@ -15349,7 +15349,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "6e7469a2-cbe3-4e51-a512-a94e6d5aec45")
+			(uuid "048fa475-1374-4155-8a01-398d9173467c")
 			(effects
 				(font
 					(size 1 1)
@@ -15362,7 +15362,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "eae61434-31ef-482a-bcbf-cc4d6de89fe8")
+			(uuid "a284a088-452e-445e-8397-696b794208af")
 			(effects
 				(font
 					(size 1 1)
@@ -15373,14 +15373,6 @@
 		(path "/b036f978-830a-4050-8a97-51008c5a2254")
 		(sheetname "/")
 		(sheetfile "PelletPirate_V5.kicad_sch")
-		(units
-			(unit
-				(name "A")
-				(pins "A4" "A9" "A5" "A6" "A7" "A8" "A1" "A12" "S1" "S2" "S3" "S4" "B4"
-					"B9" "B8" "B7" "B6" "B5" "B1" "B12"
-				)
-			)
-		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
@@ -15812,29 +15804,6 @@
 			(uuid "a8cc7b23-bdb8-4525-8fcb-dcf1b3b920ab")
 		)
 		(embedded_fonts no)
-		(model "${KIPRJMOD}/USB_try2/usb4145-03-0070-c.stp"
-			(hide yes)
-			(offset
-				(xyz 0 -1.3 -0.11)
-			)
-			(scale
-				(xyz 1 1 1)
-			)
-			(rotate
-				(xyz -90 -0 -0)
-			)
-		)
-		(model "${KIPRJMOD}/USB_try2/usb4145-03-0170-c.stp"
-			(offset
-				(xyz 0 -1.35 -0.12)
-			)
-			(scale
-				(xyz 1 1 1)
-			)
-			(rotate
-				(xyz -90 -0 -0)
-			)
-		)
 	)
 	(footprint "Capacitor_SMD:C_0402_1005Metric"
 		(layer "F.Cu")
@@ -16052,14 +16021,13 @@
 		(uuid "d8b62446-671f-43be-ae4c-625d567e0e47")
 		(at 137.9 123.5 -90)
 		(property "Reference" "MOV1"
-			(at 0 -0.5 270)
+			(at -2.525 -5.925 0)
 			(unlocked yes)
 			(layer "F.SilkS")
-			(hide yes)
-			(uuid "ef673c30-bf1e-4644-be04-d3342f4414d1")
+			(uuid "0d077fc8-ec8d-44f1-a833-92621cfe908c")
 			(effects
 				(font
-					(size 1 1)
+					(size 0.8 0.8)
 					(thickness 0.1)
 				)
 			)
@@ -16069,7 +16037,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "4d488ab0-2677-4d45-bee2-7008a4eedf7c")
+			(uuid "5ee61f7c-f0a7-452b-a195-e83ff27a0b01")
 			(effects
 				(font
 					(size 1 1)
@@ -16082,7 +16050,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "6bfd8a1e-212a-4d48-b04b-b8e6d712e00e")
+			(uuid "5674a37d-2473-444a-bc0b-57413c710558")
 			(effects
 				(font
 					(size 1 1)
@@ -16095,7 +16063,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "a463e8d7-3feb-40e4-8147-378f60a74089")
+			(uuid "5a6fd9c3-2c61-4bfd-a939-1b4a097a1329")
 			(effects
 				(font
 					(size 1 1)
@@ -16242,7 +16210,7 @@
 			(uuid "aa06aeb7-a346-4c51-9448-9a299f62361d")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 3.75 -3 0)
+			(at -1.45 -0.175 0)
 			(unlocked yes)
 			(layer "F.Fab")
 			(uuid "380da407-c76d-42e4-8141-ed865599d6c8")
@@ -17736,7 +17704,7 @@
 		(descr "Resistor SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "resistor")
 		(property "Reference" "R28"
-			(at 3.55 1 0)
+			(at -1.075 1.7 0)
 			(layer "F.SilkS")
 			(uuid "ce778c22-89e3-4b3b-9889-fbcfeb0bf447")
 			(effects
@@ -18615,7 +18583,7 @@
 		(descr "CP, Radial series, Radial, pin pitch=5.00mm, diameter=10mm, height=16mm, Electrolytic Capacitor")
 		(tags "CP Radial series Radial pin pitch 5.00mm diameter 10mm height 16mm Electrolytic Capacitor")
 		(property "Reference" "C7"
-			(at 6.55 -4.45 0)
+			(at 7.325 3.8 0)
 			(layer "F.SilkS")
 			(uuid "18a4f3d5-7861-4bb9-9c61-7db54dca8c3c")
 			(effects
@@ -29718,6 +29686,7 @@
 		(property "Value" "400Ω"
 			(at 0 -1.83 0)
 			(layer "B.Fab")
+			(hide yes)
 			(uuid "4455d9e9-3e40-4746-8224-ad58fb3ac49c")
 			(effects
 				(font
@@ -31612,7 +31581,7 @@
 		(uuid "710c5f9d-b124-4772-8e93-f24d65298311")
 		(at 131.84 102.79 -90)
 		(property "Reference" "MOC1"
-			(at -5.24 -4.31 0)
+			(at -5.24 0.79 0)
 			(layer "B.SilkS")
 			(uuid "a2c9f224-220f-4daa-a340-b0ed1c3690a5")
 			(effects
@@ -31624,7 +31593,7 @@
 			)
 		)
 		(property "Value" "MOC3063M"
-			(at 0.01 -0.34 90)
+			(at 0.01 -0.035 0)
 			(layer "B.Fab")
 			(uuid "94ee6137-cdc8-4696-8e41-2334cc8ca69f")
 			(effects
@@ -37396,6 +37365,7 @@
 		(property "Value" "400Ω"
 			(at 0 -1.83 0)
 			(layer "B.Fab")
+			(hide yes)
 			(uuid "dcc88101-a584-427d-a56e-80e7d8be04c3")
 			(effects
 				(font
@@ -37918,7 +37888,7 @@
 		(descr "Fiducial, circular marking, 1mm bare copper, 2mm soldermask opening (Level A)")
 		(tags "fiducial")
 		(property "Reference" "FID6"
-			(at 0 1.95 0)
+			(at -0.225 1.825 0)
 			(layer "B.SilkS")
 			(uuid "9a931171-8f28-4686-a387-1fe8250155db")
 			(effects
@@ -38030,7 +38000,7 @@
 		(uuid "def1faf3-475c-4c2d-b314-6b7dff2e0316")
 		(at 144.14 103.51 -90)
 		(property "Reference" "MOC2"
-			(at -5.21 -2.81 0)
+			(at -5.21 0.665 0)
 			(layer "B.SilkS")
 			(uuid "3c6c76f0-a2fe-4064-a04d-6556d33072c3")
 			(effects
@@ -38042,7 +38012,7 @@
 			)
 		)
 		(property "Value" "MOC3063M"
-			(at -0.21 0.36 90)
+			(at -1.11 0.015 0)
 			(layer "B.Fab")
 			(uuid "26ba474a-46d3-4505-b3db-bdbdfeb2a636")
 			(effects
@@ -38574,6 +38544,7 @@
 		(property "Value" "400Ω"
 			(at 0 -1.83 0)
 			(layer "B.Fab")
+			(hide yes)
 			(uuid "608911ae-6201-4a4a-992e-e68e0cae2cc4")
 			(effects
 				(font
@@ -39379,7 +39350,7 @@
 		(uuid "ecc53f2d-ca08-4518-9fb0-1ec67b955f2a")
 		(at 157.74 102.31 -90)
 		(property "Reference" "MOC3"
-			(at -5.36 -2.91 0)
+			(at -5.31 4.515 0)
 			(layer "B.SilkS")
 			(uuid "4000ae0c-df8e-4239-bdfe-1429e361067b")
 			(effects
@@ -39391,7 +39362,7 @@
 			)
 		)
 		(property "Value" "MOC3053M"
-			(at 9.921 -5.395 90)
+			(at -1.51 0.115 0)
 			(layer "B.Fab")
 			(uuid "867efd81-fb22-4d0a-a777-475c1257e1fa")
 			(effects
@@ -40461,6 +40432,7 @@
 		(property "Value" "400Ω"
 			(at 0 -1.83 180)
 			(layer "B.Fab")
+			(hide yes)
 			(uuid "a1e65160-27d4-47dc-bdf6-cab75df7875a")
 			(effects
 				(font
@@ -41578,6 +41550,7 @@
 		(property "Value" "400Ω"
 			(at 0 -1.83 0)
 			(layer "B.Fab")
+			(hide yes)
 			(uuid "2eddc210-1653-4580-a05b-595cfb5b8650")
 			(effects
 				(font
@@ -41784,6 +41757,7 @@
 		(property "Value" "0.1µF 16V"
 			(at 0 -1.16 90)
 			(layer "B.Fab")
+			(hide yes)
 			(uuid "cb9179a7-d237-4e31-a7e4-ca65d1fa398c")
 			(effects
 				(font
@@ -42417,6 +42391,58 @@
 		(layer "Edge.Cuts")
 		(uuid "e9626f52-9699-4d16-94e1-d28d05feb293")
 	)
+	(gr_text "GND"
+		(at 165.15 93.525 90)
+		(layer "F.SilkS")
+		(uuid "deaba350-8527-4b5a-b61a-a69f3da87ba6")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.16)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+	)
+	(gr_text "LED+"
+		(at 167.675 93.525 90)
+		(layer "F.SilkS")
+		(uuid "e327bc83-0b92-4916-8217-16fd43b71ac4")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.16)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+	)
+	(gr_text "+3.3V"
+		(at 170.175 93.525 90)
+		(layer "F.SilkS")
+		(uuid "73b99d2c-f8e6-439a-a0c9-04bc7cc5d839")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.16)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+	)
+	(gr_text "+12V"
+		(at 172.7 93.525 90)
+		(layer "F.SilkS")
+		(uuid "b75b1f0f-7c16-4f9e-ad07-ea32ceace1b9")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.16)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+	)
 	(gr_text "© PelletPirate v5.0 2026\n{dblquote}It's a Pirate's Life for Me!{dblquote}"
 		(at 122.6 77 90)
 		(layer "F.SilkS")
@@ -42428,6 +42454,19 @@
 				(bold yes)
 			)
 			(justify bottom)
+		)
+	)
+	(gr_text "3053M"
+		(at 160.9 97.425 0)
+		(layer "B.SilkS")
+		(uuid "e6d436cf-2357-4f57-8e13-d28029a72fb0")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.2)
+				(bold yes)
+			)
+			(justify left bottom mirror)
 		)
 	)
 	(segment
