@@ -36,7 +36,7 @@
 35,MOC1 MOC2,2,ONSEMI,MOC3063M,MOC3063M,MOC3063M-PP2,"Zero Cross Opto-Triac, Vdrm 600V, Ift 5mA, DIP6",https://www.digikey.com/en/products/detail/onsemi/MOC3063M/281237 ,NO SUBSTITUTION
 36,MOC3,1,ONSEMI,MOC3053M ,MOC3053M,DIP762W46P254L851H508Q6,Optoisolator Triac Output 4170Vrms 1 Channel 6-DIP,https://www.digikey.com/en/products/detail/onsemi/MOC3053M/9764702,NO SUBSTITUTION
 37,MOV1,1,BOURNS,MOV-14D561K ,PP_14D561K,Varistor_14mm_p7.5mm,Voltage dependent resistor,https://www.digikey.com/en/products/detail/bourns-inc/MOV-14D561K/2798251 ,NO SUBSTITUTION
-38,PS1,1,Bel Fuse,PBO-5F-12,PBO-5F-12,CONV_PBO-5F-12_AUDIT_FLYMAN,AC-DC Power Supply,https://www.digikey.com/en/products/detail/bel-power-solutions/PBO-5F-12/28717413 ,NO SUBSTITUTION
+38,PS1,1,CUI Inc.,PBO-5F-12,PBO-5F-12,CONV_PBO-5F-12_AUDIT_FLYMAN,AC-DC Power Supply,https://www.digikey.com/en/products/detail/bel-power-solutions/PBO-5F-12/28717413 ,NO SUBSTITUTION
 39,PS2,1,Texas Instruments,TPS562201DDCR,Buck 3.3V 2A,SOT95P280X110-6N,"4.5 V to 17 V input, 2 A output, synchronous step-down converter in Eco-mode",https://www.digikey.com/en/products/detail/texas-instruments/TPS562201DDCR/5808210 ,Substitution allowed (equivalent spec)
 40,PS3,1,Texas Instruments,TPS61165DBVR,TPS61165DBVR,SOT95P280X145-6N,High brightness white LED driver in 2mm x 2mm QFN Package,https://www.digikey.com/en/products/detail/texas-instruments/TPS61165DBVR/2340764 ,Substitution allowed (equivalent spec)
 41,R1 R2 R3,3,PANASONIC,ERJ-1TYJ390U,39Ω 1W,R_2512_6332Metric,"Resistor, US symbol",https://www.digikey.com/en/products/detail/panasonic-electronic-components/ERJ-1TYJ390U/365201,Substitution allowed (equivalent spec)
