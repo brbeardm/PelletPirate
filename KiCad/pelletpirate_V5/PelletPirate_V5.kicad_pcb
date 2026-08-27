@@ -1684,7 +1684,7 @@
 			(uuid "758b1e8f-c2cf-408b-a4eb-e861e0742738")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/RF_Module.3dshapes/ESP32-S3-WROOM-1U.step"
+		(model "${KIPRJMOD}/Expressif_S3_N16R8_chip_N1U/ESP32-S3-WROOM-1U-N16R8.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -1694,18 +1694,7 @@
 			(rotate
 				(xyz 0 0 0)
 			)
-		)
-		(model "${KIPRJMOD}/ESP32-S3-WROOM-1U-N16R8/ESP32-S3-WROOM-1U-N16R8--3DModel-STEP-56544.STEP"
-			(offset
-				(xyz 0 0 0)
-			)
-			(scale
-				(xyz 1 1 1)
-			)
-			(rotate
-				(xyz -90 -0 -0)
-			)
-		)
+		)
 	)
 	(footprint "Connector_Wire:SolderWire-1.5sqmm_1x01_D1.7mm_OD3mm"
 		(layer "F.Cu")
@@ -12937,6 +12926,17 @@
 			(uuid "0837ee6a-1c8a-46bd-8bc7-3928ef2c0b20")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/KMR221GLFS_SMD_boot_reset_switch/KMR221GLFS.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Connector_Wire:SolderWire-1.5sqmm_1x01_D1.7mm_OD3mm"
 		(layer "F.Cu")
@@ -16151,6 +16151,17 @@
 			(uuid "a8cc7b23-bdb8-4525-8fcb-dcf1b3b920ab")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/USB_try2/usb4145-03-0170-c.stp"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Capacitor_SMD:C_0402_1005Metric"
 		(layer "F.Cu")
@@ -18962,6 +18973,17 @@
 			(uuid "62f4ad76-5118-476f-b451-3739510d9853")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/KMR221GLFS_SMD_boot_reset_switch/KMR221GLFS.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm"
 		(layer "F.Cu")
@@ -22990,7 +23012,7 @@
 			(uuid "1cdbdc0b-45f7-4dd0-a7fe-ab207db5292d")
 		)
 		(embedded_fonts no)
-		(model "${KIPRJMOD}/Inductors/1231AS-H-150M=P3.STEP"
+		(model "${KIPRJMOD}/Inductors/srr4028.stp"
 			(hide yes)
 			(offset
 				(xyz 0 0 0)
@@ -24390,7 +24412,7 @@
 			(uuid "ed113bcd-38c2-442e-96f2-05a6ce8a413e")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Connector_Hirose.3dshapes/Hirose_DF13-04P-1.25DSA_1x04_P1.25mm_Vertical.step"
+		(model "${KIPRJMOD}/HiRose_Encoder_Jack/DF13-4P-1.25DSA(25).STEP"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -30332,7 +30354,7 @@
 			(uuid "749f6365-b4f5-4c0e-8c41-84bc840047c7")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Package_DFN_QFN.3dshapes/TQFN-20-1EP_5x5mm_P0.65mm_EP3.25x3.25mm.step"
+		(model "${KIPRJMOD}/MAX_31865ATP+/MAX31865ATP+.STEP"
 			(hide yes)
 			(offset
 				(xyz 0 0 0)
@@ -31243,7 +31265,7 @@
 			(uuid "fdfb1e84-f4f0-4b4d-a61d-02b679a2f276")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Package_DFN_QFN.3dshapes/TQFN-20-1EP_5x5mm_P0.65mm_EP3.25x3.25mm.step"
+		(model "${KIPRJMOD}/MAX_31865ATP+/MAX31865ATP+.STEP"
 			(hide yes)
 			(offset
 				(xyz 0 0 0)
@@ -36469,7 +36491,7 @@
 			(uuid "3ddb4b6b-ef79-4c9e-93ff-2b1b54ee9551")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Package_DFN_QFN.3dshapes/TQFN-20-1EP_5x5mm_P0.65mm_EP3.25x3.25mm.step"
+		(model "${KIPRJMOD}/MAX_31865ATP+/MAX31865ATP+.STEP"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -41331,7 +41353,7 @@
 			(uuid "5ea9ad62-37d9-467f-b680-73cb58b1c31a")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Package_DFN_QFN.3dshapes/TQFN-20-1EP_5x5mm_P0.65mm_EP3.25x3.25mm.step"
+		(model "${KIPRJMOD}/MAX_31865ATP+/MAX31865ATP+.STEP"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -42241,7 +42263,7 @@
 			(uuid "b9dd5994-c236-4c22-91b8-aabae6535606")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Package_DFN_QFN.3dshapes/TQFN-20-1EP_5x5mm_P0.65mm_EP3.25x3.25mm.step"
+		(model "${KIPRJMOD}/MAX_31865ATP+/MAX31865ATP+.STEP"
 			(hide yes)
 			(offset
 				(xyz 0 0 0)
