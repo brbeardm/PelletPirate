@@ -21736,6 +21736,33 @@
 				)
 			)
 		)
+		(property "MF" "VISHAY"
+			(at 57.15 208.28 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MP" "CRCW1206360RFKEA"
+			(at 57.15 208.28 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/vishay-dale/CRCW1206360RFKEA/1176592"
+			(at 57.15 208.28 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "10d6e028-577a-4efd-8be3-fec7745f53f3")
 		)
@@ -21929,6 +21956,33 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "PANASONIC"
+			(at 82.55 194.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MP" "ERJ-1TYJ390U"
+			(at 82.55 194.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/panasonic-electronic-components/ERJ-1TYJ390U/365201"
+			(at 82.55 194.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "2"
@@ -22603,6 +22657,15 @@
 				(justify bottom)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/result?keywords=0031.8201"
+			(at 77.47 34.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "f09c6c14-32c9-4244-a2fd-268bcf30e2ec")
 		)
@@ -23075,6 +23138,33 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 49.53 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MP" "RC0805FR-07100KL"
+			(at 49.53 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/yageo/RC0805FR-07100KL/727544"
+			(at 49.53 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "2"
@@ -23779,6 +23869,33 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "EPCOS - TDK"
+			(at 92.71 264.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MP" "B32921C3103M000"
+			(at 92.71 264.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/epcos-tdk-electronics/B32921C3103M000/778978"
+			(at 92.71 264.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1"
@@ -24844,7 +24961,7 @@
 				)
 			)
 		)
-		(property "LINK" "https://www.digikey.com/en/products/detail/panasonic-industry/ERJ-UP6F1800V/8134828 "
+		(property "LINK" "https://www.digikey.com/en/products/detail/yageo/RC0805FR-07330RL/727866"
 			(at 29.21 195.58 90)
 			(hide yes)
 			(show_name no)
@@ -24853,6 +24970,24 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 29.21 195.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MP" "RC0805FR-07330RL"
+			(at 29.21 195.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1"
@@ -25722,7 +25857,7 @@
 				)
 			)
 		)
-		(property "LINK" "https://www.digikey.com/en/products/detail/panasonic-industry/ERJ-UP6F1800V/8134828 "
+		(property "LINK" "https://www.digikey.com/en/products/detail/yageo/RC0805FR-07330RL/727866"
 			(at 31.75 137.16 90)
 			(hide yes)
 			(show_name no)
@@ -25731,6 +25866,24 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 31.75 137.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MP" "RC0805FR-07330RL"
+			(at 31.75 137.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1"
@@ -26172,7 +26325,7 @@
 				)
 			)
 		)
-		(property "LINK" "https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/VY2471K29Y5SS63V7/1983391 "
+		(property "LINK" "https://www.digikey.com/en/products/detail/rubycon/450BXG15MEFC10X20/23330777"
 			(at 162.56 40.64 0)
 			(hide yes)
 			(show_name no)
@@ -26181,6 +26334,24 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "Rubycon"
+			(at 162.56 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MP" "450BXG15MEFC10X20"
+			(at 162.56 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1"
@@ -26512,6 +26683,33 @@
 				)
 			)
 		)
+		(property "MF" "VISHAY"
+			(at 50.8 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MP" "CRCW1206360RFKEA"
+			(at 50.8 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/vishay-dale/CRCW1206360RFKEA/1176592"
+			(at 50.8 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "4b06109d-b1dc-4db9-bfe1-c0f1fe5a0944")
 		)
@@ -26669,6 +26867,33 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "Hirose Electric Co Ltd"
+			(at 341.63 284.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MP" "DF13-4P-1.25DSA(25)"
+			(at 341.63 284.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/hirose-electric-co-ltd/DF13-4P-1-25DSA-25/15997347"
+			(at 341.63 284.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1"
@@ -27786,7 +28011,7 @@
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
-		(in_bom yes)
+		(in_bom no)
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
@@ -28321,7 +28546,7 @@
 				)
 			)
 		)
-		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/C1206C106K3RACTU/3317648 "
+		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/C1206C106K3RACTU/3317648"
 			(at 38.1 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -28330,6 +28555,24 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "KEMET"
+			(at 38.1 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MP" "C1206C106K3RACTU"
+			(at 38.1 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1"
@@ -29105,7 +29348,7 @@
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
-		(in_bom yes)
+		(in_bom no)
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
@@ -30025,6 +30268,15 @@
 				(justify bottom)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/TB002-500-02BE/10064069"
+			(at 171.45 241.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "a5179c95-c2e9-4470-a77c-829d1691db53")
 		)
@@ -30305,6 +30557,33 @@
 				)
 			)
 		)
+		(property "MF" "VISHAY"
+			(at 57.15 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MP" "CRCW1206360RFKEA"
+			(at 57.15 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/vishay-dale/CRCW1206360RFKEA/1176592"
+			(at 57.15 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "f8b02716-6fab-498b-a672-a7b40e00d273")
 		)
@@ -30500,6 +30779,33 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 123.19 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MP" "RC0402FR-0710KL"
+			(at 123.19 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/yageo/RC0402FR-0710KL/726523"
+			(at 123.19 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "2"
@@ -31019,6 +31325,15 @@
 				(justify bottom)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/SJ1-3523NG/738692"
+			(at 483.87 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "ddfe505f-6f30-40ef-bdef-281633728aec")
 		)
@@ -31418,6 +31733,15 @@
 				(justify bottom)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/SJ1-3523NG/738692"
+			(at 483.87 231.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "ecfee7ab-07a8-4be1-b5d3-c55466573b52")
 		)
@@ -31501,6 +31825,33 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "EPCOS - TDK"
+			(at 82.55 146.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MP" "B32921C3103M000"
+			(at 82.55 146.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/epcos-tdk-electronics/B32921C3103M000/778978"
+			(at 82.55 146.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1"
@@ -31910,7 +32261,7 @@
 				)
 			)
 		)
-		(property "Value" "180Ω"
+		(property "Value" "180Ω"
 			(at 61.214 249.174 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -32800,6 +33151,15 @@
 				(justify bottom)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/SJ1-3523NG/738692"
+			(at 483.87 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "a51d6f06-7672-4600-8998-a83439018740")
 		)
@@ -32883,6 +33243,33 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 199.39 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MP" "RC0603FR-07100KL"
+			(at 199.39 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/yageo/RC0603FR-07100KL/726889"
+			(at 199.39 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "2"
@@ -33530,6 +33917,15 @@
 				(justify bottom)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/SJ1-3523NG/738692"
+			(at 483.87 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "c633c67c-3156-484e-a88c-3fafdedf56b5")
 		)
@@ -33985,6 +34381,33 @@
 				)
 			)
 		)
+		(property "MF" "EPCOS - TDK"
+			(at 82.55 204.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MP" "B32921C3103M000"
+			(at 82.55 204.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/epcos-tdk-electronics/B32921C3103M000/778978"
+			(at 82.55 204.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "8a47a781-d70d-4fee-9cd8-80b92e096c37")
 		)
@@ -34140,6 +34563,33 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "PANASONIC"
+			(at 92.71 254 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MP" "ERJ-1TYJ390U"
+			(at 92.71 254 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/panasonic-electronic-components/ERJ-1TYJ390U/365201"
+			(at 92.71 254 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "2"
@@ -36087,6 +36537,33 @@
 				)
 			)
 		)
+		(property "MF" "YAGEO"
+			(at 123.19 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MP" "RC0805FR-0733K2L"
+			(at 123.19 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/yageo/RC0805FR-0733K2L/727865"
+			(at 123.19 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "aa74bf2f-1752-440c-a09a-116cd308c178")
 		)
@@ -37159,6 +37636,33 @@
 				)
 			)
 		)
+		(property "MF" "KEMET"
+			(at 186.69 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MP" "C0402C104K3RACTU"
+			(at 186.69 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/C0402C104K3RACTU/6697176"
+			(at 186.69 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "fdabbb01-e9f5-48c9-b1ab-fc083d866c90")
 		)
@@ -37317,6 +37821,33 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "VISHAY"
+			(at 50.8 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MP" "CRCW1206360RFKEA"
+			(at 50.8 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/vishay-dale/CRCW1206360RFKEA/1176592"
+			(at 50.8 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1"
@@ -38009,6 +38540,24 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "VISHAY"
+			(at 142.24 36.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MP" "VY2471K29Y5SS63V7"
+			(at 142.24 36.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "2"
@@ -39537,6 +40086,15 @@
 				(justify bottom)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/SJ1-3523NG/738692"
+			(at 483.87 182.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "e59ac666-c7a1-4fdb-9934-517d75988a76")
 		)
@@ -39918,6 +40476,24 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "VISHAY"
+			(at 142.24 44.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MP" "VY2471K29Y5SS63V7"
+			(at 142.24 44.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "2"
@@ -40988,7 +41564,7 @@
 				)
 			)
 		)
-		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/C1206C106K3RACTU/3317648 "
+		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/C1206C106K3RACTU/3317648"
 			(at 176.53 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -40997,6 +41573,24 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "KEMET"
+			(at 176.53 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MP" "C1206C106K3RACTU"
+			(at 176.53 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1"
@@ -41446,6 +42040,33 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "MF" "PANASONIC"
+			(at 82.55 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MP" "ERJ-1TYJ390U"
+			(at 82.55 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/panasonic-electronic-components/ERJ-1TYJ390U/365201"
+			(at 82.55 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "2"
