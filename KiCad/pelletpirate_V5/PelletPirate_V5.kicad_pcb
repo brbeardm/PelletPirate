@@ -2228,6 +2228,45 @@
 				)
 			)
 		)
+		(property "MF" "PANASONIC"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "9103856c-0232-44b0-8b4b-1cf6543fbb90")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MP" "ERJ-1TYJ390U"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "4eb79539-cb3e-4cc8-824c-86052d9f1d20")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/panasonic-electronic-components/ERJ-1TYJ390U/365201"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "68b99d78-9afc-4592-aba0-e78242a4ecfc")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
 		(property ki_fp_filters "R_*")
 		(path "/10a9bfef-49ab-4e26-ae32-bd1afd573e12")
 		(sheetname "/")
@@ -4622,6 +4661,19 @@
 				)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/TB002-500-02BE/10064069"
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "5569e66b-4b2e-42a2-aafe-20136ec2e6de")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
 		(path "/7ec858ea-c245-4562-ac1f-15507d78b079")
 		(sheetname "/")
 		(sheetfile "PelletPirate_V5.kicad_sch")
@@ -4875,6 +4927,45 @@
 				)
 			)
 		)
+		(property "MF" "VISHAY"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "4e654c8a-a4a0-434e-a384-b771eb82f29e")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MP" "CRCW1206360RFKEA"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "c4429c05-15c2-44fd-b07b-6fea097e9af5")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/vishay-dale/CRCW1206360RFKEA/1176592"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "c1878b97-c8ea-423e-9a5e-68c86a92a5f9")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
 		(property ki_fp_filters "R_*")
 		(path "/8246067f-efcf-4264-a021-7a1428eb7553")
 		(sheetname "/")
@@ -5036,6 +5127,7 @@
 				(pins "1")
 			)
 		)
+		(attr exclude_from_bom)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_circle
 			(center 0 0)
@@ -5471,6 +5563,45 @@
 			(layer "F.SilkS")
 			(hide yes)
 			(uuid "1f868b8c-b339-465a-a7e5-4c9e306e2105")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MF" "VISHAY"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "b7a25874-cc15-4ee9-a8a6-ff5645daad95")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MP" "CRCW1206360RFKEA"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "b0438bcd-b516-4f5a-9814-01517492b534")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/vishay-dale/CRCW1206360RFKEA/1176592"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "86a1ddf6-2102-4526-887c-cd6e7374b131")
 			(effects
 				(font
 					(size 1 1)
@@ -7250,6 +7381,32 @@
 				)
 			)
 		)
+		(property "MF" "VISHAY"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "d1ff6fcc-5f7a-4e4b-8c93-bc9b47ac7e8c")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MP" "VY2471K29Y5SS63V7"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "1ecc1f09-4078-4ab5-ba9e-bba9108e0e95")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
 		(property ki_fp_filters "C_*")
 		(path "/d0a21255-2353-41a4-86a7-feb3ae078232")
 		(sheetname "/")
@@ -7457,6 +7614,32 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "4f227bf2-2950-4617-85de-d6ff877b885a")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MF" "VISHAY"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "62e79803-bc5b-4d86-96d5-0eeeaaaa825f")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MP" "VY2471K29Y5SS63V7"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "2804dcbc-46c5-4a5a-a40a-cb82f3b26f5c")
 			(effects
 				(font
 					(size 1 1)
@@ -7901,12 +8084,38 @@
 				)
 			)
 		)
-		(property "LINK" "https://www.digikey.com/en/products/detail/panasonic-industry/ERJ-UP6F1800V/8134828 "
+		(property "LINK" "https://www.digikey.com/en/products/detail/yageo/RC0805FR-07330RL/727866"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "fe7e7244-89b5-4b86-b976-91d7d19586f4")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "fa753c7a-bbb9-4f0c-9ff6-9420f29855a1")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MP" "RC0805FR-07330RL"
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "a25caa22-eddb-477f-a217-a405f4607757")
 			(effects
 				(font
 					(size 1 1)
@@ -8790,6 +8999,19 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "491e223c-8fcf-4274-b77f-ba2d434cbb6c")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/result?keywords=0031.8201"
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "ce60fd06-3663-4dc7-8347-b78385ce3118")
 			(effects
 				(font
 					(size 1 1)
@@ -9839,6 +10061,45 @@
 			(layer "F.SilkS")
 			(hide yes)
 			(uuid "c74ba6c9-1cdd-4134-b477-14af162ef6c4")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MF" "VISHAY"
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "ca34931c-0c60-4114-901a-e91127b2538d")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MP" "CRCW1206360RFKEA"
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "d10bfd57-3696-49f5-b34a-4f43efb50d09")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/vishay-dale/CRCW1206360RFKEA/1176592"
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "0dadbba3-0503-4ac1-b9fe-96cd5754dbfb")
 			(effects
 				(font
 					(size 1 1)
@@ -12981,6 +13242,45 @@
 				)
 			)
 		)
+		(property "MF" "PANASONIC"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "e03651f4-5460-4252-aefe-cd7f80ab6e11")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MP" "ERJ-1TYJ390U"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "3269e274-85c5-43f2-8af0-3a4e90bafea3")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/panasonic-electronic-components/ERJ-1TYJ390U/365201"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "adcba185-4fb0-41f9-96cb-d99b9e205b91")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
 		(property ki_fp_filters "R_*")
 		(path "/fe0a7757-7c41-4235-9a39-4145ab0a63b1")
 		(sheetname "/")
@@ -14634,6 +14934,45 @@
 				)
 			)
 		)
+		(property "MF" "VISHAY"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "655519de-038f-4916-9e20-cbfa11fa3e2f")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MP" "CRCW1206360RFKEA"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "555a169b-a200-4080-bd1d-b73b99960235")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/vishay-dale/CRCW1206360RFKEA/1176592"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "3f2a6404-3a10-4431-bc60-b52852235658")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
 		(property ki_fp_filters "R_*")
 		(path "/0d39eb67-81a5-476c-896c-02e954765e64")
 		(sheetname "/")
@@ -14747,7 +15086,7 @@
 				)
 			)
 		)
-		(property "Value" "180Ω"
+		(property "Value" "180Ω"
 			(at 0 1.65 90)
 			(layer "F.Fab")
 			(hide yes)
@@ -15373,6 +15712,14 @@
 		(path "/b036f978-830a-4050-8a97-51008c5a2254")
 		(sheetname "/")
 		(sheetfile "PelletPirate_V5.kicad_sch")
+		(units
+			(unit
+				(name "A")
+				(pins "A4" "A9" "A5" "A6" "A7" "A8" "A1" "A12" "S1" "S2" "S3" "S4" "B4"
+					"B9" "B8" "B7" "B6" "B5" "B1" "B12"
+				)
+			)
+		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
@@ -17601,6 +17948,45 @@
 				)
 			)
 		)
+		(property "MF" "PANASONIC"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "ef0463e6-ab9d-4fb8-8853-c3dd64458917")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MP" "ERJ-1TYJ390U"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "5a2f706b-364f-4d53-b09a-a0d84ced7fca")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/panasonic-electronic-components/ERJ-1TYJ390U/365201"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "fc430005-76e3-4451-9cd7-dd2e8d3d073f")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
 		(property ki_fp_filters "R_*")
 		(path "/aefeb6fe-671d-430c-bb54-fe36df571784")
 		(sheetname "/")
@@ -18213,6 +18599,7 @@
 				(pins "1")
 			)
 		)
+		(attr exclude_from_bom)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_circle
 			(center 0 0)
@@ -18639,12 +19026,38 @@
 				)
 			)
 		)
-		(property "LINK" "https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/VY2471K29Y5SS63V7/1983391 "
+		(property "LINK" "https://www.digikey.com/en/products/detail/rubycon/450BXG15MEFC10X20/23330777"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "e4df929d-853b-4c1e-a233-8f4f7b90782b")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MF" "Rubycon"
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "d3fb4af1-2e93-48d5-a53f-162c363eed8f")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MP" "450BXG15MEFC10X20"
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "3395c682-c945-4225-8177-1d1b5954eabf")
 			(effects
 				(font
 					(size 1 1)
@@ -21636,12 +22049,38 @@
 				)
 			)
 		)
-		(property "LINK" "https://www.digikey.com/en/products/detail/panasonic-industry/ERJ-UP6F1800V/8134828 "
+		(property "LINK" "https://www.digikey.com/en/products/detail/yageo/RC0805FR-07330RL/727866"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "740f2810-fc7d-4ae6-bdb5-b14a59deef58")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "d05f1261-5268-46e8-bc06-bb1f3ec6f7af")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MP" "RC0805FR-07330RL"
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "be3269f4-d890-4ef9-a8c4-ba7af107c846")
 			(effects
 				(font
 					(size 1 1)
@@ -22643,6 +23082,48 @@
 				(justify mirror)
 			)
 		)
+		(property "MF" "YAGEO"
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "5a81771e-0c4b-4c18-b86d-73ceac96747b")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "MP" "RC0805FR-0733K2L"
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "b1b5831c-ce5e-4aee-8f28-2db730bbd3d7")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/yageo/RC0805FR-0733K2L/727865"
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "133048f5-886a-4484-b5de-28396b9efe94")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
 		(property ki_fp_filters "R_*")
 		(path "/baab68d6-3094-44d6-b3ea-53f948ef184c")
 		(sheetname "/")
@@ -23496,6 +23977,48 @@
 			(layer "B.SilkS")
 			(hide yes)
 			(uuid "aed8482a-7ac3-49c4-9eae-9b91e1b12a45")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "MF" "Hirose Electric Co Ltd"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "17e34d3f-4eaf-4cdc-b6c6-cd8c00c0ec4e")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "MP" "DF13-4P-1.25DSA(25)"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "25ea3e88-3715-43cf-a166-d51c2385a238")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/hirose-electric-co-ltd/DF13-4P-1-25DSA-25/15997347"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "2bdc26ac-a80b-404d-b68d-a30c34b11ebc")
 			(effects
 				(font
 					(size 1 1)
@@ -25258,6 +25781,48 @@
 				(justify mirror)
 			)
 		)
+		(property "MF" "YAGEO"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "075e1d92-ff98-4055-ae94-31111d849093")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "MP" "RC0603FR-07100KL"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "93680dbc-8bdc-49ae-9acf-5dacf3da5a88")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/yageo/RC0603FR-07100KL/726889"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "55dc7e91-0bf1-4c4a-a426-293ebc8db6ff")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
 		(property ki_fp_filters "R_*")
 		(path "/9f150386-b0b0-4c28-963b-603a2cf656b9")
 		(sheetname "/")
@@ -25415,6 +25980,48 @@
 			(layer "B.SilkS")
 			(hide yes)
 			(uuid "8cdd6b26-60c2-4251-9d97-3ba33b234c6e")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "MF" "EPCOS - TDK"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "c989afc6-3b52-4140-8d53-1e8d5d4350f7")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "MP" "B32921C3103M000"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "9e4cf7a5-fc68-4f94-9812-268532c66e69")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/epcos-tdk-electronics/B32921C3103M000/778978"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "99dd7fc1-83dd-4238-beeb-97f914af760f")
 			(effects
 				(font
 					(size 1 1)
@@ -26038,12 +26645,40 @@
 				(justify mirror)
 			)
 		)
-		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/C1206C106K3RACTU/3317648 "
+		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/C1206C106K3RACTU/3317648"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "1124a1d8-2b5f-4e03-add8-8e504c86e00c")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "MF" "KEMET"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "eed6d261-7ee1-4040-b98c-22a98361650c")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "MP" "C1206C106K3RACTU"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "bb2fd176-ff59-4b12-918f-a88973b647a7")
 			(effects
 				(font
 					(size 1 1)
@@ -27648,6 +28283,20 @@
 				(justify mirror)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/SJ1-3523NG/738692"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "b294e505-68aa-48f3-88c4-bb575d46eaa3")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
 		(path "/9ef29da1-8f8a-4b3c-b2a0-c386854c9b8a")
 		(sheetname "/")
 		(sheetfile "PelletPirate_V5.kicad_sch")
@@ -28742,6 +29391,48 @@
 			(layer "B.SilkS")
 			(hide yes)
 			(uuid "af1d6d02-1de6-476a-8c6d-cb29a504bc0e")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "6b5423c1-25a6-41ad-960b-1bcb92200fd7")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "MP" "RC0805FR-07100KL"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "b6b3a337-7b24-4b32-9ca6-249a2fe8cc5f")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/yageo/RC0805FR-07100KL/727544"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "94af7d22-5f4d-4ffa-b9e3-b0a008832079")
 			(effects
 				(font
 					(size 1 1)
@@ -30644,6 +31335,48 @@
 				(justify mirror)
 			)
 		)
+		(property "MF" "EPCOS - TDK"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "5f0d1b13-5b98-49cb-b0b1-f3a0ca97f275")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "MP" "B32921C3103M000"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "e0cd69e4-dd0e-465a-9a93-f96ab0d87fb5")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/epcos-tdk-electronics/B32921C3103M000/778978"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "d47aa3ba-7323-480f-9b17-d745b335d807")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
 		(property ki_fp_filters "C_*")
 		(path "/934c8d95-168d-4f81-84c5-fba0ea67ceef")
 		(sheetname "/")
@@ -31169,6 +31902,20 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "ae936e42-abd5-4a9f-9dda-681d5a093536")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/SJ1-3523NG/738692"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "40189651-eed5-4ab0-86fa-6ea8aa6dbacf")
 			(effects
 				(font
 					(size 1 1)
@@ -32118,6 +32865,20 @@
 				(justify mirror)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/SJ1-3523NG/738692"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "3f149447-3ea1-4fb9-81cb-2a89ad8b441e")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
 		(path "/9298827e-caf6-435b-a6cf-55443cbe9255")
 		(sheetname "/")
 		(sheetfile "PelletPirate_V5.kicad_sch")
@@ -33023,6 +33784,20 @@
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "e31818a5-ea59-4912-aaea-a447e0a6901c")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/SJ1-3523NG/738692"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "b6640c0c-106d-4640-856b-078dfdaaf8e3")
 			(effects
 				(font
 					(size 1 1)
@@ -35910,6 +36685,20 @@
 				(justify mirror)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/SJ1-3523NG/738692"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "a13a5c21-e556-4662-b273-a8fbcfc0d8ba")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
 		(path "/e0aad03a-0987-4344-885f-d1d20260e8e7")
 		(sheetname "/")
 		(sheetfile "PelletPirate_V5.kicad_sch")
@@ -37619,6 +38408,48 @@
 				(justify mirror)
 			)
 		)
+		(property "MF" "YAGEO"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "9950d600-65a4-4aa1-8de3-ff1cd92ddf41")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "MP" "RC0402FR-0710KL"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "f87fb19b-fb3b-44bb-9d59-e1a1ddfbd0ad")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/yageo/RC0402FR-0710KL/726523"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "77d86590-0038-4b4c-9ffb-61c20c1b2be6")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
 		(property ki_fp_filters "R_*")
 		(path "/851ce920-f5a9-4119-86f9-65e1940d3def")
 		(sheetname "/")
@@ -37776,6 +38607,48 @@
 			(layer "B.SilkS")
 			(hide yes)
 			(uuid "0ddb14f0-ea01-4f36-ae92-d0c360966359")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "MF" "KEMET"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "356c9e02-5ca8-4d82-b084-116215f8ab45")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "MP" "C0402C104K3RACTU"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "0d95db16-4ca8-4135-903f-e7ba114bc2df")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/C0402C104K3RACTU/6697176"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "4bcb4b4e-4639-43df-9ea1-ce7c68572430")
 			(effects
 				(font
 					(size 1 1)
@@ -38412,12 +39285,40 @@
 				(justify mirror)
 			)
 		)
-		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/C1206C106K3RACTU/3317648 "
+		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/C1206C106K3RACTU/3317648"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "9572f488-0a29-4a32-b507-d0a3742213b3")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "MF" "KEMET"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "9e4a388c-bbe3-48ed-9fcf-b7de2d126e12")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "MP" "C1206C106K3RACTU"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "325ae384-b31b-482c-9025-36d8bfbc6f68")
 			(effects
 				(font
 					(size 1 1)
@@ -39218,6 +40119,48 @@
 			(layer "B.SilkS")
 			(hide yes)
 			(uuid "f6ac9f69-18bd-477c-a57e-ed423f3ec4dd")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "MF" "EPCOS - TDK"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "b6204b25-93f0-4cb1-9b9f-70ba5a700a2c")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "MP" "B32921C3103M000"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "6baf5152-6be7-4520-bcf6-12ddbd00291f")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+				(justify mirror)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/epcos-tdk-electronics/B32921C3103M000/778978"
+			(at 0 0 180)
+			(unlocked yes)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "ad37a3e7-9f47-47d8-b152-058e96be62cd")
 			(effects
 				(font
 					(size 1 1)
