@@ -871,7 +871,7 @@
       },
       {
         "netclass": "USB",
-        "pattern": "VBUS"
+        "pattern": "/VBUS"
       },
       {
         "netclass": "USB",
@@ -1187,13 +1187,13 @@
           "group_by": false,
           "label": "DigiKey_Part_Number",
           "name": "DigiKey_Part_Number",
-          "show": false
+          "show": true
         },
         {
           "group_by": false,
           "label": "LINK",
           "name": "LINK",
-          "show": false
+          "show": true
         },
         {
           "group_by": false,
@@ -1217,13 +1217,13 @@
           "group_by": false,
           "label": "MF",
           "name": "MF",
-          "show": false
+          "show": true
         },
         {
           "group_by": false,
           "label": "MP",
           "name": "MP",
-          "show": false
+          "show": true
         },
         {
           "group_by": false,
@@ -1326,6 +1326,12 @@
           "label": "#",
           "name": "${ITEM_NUMBER}",
           "show": false
+        },
+        {
+          "group_by": false,
+          "label": "SNAPEDA_PN",
+          "name": "SNAPEDA_PN",
+          "show": false
         }
       ],
       "filter_string": "",
@@ -1376,7 +1382,7 @@
         "uuid": "0182ac56-03c6-4c14-8ead-12e31828f094"
       }
     ],
-    "used_designators": "#FLG5,R10-12,R32-47,J7-11,ESP1,T4,#PWR5,#PWR15-16,#PWR50,#PWR54-63,S1-2,MOC4,LED1,C17,C37-43,U1,U3,WirePad6",
+    "used_designators": "J7-11,#FLG5,R10-12,R32-47,T4,#PWR5,#PWR15-16,#PWR50,#PWR54-63,ESP1,S1-2,MOC4,LED1,C17,C37-43,U1,U3,WirePad6",
     "variants": []
   },
   "sheets": [

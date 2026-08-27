@@ -9585,29 +9585,27 @@
 			(on_board yes)
 			(in_pos_files yes)
 			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "J"
-				(at -12.7 10.922 0)
+			(property "Reference" "J8"
+				(at 0 15.24 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
-					(justify left bottom)
 				)
 			)
 			(property "Value" "USB4145-03-0070-C_REVA2"
-				(at -12.7 -15.24 0)
+				(at 0 12.7 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
-					(justify left bottom)
 				)
 			)
-			(property "Footprint" "USB4145-03-0070-C_REVA2:GCT_USB4145-03-0070-C_REVA2"
+			(property "Footprint" "USB_try2:GCT_USB4145-03-0070-C_REVA2"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -9907,44 +9905,6 @@
 					)
 				)
 				(pin power_in line
-					(at -17.78 7.62 0)
-					(length 5.08)
-					(hide yes)
-					(name "VBUS_A"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "A9"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin power_in line
-					(at -17.78 -5.08 0)
-					(length 5.08)
-					(hide yes)
-					(name "GND_A"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "A12"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin power_in line
 					(at 17.78 -5.08 180)
 					(length 5.08)
 					(name "GND_B"
@@ -10052,44 +10012,6 @@
 						)
 					)
 				)
-				(pin power_in line
-					(at 17.78 7.62 180)
-					(length 5.08)
-					(hide yes)
-					(name "VBUS_B"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "B9"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-				(pin power_in line
-					(at 17.78 -5.08 180)
-					(length 5.08)
-					(hide yes)
-					(name "GND_B"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-					(number "B12"
-						(effects
-							(font
-								(size 1.016 1.016)
-							)
-						)
-					)
-				)
 				(pin passive line
 					(at -17.78 -10.16 0)
 					(length 5.08)
@@ -10158,6 +10080,84 @@
 						)
 					)
 					(number "S4"
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+				)
+			)
+			(symbol "USB4145-03-0070-C_REVA2_1_0"
+				(pin passive line
+					(at -17.78 7.62 0)
+					(length 5.08)
+					(hide yes)
+					(name "VBUS_A"
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+					(number "A9"
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -17.78 -5.08 0)
+					(length 5.08)
+					(hide yes)
+					(name "GND_A"
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+					(number "A12"
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 17.78 7.62 180)
+					(length 5.08)
+					(hide yes)
+					(name "VBUS_B"
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+					(number "B9"
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 17.78 -5.08 180)
+					(length 5.08)
+					(hide yes)
+					(name "GND_B"
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+					(number "B12"
 						(effects
 							(font
 								(size 1.016 1.016)
@@ -12032,12 +12032,6 @@
 		(uuid "208a427f-4e71-4d6a-8daa-d9ba42d46201")
 	)
 	(junction
-		(at 255.27 34.29)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "228d0103-a0f8-4c00-b14a-c0e343882b0c")
-	)
-	(junction
 		(at 314.96 222.25)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -12086,6 +12080,12 @@
 		(uuid "2d398e09-9f27-458c-a01d-c715148e911b")
 	)
 	(junction
+		(at 44.45 109.22)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "2f22a9be-b75d-4be9-b982-a000a797f492")
+	)
+	(junction
 		(at 459.74 148.59)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -12126,6 +12126,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "3a63748c-6a85-4ae2-b878-b21f5e1b3c1b")
+	)
+	(junction
+		(at 44.45 77.47)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "3c3f7033-47a2-4073-8ff8-d69f25350366")
 	)
 	(junction
 		(at 123.19 92.71)
@@ -12432,6 +12438,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "7dddc8dc-ff0a-455d-a240-99664ee087ff")
+	)
+	(junction
+		(at 265.43 34.29)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "7df0ce26-c11e-4a87-a10f-a597deb61469")
 	)
 	(junction
 		(at 186.69 73.66)
@@ -12750,18 +12762,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "d62dd9a1-41ce-4395-822f-373520a74b43")
-	)
-	(junction
-		(at 44.45 109.22)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "d788f201-b775-4afa-80a6-0197947912ab")
-	)
-	(junction
-		(at 44.45 77.47)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "d82a6f14-8654-4565-9c0a-5bccdc25628c")
 	)
 	(junction
 		(at 452.12 218.44)
@@ -13144,6 +13144,7 @@
 		(stroke
 			(width 0.381)
 			(type default)
+			(color 255 0 0 1)
 		)
 		(uuid "06b33c91-dec1-4c3d-8b64-bd85a9d5c362")
 	)
@@ -13429,11 +13430,12 @@
 	)
 	(wire
 		(pts
-			(xy 306.07 179.07) (xy 377.19 179.07)
+			(xy 304.8 179.07) (xy 377.19 179.07)
 		)
 		(stroke
 			(width 0.381)
 			(type default)
+			(color 255 0 0 1)
 		)
 		(uuid "112957a8-111b-4b91-b5c5-8f341c6a95d4")
 	)
@@ -14112,8 +14114,9 @@
 			(xy 378.46 175.26) (xy 378.46 198.12)
 		)
 		(stroke
-			(width 0.381)
+			(width 0.508)
 			(type default)
+			(color 0 0 255 1)
 		)
 		(uuid "293cbbe4-b9ca-42e2-8305-b7d4855c58eb")
 	)
@@ -14186,16 +14189,6 @@
 			(type default)
 		)
 		(uuid "2b04c9ea-aa99-456b-ba5a-4481db0cb9c2")
-	)
-	(wire
-		(pts
-			(xy 38.1 77.47) (xy 44.45 77.47)
-		)
-		(stroke
-			(width 0.381)
-			(type default)
-		)
-		(uuid "2b320205-91a2-4197-b53b-d71da5b81488")
 	)
 	(wire
 		(pts
@@ -14319,11 +14312,12 @@
 	)
 	(wire
 		(pts
-			(xy 306.07 198.12) (xy 316.23 198.12)
+			(xy 304.8 198.12) (xy 316.23 198.12)
 		)
 		(stroke
 			(width 0.381)
 			(type default)
+			(color 255 0 0 1)
 		)
 		(uuid "30d1e06f-c977-42b1-8bee-8f685e28b493")
 	)
@@ -15689,6 +15683,16 @@
 	)
 	(wire
 		(pts
+			(xy 44.45 77.47) (xy 44.45 92.71)
+		)
+		(stroke
+			(width 0.381)
+			(type default)
+		)
+		(uuid "68316d04-e75d-43bf-a955-0d64fe5bb1da")
+	)
+	(wire
+		(pts
 			(xy 69.85 311.15) (xy 69.85 304.8)
 		)
 		(stroke
@@ -15796,6 +15800,16 @@
 			(type default)
 		)
 		(uuid "6b8591f7-6b94-465a-94c7-65fc07fe8405")
+	)
+	(wire
+		(pts
+			(xy 265.43 34.29) (xy 270.51 34.29)
+		)
+		(stroke
+			(width 0.381)
+			(type default)
+		)
+		(uuid "6bad9f03-ffb6-4865-9012-3077d2f3aedb")
 	)
 	(wire
 		(pts
@@ -16219,16 +16233,6 @@
 	)
 	(wire
 		(pts
-			(xy 44.45 77.47) (xy 44.45 92.71)
-		)
-		(stroke
-			(width 0.381)
-			(type default)
-		)
-		(uuid "7dd0383a-32cc-4954-8ced-ce51995a36aa")
-	)
-	(wire
-		(pts
 			(xy 82.55 149.86) (xy 82.55 158.75)
 		)
 		(stroke
@@ -16236,16 +16240,6 @@
 			(type default)
 		)
 		(uuid "7df493e3-4314-4949-a355-0e648704131f")
-	)
-	(wire
-		(pts
-			(xy 255.27 34.29) (xy 256.54 34.29)
-		)
-		(stroke
-			(width 0.381)
-			(type default)
-		)
-		(uuid "7dff5057-30b3-4465-82cb-51ae0051474c")
 	)
 	(wire
 		(pts
@@ -16309,7 +16303,7 @@
 	)
 	(wire
 		(pts
-			(xy 255.27 34.29) (xy 255.27 40.64)
+			(xy 265.43 34.29) (xy 265.43 57.15)
 		)
 		(stroke
 			(width 0.381)
@@ -16659,16 +16653,6 @@
 	)
 	(wire
 		(pts
-			(xy 255.27 40.64) (xy 265.43 40.64)
-		)
-		(stroke
-			(width 0.381)
-			(type default)
-		)
-		(uuid "904e2189-5611-430b-a6de-867288b45bdb")
-	)
-	(wire
-		(pts
 			(xy 186.69 281.94) (xy 186.69 276.86)
 		)
 		(stroke
@@ -16734,6 +16718,7 @@
 		(stroke
 			(width 0.381)
 			(type default)
+			(color 255 0 0 1)
 		)
 		(uuid "91a9858a-aee1-4171-9ea0-97f4df5e8b32")
 	)
@@ -16836,6 +16821,16 @@
 			(type default)
 		)
 		(uuid "980b97a5-0a06-41fb-8658-7b4d40f2f47e")
+	)
+	(wire
+		(pts
+			(xy 44.45 109.22) (xy 76.2 109.22)
+		)
+		(stroke
+			(width 0.381)
+			(type default)
+		)
+		(uuid "989b1a54-f51e-48ef-9534-1b23bfb11d90")
 	)
 	(wire
 		(pts
@@ -17259,11 +17254,12 @@
 	)
 	(wire
 		(pts
-			(xy 308.61 200.66) (xy 308.61 175.26)
+			(xy 307.34 200.66) (xy 307.34 175.26)
 		)
 		(stroke
-			(width 0.381)
+			(width 0.508)
 			(type default)
+			(color 0 0 255 1)
 		)
 		(uuid "a8be0a59-e3cd-4124-b58d-4a497f4d0fdb")
 	)
@@ -17279,6 +17275,16 @@
 	)
 	(wire
 		(pts
+			(xy 44.45 100.33) (xy 44.45 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a8d9ec7f-670e-4011-bd5c-c9e6b24ceb8d")
+	)
+	(wire
+		(pts
 			(xy 279.4 163.83) (xy 287.02 163.83)
 		)
 		(stroke
@@ -17286,16 +17292,6 @@
 			(type default)
 		)
 		(uuid "a97eda62-7cb7-4be5-87a5-7d794e77f0f1")
-	)
-	(wire
-		(pts
-			(xy 44.45 100.33) (xy 44.45 109.22)
-		)
-		(stroke
-			(width 0.381)
-			(type default)
-		)
-		(uuid "a9894fe8-e27b-46ff-b0b0-157abfc9b972")
 	)
 	(wire
 		(pts
@@ -17416,6 +17412,16 @@
 			(type default)
 		)
 		(uuid "adf73d37-2b20-4112-808c-2c8326c078ee")
+	)
+	(wire
+		(pts
+			(xy 313.69 193.04) (xy 316.23 193.04)
+		)
+		(stroke
+			(width 0.381)
+			(type default)
+		)
+		(uuid "ae76be12-32a6-4d33-8f94-7afee633b2b7")
 	)
 	(wire
 		(pts
@@ -17549,11 +17555,12 @@
 	)
 	(wire
 		(pts
-			(xy 308.61 200.66) (xy 316.23 200.66)
+			(xy 307.34 200.66) (xy 316.23 200.66)
 		)
 		(stroke
-			(width 0.381)
+			(width 0.508)
 			(type default)
+			(color 0 0 255 1)
 		)
 		(uuid "b6c69e5a-943c-4c26-84d9-eb90383c77da")
 	)
@@ -18029,11 +18036,12 @@
 	)
 	(wire
 		(pts
-			(xy 308.61 175.26) (xy 378.46 175.26)
+			(xy 307.34 175.26) (xy 378.46 175.26)
 		)
 		(stroke
-			(width 0.381)
+			(width 0.508)
 			(type default)
+			(color 0 0 255 1)
 		)
 		(uuid "cb11fad4-935f-4e79-ab03-3439e6db039b")
 	)
@@ -18109,7 +18117,7 @@
 	)
 	(wire
 		(pts
-			(xy 250.19 34.29) (xy 255.27 34.29)
+			(xy 250.19 34.29) (xy 265.43 34.29)
 		)
 		(stroke
 			(width 0.381)
@@ -18146,6 +18154,16 @@
 			(type default)
 		)
 		(uuid "d1fc07ce-62d3-4739-bfce-d2de72e719a1")
+	)
+	(wire
+		(pts
+			(xy 354.33 193.04) (xy 351.79 193.04)
+		)
+		(stroke
+			(width 0.381)
+			(type default)
+		)
+		(uuid "d22320f4-a599-4e10-a21a-c4c4352fd0d6")
 	)
 	(wire
 		(pts
@@ -18309,11 +18327,12 @@
 	)
 	(wire
 		(pts
-			(xy 306.07 198.12) (xy 306.07 179.07)
+			(xy 304.8 198.12) (xy 304.8 179.07)
 		)
 		(stroke
 			(width 0.381)
 			(type default)
+			(color 255 0 0 1)
 		)
 		(uuid "da280b27-3fd9-44e6-a286-3943407796d2")
 	)
@@ -18482,8 +18501,9 @@
 			(xy 378.46 198.12) (xy 351.79 198.12)
 		)
 		(stroke
-			(width 0.381)
+			(width 0.508)
 			(type default)
+			(color 0 0 255 1)
 		)
 		(uuid "e2961b6f-eba3-48f4-bbf7-0be26fe1f230")
 	)
@@ -18609,16 +18629,6 @@
 	)
 	(wire
 		(pts
-			(xy 265.43 40.64) (xy 265.43 57.15)
-		)
-		(stroke
-			(width 0.381)
-			(type default)
-		)
-		(uuid "e6f2bd4a-a98d-4e76-aa94-c701b0682f80")
-	)
-	(wire
-		(pts
 			(xy 199.39 97.79) (xy 199.39 90.17)
 		)
 		(stroke
@@ -18709,7 +18719,7 @@
 	)
 	(wire
 		(pts
-			(xy 44.45 77.47) (xy 49.53 77.47)
+			(xy 38.1 77.47) (xy 44.45 77.47)
 		)
 		(stroke
 			(width 0.381)
@@ -18959,6 +18969,16 @@
 	)
 	(wire
 		(pts
+			(xy 44.45 77.47) (xy 49.53 77.47)
+		)
+		(stroke
+			(width 0.381)
+			(type default)
+		)
+		(uuid "f428d66d-6227-46b8-970e-668f46ba0653")
+	)
+	(wire
+		(pts
 			(xy 502.92 17.78) (xy 502.92 22.86)
 		)
 		(stroke
@@ -19139,16 +19159,6 @@
 	)
 	(wire
 		(pts
-			(xy 44.45 109.22) (xy 76.2 109.22)
-		)
-		(stroke
-			(width 0.381)
-			(type default)
-		)
-		(uuid "fe170a51-9cff-4a4c-875f-f26b92591cc2")
-	)
-	(wire
-		(pts
 			(xy 452.12 168.91) (xy 452.12 170.18)
 		)
 		(stroke
@@ -19237,7 +19247,7 @@
 		(uuid "0667db8e-6b39-404d-9d7e-da99e9584174")
 	)
 	(label "USB-C_D+"
-		(at 306.07 179.07 180)
+		(at 304.8 179.07 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -19367,7 +19377,7 @@
 		(uuid "3731a630-f46a-4074-98cd-7a7f211ff765")
 	)
 	(label "USB-C_D-"
-		(at 308.61 175.26 180)
+		(at 307.34 175.26 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -19518,7 +19528,7 @@
 		)
 		(uuid "643d164c-1938-4cff-9a68-bdbeca6abfaa")
 	)
-	(label "MAX1_CS"
+	(label "MAX5_CS"
 		(at 238.76 184.15 0)
 		(effects
 			(font
@@ -19589,7 +19599,7 @@
 		(uuid "7e27e9cf-4e9d-45b2-83a8-b545a4a547d5")
 	)
 	(label "VBUS"
-		(at 316.23 193.04 180)
+		(at 313.69 193.04 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -19756,7 +19766,7 @@
 		(uuid "b29525e5-a8af-4f15-b5a6-1d2b94be8b4e")
 	)
 	(label "VBUS"
-		(at 351.79 193.04 0)
+		(at 354.33 193.04 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -19835,7 +19845,7 @@
 		)
 		(uuid "c7b82957-a654-4d1e-8a99-bee3380d3a5c")
 	)
-	(label "MAX5_CS"
+	(label "MAX1_CS"
 		(at 199.39 189.23 180)
 		(effects
 			(font
@@ -21230,7 +21240,7 @@
 		(dnp no)
 		(uuid "0c7e94fa-5532-4b67-bf0d-9c0db5193cd0")
 		(property "Reference" "D1"
-			(at 248.158 40.64 90)
+			(at 248.158 37.084 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -21241,7 +21251,7 @@
 			)
 		)
 		(property "Value" "SMBJ20A"
-			(at 249.174 38.354 90)
+			(at 249.174 38.862 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -21559,7 +21569,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 411.1752 160.02 0)
 			(hide yes)
 			(show_name no)
@@ -21582,6 +21592,39 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 410.21 163.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL05B104KO5NNNC/3886659"
+			(at 410.21 163.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 410.21 163.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "CL05B104KO5NNNC"
 			(at 410.21 163.83 0)
 			(hide yes)
 			(show_name no)
@@ -23198,7 +23241,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 459.4352 237.49 0)
 			(hide yes)
 			(show_name no)
@@ -23221,6 +23264,39 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 458.47 241.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL05B104KO5NNNC/3886659"
+			(at 458.47 241.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 458.47 241.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "CL05B104KO5NNNC"
 			(at 458.47 241.3 0)
 			(hide yes)
 			(show_name no)
@@ -24745,7 +24821,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 503.8852 165.1 0)
 			(hide yes)
 			(show_name no)
@@ -24768,6 +24844,39 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 502.92 168.91 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL05B104KO5NNNC/3886659"
+			(at 502.92 168.91 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 502.92 168.91 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "CL05B104KO5NNNC"
 			(at 502.92 168.91 0)
 			(hide yes)
 			(show_name no)
@@ -25064,7 +25173,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 411.1752 111.76 0)
 			(hide yes)
 			(show_name no)
@@ -25087,6 +25196,39 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 410.21 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL05B104KO5NNNC/3886659"
+			(at 410.21 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 410.21 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "CL05B104KO5NNNC"
 			(at 410.21 115.57 0)
 			(hide yes)
 			(show_name no)
@@ -26865,7 +27007,7 @@
 		(dnp no)
 		(uuid "5fac2a89-0140-4bae-a894-c5faec0f185f")
 		(property "Reference" "C15"
-			(at 235.712 37.592 0)
+			(at 230.632 37.338 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -26876,7 +27018,7 @@
 			)
 		)
 		(property "Value" "220µF 35V"
-			(at 235.712 41.91 0)
+			(at 228.346 41.656 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -27626,7 +27768,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 460.7052 140.97 0)
 			(hide yes)
 			(show_name no)
@@ -27649,6 +27791,39 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 459.74 144.78 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL05B104KO5NNNC/3886659"
+			(at 459.74 144.78 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 459.74 144.78 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "CL05B104KO5NNNC"
 			(at 459.74 144.78 0)
 			(hide yes)
 			(show_name no)
@@ -27802,7 +27977,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 503.8852 22.86 0)
 			(hide yes)
 			(show_name no)
@@ -27825,6 +28000,39 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 502.92 26.67 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL05B104KO5NNNC/3886659"
+			(at 502.92 26.67 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 502.92 26.67 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "CL05B104KO5NNNC"
 			(at 502.92 26.67 0)
 			(hide yes)
 			(show_name no)
@@ -28239,7 +28447,7 @@
 				)
 			)
 		)
-		(property "Value" "NEUTRAL-In"
+		(property "Value" "(N)-in"
 			(at 64.262 48.768 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -28627,7 +28835,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 411.1752 64.77 0)
 			(hide yes)
 			(show_name no)
@@ -28650,6 +28858,39 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 410.21 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL05B104KO5NNNC/3886659"
+			(at 410.21 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 410.21 68.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "CL05B104KO5NNNC"
 			(at 410.21 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -28688,7 +28929,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7ec858ea-c245-4562-ac1f-15507d78b079")
-		(property "Reference" "J10"
+		(property "Reference" "J9"
 			(at 171.45 231.14 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -28860,7 +29101,7 @@
 		(instances
 			(project "PelletPirate_V5"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
-					(reference "J10")
+					(reference "J9")
 					(unit 1)
 				)
 			)
@@ -29930,7 +30171,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 460.7052 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -29953,6 +30194,39 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 459.74 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL05B104KO5NNNC/3886659"
+			(at 459.74 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 459.74 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "CL05B104KO5NNNC"
 			(at 459.74 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -30301,7 +30575,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 411.1752 208.28 0)
 			(hide yes)
 			(show_name no)
@@ -30324,6 +30598,39 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 410.21 212.09 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL05B104KO5NNNC/3886659"
+			(at 410.21 212.09 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 410.21 212.09 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "CL05B104KO5NNNC"
 			(at 410.21 212.09 0)
 			(hide yes)
 			(show_name no)
@@ -30459,7 +30766,7 @@
 				)
 			)
 		)
-		(property "Footprint" "STPS0540Z_Schotty Diode LED:SOD-123"
+		(property "Footprint" "STPS0540Z_Schotty Diode LED:D2-Footprint-Flyman"
 			(at 255.524 83.566 0)
 			(hide yes)
 			(show_name no)
@@ -31109,7 +31416,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 503.8852 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -31132,6 +31439,39 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 502.92 118.11 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL05B104KO5NNNC/3886659"
+			(at 502.92 118.11 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 502.92 118.11 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "CL05B104KO5NNNC"
 			(at 502.92 118.11 0)
 			(hide yes)
 			(show_name no)
@@ -32208,7 +32548,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 33.274 256.286 90)
 			(hide yes)
 			(show_name no)
@@ -32334,7 +32674,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 412.4452 16.51 0)
 			(hide yes)
 			(show_name no)
@@ -32357,6 +32697,39 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 411.48 20.32 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL05B104KO5NNNC/3886659"
+			(at 411.48 20.32 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 411.48 20.32 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "CL05B104KO5NNNC"
 			(at 411.48 20.32 0)
 			(hide yes)
 			(show_name no)
@@ -32842,7 +33215,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b036f978-830a-4050-8a97-51008c5a2254")
-		(property "Reference" "J9"
+		(property "Reference" "J8"
 			(at 334.01 185.42 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -33104,7 +33477,7 @@
 		(instances
 			(project "PelletPirate_V5"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
-					(reference "J9")
+					(reference "J8")
 					(unit 1)
 				)
 			)
@@ -34095,7 +34468,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 460.7052 46.99 0)
 			(hide yes)
 			(show_name no)
@@ -34118,6 +34491,39 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 459.74 50.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL05B104KO5NNNC/3886659"
+			(at 459.74 50.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 459.74 50.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "CL05B104KO5NNNC"
 			(at 459.74 50.8 0)
 			(hide yes)
 			(show_name no)
@@ -34744,7 +35150,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 503.8852 67.31 0)
 			(hide yes)
 			(show_name no)
@@ -34767,6 +35173,39 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 502.92 71.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL05B104KO5NNNC/3886659"
+			(at 502.92 71.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 502.92 71.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "CL05B104KO5NNNC"
 			(at 502.92 71.12 0)
 			(hide yes)
 			(show_name no)
@@ -35398,7 +35837,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 503.8852 212.09 0)
 			(hide yes)
 			(show_name no)
@@ -35421,6 +35860,39 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 502.92 215.9 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL05B104KO5NNNC/3886659"
+			(at 502.92 215.9 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 502.92 215.9 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "CL05B104KO5NNNC"
 			(at 502.92 215.9 0)
 			(hide yes)
 			(show_name no)
@@ -38179,7 +38651,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 460.7052 189.23 0)
 			(hide yes)
 			(show_name no)
@@ -38202,6 +38674,39 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 459.74 193.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL05B104KO5NNNC/3886659"
+			(at 459.74 193.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 459.74 193.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "CL05B104KO5NNNC"
 			(at 459.74 193.04 0)
 			(hide yes)
 			(show_name no)
@@ -38540,7 +39045,7 @@
 	)
 	(symbol
 		(lib_id "power:+12V")
-		(at 256.54 34.29 270)
+		(at 270.51 34.29 270)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -38550,7 +39055,7 @@
 		(dnp no)
 		(uuid "f01cbc84-ce46-409e-abee-82beb4d62e75")
 		(property "Reference" "#PWR017"
-			(at 252.73 34.29 0)
+			(at 266.7 34.29 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -38561,7 +39066,7 @@
 			)
 		)
 		(property "Value" "+12V"
-			(at 262.382 34.29 90)
+			(at 276.352 34.29 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -38571,7 +39076,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 256.54 34.29 0)
+			(at 270.51 34.29 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -38582,7 +39087,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 256.54 34.29 0)
+			(at 270.51 34.29 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -38593,7 +39098,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+12V\""
-			(at 256.54 34.29 0)
+			(at 270.51 34.29 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -38618,7 +39123,7 @@
 	(symbol
 		(lib_id "Device:C")
 		(at 44.45 96.52 0)
-		(mirror x)
+		(mirror y)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -38628,7 +39133,7 @@
 		(dnp no)
 		(uuid "f3de7ced-7658-44ef-9251-912842f398bb")
 		(property "Reference" "C11"
-			(at 45.212 94.234 0)
+			(at 43.688 98.806 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -38639,7 +39144,7 @@
 			)
 		)
 		(property "Value" "0.1µF 50V"
-			(at 45.212 98.806 0)
+			(at 43.688 94.234 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -38650,7 +39155,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
-			(at 45.4152 92.71 0)
+			(at 43.4848 100.33 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
