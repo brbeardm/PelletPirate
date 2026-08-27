@@ -1108,7 +1108,7 @@
       "method": 0,
       "sort_order": 0
     },
-    "bom_export_filename": "C:\\DEVELOPMENT\\pelletpirate\\KiCad\\PelletPirate_V4\\PelletPirate_V4_BOM.csv",
+    "bom_export_filename": "C:\\DEVELOPMENT\\pelletpirate\\KiCad\\PelletPirate_V5\\PelletPirate_V5_BOM.csv",
     "bom_fmt_presets": [],
     "bom_fmt_settings": {
       "field_delimiter": ",",
@@ -1145,19 +1145,19 @@
           "group_by": true,
           "label": "DNP",
           "name": "${DNP}",
-          "show": true
+          "show": false
         },
         {
           "group_by": true,
           "label": "Exclude from BOM",
           "name": "${EXCLUDE_FROM_BOM}",
-          "show": true
+          "show": false
         },
         {
           "group_by": true,
           "label": "Exclude from Board",
           "name": "${EXCLUDE_FROM_BOARD}",
-          "show": true
+          "show": false
         },
         {
           "group_by": true,
@@ -1169,7 +1169,7 @@
           "group_by": false,
           "label": "Datasheet",
           "name": "Datasheet",
-          "show": true
+          "show": false
         },
         {
           "group_by": false,
@@ -1187,7 +1187,7 @@
           "group_by": false,
           "label": "DigiKey_Part_Number",
           "name": "DigiKey_Part_Number",
-          "show": true
+          "show": false
         },
         {
           "group_by": false,
@@ -1319,7 +1319,7 @@
           "group_by": false,
           "label": "Description",
           "name": "Description",
-          "show": false
+          "show": true
         },
         {
           "group_by": false,
@@ -1382,7 +1382,7 @@
         "uuid": "0182ac56-03c6-4c14-8ead-12e31828f094"
       }
     ],
-    "used_designators": "J7-11,#FLG5,R10-12,R32-47,T4,#PWR5,#PWR15-16,#PWR50,#PWR54-63,ESP1,S1-2,MOC4,LED1,C17,C37-43,U1,U3,WirePad6",
+    "used_designators": "J7-11,#FLG5,R10-12,R32-47,T4,#PWR5,#PWR15-16,#PWR50,#PWR54-63,ESP1,S1-2,MOC4,LED1,C17,C37-43,U1,U3,WirePad6,TP1-3",
     "variants": []
   },
   "sheets": [

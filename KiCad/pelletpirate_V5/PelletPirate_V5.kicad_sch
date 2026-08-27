@@ -1300,6 +1300,129 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Connector:TestPoint"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0.762)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "TP"
+				(at 0 6.858 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "TestPoint"
+				(at 0 5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 5.08 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 5.08 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "test point"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "test point tp"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "Pin* Test*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "TestPoint_0_1"
+				(circle
+					(center 0 3.302)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "TestPoint_1_1"
+				(pin passive line
+					(at 0 0 90)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Connector_Generic:Conn_01x04"
 			(pin_names
 				(offset 1.016)
@@ -12488,6 +12611,12 @@
 		(uuid "8ad8fd9d-63cb-4ab0-b728-7779eebe2e32")
 	)
 	(junction
+		(at 72.39 302.26)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "8bed72e9-a238-4ef2-9057-cc517297d4fe")
+	)
+	(junction
 		(at 110.49 34.29)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -16313,6 +16442,16 @@
 	)
 	(wire
 		(pts
+			(xy 72.39 302.26) (xy 76.2 302.26)
+		)
+		(stroke
+			(width 0.381)
+			(type default)
+		)
+		(uuid "8095bd91-212e-4187-8872-9c65539c5bd9")
+	)
+	(wire
+		(pts
 			(xy 502.92 160.02) (xy 510.54 160.02)
 		)
 		(stroke
@@ -17656,7 +17795,7 @@
 	)
 	(wire
 		(pts
-			(xy 68.58 302.26) (xy 76.2 302.26)
+			(xy 68.58 302.26) (xy 72.39 302.26)
 		)
 		(stroke
 			(width 0.381)
@@ -20559,6 +20698,39 @@
 				)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/C0805C105K5RACTU/3317615 "
+			(at 267.97 88.9 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "KEMET"
+			(at 267.97 88.9 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "C0805C105K5RACTU  "
+			(at 267.97 88.9 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "eb44e3f0-e2f0-4037-9fa3-b99fb909adfb")
 		)
@@ -20630,6 +20802,39 @@
 		)
 		(property "Description" "Generic common-mode choke, ferrite core, 1243 pin order"
 			(at 124.206 40.132 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/SSRH7H-M05408/8509242 "
+			(at 128.27 39.37 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "KEMET"
+			(at 128.27 39.37 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "SSRH7H-M05408 "
+			(at 128.27 39.37 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -21440,6 +21645,17 @@
 				(justify bottom)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/littelfuse-inc/SMBJ20A/285988 "
+			(at 250.19 40.64 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "36e911de-df8c-4931-a4a0-4fe546901746")
 		)
@@ -21613,7 +21829,7 @@
 				)
 			)
 		)
-		(property "MF" "YAGEO"
+		(property "MF" "Samsung"
 			(at 410.21 163.83 0)
 			(hide yes)
 			(show_name no)
@@ -22425,7 +22641,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "BTA12-Triac"
+		(property "Value" "BTA12-600BWRG"
 			(at 68.072 128.27 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -22462,6 +22678,39 @@
 			)
 		)
 		(property "Description" "12A RMS, 600V Off-State Voltage, 50mA Sensitivity, Snubberless, Insulated, Triac, TO-220"
+			(at 64.77 130.81 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/stmicroelectronics/BTA12-600BWRG/654429 "
+			(at 64.77 130.81 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "STMicroelectronics"
+			(at 64.77 130.81 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "BTA12-600BWRG  "
 			(at 64.77 130.81 0)
 			(hide yes)
 			(show_name no)
@@ -22625,6 +22874,39 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 247.65 96.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/yageo/RC1206FR-074R99L/728895 "
+			(at 247.65 96.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 247.65 96.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "RC1206FR-074R99L  "
 			(at 247.65 96.52 0)
 			(hide yes)
 			(show_name no)
@@ -23003,6 +23285,39 @@
 				)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/analog-devices-inc-maxim-integrated/MAX31865ATP/3681476 "
+			(at 433.07 232.41 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "ANALOG DEVICES"
+			(at 433.07 232.41 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "MAX31865ATP+  "
+			(at 433.07 232.41 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "10"
 			(uuid "142cd249-cef5-4603-90b9-91680e62378f")
 		)
@@ -23156,7 +23471,7 @@
 				)
 			)
 		)
-		(property "LINK" "https://www.digikey.com/en/products/detail/stmicroelectronics/BTA12-600BWRG/654429"
+		(property "LINK" "https://www.digikey.com/en/products/detail/stmicroelectronics/BTA12-600BWRG/654429 "
 			(at 71.12 248.92 0)
 			(hide yes)
 			(show_name no)
@@ -23178,7 +23493,7 @@
 				)
 			)
 		)
-		(property "MP" "BTA12-600BWRG "
+		(property "MP" "BTA12-600BWRG  "
 			(at 71.12 248.92 0)
 			(hide yes)
 			(show_name no)
@@ -23285,7 +23600,7 @@
 				)
 			)
 		)
-		(property "MF" "YAGEO"
+		(property "MF" "Samsung"
 			(at 458.47 241.3 0)
 			(hide yes)
 			(show_name no)
@@ -23692,6 +24007,17 @@
 				(justify bottom)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/hirose-electric-co-ltd/FH26W-39S-0-3SHW-60/5132503 "
+			(at 237.49 292.1 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "5"
 			(uuid "a04ac681-9d46-4520-9f7c-ed0827aeab5c")
 		)
@@ -24095,6 +24421,39 @@
 				)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/C0805C104K5RACTU/411169 "
+			(at 92.71 82.55 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "KEMET"
+			(at 92.71 82.55 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "C0805C104K5RACTU "
+			(at 92.71 82.55 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "515a0739-2311-4b53-8b73-b8492251d294")
 		)
@@ -24485,6 +24844,17 @@
 				)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/panasonic-industry/ERJ-UP6F1800V/8134828 "
+			(at 29.21 195.58 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "5fd35940-58a2-4eae-9d6b-f226c1f4e8a4")
 		)
@@ -24865,7 +25235,7 @@
 				)
 			)
 		)
-		(property "MF" "YAGEO"
+		(property "MF" "Samsung"
 			(at 502.92 168.91 0)
 			(hide yes)
 			(show_name no)
@@ -25047,6 +25417,39 @@
 				)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/A750MS477M1EAAE015/6196448 "
+			(at 203.2 40.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "KEMET"
+			(at 203.2 40.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "A750MS477M1EAAE015 "
+			(at 203.2 40.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "f0080673-ba66-4b87-97a7-f5cd7e644661")
 		)
@@ -25217,7 +25620,7 @@
 				)
 			)
 		)
-		(property "MF" "YAGEO"
+		(property "MF" "Samsung"
 			(at 410.21 115.57 0)
 			(hide yes)
 			(show_name no)
@@ -25310,6 +25713,17 @@
 		)
 		(property "Description" "Resistor, US symbol"
 			(at 31.75 137.16 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/panasonic-industry/ERJ-UP6F1800V/8134828 "
+			(at 31.75 137.16 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -25576,6 +25990,17 @@
 				(justify bottom)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/texas-instruments/TPS61165DBVR/2340764 "
+			(at 222.25 90.17 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "01c03462-57f0-47e4-bb00-ec0e3b06aede")
 		)
@@ -25747,6 +26172,17 @@
 				)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/VY2471K29Y5SS63V7/1983391 "
+			(at 162.56 40.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "7d07d032-b101-41cf-813e-daa7380990a1")
 		)
@@ -25819,6 +26255,39 @@
 			)
 		)
 		(property "Description" "RTD-to-Digital Converter, TQFN-20"
+			(at 433.07 41.91 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/analog-devices-inc-maxim-integrated/MAX31865ATP/3681476 "
+			(at 433.07 41.91 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "ANALOG DEVICES"
+			(at 433.07 41.91 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "MAX31865ATP+  "
 			(at 433.07 41.91 0)
 			(hide yes)
 			(show_name no)
@@ -26980,6 +27449,39 @@
 				)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/R46KF310000M1M/5177298 "
+			(at 101.6 40.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "KEMET"
+			(at 101.6 40.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "R46KF310000M1M  "
+			(at 101.6 40.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "272669a2-a540-439d-a2a7-79ed43f46e1c")
 		)
@@ -27051,6 +27553,39 @@
 			)
 		)
 		(property "Description" "capacitor, small US symbol"
+			(at 234.95 39.37 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/kyocera-avx/RPF0811221M035K/20096675 "
+			(at 234.95 39.37 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "KYOCERA AVX"
+			(at 234.95 39.37 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "RPF0811221M035K  "
 			(at 234.95 39.37 0)
 			(hide yes)
 			(show_name no)
@@ -27197,6 +27732,39 @@
 				)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/bourns-inc/MOV-14D561K/2798251 "
+			(at 86.36 40.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "BOURNS"
+			(at 86.36 40.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "MOV-14D561K "
+			(at 86.36 40.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "1c3a086f-afa0-4709-a2aa-afc2f4c81708")
 		)
@@ -27207,6 +27775,83 @@
 			(project "PelletPirate_V5"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "MOV1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 69.85 311.15 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "61c83519-905e-469d-adaa-82f0913b4fb7")
+		(property "Reference" "TP2"
+			(at 66.548 306.07 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TestPoint"
+			(at 66.548 308.61 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_THTPad_D1.5mm_Drill0.7mm"
+			(at 69.85 306.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 69.85 306.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "test point"
+			(at 69.85 311.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "944bdb52-1a81-4e17-aad6-1d02247984a5")
+		)
+		(instances
+			(project "PelletPirate_V5"
+				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
+					(reference "TP2")
 					(unit 1)
 				)
 			)
@@ -27268,6 +27913,39 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 204.47 105.41 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/C0805C224K5RACTU/754753 "
+			(at 204.47 105.41 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "KEMET"
+			(at 204.47 105.41 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "C0805C224K5RACTU  "
 			(at 204.47 105.41 0)
 			(hide yes)
 			(show_name no)
@@ -27643,6 +28321,17 @@
 				)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/C1206C106K3RACTU/3317648 "
+			(at 38.1 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "94c140e9-7b60-4b49-a29d-10fe01e63725")
 		)
@@ -27812,7 +28501,7 @@
 				)
 			)
 		)
-		(property "MF" "YAGEO"
+		(property "MF" "Samsung"
 			(at 459.74 144.78 0)
 			(hide yes)
 			(show_name no)
@@ -27906,6 +28595,39 @@
 			)
 		)
 		(property "Description" "Zero Cross Opto-Triac, Vdrm 600V, Ift 5mA, DIP6"
+			(at 43.18 198.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/onsemi/MOC3063M/281237 "
+			(at 43.18 198.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "ONSEMI"
+			(at 43.18 198.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "MOC3063M"
 			(at 43.18 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -28021,7 +28743,7 @@
 				)
 			)
 		)
-		(property "MF" "YAGEO"
+		(property "MF" "Samsung"
 			(at 502.92 26.67 0)
 			(hide yes)
 			(show_name no)
@@ -28329,6 +29051,39 @@
 				)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/murata-electronics/GRM31CZ71C226ME15L/13904808 "
+			(at 137.16 92.71 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "MURATA"
+			(at 137.16 92.71 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "GRM31CZ71C226ME15L  "
+			(at 137.16 92.71 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "f7754c2c-7d77-49da-95a2-32e479a4fea9")
 		)
@@ -28339,6 +29094,85 @@
 			(project "PelletPirate_V5"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "C19")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 72.39 302.26 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "6f65f6f1-408e-4b8b-a156-449d11e2bd3a")
+		(property "Reference" "TP1"
+			(at 74.93 297.6879 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TestPoint"
+			(at 74.93 300.2279 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_THTPad_D1.5mm_Drill0.7mm"
+			(at 77.47 302.26 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 77.47 302.26 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "test point"
+			(at 72.39 302.26 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "944bdb52-1a81-4e17-aad6-1d02247984a6")
+		)
+		(instances
+			(project "PelletPirate_V5"
+				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
+					(reference "TP1")
 					(unit 1)
 				)
 			)
@@ -28401,6 +29235,39 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
+			(at 457.2 125.73 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/yageo/RT1206BRD07400RL/5936956 "
+			(at 457.2 125.73 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 457.2 125.73 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "RT1206BRD07400RL  "
 			(at 457.2 125.73 0)
 			(hide yes)
 			(show_name no)
@@ -28569,6 +29436,39 @@
 				)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/analog-devices-inc-maxim-integrated/MAX31865ATP/3681476 "
+			(at 433.07 88.9 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "ANALOG DEVICES"
+			(at 433.07 88.9 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "MAX31865ATP+  "
+			(at 433.07 88.9 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "10"
 			(uuid "dde2df11-86ee-4ee8-a551-494d24b226d9")
 		)
@@ -28699,6 +29599,39 @@
 		)
 		(property "Description" "Unpolarized capacitor"
 			(at 184.15 54.61 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/VY2102M29Y5US63V7/1983393 "
+			(at 184.15 54.61 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "VISHAY"
+			(at 184.15 54.61 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "VY2102M29Y5US63V7  "
+			(at 184.15 54.61 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -28879,7 +29812,7 @@
 				)
 			)
 		)
-		(property "MF" "YAGEO"
+		(property "MF" "Samsung"
 			(at 410.21 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -29454,6 +30387,39 @@
 				)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/murata-electronics/GRM31CZ71C226ME15L/13904808 "
+			(at 143.51 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "MURATA"
+			(at 143.51 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "GRM31CZ71C226ME15L  "
+			(at 143.51 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "8d105362-2bbe-475a-8208-0134559a40fd")
 		)
@@ -29838,6 +30804,17 @@
 				(justify bottom)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/murata-electronics/LQH3NPH2R2MMEL/12476579 "
+			(at 218.44 34.29 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "50b6f52a-3848-48a0-a9f5-f602c7b267a9")
 		)
@@ -30215,7 +31192,7 @@
 				)
 			)
 		)
-		(property "MF" "YAGEO"
+		(property "MF" "Samsung"
 			(at 459.74 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -30619,7 +31596,7 @@
 				)
 			)
 		)
-		(property "MF" "YAGEO"
+		(property "MF" "Samsung"
 			(at 410.21 212.09 0)
 			(hide yes)
 			(show_name no)
@@ -30883,6 +31860,17 @@
 					(size 1.27 1.27)
 				)
 				(justify bottom)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/stmicroelectronics/STPS0540Z/1039586 "
+			(at 255.27 76.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(pin "C"
@@ -31460,7 +32448,7 @@
 				)
 			)
 		)
-		(property "MF" "YAGEO"
+		(property "MF" "Samsung"
 			(at 502.92 118.11 0)
 			(hide yes)
 			(show_name no)
@@ -32135,6 +33123,17 @@
 				(justify bottom)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/murata-electronics/LQH43PN3R3M26L/4359202 "
+			(at 109.22 77.47 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "94f9446b-6ce4-4c6b-93cc-f6e620c25afa")
 		)
@@ -32284,6 +33283,39 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
+			(at 457.2 78.74 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/yageo/RT1206BRD07400RL/5936956 "
+			(at 457.2 78.74 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 457.2 78.74 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "RT1206BRD07400RL  "
 			(at 457.2 78.74 0)
 			(hide yes)
 			(show_name no)
@@ -32718,7 +33750,7 @@
 				)
 			)
 		)
-		(property "MF" "YAGEO"
+		(property "MF" "Samsung"
 			(at 411.48 20.32 0)
 			(hide yes)
 			(show_name no)
@@ -33225,7 +34257,7 @@
 				)
 			)
 		)
-		(property "Value" "USB4145-03-0070-C_REVA2"
+		(property "Value" "USB4145-03-0170-C"
 			(at 334.01 187.96 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -33318,7 +34350,7 @@
 				(justify bottom)
 			)
 		)
-		(property "Check_prices" "https://www.snapeda.com/parts/USB4145-03-0070-C/Global+Connector+Technology/view-part/?ref=eda"
+		(property "Check_prices" ""
 			(at 334.01 200.66 0)
 			(hide yes)
 			(show_name no)
@@ -33354,7 +34386,7 @@
 				(justify bottom)
 			)
 		)
-		(property "SnapEDA_Link" "https://www.snapeda.com/parts/USB4145-03-0070-C/Global+Connector+Technology/view-part/?ref=snap"
+		(property "SnapEDA_Link" "https://www.digikey.com/en/products/detail/gct/USB4145-03-0170-C/16649098?s=N4IgTCBcDaIKoGUBCAWAjCgrAWgAwGY80B2XbAYRAF0BfIA"
 			(at 334.01 200.66 0)
 			(hide yes)
 			(show_name no)
@@ -33366,7 +34398,7 @@
 				(justify bottom)
 			)
 		)
-		(property "MP" "USB4145-03-0070-C"
+		(property "MP" "USB4145-03-0170-C"
 			(at 334.01 200.66 0)
 			(hide yes)
 			(show_name no)
@@ -33402,7 +34434,7 @@
 				(justify bottom)
 			)
 		)
-		(property "SNAPEDA_PN" "USB4145-03-0070-C"
+		(property "SNAPEDA_PN" "USB4145-03-0170-C"
 			(at 334.01 200.66 0)
 			(hide yes)
 			(show_name no)
@@ -33412,6 +34444,17 @@
 					(size 1.27 1.27)
 				)
 				(justify bottom)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/gct/USB4145-03-0170-C/16649098"
+			(at 334.01 200.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(pin "A8"
@@ -33540,6 +34583,39 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
+			(at 457.2 222.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/yageo/RT1206BRD07400RL/5936956 "
+			(at 457.2 222.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 457.2 222.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "RT1206BRD07400RL  "
 			(at 457.2 222.25 0)
 			(hide yes)
 			(show_name no)
@@ -33744,7 +34820,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "BTA12-Triac"
+		(property "Value" "BTA12-600BWRG"
 			(at 67.818 186.182 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -33781,6 +34857,39 @@
 			)
 		)
 		(property "Description" "12A RMS, 600V Off-State Voltage, 50mA Sensitivity, Snubberless, Insulated, Triac, TO-220"
+			(at 64.77 189.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/stmicroelectronics/BTA12-600BWRG/654429 "
+			(at 64.77 189.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "STMicroelectronics"
+			(at 64.77 189.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "BTA12-600BWRG  "
 			(at 64.77 189.23 0)
 			(hide yes)
 			(show_name no)
@@ -34204,6 +35313,39 @@
 				)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/analog-devices-inc-maxim-integrated/MAX31865ATP/3681476 "
+			(at 433.07 184.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "ANALOG DEVICES"
+			(at 433.07 184.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "MAX31865ATP+  "
+			(at 433.07 184.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "10"
 			(uuid "ea0d3d4d-40a0-4ed2-84cb-da11e5647aa4")
 		)
@@ -34512,7 +35654,7 @@
 				)
 			)
 		)
-		(property "MF" "YAGEO"
+		(property "MF" "Samsung"
 			(at 459.74 50.8 0)
 			(hide yes)
 			(show_name no)
@@ -35194,7 +36336,7 @@
 				)
 			)
 		)
-		(property "MF" "YAGEO"
+		(property "MF" "Samsung"
 			(at 502.92 71.12 0)
 			(hide yes)
 			(show_name no)
@@ -35365,6 +36507,39 @@
 			)
 		)
 		(property "Description" "RTD-to-Digital Converter, TQFN-20"
+			(at 433.07 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/analog-devices-inc-maxim-integrated/MAX31865ATP/3681476 "
+			(at 433.07 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "ANALOG DEVICES"
+			(at 433.07 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "MAX31865ATP+  "
 			(at 433.07 135.89 0)
 			(hide yes)
 			(show_name no)
@@ -35881,7 +37056,7 @@
 				)
 			)
 		)
-		(property "MF" "YAGEO"
+		(property "MF" "Samsung"
 			(at 502.92 215.9 0)
 			(hide yes)
 			(show_name no)
@@ -36358,6 +37533,17 @@
 				(justify bottom)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/bel-power-solutions/PBO-5F-12/28717413 "
+			(at 184.15 39.37 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "06e9c600-763a-40e2-9ae2-d4df4ab11164")
 		)
@@ -36441,6 +37627,39 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
+			(at 457.2 173.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/yageo/RT1206BRD07400RL/5936956 "
+			(at 457.2 173.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 457.2 173.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "RT1206BRD07400RL  "
 			(at 457.2 173.99 0)
 			(hide yes)
 			(show_name no)
@@ -36771,6 +37990,17 @@
 			)
 		)
 		(property "Description" "capacitor, small US symbol"
+			(at 142.24 36.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/VY2471K29Y5SS63V7/1983391"
 			(at 142.24 36.83 0)
 			(hide yes)
 			(show_name no)
@@ -37427,7 +38657,7 @@
 				)
 			)
 		)
-		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/C1206C106K3RACTU/3317648"
+		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/C1206C106K3RACTU/3317648 "
 			(at 279.4 175.26 0)
 			(hide yes)
 			(show_name no)
@@ -37965,6 +39195,17 @@
 				(justify bottom)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/texas-instruments/TPS562201DDCR/5808210 "
+			(at 71.12 87.63 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "6"
 			(uuid "23ec07ed-3619-409f-a334-2365d10593db")
 		)
@@ -38049,6 +39290,39 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 129.54 85.09 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/murata-electronics/GRM31CZ71C226ME15L/13904808 "
+			(at 129.54 85.09 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "MURATA"
+			(at 129.54 85.09 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "GRM31CZ71C226ME15L  "
 			(at 129.54 85.09 0)
 			(hide yes)
 			(show_name no)
@@ -38509,6 +39783,39 @@
 				)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/onsemi/MOC3063M/281237 "
+			(at 43.18 139.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "ONSEMI"
+			(at 43.18 139.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "MOC3063M"
+			(at 43.18 139.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "4"
 			(uuid "9df8aaf3-ae88-4ec5-abe2-21929d5d725e")
 		)
@@ -38592,6 +39899,17 @@
 			)
 		)
 		(property "Description" "capacitor, small US symbol"
+			(at 142.24 44.45 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/VY2471K29Y5SS63V7/1983391"
 			(at 142.24 44.45 0)
 			(hide yes)
 			(show_name no)
@@ -38695,7 +40013,7 @@
 				)
 			)
 		)
-		(property "MF" "YAGEO"
+		(property "MF" "Samsung"
 			(at 459.74 193.04 0)
 			(hide yes)
 			(show_name no)
@@ -39187,6 +40505,39 @@
 				)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/C0805C104K5RACTU/411169 "
+			(at 44.45 96.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "KEMET"
+			(at 44.45 96.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "C0805C104K5RACTU "
+			(at 44.45 96.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "a4ccfdd9-ddcd-4244-908c-2808d86e0d8c")
 		)
@@ -39637,6 +40988,17 @@
 				)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/C1206C106K3RACTU/3317648 "
+			(at 176.53 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "1706b5f1-998b-4c0d-84dc-1b48c418de9c")
 		)
@@ -39802,6 +41164,17 @@
 				(justify bottom)
 			)
 		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/bourns-inc/SRR4028-100Y/1970246 "
+			(at 222.25 73.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "083f4b15-996e-46ca-bb30-04521e5018d6")
 		)
@@ -39874,6 +41247,39 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
+			(at 457.2 31.75 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/yageo/RT1206BRD07400RL/5936956 "
+			(at 457.2 31.75 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "YAGEO"
+			(at 457.2 31.75 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "RT1206BRD07400RL  "
 			(at 457.2 31.75 0)
 			(hide yes)
 			(show_name no)
