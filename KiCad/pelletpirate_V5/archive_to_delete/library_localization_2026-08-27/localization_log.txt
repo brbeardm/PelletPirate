@@ -1,0 +1,36 @@
+SKIP identical: SJ1-3523NG.kicad_sym
+COPY BTA12-600BWRG.kicad_sym -> BTA12-600BWRG
+DISPLACED differing dest -> archive: ESP32-S3-WROOM-1U-N16R8.kicad_sym
+COPY ESP32-S3-WROOM-1U-N16R8.kicad_sym -> Expressif_S3_N16R8_chip_N1U
+SKIP identical: FH26W-39S-0.3SHW_60_.kicad_sym
+SKIP identical: KMR221GLFS.kicad_sym
+SKIP identical: LQH3NPH2R2MMEL.kicad_sym
+SKIP identical: LQH43PN3R3M26L.kicad_sym
+SKIP identical: LTST-C191KGKT_flyman.kicad_sym
+SKIP identical: MOC3063M-PP2.kicad_sym
+COPY PBO-5F-12_pp2.kicad_sym -> PBO-5F-12_PelletPirate2
+SKIP identical: SMBJ20A_PelletPirate.kicad_sym
+SKIP identical: SRR4028.kicad_sym
+SKIP identical: STPS0540Z.kicad_sym
+SKIP identical: TPS562201DDCR.kicad_sym
+SKIP identical: TPS61165DBVR.kicad_sym
+SKIP identical: USBLC6-2SC6.kicad_sym
+DISPLACED differing dest -> archive: 0031.8201.kicad_sym
+COPY 0031.8201.kicad_sym -> Schurter_Fuse_Holder
+WROTE project sym-lib-table (21 entries)
+fp-lib-table: removed 12 entries ['Capacitors', 'ESP32-DevKitC-32E_PelletPirate', 'HiRose', 'LCD-Molex', 'NCP3065 LED Boost Driver', 'PBO-5F-12_PelletPirate', 'PBO-5F-12_PelletPirate2', 'PBO-5F-12_PP_Try2', 'RC0805FR-Sense-Resistor-LED', 'Bourns_Encoder_New', '3.3uH_Inductor', 'ESP32-Footprint-PelletPirate-02x19x2=39']; added SameSky_Screw_Terminal
+stray ESP dir contents: ESP32-S3-WROOM-1U-N16R8--3DModel-STEP-56544.STEP, ESP32-S3-WROOM-1U-N16R8.kicad_sym, ESP32-S3-WROOM-1U-N16R8.step, how-to-import.htm, XCVR_ESP32-S3-WROOM-1U-N16R8.kicad_mod
+ARCHIVED: Capacitors
+ARCHIVED: ESP32-DevKitC-32E_PelletPirate
+ARCHIVED: ESP32-Footprint-PelletPirate-02x19x2=39.pretty
+ARCHIVED: PBO-5F-12_PP_Try2
+ARCHIVED: Bourns_Encoder_New
+ARCHIVED: New folder
+ARCHIVED: ESP32-S3-WROOM-1U-N16R8
+ARCHIVED: PelletPirate_V5.kicad_pro.pre_netclass_backup
+ARCHIVED: USB_try2\USB4105-GF-A-flyman.kicad_sym
+ARCHIVED: USB_try2\USB4105-GF-A-flyman.bak
+ARCHIVED: USB_try2\GCT_USB4105-GF-A_flyman.kicad_mod
+ARCHIVED: USB_try2\USB4105-GF-A--3DModel-STEP-510211.STEP
+ARCHIVED: USB_try2\USB4105-GF-A-flyman.step
+ARCHIVED: USB_try2\USB4145-03-0070-C_REVA2.bak
