@@ -1382,7 +1382,7 @@
         "uuid": "0182ac56-03c6-4c14-8ead-12e31828f094"
       }
     ],
-    "used_designators": "J7-11,#FLG5,R10-12,R32-47,T4,#PWR5,#PWR15-16,#PWR50,#PWR54-63,ESP1,S1-2,MOC4,LED1,C17,C37-43,U1,U3,WirePad6,TP1-3",
+    "used_designators": "J7-11,#FLG5,R10-12,R32-47,T4,#PWR5,#PWR15-16,#PWR48,#PWR50,#PWR54-64,ESP1,S1-2,MOC4,LED1,C17,C37-43,U1,U3,WirePad6,TP1-3",
     "variants": []
   },
   "sheets": [

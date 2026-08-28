@@ -12083,7 +12083,7 @@
 		(uuid "0f86d4c9-e118-4b41-9ca6-ab0458860642")
 	)
 	(junction
-		(at 76.2 302.26)
+		(at 363.22 243.84)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "10a36020-0869-4998-9ac6-624528ad3736")
@@ -12123,6 +12123,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "1bce11ca-847f-4142-a5c0-865b42a7ec36")
+	)
+	(junction
+		(at 157.48 186.69)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "1cdd7102-7f16-4b0b-bd51-99597f72b4c3")
 	)
 	(junction
 		(at 279.4 163.83)
@@ -12267,12 +12273,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "3df28e4c-0d89-4ee6-b1d2-09f09ca114d7")
-	)
-	(junction
-		(at 170.18 210.82)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "3eed422f-5f50-4508-ad52-27b4f77bbc00")
 	)
 	(junction
 		(at 502.92 17.78)
@@ -12443,10 +12443,16 @@
 		(uuid "5f36d3d6-d70c-4ce9-b79a-5bf4554f0a6b")
 	)
 	(junction
-		(at 69.85 311.15)
+		(at 356.87 252.73)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "60d779d6-d33f-42c2-b323-4d4531eb9166")
+	)
+	(junction
+		(at 170.18 210.82)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "61ad7598-e8ad-49eb-943e-34135f6f86c4")
 	)
 	(junction
 		(at 234.95 274.32)
@@ -12611,7 +12617,7 @@
 		(uuid "8ad8fd9d-63cb-4ab0-b728-7779eebe2e32")
 	)
 	(junction
-		(at 72.39 302.26)
+		(at 359.41 243.84)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "8bed72e9-a238-4ef2-9057-cc517297d4fe")
@@ -12803,12 +12809,6 @@
 		(uuid "b607d4f1-7722-444d-8f6d-bb7585d4345e")
 	)
 	(junction
-		(at 157.48 223.52)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "b85ff278-99f9-4d64-86f7-fcf2bd033bab")
-	)
-	(junction
 		(at 67.31 218.44)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -12833,6 +12833,12 @@
 		(uuid "c44b64f8-083b-4968-ad62-8ca5cdac0583")
 	)
 	(junction
+		(at 170.18 223.52)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "c6808a71-1996-45b6-beae-b6bc2884b473")
+	)
+	(junction
 		(at 410.21 111.76)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -12855,12 +12861,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "cc65f5f7-5776-46c3-9549-f877ee9ba927")
-	)
-	(junction
-		(at 157.48 186.69)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "ccbdba59-3efa-4a03-9d6b-435192cb23db")
 	)
 	(junction
 		(at 247.65 111.76)
@@ -12995,12 +12995,6 @@
 		(uuid "f67248aa-f766-4bba-9bda-5f7394312f93")
 	)
 	(junction
-		(at 157.48 210.82)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "f68390f3-9644-40f4-bdc8-3e898858abf4")
-	)
-	(junction
 		(at 410.21 160.02)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -13051,7 +13045,7 @@
 		(uuid "3a76ee1e-0ed2-40c4-9de0-d52df0f836a6")
 	)
 	(no_connect
-		(at 45.72 304.8)
+		(at 332.74 246.38)
 		(uuid "3ea15433-ae2b-415e-a8b0-adfbc06edc01")
 	)
 	(no_connect
@@ -13083,7 +13077,7 @@
 		(uuid "74837481-41ee-41a4-a762-9690068c6b0d")
 	)
 	(no_connect
-		(at 68.58 299.72)
+		(at 355.6 241.3)
 		(uuid "84daf540-b34a-4db7-8126-0bae46e2bbbb")
 	)
 	(no_connect
@@ -13238,7 +13232,7 @@
 	)
 	(wire
 		(pts
-			(xy 43.18 302.26) (xy 45.72 302.26)
+			(xy 330.2 243.84) (xy 332.74 243.84)
 		)
 		(stroke
 			(width 0.381)
@@ -13600,7 +13594,7 @@
 	)
 	(wire
 		(pts
-			(xy 69.85 311.15) (xy 76.2 311.15)
+			(xy 356.87 252.73) (xy 363.22 252.73)
 		)
 		(stroke
 			(width 0.381)
@@ -14100,7 +14094,7 @@
 	)
 	(wire
 		(pts
-			(xy 91.44 302.26) (xy 95.25 302.26)
+			(xy 378.46 243.84) (xy 382.27 243.84)
 		)
 		(stroke
 			(width 0.381)
@@ -14261,16 +14255,6 @@
 	)
 	(wire
 		(pts
-			(xy 152.4 223.52) (xy 157.48 223.52)
-		)
-		(stroke
-			(width 0.381)
-			(type default)
-		)
-		(uuid "29ec2f68-cf71-4c43-b7b9-bb7c6cb65915")
-	)
-	(wire
-		(pts
 			(xy 448.31 186.69) (xy 452.12 186.69)
 		)
 		(stroke
@@ -14281,7 +14265,7 @@
 	)
 	(wire
 		(pts
-			(xy 157.48 186.69) (xy 157.48 198.12)
+			(xy 157.48 186.69) (xy 157.48 193.04)
 		)
 		(stroke
 			(width 0.381)
@@ -14331,7 +14315,7 @@
 	)
 	(wire
 		(pts
-			(xy 33.02 302.26) (xy 35.56 302.26)
+			(xy 320.04 243.84) (xy 322.58 243.84)
 		)
 		(stroke
 			(width 0.381)
@@ -14579,6 +14563,16 @@
 			(type default)
 		)
 		(uuid "35cc5679-8fb8-448f-9be2-7e8b4d57c965")
+	)
+	(wire
+		(pts
+			(xy 367.03 143.51) (xy 367.03 144.78)
+		)
+		(stroke
+			(width 0.381)
+			(type default)
+		)
+		(uuid "3657e42c-2c4e-4378-bf97-20616b3761b1")
 	)
 	(wire
 		(pts
@@ -14962,7 +14956,7 @@
 	)
 	(wire
 		(pts
-			(xy 43.18 299.72) (xy 45.72 299.72)
+			(xy 330.2 241.3) (xy 332.74 241.3)
 		)
 		(stroke
 			(width 0.381)
@@ -15222,7 +15216,7 @@
 	)
 	(wire
 		(pts
-			(xy 157.48 223.52) (xy 181.61 223.52)
+			(xy 152.4 223.52) (xy 170.18 223.52)
 		)
 		(stroke
 			(width 0.381)
@@ -15489,6 +15483,16 @@
 			(type default)
 		)
 		(uuid "5b948432-63ed-49f4-bdaf-01bef71fd04e")
+	)
+	(wire
+		(pts
+			(xy 367.03 152.4) (xy 367.03 153.67)
+		)
+		(stroke
+			(width 0.381)
+			(type default)
+		)
+		(uuid "5be81773-35e7-4666-b058-9c343630fd59")
 	)
 	(wire
 		(pts
@@ -15822,7 +15826,7 @@
 	)
 	(wire
 		(pts
-			(xy 69.85 311.15) (xy 69.85 304.8)
+			(xy 356.87 252.73) (xy 356.87 246.38)
 		)
 		(stroke
 			(width 0.381)
@@ -15922,6 +15926,16 @@
 	)
 	(wire
 		(pts
+			(xy 170.18 210.82) (xy 170.18 223.52)
+		)
+		(stroke
+			(width 0.381)
+			(type default)
+		)
+		(uuid "6b718de2-68fc-4639-995f-dd153b3f2ffb")
+	)
+	(wire
+		(pts
 			(xy 142.24 39.37) (xy 142.24 40.64)
 		)
 		(stroke
@@ -16012,7 +16026,7 @@
 	)
 	(wire
 		(pts
-			(xy 33.02 299.72) (xy 35.56 299.72)
+			(xy 320.04 241.3) (xy 322.58 241.3)
 		)
 		(stroke
 			(width 0.381)
@@ -16062,7 +16076,7 @@
 	)
 	(wire
 		(pts
-			(xy 76.2 302.26) (xy 83.82 302.26)
+			(xy 363.22 243.84) (xy 370.84 243.84)
 		)
 		(stroke
 			(width 0.381)
@@ -16162,23 +16176,13 @@
 	)
 	(wire
 		(pts
-			(xy 69.85 313.69) (xy 69.85 311.15)
+			(xy 356.87 255.27) (xy 356.87 252.73)
 		)
 		(stroke
 			(width 0.381)
 			(type default)
 		)
 		(uuid "75369fc7-bd77-40ff-91cf-5341df711a56")
-	)
-	(wire
-		(pts
-			(xy 157.48 223.52) (xy 157.48 210.82)
-		)
-		(stroke
-			(width 0.381)
-			(type default)
-		)
-		(uuid "75901f45-00b5-4cf3-9faf-3ff09a9637bc")
 	)
 	(wire
 		(pts
@@ -16442,7 +16446,7 @@
 	)
 	(wire
 		(pts
-			(xy 72.39 302.26) (xy 76.2 302.26)
+			(xy 359.41 243.84) (xy 363.22 243.84)
 		)
 		(stroke
 			(width 0.381)
@@ -16799,16 +16803,6 @@
 			(type default)
 		)
 		(uuid "905439c0-437e-47dc-8adc-08a34e2a0cb5")
-	)
-	(wire
-		(pts
-			(xy 157.48 210.82) (xy 170.18 210.82)
-		)
-		(stroke
-			(width 0.381)
-			(type default)
-		)
-		(uuid "90acb270-bb1f-49f2-a042-8f9abfcf6864")
 	)
 	(wire
 		(pts
@@ -17373,7 +17367,7 @@
 	)
 	(wire
 		(pts
-			(xy 76.2 302.26) (xy 76.2 303.53)
+			(xy 363.22 243.84) (xy 363.22 245.11)
 		)
 		(stroke
 			(width 0.381)
@@ -17775,6 +17769,16 @@
 	)
 	(wire
 		(pts
+			(xy 157.48 200.66) (xy 157.48 207.01)
+		)
+		(stroke
+			(width 0.381)
+			(type default)
+		)
+		(uuid "b981a931-cf8d-46bb-89de-50cf7d5d3960")
+	)
+	(wire
+		(pts
 			(xy 99.06 123.19) (xy 82.55 123.19)
 		)
 		(stroke
@@ -17795,7 +17799,7 @@
 	)
 	(wire
 		(pts
-			(xy 68.58 302.26) (xy 72.39 302.26)
+			(xy 355.6 243.84) (xy 359.41 243.84)
 		)
 		(stroke
 			(width 0.381)
@@ -18155,6 +18159,16 @@
 	)
 	(wire
 		(pts
+			(xy 130.81 189.23) (xy 130.81 194.31)
+		)
+		(stroke
+			(width 0.381)
+			(type default)
+		)
+		(uuid "ca0e5cba-f1dd-492c-a125-d1847cee007f")
+	)
+	(wire
+		(pts
 			(xy 199.39 224.79) (xy 229.87 224.79)
 		)
 		(stroke
@@ -18403,16 +18417,6 @@
 			(type default)
 		)
 		(uuid "d7e016f1-7d0d-4b2f-9587-00ffbca573f4")
-	)
-	(wire
-		(pts
-			(xy 157.48 205.74) (xy 157.48 210.82)
-		)
-		(stroke
-			(width 0.381)
-			(type default)
-		)
-		(uuid "d7e9cc0a-1cd0-4fbf-a4ff-4536df78ab5c")
 	)
 	(wire
 		(pts
@@ -18728,7 +18732,7 @@
 	)
 	(wire
 		(pts
-			(xy 350.52 143.51) (xy 356.87 143.51)
+			(xy 350.52 143.51) (xy 367.03 143.51)
 		)
 		(stroke
 			(width 0.381)
@@ -19178,7 +19182,7 @@
 	)
 	(wire
 		(pts
-			(xy 68.58 304.8) (xy 69.85 304.8)
+			(xy 355.6 246.38) (xy 356.87 246.38)
 		)
 		(stroke
 			(width 0.381)
@@ -19255,6 +19259,16 @@
 			(type default)
 		)
 		(uuid "fa74f60f-4aca-43bd-8ed8-95882da78d94")
+	)
+	(wire
+		(pts
+			(xy 170.18 223.52) (xy 181.61 223.52)
+		)
+		(stroke
+			(width 0.381)
+			(type default)
+		)
+		(uuid "fb0b90f8-f345-4847-8565-5274c9d646c1")
 	)
 	(wire
 		(pts
@@ -19373,7 +19387,7 @@
 		(uuid "05a0ad42-9ee1-4b44-af33-3a80c2954fe6")
 	)
 	(label "AC-NEUTRAL"
-		(at 33.02 302.26 180)
+		(at 320.04 243.84 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -19432,7 +19446,7 @@
 		(uuid "0eaa9af1-00b2-4f7e-b68a-53e70053a6c2")
 	)
 	(label "AC-LOAD"
-		(at 33.02 299.72 180)
+		(at 320.04 241.3 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -20210,7 +20224,7 @@
 		(uuid "fc83ac96-5507-498e-aa0d-ee80a6c82ed7")
 	)
 	(label "ZC_DET"
-		(at 68.58 302.26 0)
+		(at 355.6 243.84 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -20508,7 +20522,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_US")
-		(at 87.63 302.26 90)
+		(at 374.65 243.84 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -20518,7 +20532,7 @@
 		(dnp no)
 		(uuid "088e5ecd-bfc9-4b25-a4f1-e3cebf0b865a")
 		(property "Reference" "R43"
-			(at 86.106 307.594 0)
+			(at 373.126 249.174 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -20529,7 +20543,7 @@
 			)
 		)
 		(property "Value" "10KΩ"
-			(at 88.646 309.118 0)
+			(at 375.666 250.698 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -20540,7 +20554,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 87.884 301.244 90)
+			(at 374.904 242.824 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20551,7 +20565,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 87.63 302.26 0)
+			(at 374.65 243.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20562,7 +20576,7 @@
 			)
 		)
 		(property "Description" "10 kOhms ±1% 0.063W, 1/16W Chip Resistor 0402 (1005 Metric) Moisture Resistant Thick Film"
-			(at 87.63 302.26 0)
+			(at 374.65 243.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20573,7 +20587,7 @@
 			)
 		)
 		(property "System" "ESP"
-			(at 87.63 302.26 0)
+			(at 374.65 243.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20584,7 +20598,7 @@
 			)
 		)
 		(property "LINK" "https://www.digikey.com/en/products/detail/yageo/RC0402FR-0710KL/726523"
-			(at 87.63 302.26 0)
+			(at 374.65 243.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20595,7 +20609,7 @@
 			)
 		)
 		(property "MF" "YAGEO"
-			(at 87.63 302.26 0)
+			(at 374.65 243.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20606,7 +20620,7 @@
 			)
 		)
 		(property "MP" "RC0402FR-0710KL"
-			(at 87.63 302.26 0)
+			(at 374.65 243.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20867,7 +20881,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 69.85 313.69 0)
+		(at 356.87 255.27 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -20877,7 +20891,7 @@
 		(dnp no)
 		(uuid "0ab1ed8e-1c3e-4776-8b1d-21a3e3709bb2")
 		(property "Reference" "#PWR050"
-			(at 69.85 320.04 0)
+			(at 356.87 261.62 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20888,7 +20902,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 69.85 318.008 0)
+			(at 356.87 259.588 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -20898,7 +20912,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 69.85 313.69 0)
+			(at 356.87 255.27 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20909,7 +20923,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 69.85 313.69 0)
+			(at 356.87 255.27 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20920,7 +20934,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 69.85 313.69 0)
+			(at 356.87 255.27 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -21234,10 +21248,9 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "0c682ec4-0044-472a-a576-3c4e6615728b")
 		(property "Reference" "S2"
-			(at 138.2395 180.34 0)
+			(at 134.112 183.134 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -21247,7 +21260,7 @@
 			)
 		)
 		(property "Value" "KMR221GLFS"
-			(at 138.2395 182.88 0)
+			(at 138.684 192.024 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -21738,29 +21751,35 @@
 		)
 		(property "MF" "VISHAY"
 			(at 57.15 208.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "MP" "CRCW1206360RFKEA"
 			(at 57.15 208.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "LINK" "https://www.digikey.com/en/products/detail/vishay-dale/CRCW1206360RFKEA/1176592"
 			(at 57.15 208.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -21960,29 +21979,35 @@
 		)
 		(property "MF" "PANASONIC"
 			(at 82.55 194.31 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "MP" "ERJ-1TYJ390U"
 			(at 82.55 194.31 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "LINK" "https://www.digikey.com/en/products/detail/panasonic-electronic-components/ERJ-1TYJ390U/365201"
 			(at 82.55 194.31 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "2"
@@ -22659,11 +22684,13 @@
 		)
 		(property "LINK" "https://www.digikey.com/en/products/result?keywords=0031.8201"
 			(at 77.47 34.29 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -22804,7 +22831,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 130.81 189.23 0)
+		(at 130.81 194.31 0)
 		(mirror y)
 		(unit 1)
 		(body_style 1)
@@ -22816,7 +22843,7 @@
 		(fields_autoplaced yes)
 		(uuid "16d8dc49-b850-4e7a-b171-e0f8f2036e64")
 		(property "Reference" "#PWR063"
-			(at 130.81 195.58 0)
+			(at 130.81 200.66 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -22827,7 +22854,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 130.81 194.31 0)
+			(at 130.81 199.39 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -22837,7 +22864,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 130.81 189.23 0)
+			(at 130.81 194.31 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -22848,7 +22875,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 130.81 189.23 0)
+			(at 130.81 194.31 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -22859,7 +22886,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 130.81 189.23 0)
+			(at 130.81 194.31 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -23142,29 +23169,35 @@
 		)
 		(property "MF" "YAGEO"
 			(at 49.53 82.55 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "MP" "RC0805FR-07100KL"
 			(at 49.53 82.55 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "LINK" "https://www.digikey.com/en/products/detail/yageo/RC0805FR-07100KL/727544"
 			(at 49.53 82.55 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "2"
@@ -23873,29 +23906,35 @@
 		)
 		(property "MF" "EPCOS - TDK"
 			(at 92.71 264.16 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "MP" "B32921C3103M000"
 			(at 92.71 264.16 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "LINK" "https://www.digikey.com/en/products/detail/epcos-tdk-electronics/B32921C3103M000/778978"
 			(at 92.71 264.16 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -24974,20 +25013,24 @@
 		)
 		(property "MF" "YAGEO"
 			(at 29.21 195.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "MP" "RC0805FR-07330RL"
 			(at 29.21 195.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -25870,20 +25913,24 @@
 		)
 		(property "MF" "YAGEO"
 			(at 31.75 137.16 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "MP" "RC0805FR-07330RL"
 			(at 31.75 137.16 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -26338,20 +26385,24 @@
 		)
 		(property "MF" "Rubycon"
 			(at 162.56 40.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "MP" "450BXG15MEFC10X20"
 			(at 162.56 40.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -26685,29 +26736,35 @@
 		)
 		(property "MF" "VISHAY"
 			(at 50.8 129.54 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "MP" "CRCW1206360RFKEA"
 			(at 50.8 129.54 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "LINK" "https://www.digikey.com/en/products/detail/vishay-dale/CRCW1206360RFKEA/1176592"
 			(at 50.8 129.54 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -26871,29 +26928,35 @@
 		)
 		(property "MF" "Hirose Electric Co Ltd"
 			(at 341.63 284.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "MP" "DF13-4P-1.25DSA(25)"
 			(at 341.63 284.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "LINK" "https://www.digikey.com/en/products/detail/hirose-electric-co-ltd/DF13-4P-1-25DSA-25/15997347"
 			(at 341.63 284.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -26940,7 +27003,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "0.1µF 25V"
+		(property "Value" "1.0µF 25V"
 			(at 155.956 169.926 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -26951,7 +27014,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 166.37 167.3352 0)
 			(hide yes)
 			(show_name no)
@@ -26973,7 +27036,7 @@
 				)
 			)
 		)
-		(property "Description" "0.1 µF ±10% 25V Ceramic Capacitor X7R 0402 (1005 Metric)"
+		(property "Description" "1.0 µF ±10% 25V Ceramic Capacitor X7R 0603 (1608 Metric)"
 			(at 162.56 166.37 0)
 			(hide yes)
 			(show_name no)
@@ -26995,7 +27058,7 @@
 				)
 			)
 		)
-		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/C0402C104K3RACTU/6697176"
+		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/C0603C105K3RACTU/3317410"
 			(at 162.56 166.37 90)
 			(hide yes)
 			(show_name no)
@@ -27006,7 +27069,7 @@
 				)
 			)
 		)
-		(property "MP" "C0402C104K3RACTU "
+		(property "MP" "C0603C105K3RACTU"
 			(at 162.56 166.37 90)
 			(hide yes)
 			(show_name no)
@@ -27483,8 +27546,122 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:C")
+		(at 367.03 148.59 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "5b980684-81b9-4c7a-b777-6f450fe829bf")
+		(property "Reference" "C43"
+			(at 369.57 148.844 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "0.1µF 25V"
+			(at 367.538 150.876 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+			(at 367.9952 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 367.03 148.59 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 367.03 148.59 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MF" "KEMET"
+			(at 367.03 148.59 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MP" "C0402C104K3RACTU"
+			(at 367.03 148.59 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/C0402C104K3RACTU/6697176"
+			(at 367.03 148.59 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "6c418a98-b792-4b4f-b5af-521a53f8d2be")
+		)
+		(pin "2"
+			(uuid "efa09568-cece-4461-9ee8-5d1148be0d53")
+		)
+		(instances
+			(project "PelletPirate_V5"
+				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
+					(reference "C43")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R_US")
-		(at 39.37 302.26 90)
+		(at 326.39 243.84 90)
 		(mirror x)
 		(unit 1)
 		(body_style 1)
@@ -27495,7 +27672,7 @@
 		(dnp no)
 		(uuid "5e2a8574-e99b-499d-887e-275e8c28de15")
 		(property "Reference" "R41"
-			(at 41.402 304.8 90)
+			(at 328.422 246.38 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -27506,7 +27683,7 @@
 			)
 		)
 		(property "Value" "15KΩ"
-			(at 41.148 306.832 90)
+			(at 328.168 248.412 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -27517,7 +27694,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_1206_3216Metric"
-			(at 39.624 303.276 90)
+			(at 326.644 244.856 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -27528,7 +27705,7 @@
 			)
 		)
 		(property "Datasheet" "https://industrial.panasonic.com/cdbs/www-data/pdf/RDO0000/AOA0000C331.pdf"
-			(at 39.37 302.26 0)
+			(at 326.39 243.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -27539,7 +27716,7 @@
 			)
 		)
 		(property "Description" "Panasonic ERJ-P08J153V — 15kΩ 5% 2/3W 1206 anti-surge"
-			(at 39.37 302.26 0)
+			(at 326.39 243.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -27550,7 +27727,7 @@
 			)
 		)
 		(property "System" "GRILL"
-			(at 39.37 302.26 0)
+			(at 326.39 243.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -27561,7 +27738,7 @@
 			)
 		)
 		(property "LINK" "https://www.digikey.com/en/products/detail/panasonic-industry/ERJ-P08J153V/525339"
-			(at 39.37 302.26 0)
+			(at 326.39 243.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -27572,7 +27749,7 @@
 			)
 		)
 		(property "MF" "Panasonic"
-			(at 39.37 302.26 0)
+			(at 326.39 243.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -27583,7 +27760,7 @@
 			)
 		)
 		(property "MP" "ERJ-P08J153V"
-			(at 39.37 302.26 0)
+			(at 326.39 243.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -28007,7 +28184,7 @@
 	)
 	(symbol
 		(lib_id "Connector:TestPoint")
-		(at 69.85 311.15 90)
+		(at 356.87 252.73 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -28018,7 +28195,7 @@
 		(fields_autoplaced yes)
 		(uuid "61c83519-905e-469d-adaa-82f0913b4fb7")
 		(property "Reference" "TP2"
-			(at 66.548 306.07 90)
+			(at 353.568 247.65 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -28028,7 +28205,7 @@
 			)
 		)
 		(property "Value" "TestPoint"
-			(at 66.548 308.61 90)
+			(at 353.568 250.19 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -28038,7 +28215,7 @@
 			)
 		)
 		(property "Footprint" "TestPoint:TestPoint_THTPad_D1.5mm_Drill0.7mm"
-			(at 69.85 306.07 0)
+			(at 356.87 247.65 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -28049,7 +28226,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 69.85 306.07 0)
+			(at 356.87 247.65 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -28060,7 +28237,7 @@
 			)
 		)
 		(property "Description" "test point"
-			(at 69.85 311.15 0)
+			(at 356.87 252.73 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -28559,20 +28736,24 @@
 		)
 		(property "MF" "KEMET"
 			(at 38.1 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "MP" "C1206C106K3RACTU"
 			(at 38.1 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -29344,7 +29525,7 @@
 	)
 	(symbol
 		(lib_id "Connector:TestPoint")
-		(at 72.39 302.26 0)
+		(at 359.41 243.84 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -29355,7 +29536,7 @@
 		(fields_autoplaced yes)
 		(uuid "6f65f6f1-408e-4b8b-a156-449d11e2bd3a")
 		(property "Reference" "TP1"
-			(at 74.93 297.6879 0)
+			(at 361.95 239.2679 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -29366,7 +29547,7 @@
 			)
 		)
 		(property "Value" "TestPoint"
-			(at 74.93 300.2279 0)
+			(at 361.95 241.8079 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -29377,7 +29558,7 @@
 			)
 		)
 		(property "Footprint" "TestPoint:TestPoint_THTPad_D1.5mm_Drill0.7mm"
-			(at 77.47 302.26 0)
+			(at 364.49 243.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -29388,7 +29569,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 77.47 302.26 0)
+			(at 364.49 243.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -29399,7 +29580,7 @@
 			)
 		)
 		(property "Description" "test point"
-			(at 72.39 302.26 0)
+			(at 359.41 243.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -30270,11 +30451,13 @@
 		)
 		(property "LINK" "https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/TB002-500-02BE/10064069"
 			(at 171.45 241.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -30294,7 +30477,7 @@
 	)
 	(symbol
 		(lib_id "H11AA1M_Opto_FanPulse:H11AA1M")
-		(at 55.88 302.26 0)
+		(at 342.9 243.84 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -30305,7 +30488,7 @@
 		(fields_autoplaced yes)
 		(uuid "8214df1a-df70-4634-b5e6-60f6dd0ead1d")
 		(property "Reference" "U3"
-			(at 57.2884 289.56 0)
+			(at 344.3084 231.14 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -30315,7 +30498,7 @@
 			)
 		)
 		(property "Value" "H11AA1M"
-			(at 57.2884 292.1 0)
+			(at 344.3084 233.68 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -30325,7 +30508,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-6_W7.62mm"
-			(at 56.388 310.642 0)
+			(at 343.408 252.222 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -30337,7 +30520,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 55.88 302.26 0)
+			(at 342.9 243.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -30348,7 +30531,7 @@
 			)
 		)
 		(property "Description" "Optoisolator Transistor with Base Output 4170Vrms 1 Channel 6-DIP"
-			(at 56.388 309.118 0)
+			(at 343.408 250.698 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -30360,7 +30543,7 @@
 			)
 		)
 		(property "MF" "ON Semiconductor"
-			(at 56.896 309.626 0)
+			(at 343.916 251.206 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -30372,7 +30555,7 @@
 			)
 		)
 		(property "Package" "PDIP-6 ON Semiconductor"
-			(at 57.15 309.88 0)
+			(at 344.17 251.46 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -30384,7 +30567,7 @@
 			)
 		)
 		(property "Price" "None"
-			(at 56.896 309.626 0)
+			(at 343.916 251.206 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -30396,7 +30579,7 @@
 			)
 		)
 		(property "SnapEDA_Link" "https://www.snapeda.com/parts/H11AA1M/Onsemi/view-part/?ref=snap"
-			(at 56.896 308.356 0)
+			(at 343.916 249.936 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -30408,7 +30591,7 @@
 			)
 		)
 		(property "MP" "H11AA1M"
-			(at 57.15 309.372 0)
+			(at 344.17 250.952 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -30420,7 +30603,7 @@
 			)
 		)
 		(property "Availability" "In Stock"
-			(at 57.15 309.626 0)
+			(at 344.17 251.206 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -30432,7 +30615,7 @@
 			)
 		)
 		(property "Check_prices" "https://www.snapeda.com/parts/H11AA1M/Onsemi/view-part/?ref=eda"
-			(at 55.372 309.626 0)
+			(at 342.392 251.206 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -30444,7 +30627,7 @@
 			)
 		)
 		(property "LINK" "https://www.digikey.com/en/products/detail/onsemi/H11AA1M/1053602"
-			(at 55.88 302.26 0)
+			(at 342.9 243.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -30455,7 +30638,7 @@
 			)
 		)
 		(property "System" "GRILL"
-			(at 55.88 302.26 0)
+			(at 342.9 243.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -30559,29 +30742,35 @@
 		)
 		(property "MF" "VISHAY"
 			(at 57.15 148.59 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "MP" "CRCW1206360RFKEA"
 			(at 57.15 148.59 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "LINK" "https://www.digikey.com/en/products/detail/vishay-dale/CRCW1206360RFKEA/1176592"
 			(at 57.15 148.59 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -30748,7 +30937,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 122.174 101.854 90)
 			(hide yes)
 			(show_name no)
@@ -30770,7 +30959,7 @@
 				)
 			)
 		)
-		(property "Description" "Resistor, US symbol"
+		(property "Description" "10kΩ ±1% 0.125W thick film 0805"
 			(at 123.19 101.6 0)
 			(hide yes)
 			(show_name no)
@@ -30783,29 +30972,35 @@
 		)
 		(property "MF" "YAGEO"
 			(at 123.19 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "MP" "RC0402FR-0710KL"
+		(property "MP" "RC0805FR-0710KL"
 			(at 123.19 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
-		(property "LINK" "https://www.digikey.com/en/products/detail/yageo/RC0402FR-0710KL/726523"
+		(property "LINK" "https://www.digikey.com/en/products/detail/yageo/RC0805FR-0710KL/727535"
 			(at 123.19 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "2"
@@ -31327,11 +31522,13 @@
 		)
 		(property "LINK" "https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/SJ1-3523NG/738692"
 			(at 483.87 134.62 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -31735,11 +31932,13 @@
 		)
 		(property "LINK" "https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/SJ1-3523NG/738692"
 			(at 483.87 231.14 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -31829,29 +32028,35 @@
 		)
 		(property "MF" "EPCOS - TDK"
 			(at 82.55 146.05 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "MP" "B32921C3103M000"
 			(at 82.55 146.05 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "LINK" "https://www.digikey.com/en/products/detail/epcos-tdk-electronics/B32921C3103M000/778978"
 			(at 82.55 146.05 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -32645,7 +32850,7 @@
 	)
 	(symbol
 		(lib_id "power:+3.3V")
-		(at 95.25 302.26 270)
+		(at 382.27 243.84 270)
 		(mirror x)
 		(unit 1)
 		(body_style 1)
@@ -32656,7 +32861,7 @@
 		(dnp no)
 		(uuid "9da0abca-5b72-44e6-a069-5d0d6ad7a548")
 		(property "Reference" "#PWR054"
-			(at 91.44 302.26 0)
+			(at 378.46 243.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -32667,7 +32872,7 @@
 			)
 		)
 		(property "Value" "+3.3V"
-			(at 101.346 302.26 90)
+			(at 388.366 243.84 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -32677,7 +32882,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 95.25 302.26 0)
+			(at 382.27 243.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -32688,7 +32893,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 95.25 302.26 0)
+			(at 382.27 243.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -32699,7 +32904,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 95.25 302.26 0)
+			(at 382.27 243.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -33153,11 +33358,13 @@
 		)
 		(property "LINK" "https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/SJ1-3523NG/738692"
 			(at 483.87 87.63 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -33247,29 +33454,35 @@
 		)
 		(property "MF" "YAGEO"
 			(at 199.39 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "MP" "RC0603FR-07100KL"
 			(at 199.39 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "LINK" "https://www.digikey.com/en/products/detail/yageo/RC0603FR-07100KL/726889"
 			(at 199.39 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "2"
@@ -33919,11 +34132,13 @@
 		)
 		(property "LINK" "https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/SJ1-3523NG/738692"
 			(at 483.87 40.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -34063,6 +34278,85 @@
 			(project "PelletPirate_V5"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 157.48 207.01 0)
+		(mirror y)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "a565f4a5-5667-439c-b0f0-bdecb7b25e31")
+		(property "Reference" "#PWR064"
+			(at 157.48 213.36 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 157.48 212.09 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 157.48 207.01 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 157.48 207.01 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 157.48 207.01 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "31b889b6-edab-44f7-9c52-59783d15a912")
+		)
+		(instances
+			(project "PelletPirate_V5"
+				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
+					(reference "#PWR064")
 					(unit 1)
 				)
 			)
@@ -34383,29 +34677,35 @@
 		)
 		(property "MF" "EPCOS - TDK"
 			(at 82.55 204.47 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "MP" "B32921C3103M000"
 			(at 82.55 204.47 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "LINK" "https://www.digikey.com/en/products/detail/epcos-tdk-electronics/B32921C3103M000/778978"
 			(at 82.55 204.47 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -34567,29 +34867,35 @@
 		)
 		(property "MF" "PANASONIC"
 			(at 92.71 254 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "MP" "ERJ-1TYJ390U"
 			(at 92.71 254 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "LINK" "https://www.digikey.com/en/products/detail/panasonic-electronic-components/ERJ-1TYJ390U/365201"
 			(at 92.71 254 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "2"
@@ -36143,7 +36449,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 76.2 307.34 0)
+		(at 363.22 248.92 0)
 		(mirror y)
 		(unit 1)
 		(body_style 1)
@@ -36154,7 +36460,7 @@
 		(dnp no)
 		(uuid "b8bbd30f-fb58-4e49-b0fa-997ac5bfa5a3")
 		(property "Reference" "C42"
-			(at 76.962 304.8 0)
+			(at 363.982 246.38 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -36165,7 +36471,7 @@
 			)
 		)
 		(property "Value" "1000pF 50V"
-			(at 76.708 309.372 0)
+			(at 363.728 250.952 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -36176,7 +36482,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 75.2348 311.15 0)
+			(at 362.2548 252.73 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -36187,7 +36493,7 @@
 			)
 		)
 		(property "Datasheet" "https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/609/CL05B102KB5NNNC_Spec.pdf"
-			(at 76.2 307.34 0)
+			(at 363.22 248.92 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -36198,7 +36504,7 @@
 			)
 		)
 		(property "Description" "1000 pF ±10% 50V Ceramic Capacitor X7R 0402 (1005 Metric)"
-			(at 76.2 307.34 0)
+			(at 363.22 248.92 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -36209,7 +36515,7 @@
 			)
 		)
 		(property "MF" "Samsung"
-			(at 76.2 307.34 0)
+			(at 363.22 248.92 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -36220,7 +36526,7 @@
 			)
 		)
 		(property "MP" "CL05B102KB5NNNC"
-			(at 76.2 307.34 0)
+			(at 363.22 248.92 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -36231,7 +36537,7 @@
 			)
 		)
 		(property "LINK" "https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL05B102KB5NNNC/3886690"
-			(at 76.2 307.34 0)
+			(at 363.22 248.92 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -36242,7 +36548,7 @@
 			)
 		)
 		(property "System" "GRILL"
-			(at 76.2 307.34 0)
+			(at 363.22 248.92 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -36347,7 +36653,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 157.48 201.93 0)
+		(at 157.48 196.85 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -36357,7 +36663,7 @@
 		(dnp no)
 		(uuid "ba9ca933-d68d-4c10-a5eb-a97c43514fab")
 		(property "Reference" "C40"
-			(at 153.162 199.898 0)
+			(at 153.162 194.818 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -36368,7 +36674,7 @@
 			)
 		)
 		(property "Value" "0.1µF 25V"
-			(at 151.384 204.47 0)
+			(at 151.384 199.39 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -36379,7 +36685,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 158.4452 205.74 0)
+			(at 158.4452 200.66 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -36390,7 +36696,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 157.48 201.93 0)
+			(at 157.48 196.85 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -36401,7 +36707,7 @@
 			)
 		)
 		(property "Description" "0.1 µF ±10% 25V Ceramic Capacitor X7R 0402 (1005 Metric)"
-			(at 157.48 201.93 0)
+			(at 157.48 196.85 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -36412,7 +36718,7 @@
 			)
 		)
 		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/C0402C104K3RACTU/6697176"
-			(at 157.48 201.93 0)
+			(at 157.48 196.85 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -36423,7 +36729,7 @@
 			)
 		)
 		(property "MF" "KEMET"
-			(at 157.48 201.93 0)
+			(at 157.48 196.85 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -36434,7 +36740,7 @@
 			)
 		)
 		(property "MP" "C0402C104K3RACTU "
-			(at 157.48 201.93 0)
+			(at 157.48 196.85 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -36445,7 +36751,7 @@
 			)
 		)
 		(property "System" "MAX, PS3, ESP"
-			(at 157.48 201.93 0)
+			(at 157.48 196.85 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -36539,29 +36845,35 @@
 		)
 		(property "MF" "YAGEO"
 			(at 123.19 87.63 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "MP" "RC0805FR-0733K2L"
 			(at 123.19 87.63 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "LINK" "https://www.digikey.com/en/products/detail/yageo/RC0805FR-0733K2L/727865"
 			(at 123.19 87.63 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "2"
@@ -37253,6 +37565,83 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 367.03 153.67 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "be2fcbc0-123e-450d-ba0a-5e339446e9ab")
+		(property "Reference" "#PWR048"
+			(at 367.03 160.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 367.03 157.988 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 367.03 153.67 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 367.03 153.67 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 367.03 153.67 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "92b3426f-c61c-4cb4-8619-d21a2f04ea7b")
+		)
+		(instances
+			(project "PelletPirate_V5"
+				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
+					(reference "#PWR048")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R_US")
 		(at 152.4 179.07 270)
 		(mirror x)
@@ -37603,7 +37992,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 187.6552 96.52 0)
 			(hide yes)
 			(show_name no)
@@ -37638,29 +38027,35 @@
 		)
 		(property "MF" "KEMET"
 			(at 186.69 92.71 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "MP" "C0402C104K3RACTU"
 			(at 186.69 92.71 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/C0402C104K3RACTU/6697176"
 			(at 186.69 92.71 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -37825,29 +38220,35 @@
 		)
 		(property "MF" "VISHAY"
 			(at 50.8 187.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "MP" "CRCW1206360RFKEA"
 			(at 50.8 187.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "LINK" "https://www.digikey.com/en/products/detail/vishay-dale/CRCW1206360RFKEA/1176592"
 			(at 50.8 187.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -38544,20 +38945,24 @@
 		)
 		(property "MF" "VISHAY"
 			(at 142.24 36.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "MP" "VY2471K29Y5SS63V7"
 			(at 142.24 36.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "2"
@@ -38937,7 +39342,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_US")
-		(at 39.37 299.72 90)
+		(at 326.39 241.3 90)
 		(mirror x)
 		(unit 1)
 		(body_style 1)
@@ -38948,7 +39353,7 @@
 		(dnp no)
 		(uuid "d4abe941-aa13-4a65-8b8a-7d5ab749b1cc")
 		(property "Reference" "R42"
-			(at 42.164 295.656 90)
+			(at 329.184 237.236 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -38959,7 +39364,7 @@
 			)
 		)
 		(property "Value" "15KΩ"
-			(at 41.91 297.688 90)
+			(at 328.93 239.268 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -38970,7 +39375,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_1206_3216Metric"
-			(at 39.624 300.736 90)
+			(at 326.644 242.316 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -38981,7 +39386,7 @@
 			)
 		)
 		(property "Datasheet" "https://industrial.panasonic.com/cdbs/www-data/pdf/RDO0000/AOA0000C331.pdf"
-			(at 39.37 299.72 0)
+			(at 326.39 241.3 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -38992,7 +39397,7 @@
 			)
 		)
 		(property "Description" "Panasonic ERJ-P08J153V — 15kΩ 5% 2/3W 1206 anti-surge"
-			(at 39.37 299.72 0)
+			(at 326.39 241.3 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -39003,7 +39408,7 @@
 			)
 		)
 		(property "System" "GRILL"
-			(at 39.37 299.72 0)
+			(at 326.39 241.3 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -39014,7 +39419,7 @@
 			)
 		)
 		(property "LINK" "https://www.digikey.com/en/products/detail/panasonic-industry/ERJ-P08J153V/525339"
-			(at 39.37 299.72 0)
+			(at 326.39 241.3 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -39025,7 +39430,7 @@
 			)
 		)
 		(property "MF" "Panasonic"
-			(at 39.37 299.72 0)
+			(at 326.39 241.3 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -39036,7 +39441,7 @@
 			)
 		)
 		(property "MP" "ERJ-P08J153V"
-			(at 39.37 299.72 0)
+			(at 326.39 241.3 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -40088,11 +40493,13 @@
 		)
 		(property "LINK" "https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/SJ1-3523NG/738692"
 			(at 483.87 182.88 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -40480,20 +40887,24 @@
 		)
 		(property "MF" "VISHAY"
 			(at 142.24 44.45 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "MP" "VY2471K29Y5SS63V7"
 			(at 142.24 44.45 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "2"
@@ -41577,20 +41988,24 @@
 		)
 		(property "MF" "KEMET"
 			(at 176.53 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "MP" "C1206C106K3RACTU"
 			(at 176.53 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -42044,29 +42459,35 @@
 		)
 		(property "MF" "PANASONIC"
 			(at 82.55 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "MP" "ERJ-1TYJ390U"
 			(at 82.55 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(property "LINK" "https://www.digikey.com/en/products/detail/panasonic-electronic-components/ERJ-1TYJ390U/365201"
 			(at 82.55 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(hide yes)
 			)
 		)
 		(pin "2"
