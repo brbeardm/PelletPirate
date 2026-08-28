@@ -1,0 +1,30 @@
+# PelletPirate V5v1 — Enhancement Backlog
+Created 2026-08-28 as a self-contained clone of PelletPirate_V5 (as-ordered state, commit 88b1ec5 lineage).
+This project holds queued improvements for the NEXT PCB run. V5 (5 boards, PCBWay order of 2026-08-27)
+remains the reference design; make changes HERE only.
+
+## Queued enhancements
+1. **USB ESD ballast:** add 100nF X7R from U1 (USBLC6-2SC6) pin 5 (VBUS) to GND, placed at the pin.
+   Part: KEMET C0402C104K3RACTU (already BOM line C9 — quantity bump, no new line).
+   Rationale: local charge reservoir for the ESD steering rail; rail is otherwise floating (data-only design)
+   or stiffened only through cable inductance. Not a defect fix — a robustness nicety.
+2. **TP2 relocation (optional):** move TP2 (GND) to within ~5mm of TP1 (ZC_DET) so a scope spring-ground
+   reaches both. Currently ~13mm apart — usable with wire loops, not with a spring tip.
+3. **Silkscreen version text:** update board silk from V5 to V5.1 before any fab (user edit in KiCad).
+4. **PLACEHOLDER — rainbow-hunt findings:** pending the DHO814 scope sessions on V4 (and V2 comparison),
+   fold any confirmed root-cause fix into this rev (candidates parked: LC filtering on 12V into PS2/panel
+   path; panel-rail decoupling changes). Do not speculate in copper before the scope verdict.
+
+## State inherited from V5 (all verified at clone time)
+- ERC 0 / DRC 0 / parity 0, run from THIS directory (proves self-containment).
+- sym-lib-table + fp-lib-table: 100% ${KIPRJMOD} — no references outside this folder.
+- All internal file references renamed PelletPirate_V5 -> PelletPirate_V5v1
+  (pro meta + sheet names + BOM export path, sch instance project names x189, pcb sheetfile refs x130, prl meta).
+- Excluded from clone (V5-specific): PelletPirate_V5-backups/, archive_to_delete/, PCBWay/ (V5 order package),
+  .claude/, editor .bak/.lck files.
+- Docs carried over (still accurate for this rev): boardpins delta (pin map unchanged), BOM fill table reference.
+
+## Reminders for the eventual V5.1 fab package
+- Regenerate everything from THIS project (gerbers/positions/BOM/DNS notes) — do not reuse V5's PCBWay/ files.
+- BOM DNS list carries forward unchanged unless the rainbow verdict adds parts.
+- USB4145 stake variant remains -0170 (1.6mm board).
