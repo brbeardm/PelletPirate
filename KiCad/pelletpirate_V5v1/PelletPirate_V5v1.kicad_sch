@@ -37932,7 +37932,7 @@
 				(justify bottom)
 			)
 		)
-		(property "MF" "Bel Fuse"
+		(property "MF" "CUI Inc."
 			(at 184.15 39.37 0)
 			(hide yes)
 			(show_name no)
