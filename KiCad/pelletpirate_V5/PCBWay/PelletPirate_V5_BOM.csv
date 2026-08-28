@@ -4,7 +4,7 @@
 3,C5 C6,2,VISHAY,VY2471K29Y5SS63V7,470pF 440V X1Y2,C_Disc_D7.5mm_W5.0mm_P7.50mm,"capacitor, small US symbol",https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/VY2471K29Y5SS63V7/1983391,NO SUBSTITUTION
 4,C7,1,Rubycon,450BXG15MEFC10X20,15µF 450V,CP_Radial_D10.0mm_P5.00mm,"capacitor, small US symbol",https://www.digikey.com/en/products/detail/rubycon/450BXG15MEFC10X20/23330777,NO SUBSTITUTION
 5,C8 C10,2,KEMET,C1206C106K3RACTU,10µF 25V,C_1206_3216Metric,Unpolarized capacitor,https://www.digikey.com/en/products/detail/kemet/C1206C106K3RACTU/3317648,Substitution allowed (equivalent spec)
-6,C9,1,KEMET,C0402C104K3RACTU,0.1µF 25V,C_0805_2012Metric,Unpolarized capacitor,https://www.digikey.com/en/products/detail/kemet/C0402C104K3RACTU/6697176,Substitution allowed (equivalent spec)
+6,C9,1,KEMET,C0805C104K3RACTU,0.1µF 25V,C_0805_2012Metric,Unpolarized capacitor,https://www.digikey.com/en/products/detail/kemet/C0805C104K3RACTU/411167,Substitution allowed (equivalent spec)
 7,C11 C14,2,KEMET,C0805C104K5RACTU ,0.1µF 50V,C_0805_2012Metric,Unpolarized capacitor,https://www.digikey.com/en/products/detail/kemet/C0805C104K5RACTU/411169 ,Substitution allowed (equivalent spec)
 8,C12,1,VISHAY,VY2102M29Y5US63V7  ,1000pF 440V Y5U,C_Disc_D7.5mm_W5.0mm_P7.50mm,Unpolarized capacitor,https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/VY2102M29Y5US63V7/1983393 ,NO SUBSTITUTION
 9,C13,1,KEMET,A750MS477M1EAAE015 ,470µF 25V,CP_Radial_D10.0mm_P5.00mm,"capacitor, small US symbol",https://www.digikey.com/en/products/detail/kemet/A750MS477M1EAAE015/6196448 ,Substitution allowed (equivalent spec)
@@ -48,7 +48,7 @@
 47,R16,1,YAGEO,RC0603FR-07100KL,100KΩ,R_0603_1608Metric_Pad0.98x0.95mm_HandSolder,Resistor,https://www.digikey.com/en/products/detail/yageo/RC0603FR-07100KL/726889,Substitution allowed (equivalent spec)
 48,R17,1,YAGEO,RC1206FR-074R99L  ,4.99Ω 1%,R_1206_3216Metric_Pad1.30x1.75mm_HandSolder,Resistor,https://www.digikey.com/en/products/detail/yageo/RC1206FR-074R99L/728895 ,Substitution allowed (equivalent spec)
 49,R19,1,YAGEO,RC0805FR-0733K2L,33.2KΩ,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,"Resistor, US symbol",https://www.digikey.com/en/products/detail/yageo/RC0805FR-0733K2L/727865,Substitution allowed (equivalent spec)
-50,R20,1,YAGEO,RC0402FR-0710KL,10KΩ,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,"Resistor, US symbol",https://www.digikey.com/en/products/detail/yageo/RC0402FR-0710KL/726523,Substitution allowed (equivalent spec)
+50,R20,1,YAGEO,RC0805FR-0710KL,10KΩ,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,"Resistor, US symbol",https://www.digikey.com/en/products/detail/yageo/RC0805FR-0710KL/727535,Substitution allowed (equivalent spec)
 51,R21 R22 R23 R24 R25,5,YAGEO,RT1206BRD07400RL  ,400Ω,R_1206_3216Metric,"Resistor, US symbol",https://www.digikey.com/en/products/detail/yageo/RT1206BRD07400RL/5936956 ,Substitution allowed (equivalent spec)
 52,R28,1,VISHAY,CRCW1206360RFKEA ,360Ω 1/4W,R_1206_3216Metric,"360 Ohms ±1% 0.25W, 1/4W Chip Resistor 1206 (3216 Metric) Automotive AEC-Q200 Thick Film",https://www.digikey.com/en/products/detail/vishay-dale/CRCW1206360RFKEA/1176592,Substitution allowed (equivalent spec)
 53,R32 R33 R34 R35 R36 R40 R43 R44 R45,9,YAGEO,RC0402FR-0710KL,10KΩ,R_0402_1005Metric,"10 kOhms ±1% 0.063W, 1/16W Chip Resistor 0402 (1005 Metric) Moisture Resistant Thick Film",https://www.digikey.com/en/products/detail/yageo/RC0402FR-0710KL/726523,Substitution allowed (equivalent spec)

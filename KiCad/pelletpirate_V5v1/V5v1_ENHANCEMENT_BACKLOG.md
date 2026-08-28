@@ -28,3 +28,12 @@ remains the reference design; make changes HERE only.
 - Regenerate everything from THIS project (gerbers/positions/BOM/DNS notes) — do not reuse V5's PCBWay/ files.
 - BOM DNS list carries forward unchanged unless the rainbow verdict adds parts.
 - USB4145 stake variant remains -0170 (1.6mm board).
+
+## Added 2026-08-28 (C9/R20 package-mismatch fallout)
+5. **C9 footprint shrink (user request "smaller"):** C9 (0.1uF 25V, PS3 area) is 0805 by V2 heritage.
+   Shrink footprint to C_0402_1005Metric and set MP back to C0402C104K3RACTU (0402) - same class of
+   change as the C21-C35 shrink already proven on V5. Optional same treatment for R20 (10k) -> RC0402FR-0710KL.
+   Until then, fields say the 0805 parts (C0805C104K3RACTU / RC0805FR-0710KL) matching current copper.
+   The NEW VBUS cap (item 1) is to be designed 0402 from the start.
+   LESSON: BOM value-matching from another rev MUST verify footprint size per line - two slipped through
+   on the V5 order (C9, R20) and were corrected in the PCBWay BOM during review, 2026-08-28.

@@ -30790,7 +30790,7 @@
 				(hide yes)
 			)
 		)
-		(property "MP" "RC0402FR-0710KL"
+		(property "MP" "RC0805FR-0710KL"
 			(at 123.19 101.6 0)
 			(effects
 				(font
@@ -30799,7 +30799,7 @@
 				(hide yes)
 			)
 		)
-		(property "LINK" "https://www.digikey.com/en/products/detail/yageo/RC0402FR-0710KL/726523"
+		(property "LINK" "https://www.digikey.com/en/products/detail/yageo/RC0805FR-0710KL/727535"
 			(at 123.19 101.6 0)
 			(effects
 				(font
@@ -37645,7 +37645,7 @@
 				(hide yes)
 			)
 		)
-		(property "MP" "C0402C104K3RACTU"
+		(property "MP" "C0805C104K3RACTU"
 			(at 186.69 92.71 0)
 			(effects
 				(font
@@ -37654,7 +37654,7 @@
 				(hide yes)
 			)
 		)
-		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/C0402C104K3RACTU/6697176"
+		(property "LINK" "https://www.digikey.com/en/products/detail/kemet/C0805C104K3RACTU/411167"
 			(at 186.69 92.71 0)
 			(effects
 				(font
