@@ -56,3 +56,27 @@ mechanism, which is why none changed the symptom. Not layout. Not added circuitr
 ## Session artifacts
 captures/: bench + AC 3-rail screenshots, ranged measurements, pickup calibration, line-trigger frames,
 deep spectra source data (AC_3V3_deep.bin, AC_3V3_100ms_deep.csv). Harness: scope_harness.py.
+
+
+# SESSION 2 — V2 comparison (2026-08-29, board: V2 production unit, clip-on at D1 12V pin + DevKit 3V3/GND pins)
+USB baseline (DevKit LDO only, PS2 off, 12V floats at 2.5VDC): 3.3V = 1.65mVrms — pristine.
+(Teaches: V4's bench 29mVrms was mostly PS2's own buck ripple.)
+
+AC (PS1 alive, LCD CLEAN):
+- 12V: 768mVpp / 32mVrms — comb 6.1/12.5kHz + 61/75kHz + ~114kHz flyback + 191kHz
+- 3.3V: 218mVpp / 48.8mVrms — comb 5.1kHz dominant, decaying fast (rel 0.07 by 36kHz)
+
+## VERDICT (with Session 1):
+**PS1 bursts on BOTH boards — it is normal behavior for this part at these loads.** The differential is
+DOWNSTREAM ATTENUATION: V2's 12V node ~2.3x quieter, V2's 3.3V chain kills comb harmonics that V4 passes.
+Panel upset threshold bracketed: ~50mVrms (V2 clean) < threshold < ~110mVrms (V4 rainbow).
+Contributors to V2's extra damping: DevKit's added 3.3V-rail capacitance + standing load + LDO domain;
+possibly PS1 lot/vintage amplitude differences (V2 units 2026-05, V4 units 2026-07) — unresolved, not needed.
+
+## V5 FIX PLAN (fold in before reorder):
+1. LC/ferrite filter on 12V feed into PS2 (kill comb upstream)
+2. Added 3.3V bulk + panel-rail post-filter (ferrite + cap at FPC 3.3V feed)
+3. Acceptance: panel rail <30mVrms on AC (2-3x margin below threshold) — verified with this scope
+   on first V5 article via TP/J7, same harness.
+Optional validation before respin: bodge the 12V LC + 3.3V bulk onto V4 board 5 (sacrificial) and watch
+the comb die live — de-risks the V5 change for the cost of an afternoon.
