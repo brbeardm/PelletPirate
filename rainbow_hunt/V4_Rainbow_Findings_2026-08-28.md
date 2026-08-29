@@ -80,3 +80,49 @@ possibly PS1 lot/vintage amplitude differences (V2 units 2026-05, V4 units 2026-
    on first V5 article via TP/J7, same harness.
 Optional validation before respin: bodge the 12V LC + 3.3V bulk onto V4 board 5 (sacrificial) and watch
 the comb die live — de-risks the V5 change for the cost of an afternoon.
+
+
+# SESSION 3 — bodge test + panel census (2026-08-28 evening). CASE CLOSED.
+
+## Board 5 disqualified and retired
+Attempted the 100uF bodge on board 5 first. Measurements revealed board 5's power tree is broken
+independent of any bodge: PS2 misregulates the "3.3V" rail to 4.41V on bench (feedback damage —
+surgery casualty or native defect), and on AC the rail collapses to ~2.1V at ~360Hz (6x line) with the
+12V carrying 3.27Vpp. The junk-bin cap was innocent (sawtooth persisted with cap removed). ESP/panel
+survived sustained 4.41V operation (1V over abs max) — noted for the "tough chips" file.
+NOTE: session-1 "deep" archive AC_3V3_deep.bin is a failed 10k-pt read (pre STARt/STOP fix) — no valid
+unbodged V4 deep spectrum exists on disk.
+
+## Board 2 bodge: 100uF axial across J7.2/J7.4 (3.3V/GND), on AC
+- 3.3V: 109-129mVrms -> **58.2-58.9mVrms** (halved). Vpp went UP (675 -> ~970mVpp) — ESL passes spikes.
+- 12V: ~72mVrms (unchanged, as expected).
+- Deep 1Mpt Goertzel band scan (captures/board2_bodge100u_spectrum.json): 7kHz comb SURVIVES —
+  7k=3.8mV, **14k=5.9mV dominant**, 21k=1.9mV, 28k=0.8mV; 117kHz fundamental crushed (0.016mV).
+  ESR floor (~1 ohm for aged axial) is transparent at 14kHz: bulk electrolytic alone CANNOT kill the comb.
+- **Rainbow unchanged at 58mVrms.** Simple rms-threshold model dead: V2 clean at 48.8, board 2 rainbows
+  at 58 — 20% gap can't flip a panel.
+
+## Panel census (4 panels, board 2 bodged @58mVrms, AC): THE RESOLUTION
+| Panel | On board 2 (AC) | On bench | On V2 (AC) |
+|---|---|---|---|
+| Original board-2 panel ("suspect") | RAINBOW | clean | **CLEAN** |
+| Spare (breadboard era) | CLEAN | - | - |
+| Brand new out of box | CLEAN | - | - |
+| (4th used panel — not yet run) | - | - | - |
+
+## FINAL VERDICT
+**Rainbow = (V4's 3.3V kHz-comb noise) x (a marginal panel unit). Both ingredients required.**
+- 3 of 4 panels tolerate V4's AC rail (at the bodged 58mVrms; unproven at the original 120).
+- The 1 marginal panel rainbows on V4-AC, is clean on V4-bench (quiet rail), and **clean on V2-AC** —
+  V2's quieter chain (48.8mVrms, comb decaying by 36kHz) rescues even the weak panel.
+- HX8357D VCOM/gamma charge pumps are the sensitive element; unit-to-unit tolerance spread is real.
+- Panels are a lottery: V5 must be designed for the WORST panel. Acceptance target unchanged:
+  <30mVrms on AC at the panel feed, comb suppressed (ferrite post-filter, not bulk-only — proven
+  tonight that bulk alone fails).
+- Caveat: V4's rainbow history should be re-read as "the marginal panel was the witness on every
+  sighting" (pending user confirming the same panel toured boards 1/2/5).
+
+## Bench state at session end
+Board 2: 100uF bodge still installed on J7 (decision pending: remove or leave), functional with any
+good panel. Board 5: RETIRED (PS2 feedback broken, 4.41V rail). Suspect panel: needs a sharpie mark.
+Session 3 artifacts: captures/board5_*, board2_bodge100u_*.png/json.
