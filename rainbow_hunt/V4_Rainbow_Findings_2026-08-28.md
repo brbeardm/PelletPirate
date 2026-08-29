@@ -82,6 +82,51 @@ Optional validation before respin: bodge the 12V LC + 3.3V bulk onto V4 board 5 
 the comb die live — de-risks the V5 change for the cost of an afternoon.
 
 
+# SESSION 5 — SCLK glitch hunt + V2 control (2026-08-29). CASE CLOSED FOR REAL — every link measured.
+
+## The instrument: runt sentinel at the victim node
+Wire tails soldered to V4 board 2's ESP castellations: pad 33 (/ALL_SCLK) + pad 40 (GND), probe at
+10x (MANDATORY — at 1x the probe's ~100pF loading corrupts the display LIVE: accidental fault-injection
+that proved the clock->corruption chain by demonstration; corruption froze in panel GRAM when loading
+removed = write-time mechanism confirmed). Scope hardware runt trigger 0.99/2.31V watches the full
+1.25GSa stream continuously (events too rare/narrow for stored-sample capture — even 25M @ 1.25GSa
+windows miss them; the trigger comparator is the only thing fast + patient enough).
+
+## THE THREE-WAY VERDICT (same thresholds, same probe, same 4MHz firmware)
+| Board | Power | SCLK runt events |
+|---|---|---|
+| V4 board 2 | AC | **26/min (fires within ~2s of every arm)** |
+| V4 board 2 | bench 12V | **0 in 2 min** |
+| **V2 (probe on DevKit GPIO18 header pin)** | **AC** | **0 in 2 min** |
+Supporting: V4-AC idle SCLK line peaks at 956mV (panel VIL limit = 0.99V) vs mV-quiet on bench;
+active clock half-periods 123-126ns pristine in both states — the events are threshold-riding
+excursions, not clock distortion.
+
+## MEASURED CAUSAL CHAIN (complete)
+PS1 emits switching transients (normal, Figure-2-compliant circuit, BOTH boards) -> on V4 the bare
+ESP module stands directly on bouncing board ground and the events reach SCLK (26/min, AC-only) ->
+panel listens only during its CS window (a few % duty) -> occasionally one lands inside an LCD write ->
+RGB565 bit-shift -> orange<->green flicker / stripes. Episodic because the aggressor wanders AND the
+hit is probabilistic. V2 blocks it at step two: the DevKitC "raft" (own ground pour + local bulk/bypass
+at the module + header-pin isolation) keeps the clock-launching environment quiet — V2's SCLK never
+sees the events at all. This is why no downstream factor (panel unit, comb amplitude, caps, load)
+ever correlated cleanly on V4, and why V2 was always immune.
+
+## V5 PRESCRIPTION (evidence-traceable, each maps to a measurement)
+1. Rebuild the raft: local GND island under the ESP stitched tight to the plane + DevKit-grade
+   bulk/bypass at the module (V2-AC = 0 proves the raft works).
+2. 33R series resistors at ESP SPI outputs (SCLK/MOSI/LCD_CS/LCD_DC) — victim armor.
+3. Ferrite + bulk at the panel FPC 3.3V feed — panel-side margin.
+4. Optional: HF ferrite bead in addition to L1 (ns-band the 2.2uH doesn't block).
+5. Power section UNCHANGED — it is Bel's Figure 2 verbatim (Session 4 retraction stands).
+ACCEPTANCE (first V5 article, this scope, this script): runt sentinel = 0 fires/min on AC at
+0.99/2.31V + idle SCLK peak <300mV. Pass/fail.
+
+## Bench state
+Board 2: SCLK+GND tails still on (KEEP — they are the V5 acceptance-test fixture), C13=220uF donor
+(restore original 470uF when convenient), 100uF bodge on J7. V2: untouched, clip-on only.
+Artifacts: sclk_tap_verify.png, runt_catch_*.png, ac10x_*, spike_context*, sentinel/hunt scripts.
+
 # SESSION 4 — spec audit + interventions on board 2 (2026-08-28 late night -> 08-29). CASE REOPENED.
 Session 3's "case closed" was premature. Session 4 killed the comb-amplitude model and reclassified the symptom.
 
