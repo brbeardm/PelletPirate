@@ -126,3 +126,11 @@ unbodged V4 deep spectrum exists on disk.
 Board 2: 100uF bodge still installed on J7 (decision pending: remove or leave), functional with any
 good panel. Board 5: RETIRED (PS2 feedback broken, 4.41V rail). Suspect panel: needs a sharpie mark.
 Session 3 artifacts: captures/board5_*, board2_bodge100u_*.png/json.
+
+## Addendum: board 3 survey (unbodged, AC, new panel — LCD CLEAN)
+DC 11.70V / 3.39V. 12V: 3.1Vpp / ~71mVrms. 3.3V: **96mVrms with the same comb (7k dominant 2.9mV,
+14k 1.6mV, 28/35k alive)** — and the display is CLEAN with a good panel. Confirms fleet consistency
+(V4 boards all carry ~95-130mVrms comb) and panel-dominance of the symptom. This capture doubles as
+the missing valid unbodged V4 deep spectrum: captures/board3_AC_3V3_spectrum.json (+ board3_AC_rails.png,
+scan script board3_scan.py). Note: board-to-board harmonic variance (board2-bodged 14k line > board3-unbodged)
+is comparable to the bodge effect — single-cap interventions are lost in unit variance; ferrite/LC stack it is.
