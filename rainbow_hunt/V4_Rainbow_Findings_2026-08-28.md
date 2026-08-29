@@ -85,12 +85,24 @@ the comb die live — de-risks the V5 change for the cost of an afternoon.
 # SESSION 4 — spec audit + interventions on board 2 (2026-08-28 late night -> 08-29). CASE REOPENED.
 Session 3's "case closed" was premature. Session 4 killed the comb-amplitude model and reclassified the symptom.
 
-## PBO-5F-12 datasheet audit (Bel rev 09/18/2025) — FIRST CONCRETE SPEC VIOLATION FOUND
+## PBO-5F-12 datasheet audit (Bel rev 09/18/2025)
 - Ripple/noise spec: 150mVp-p MAX at 20MHz BW, nominal input, RATED load (420mA), 25C. All regulation
   specs conditioned on 10-100% load (42-420mA); below that, behavior unspecified.
-- **Max capacitive load, 12V model: 470uF (max column verified by x-position parse). V2/V4/V5 designs
-  hang C13(470u)+C15(220u) = 690uF = 47% OVER MAX — every board ever built runs PS1 outside its
-  documented envelope. This voids any part-vs-spec ripple claim until fixed.**
+- ~~Max capacitive load violation~~ **RETRACTED (user caught it, 08-29): datasheet page 5 Figure 2 +
+  Table 1 (EMC recommended circuit) explicitly specify for the 12V model: C2=470uF/25V at the module,
+  L1=2.2uH, C3=220uF/35V behind it, TVS SMBJ20A — which IS the board's C13/L1/C15/D1 verbatim, and the
+  front end (CX=C4, LF=LF1 30mH, MOV 14D561K=MOV1, C1 15uF/450V=C7) completes Figure 2 exactly.
+  The 470uF max-cap-load spec applies to the module's direct load (C13 alone = compliant); the 220uF
+  is decoupled behind L1 per Bel's own arrangement. NO SPEC VIOLATION EXISTED. The board already
+  contains the C-L-C pi-filter; V2 was designed straight from this datasheet.**
+- Consequence: the board-2 C13->220uF transplant was performed on a false premise and makes board 2
+  DEVIATE from Fig 2 (220 where 470 belongs); reinstall the original 470uF when convenient
+  (measurements showed the swap changed nothing, consistent with the retraction).
+- Mitigation list reordered: "add pi-filter" is MOOT (exists). Primary V5 fixes = SPI series resistors,
+  panel-feed filtering, ground stitching; plus optional HF ferrite bead in addition to L1 for the
+  ns-band a 2.2uH power inductor doesn't block. V2-vs-V4 run the SAME Fig-2 circuit with different
+  outcomes -> the differential is LAYOUT/GROUNDING of this circuit + the DevKit's buffering, not the
+  circuit itself.
 - Reinterpretation: our "117kHz flyback" = 2nd harmonic of ~58.5kHz (117/178/234 = 2x/3x/4x) —
   consistent with the 65kHz typ switching spec. Module behaves like a PBO-5F should.
 - TPS562201 audit (same night, see V5 project): PS2 cluster 100% per datasheet Table 7-2. No PS2 changes
