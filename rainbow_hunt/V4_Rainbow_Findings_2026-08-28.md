@@ -127,6 +127,15 @@ Board 2: 100uF bodge still installed on J7 (decision pending: remove or leave), 
 good panel. Board 5: RETIRED (PS2 feedback broken, 4.41V rail). Suspect panel: needs a sharpie mark.
 Session 3 artifacts: captures/board5_*, board2_bodge100u_*.png/json.
 
+## Addendum 2: board 4 survey (unbodged, AC, good panel — slight infrequent flicker)
+DC 11.94V / **3.54V (3.3V rail runs +7% high — fleet DC gradient 3.31/3.39/3.54/4.41 tracks noise
+rank; possible PS2 unit-variance spread with board 5 as the broken extreme — DMM cross-check queued)**.
+12V ~76mVrms. 3.3V: **184-185mVrms — noisiest healthy board — comb fundamental at 3.5kHz (71mV single
+line!) not 7kHz**; burst repetition rate is unit-dependent. Display with a good panel: only barest
+occasional flicker at 185mVrms while the marginal panel rainbows at 58 → **panel immunity spread >3x;
+panel variance is the DOMINANT variable.** <30mVrms V5 target unchanged (must cover worst panel).
+Artifacts: board4_AC_rails.png, board4_AC_3V3_spectrum.json.
+
 ## Addendum: board 3 survey (unbodged, AC, new panel — LCD CLEAN)
 DC 11.70V / 3.39V. 12V: 3.1Vpp / ~71mVrms. 3.3V: **96mVrms with the same comb (7k dominant 2.9mV,
 14k 1.6mV, 28/35k alive)** — and the display is CLEAN with a good panel. Confirms fleet consistency

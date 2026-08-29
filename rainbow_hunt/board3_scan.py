@@ -1,7 +1,9 @@
-"""Board 3 AC scan: rms on both rails + deep comb spectrum on 3.3V."""
+"""Board AC scan: rms on both rails + deep comb spectrum on 3.3V. Usage: python board3_scan.py [label]"""
 import sys, math, json, time
 sys.path.insert(0, r'C:\development\pelletpirate\rainbow_hunt')
 from scope_harness import Scope, shot
+
+label = sys.argv[1] if len(sys.argv) > 1 else 'board3'
 
 sc = Scope()
 sc.cmd(':CHANnel1:COUPling AC'); sc.cmd(':CHANnel1:SCALe 0.5'); sc.cmd(':CHANnel1:OFFSet 0')
@@ -19,7 +21,7 @@ for ch, name in ((1, '12V'), (2, '3.3V')):
     pp = f'{min(vpps)*1000:.0f}-{max(vpps)*1000:.0f}mVpp' if vpps else 'INVALID'
     rm = f'{min(vrmss)*1000:.1f}-{max(vrmss)*1000:.1f}mVrms' if vrmss else 'INVALID'
     print(f'CH{ch} ({name}): {pp}  |  {rm}')
-shot(sc, 'board3_AC_rails')
+shot(sc, f'{label}_AC_rails')
 
 # deep capture on 3.3V for comb scan
 sc.cmd(':TIMebase:MAIN:SCALe 0.01'); sc.cmd(':ACQuire:MDEPth 1M'); sc.cmd(':RUN')
@@ -51,4 +53,4 @@ mx = max(res.values())
 for f in freqs:
     print(f'{f/1000:7.1f}kHz  {res[f]*1000:7.3f}mV  ' + '#' * int(res[f] / mx * 40))
 json.dump({str(k): val for k, val in res.items()},
-          open(r'C:\development\pelletpirate\rainbow_hunt\captures\board3_AC_3V3_spectrum.json', 'w'))
+          open(rf'C:\development\pelletpirate\rainbow_hunt\captures\{label}_AC_3V3_spectrum.json', 'w'))
