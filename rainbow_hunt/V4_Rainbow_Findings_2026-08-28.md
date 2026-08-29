@@ -82,6 +82,59 @@ Optional validation before respin: bodge the 12V LC + 3.3V bulk onto V4 board 5 
 the comb die live — de-risks the V5 change for the cost of an afternoon.
 
 
+# SESSION 4 — spec audit + interventions on board 2 (2026-08-28 late night -> 08-29). CASE REOPENED.
+Session 3's "case closed" was premature. Session 4 killed the comb-amplitude model and reclassified the symptom.
+
+## PBO-5F-12 datasheet audit (Bel rev 09/18/2025) — FIRST CONCRETE SPEC VIOLATION FOUND
+- Ripple/noise spec: 150mVp-p MAX at 20MHz BW, nominal input, RATED load (420mA), 25C. All regulation
+  specs conditioned on 10-100% load (42-420mA); below that, behavior unspecified.
+- **Max capacitive load, 12V model: 470uF (max column verified by x-position parse). V2/V4/V5 designs
+  hang C13(470u)+C15(220u) = 690uF = 47% OVER MAX — every board ever built runs PS1 outside its
+  documented envelope. This voids any part-vs-spec ripple claim until fixed.**
+- Reinterpretation: our "117kHz flyback" = 2nd harmonic of ~58.5kHz (117/178/234 = 2x/3x/4x) —
+  consistent with the 65kHz typ switching spec. Module behaves like a PBO-5F should.
+- TPS562201 audit (same night, see V5 project): PS2 cluster 100% per datasheet Table 7-2. No PS2 changes
+  justified — TPS562208 swap idea WITHDRAWN (V2 runs the same part clean; not the differential).
+
+## Experiments on board 2 (all same session, fresh baselines each)
+1. **Dummy load +75mA** (100+100 series || 390+390 series = 159 ohm at J7.1/J7.4): no effect beyond the
+   comb's natural drift. Light-load theory: no resolvable effect at this scale (earlier "dead" verdict
+   was over-claimed — the comb's own wandering exceeds any load effect).
+2. **Comb wanders spontaneously**: 7k line 2.35 -> 5.04mV in minutes, same config, nothing touched.
+   Any single-scan A/B on this board is unreliable; only repeated sampling counts.
+3. **C13 -> 220uF transplant** (donor = board 5's C15; rail now 220+220 = 440uF, IN SPEC): rails healthy
+   (11.97/3.31), comb NOT collapsed (7k hit record 7.04mV post-surgery), flicker rate ~unchanged.
+   Spec fix KEPT (it is correct regardless); it is not the cure.
+4. **Comb-amplitude <-> symptom correlation: DEAD.** Flaky episode at 7k=5.04mV, then CLEAN boots at
+   4.30 and 7.04mV (the record). Amplitude does not predict the symptom.
+
+## Symptom reclassification (user's precise description)
+On board 2 with the NEW panel: orange selector elements flip orange->green and back; grayed text
+(COOK MODE, TARGET) flickers gray->white->gray; episodic, boot-to-boot variable, sometimes absent for
+minutes. This is WRITE-TIME pixel corruption (RGB565 bit-shift signature: one glitched SCLK edge shifts
+all following bits -> wholesale hue flip until next clean write) — a DIGITAL/SPI mechanism, distinct
+from analog VCOM/gamma "rainbow" shimmering. The historical record may conflate >=2 mechanisms; the
+original suspect-panel behavior may still be analog. FPC-contact cause explicitly excluded by user
+(cable touches nothing; verified every test).
+Panel census caveat: "new panel clean" did NOT hold over hours — census re-read as: all panels
+flicker occasionally on V4-AC (suspect panel = most susceptible), aggressor varies in time.
+
+## Where the evidence now points
+12V-side exonerated piece by piece: load point (no effect), cap loading (fixed, no change), comb
+amplitude (uncorrelated). Leading model: **stochastic SPI write corruption during AC operation,
+coupling path unknown.** Never directly observed — only inferred from pixel colors.
+**NEXT SESSION: catch it in the act.** Solder thin wire tails to SCLK (ESP castellation pad) + GND;
+CH3/CH4 on SPI, CH1 on 12V; trigger on SCLK runts/glitches; correlate with PS1 bursts. If glitches
+appear on the wire during corruption events -> conducted/coupled aggressor confirmed and localizable.
+
+## Program status
+**V5 reorder ON HOLD (user, 2026-08-29): "can't justify $1000 until we resolve something concrete."**
+V5 changes justified so far: 12V rail total capacitance <=470uF (datasheet-traceable). Ferrite/LC stack
+and panel post-filter: PENDING the SPI hunt verdict. Board 2 config: C13=220uF (donor), 100uF bodge
+still on J7 3.3V. Board 5: parts donor. Session 4 artifacts: captures/board2_noload_*, board2_load_removed_*,
+board2_rainbow_visible_*, board2_c13_220u_*, board2_c13_cycle1_*, board2_c13_cycle2_*, tps562201_extract*.txt,
+ps2_cluster.py, v5_audit_netlist.net.
+
 # SESSION 3 — bodge test + panel census (2026-08-28 evening). CASE CLOSED.
 
 ## Board 5 disqualified and retired
