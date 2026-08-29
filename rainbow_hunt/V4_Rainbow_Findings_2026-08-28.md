@@ -129,7 +129,9 @@ Session 3 artifacts: captures/board5_*, board2_bodge100u_*.png/json.
 
 ## Addendum 2: board 4 survey (unbodged, AC, good panel — slight infrequent flicker)
 DC 11.94V / **3.54V (3.3V rail runs +7% high — fleet DC gradient 3.31/3.39/3.54/4.41 tracks noise
-rank; possible PS2 unit-variance spread with board 5 as the broken extreme — DMM cross-check queued)**.
+rank; possible PS2 unit-variance spread with board 5 as the broken extreme — **DMM CONFIRMED 3.50V**,
+reading is real. Unifying mechanism: D-CAP2 valley regulation — FB noise pushes DC up, so setpoint
+gradient = same noise disease, four severities, board 5 the end state)**.
 12V ~76mVrms. 3.3V: **184-185mVrms — noisiest healthy board — comb fundamental at 3.5kHz (71mV single
 line!) not 7kHz**; burst repetition rate is unit-dependent. Display with a good panel: only barest
 occasional flicker at 185mVrms while the marginal panel rainbows at 58 → **panel immunity spread >3x;
