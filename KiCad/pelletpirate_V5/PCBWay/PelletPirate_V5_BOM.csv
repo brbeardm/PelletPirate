@@ -30,7 +30,7 @@
 29,L1,1,Murata,LQH3NPH2R2MMEL,2.2µH,IND_LQH3NPH2R2MMEL,Inductor with Inductance 2.2uH Tol.+/-20% Package 1212 (3030),https://www.digikey.com/en/products/detail/murata-electronics/LQH3NPH2R2MMEL/12476579,Equal or better spec allowed
 30,L2,1,Murata,LQH43PN3R3M26L,3.3µH,IND_LQH43PN3R3M26L,"Inductor with Inductance: 3.3uH Tol. +/-20%, Package: 1812 (4532)",https://www.digikey.com/en/products/detail/murata-electronics/LQH43PN3R3M26L/4359202,Equal or better spec allowed
 31,L3,1,Bourns,SRR4028,SRR4028-100Y,SRR4028,Power Inductors - SMD,https://www.digikey.com/en/products/detail/bourns-inc/SRR4028-100Y/1970246,Equal or better spec allowed
-32,L5,1,Murata,BLM31PG601SN1L,BLM31PG601SN1L,BEADC3216X130N_flyman,600 Ohms @ 100 MHz 1 Power Line Ferrite Bead 1206 (3216 Metric) 1.5A 80mOhm,,NO SUBSTITUTION
+32,L5,1,Murata,BLM31PG601SN1L,BLM31PG601SN1L,BEADC3216X130N_flyman,600 Ohms @ 100 MHz 1 Power Line Ferrite Bead 1206 (3216 Metric) 1.5A 80mOhm,https://www.digikey.com/en/products/detail/murata-electronics/BLM31PG601SN1L/584266,NO SUBSTITUTION
 33,LED1,1,LiteOn,LTST-C191KGKT,LTST-C191KGKT_flyman,LED_0603_1608Metric,Green 571nm LED Indication - Discrete 2V 0603 (1608 Metric),https://www.digikey.com/en/products/detail/liteon/LTST-C191KGKT/386835,Equal or better spec allowed
 34,LF1,1,KEMET,SSRH7H-M05408,SSRH7H-M05408,Kemet_Choke_SSRH7H_M05408,"Generic common-mode choke, ferrite core, 1243 pin order",https://www.digikey.com/en/products/detail/kemet/SSRH7H-M05408/8509242,Equal or better spec allowed
 35,MAX1 MAX2 MAX3 MAX4 MAX5,5,ANALOG DEVICES,MAX31865ATP+,MAX31865xTP,TQFN-20-1EP_5x5mm_P0.65mm_EP3.25x3.25mm,"RTD-to-Digital Converter, TQFN-20",https://www.digikey.com/en/products/detail/analog-devices-inc-maxim-integrated/MAX31865ATP/3681476,NO SUBSTITUTION

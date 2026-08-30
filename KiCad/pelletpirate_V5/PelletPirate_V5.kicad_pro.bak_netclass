@@ -488,7 +488,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "PelletPirate_V5v1.kicad_pro",
+    "filename": "PelletPirate_V5.kicad_pro",
     "version": 3
   },
   "net_settings": {
@@ -513,6 +513,21 @@
         "wire_width": 6
       },
       {
+        "clearance": 0.25,
+        "diff_pair_gap": 0.2,
+        "diff_pair_width": 0.25,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "3V3_LCD",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 0,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.3,
+        "tuning_profile": "",
+        "via_diameter": 0.7,
+        "via_drill": 0.35
+      },
+      {
         "clearance": 0.635,
         "diff_pair_gap": 0.2,
         "diff_pair_width": 0.25,
@@ -520,7 +535,7 @@
         "microvia_drill": 0.1,
         "name": "AC_LOAD_IGNITER",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 3,
+        "priority": 4,
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 1.5,
         "tuning_profile": "",
@@ -535,7 +550,7 @@
         "microvia_drill": 0.1,
         "name": "AC_LOAD_LOW",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 2,
+        "priority": 3,
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 1.0,
         "tuning_profile": "",
@@ -550,7 +565,7 @@
         "microvia_drill": 0.1,
         "name": "AC_LOAD_SHARED",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 4,
+        "priority": 5,
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 1.5,
         "tuning_profile": "",
@@ -565,7 +580,7 @@
         "microvia_drill": 0.1,
         "name": "EARTH",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 6,
+        "priority": 7,
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 1.5,
         "tuning_profile": "",
@@ -580,7 +595,7 @@
         "microvia_drill": 0.1,
         "name": "LCD_FPC",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 7,
+        "priority": 8,
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 0.2,
         "tuning_profile": "",
@@ -595,7 +610,7 @@
         "microvia_drill": 0.1,
         "name": "LED_BACKLIGHT",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 10,
+        "priority": 11,
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 0.5,
         "tuning_profile": "",
@@ -610,7 +625,7 @@
         "microvia_drill": 0.1,
         "name": "MAINS_GATE",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 1,
+        "priority": 2,
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 0.4,
         "tuning_profile": "",
@@ -625,7 +640,7 @@
         "microvia_drill": 0.1,
         "name": "MAINS_INPUT",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 5,
+        "priority": 6,
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 1.0,
         "tuning_profile": "",
@@ -640,7 +655,7 @@
         "microvia_drill": 0.1,
         "name": "MAINS_SENSE",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 0,
+        "priority": 1,
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 0.4,
         "tuning_profile": "",
@@ -655,7 +670,7 @@
         "microvia_drill": 0.1,
         "name": "RTD_ANALOG",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 8,
+        "priority": 9,
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 0.25,
         "tuning_profile": "",
@@ -670,7 +685,7 @@
         "microvia_drill": 0.1,
         "name": "SELV_12V",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 11,
+        "priority": 12,
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 0.5,
         "tuning_profile": "",
@@ -685,7 +700,7 @@
         "microvia_drill": 0.1,
         "name": "SELV_3V3",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 12,
+        "priority": 13,
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 0.3,
         "tuning_profile": "",
@@ -700,7 +715,7 @@
         "microvia_drill": 0.1,
         "name": "SELV_SIGNAL",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 13,
+        "priority": 14,
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 0.25,
         "tuning_profile": "",
@@ -715,7 +730,7 @@
         "microvia_drill": 0.1,
         "name": "USB",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 9,
+        "priority": 10,
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 0.25,
         "tuning_profile": "",
@@ -1108,7 +1123,7 @@
       "method": 0,
       "sort_order": 0
     },
-    "bom_export_filename": "PelletPirate_V5v1_BOM.csv",
+    "bom_export_filename": "C:\\DEVELOPMENT\\pelletpirate\\KiCad\\PelletPirate_V5\\PelletPirate_V5_BOM.csv",
     "bom_fmt_presets": [],
     "bom_fmt_settings": {
       "field_delimiter": ",",
@@ -1377,18 +1392,18 @@
     "subpart_id_separator": 0,
     "top_level_sheets": [
       {
-        "filename": "PelletPirate_V5v1.kicad_sch",
-        "name": "PelletPirate_V5v1",
+        "filename": "PelletPirate_V5.kicad_sch",
+        "name": "PelletPirate_V5",
         "uuid": "0182ac56-03c6-4c14-8ead-12e31828f094"
       }
     ],
-    "used_designators": "J7-11,#FLG5,R10-12,R32-47,T4,#PWR5,#PWR15-16,#PWR48,#PWR50,#PWR54-63,ESP1,S1-2,MOC4,LED1,C17,C37-43,U1,U3,WirePad6,TP1-3",
+    "used_designators": "J7-11,#FLG5,R10-12,R32-53,T4,#PWR5,#PWR15-16,#PWR48,#PWR50,#PWR54-65,ESP1,S1-2,MOC4,LED1,C17,C37-48,U1,U3,WirePad6,TP1-3,FL1-2,L4-6",
     "variants": []
   },
   "sheets": [
     [
       "0182ac56-03c6-4c14-8ead-12e31828f094",
-      "PelletPirate_V5v1"
+      "PelletPirate_V5"
     ]
   ],
   "text_variables": {},

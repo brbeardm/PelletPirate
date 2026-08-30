@@ -1,0 +1,62 @@
+PELLETPIRATE V5 - ASSEMBLY NOTES AND DO-NOT-SUBSTITUTE PARTS LIST
+==================================================================
+Board: PelletPirate_V5, 2-layer FR-4 110 x 65 x 1.6mm, ENIG.
+Assembly: turnkey, both sides SMT + through-hole. 117 components / 61 BOM lines.
+6 fiducials (FID1-6, three per side) are in the position file, not the BOM.
+This is a 120VAC mains-connected appliance controller. Parts listed below are
+safety-critical or reliability-critical: EXACT manufacturer part number ONLY.
+NO substitutions, NO alternate brands, NO "equivalent" parts on these lines.
+
+DO-NOT-SUBSTITUTE LINES (must match BOM exactly)
+------------------------------------------------
+Refs                      Manufacturer                  Part Number              Why
+C1 C2 C3                  EPCOS - TDK                   B32921C3103M000          X2 mains safety capacitor, 305VAC (triac snubbers)
+C4                        KEMET                         R46KF310000M1M           X2 mains safety capacitor, 275VAC (line filter)
+C5 C6                     Vishay BC Components          VY2471K29Y5SS63V7        Y-class safety capacitor, line-to-earth
+C12                       Vishay BC Components          VY2102M29Y5US63V7        Y-class safety capacitor, isolation barrier
+C7                        Rubycon                       450BXG15MEFC10X20        450V primary-side bulk electrolytic
+MOV1                      Bourns                        MOV-14D561K              Mains surge varistor
+T1 T2 T3                  STMicroelectronics            BTA12-600BWRG            Snubberless mains triacs (load switching)
+MOC1 MOC2                 onsemi                        MOC3063M                 Zero-cross opto-triac drivers (mains isolation)
+MOC3                      onsemi                        MOC3053M                 Random-phase opto-triac driver (fan phase control) - do NOT swap with MOC3063
+R41 R42                   Panasonic                     ERJ-P08J153V             Anti-surge rated resistors on mains sense divider
+PS1                       CUI Inc.                      PBO-5F-12                AC/DC power module - genuine CUI only (counterfeit risk)
+ESP1                      Espressif Systems             ESP32-S3-WROOM-1U-N16R8  Exact flash/PSRAM variant required (16MB flash / 8MB octal PSRAM, U = external antenna)
+MAX1 MAX2 MAX3 MAX4 MAX5  Analog Devices                MAX31865ATP+             Precision RTD converters (measurement accuracy)
+FPC1                      Hirose Electric               FH26W-39S-0.3SHW(60)     0.3mm-pitch FPC connector, exact mating geometry
+J8                        Global Connector Technology   USB4145-03-0170-C        Vertical USB-C, 1.70mm shell stake variant - do NOT substitute the -0070 or -0230 stake versions
+
+SUBSTITUTION POLICY FOR ALL OTHER LINES
+---------------------------------------
+Generic passives and connectors not listed above may be quoted with
+alternatives of EQUAL OR BETTER specification (tolerance, voltage rating,
+temperature rating, package). Every proposed alternative must appear in the
+BOM match report for customer approval BEFORE production. Operating
+environment is outdoor: -40C minimum rating on any substitute.
+
+ASSEMBLY CAUTIONS
+-----------------
+1. FPC1 (bottom side): 0.3mm-pitch staggered two-row connector. Verify paste
+   and placement; no solder mask dams exist between its pads by design.
+2. J8 vertical USB-C: 16 SMT pads + 4 through-hole shield slots. Shield slots
+   must be soldered (mechanical retention for cable insertion loads).
+3. J9 (TB002-500-02BE screw terminal): hand or wave solder ONLY per
+   manufacturer datasheet - no reflow. Same for other through-hole parts.
+4. T1-T3 (TO-220 triacs): mount vertical, fully seated per silkscreen.
+5. Polarized parts: C7, C13, C15 electrolytics and D1, D2, LED1 - orientation
+   per silkscreen. Note D1 polarity mark is a dot, not a band.
+6. F1 is the fuse HOLDER only (Schurter 0031.8201) - no fuse cartridge is to
+   be installed at assembly.
+7. WirePad1-6 and Earth1 are bare solder-wire terminals - no components.
+8. TP1/TP2 are bare test points - no components.
+9. Drill file includes 25 plated slots (G85) around PS1 - these are creepage
+   slots, fabricate as routed slots.
+10. Position file origin: absolute board coordinates, millimeters, both sides.
+
+QUALITY / HANDLING
+------------------
+- Standard electrical test on bare boards.
+- No firmware loading, no conformal coating, no function test.
+- Neutral box packaging.
+- Reference: same design family as prior order PelletPirate_V4 (2026-07),
+  same customer account.

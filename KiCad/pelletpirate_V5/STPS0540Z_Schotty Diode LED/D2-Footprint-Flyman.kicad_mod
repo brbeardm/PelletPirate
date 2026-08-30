@@ -1,0 +1,249 @@
+(footprint "D2-Footprint-Flyman"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(property "Reference" "D2"
+		(at 3.16 -0.1 90)
+		(layer "F.SilkS")
+		(uuid "d9d2526c-38c2-4cf8-af34-fdcd721352b8")
+		(effects
+			(font
+				(size 0.801039 0.801039)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "STPS0540Z"
+		(at 0.24 1.57 180)
+		(layer "F.Fab")
+		(uuid "e136a002-e52c-482d-ab7d-2b6afa53ca9e")
+		(effects
+			(font
+				(size 0.787402 0.787402)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 180)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "6e5136e3-8af0-47c9-88df-0e184fa4d151")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Description" "Diode Schottky 40 V 500mA Surface Mount SOD-123"
+		(at 0 0 180)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "2168fc31-e099-4e9f-98ad-5e1a68a18d0a")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "MF" "STMicroelectronics"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "05aeb592-06e9-490f-8c8d-3ac1050a060b")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Package" "SOD-123 STMicroelectronics"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "3d5b4e8f-1d07-487d-b7ae-6b4405bc7680")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Price" "None"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "d0e06538-ad5a-4fed-93fe-a5826da8581e")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "SnapEDA_Link" "https://www.snapeda.com/parts/STPS0540Z/STMicroelectronics/view-part/?ref=snap"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "2ac5fa68-32a2-423c-8dbb-17487f5fe802")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "MP" "STPS0540Z"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "64e09d91-bd66-4de7-9313-56462401b999")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Availability" "In Stock"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "4d7ba76d-4a21-40a5-85d7-7921d328329a")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Check_prices" "https://www.snapeda.com/parts/STPS0540Z/STMicroelectronics/view-part/?ref=eda"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "726f8904-9f86-4de6-9372-bc6c8ebbf185")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(sheetname "/")
+	(sheetfile "PelletPirate_V5.kicad_sch")
+	(attr smd)
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_line
+		(start -2.286 0.878)
+		(end 2.286 0.878)
+		(stroke
+			(width 0.127)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "77160a46-9a0c-4dfa-bbea-97fc4888b677")
+	)
+	(fp_line
+		(start -0.83 0)
+		(end 0.543 0.6)
+		(stroke
+			(width 0.2032)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "98fcbf38-438e-4cc9-9544-0e4de92710b3")
+	)
+	(fp_line
+		(start 0.543 -0.6)
+		(end -0.83 0)
+		(stroke
+			(width 0.2032)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "2dd60c5f-4da1-405b-b072-ef93cd4599ab")
+	)
+	(fp_line
+		(start 0.543 0.6)
+		(end 0.543 -0.6)
+		(stroke
+			(width 0.2032)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "d458c81d-cc40-4aa9-bc71-30a36ac60f0a")
+	)
+	(fp_line
+		(start 2.286 -0.978)
+		(end -2.286 -0.978)
+		(stroke
+			(width 0.127)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "ec8a504a-7412-448c-a6f5-056d5807d824")
+	)
+	(fp_rect
+		(start -2.58 -1.08)
+		(end 2.61 0.98)
+		(stroke
+			(width 0.03)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "ef803495-54e2-40cf-a572-90c828fda1ef")
+	)
+	(fp_text user "C"
+		(at -1.85 -0.5 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "e8a7e2ad-65e8-4208-8a56-802628b4bf76")
+		(effects
+			(font
+				(size 0.25 0.25)
+				(thickness 0.05)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+	)
+	(fp_text user "A"
+		(at 1.61 -0.5 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "375a274c-c255-44e2-b17f-4516802c3eec")
+		(effects
+			(font
+				(size 0.25 0.25)
+				(thickness 0.05)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+	)
+	(pad "A" smd rect
+		(at 1.74 0)
+		(size 0.97 0.65)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(solder_mask_margin 0.102)
+		(uuid "cd73cdfd-afc0-4abf-bdfe-5aa2dbe817e2")
+	)
+	(pad "C" smd rect
+		(at -1.74 0)
+		(size 0.97 0.65)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(solder_mask_margin 0.102)
+		(uuid "6b91a47e-8485-478d-97f5-55c9509a06a5")
+	)
+	(embedded_fonts no)
+)
