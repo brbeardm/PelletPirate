@@ -1,0 +1,139 @@
+PelletPirate V4 - SENSITIVE / DO-NOT-SUBSTITUTE (DNS) PARTS
+Generated 2026-07-28  |  For PCBWay turnkey sourcing
+========================================================================
+These parts are SAFETY- or FUNCTION-CRITICAL. If PCBWay cannot source
+the EXACT manufacturer part number below, do NOT accept a substitute -
+flag it and consign that part instead. Review the parts-match report
+before paying.
+
+------------------------------------------------------------------------
+REF(S):  T1,T2,T3
+MFR:     STMicroelectronics
+MPN:     BTA12-600BWRG
+VALUE:   BTA12-600BWRG
+DESC:    12A RMS, 600V Off-State Voltage, 50mA Sensitivity, Snubberless, Insulated, Triac, TO-220
+LINK:    https://www.digikey.com/en/products/detail/stmicroelectronics/BTA12-600BWRG/654429
+WHY DNS: SNUBBERLESS triac. This exact variant is what makes the on-board snubber deletion safe. A standard (non-snubberless) triac substitute would arc/false-trigger on the inductive auger/fan loads. NO SUBSTITUTION.
+
+------------------------------------------------------------------------
+REF(S):  MOC3
+MFR:     ONSEMI
+MPN:     MOC3053M
+VALUE:   MOC3053M
+DESC:    Optoisolator Triac Output 4170Vrms 1 Channel 6-DIP
+LINK:    https://www.digikey.com/en/products/detail/onsemi/MOC3053M/9764702
+WHY DNS: RANDOM-PHASE (non-zero-cross) optotriac. REQUIRED for fan phase-angle speed control - a zero-cross substitute breaks variable fan speed. NO SUBSTITUTION.
+
+------------------------------------------------------------------------
+REF(S):  MOC1,MOC2
+MFR:     ONSEMI
+MPN:     MOC3063M
+VALUE:   MOC3063M
+DESC:    Optoisolator Triac Output 4170Vrms 1 Channel 6-DIP
+LINK:    https://www.digikey.com/en/products/detail/onsemi/MOC3063M/281237
+WHY DNS: Zero-cross optotriac driver (igniter, auger). Zero-cross switching is required for clean turn-on. Do not substitute a random-phase part.
+
+------------------------------------------------------------------------
+REF(S):  U3
+MFR:     ON Semiconductor
+MPN:     H11AA1M
+VALUE:   H11AA1M
+DESC:    Optoisolator Transistor with Base Output 4170Vrms 1 Channel 6-DIP
+LINK:    https://www.digikey.com/en/products/detail/onsemi/H11AA1M/1053602
+WHY DNS: AC-line zero-cross detector optocoupler. Provides mains->logic isolation for the ZC signal. No substitution.
+
+------------------------------------------------------------------------
+REF(S):  PS1
+MFR:     Bel Fuse
+MPN:     PBO-5F-12
+VALUE:   PBO-5F-12
+DESC:    Open Frame AC DC Converters 1 Output 12V 420mA 85 ~ 305 VAC, 70 ~ 430 VDC Input
+LINK:    https://www.digikey.com/en/products/detail/bel-power-solutions/PBO-5F-12/28717413
+WHY DNS: Isolated AC/DC module - THE primary-to-secondary safety isolation barrier of the whole board. No substitution.
+
+------------------------------------------------------------------------
+REF(S):  MOV1
+MFR:     BOURNS
+MPN:     MOV-14D561K
+VALUE:   PP_14D561K
+DESC:    560 V 4.5 kA Varistor 1 Circuit Through Hole Disc 14mm
+LINK:    https://www.digikey.com/en/products/detail/bourns-inc/MOV-14D561K/2798251
+WHY DNS: Mains surge varistor. Clamp voltage (560V) is matched to the design. Safety part - no substitution.
+
+------------------------------------------------------------------------
+REF(S):  C4
+MFR:     KEMET
+MPN:     R46KF310000M1M
+VALUE:   0.1µF 275V X2
+DESC:    0.1 µF Film Capacitor 275V 560V Polypropylene (PP), Metallized Radial
+LINK:    https://www.digikey.com/en/products/detail/kemet/R46KF310000M1M/5177298
+WHY DNS: X2 safety-rated mains film capacitor (line-to-neutral). Must be certified X2. No substitution.
+
+------------------------------------------------------------------------
+REF(S):  C5,C6
+MFR:     VISHAY
+MPN:     VY2471K29Y5SS63V7
+VALUE:   470pF 440V X1Y2
+DESC:    470 pF ±10% 440VAC Ceramic Capacitor Y5S Radial, Disc
+LINK:    https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/VY2471K29Y5SS63V7/1983391
+WHY DNS: Y1/Y2 safety-rated ceramic capacitors across the isolation barrier (line/neutral to earth). Certified safety part - No substitution.
+
+------------------------------------------------------------------------
+REF(S):  C12
+MFR:     VISHAY
+MPN:     VY2102M29Y5US63V7
+VALUE:   1000pF 440V Y5U
+DESC:    1000 pF ±20% 440VAC Ceramic Capacitor Y5U (E) Radial, Disc
+LINK:    https://www.digikey.com/en/products/detail/vishay-beyschlag-draloric-bc-components/VY2102M29Y5US63V7/1983393
+WHY DNS: Y-rated ceramic capacitor across the primary-to-secondary barrier. Certified safety part - No substitution.
+
+------------------------------------------------------------------------
+REF(S):  C7
+MFR:     Rubycon
+MPN:     450BXG15MEFC10X20
+VALUE:   15µF 450V
+DESC:    15 µF 450 V Aluminum Electrolytic Capacitors Radial, Can 10000 Hrs @ 105°C
+LINK:    https://www.digikey.com/en/products/detail/rubycon/450BXG15MEFC10X20/23330777
+WHY DNS: Primary DC bulk cap. 450V rating is surge headroom tied to the MOV clamp - do NOT drop the voltage rating. No substitution.
+
+------------------------------------------------------------------------
+REF(S):  R41,R42
+MFR:     Panasonic
+MPN:     ERJ-P08J153V
+VALUE:   15KΩ
+DESC:    Panasonic ERJ-P08J153V — 15kΩ 5% 2/3W 1206 anti-surge
+LINK:    https://www.digikey.com/en/products/detail/panasonic-industry/ERJ-P08J153V/525339
+WHY DNS: ANTI-SURGE / pulse-rated resistors on the mains zero-cross divider. Must be the pulse-withstanding 2/3W part - a standard 15k will char/fail on line transients. NO SUBSTITUTION.
+
+------------------------------------------------------------------------
+REF(S):  ESP1
+MFR:     Espressif Systems
+MPN:     ESP32-S3-WROOM-1U-N16R8
+VALUE:   ESP32-S3-WROOM-1U-N16R8-flyman
+DESC:    Bluetooth, WiFi 802.11b/g/n, Bluetooth v5.0 Transceiver Module 2.4GHz Antenna Not Included, U.FL Surface Mount
+LINK:    https://www.digikey.com/en/products/detail/espressif-systems/ESP32-S3-WROOM-1U-N16R8/16162641
+WHY DNS: ESP32-S3-WROOM-1U-N16R8 module (16MB flash / 8MB PSRAM, external-antenna -1U). Exact variant required. No substitution.
+
+------------------------------------------------------------------------
+REF(S):  MAX1-MAX5
+MFR:     ANALOG DEVICES
+MPN:     MAX31865ATP+
+VALUE:   MAX31865xTP
+DESC:    Temp Monitoring System (Sensor) External Sensor SPI Output 20-TQFN (5x5)
+LINK:    https://www.digikey.com/en/products/detail/analog-devices-inc-maxim-integrated/MAX31865ATP/3681476
+WHY DNS: MAX31865 RTD-to-digital front end. Exact part required for the firmware. No substitution.
+
+------------------------------------------------------------------------
+REF(S):  FPC1
+MFR:     Hirose Electric Co Ltd
+MPN:     FH26W-39S-0.3SHW(60)
+VALUE:   FH26W-39S-0.3SHW_60_
+DESC:    39 Position FPC Connector Contacts, Bottom 0.012" (0.30mm) Surface Mount, Right Angle
+LINK:    https://www.digikey.com/en/products/detail/hirose-electric-co-ltd/FH26W-39S-0-3SHW-60/5132503
+WHY DNS: LCD FPC connector - 0.3mm-pitch staggered, mates the specific LCD ribbon. No substitution.
+
+========================================================================
+ALSO NOTE FOR ASSEMBLY:
+- WirePad1-5 and Earth1 are hand-soldered wire lugs: NO machine placement.
+- Polarized: C7, C13 (tantalum-polymer), C15 (polymer) - observe + marking.
+- PS1 footprint has non-plated routed creepage slots (in the drill/edge data).

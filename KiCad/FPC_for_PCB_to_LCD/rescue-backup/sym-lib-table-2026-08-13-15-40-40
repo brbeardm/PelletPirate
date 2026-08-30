@@ -1,0 +1,4 @@
+(sym_lib_table
+	(version 7)
+	(lib (name "PCB_to_LCD_FPC-rescue") (type "Legacy") (uri "${KIPRJMOD}/PCB_to_LCD_FPC-rescue.lib") (options "") (descr ""))
+)

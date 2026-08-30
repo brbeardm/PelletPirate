@@ -1,0 +1,124 @@
+================================================================================
+ PCB ASSEMBLY INSTRUCTIONS
+ Project : PelletPirate ESP32-S3 Breadboard (ESP_Breadboard)
+ Revision: esp32-v2
+ Date    : 2026-06-29
+ Service : Turnkey PCB Fabrication + Assembly (PCBWay sourcing components)
+================================================================================
+
+--------------------------------------------------------------------------------
+1. BOARD SPECIFICATIONS
+--------------------------------------------------------------------------------
+  Layers ............. 2 (copper top + bottom)
+  Board size ......... 30.0 mm x 70.0 mm
+  Thickness .......... 1.6 mm
+  Material ........... FR-4
+  Copper weight ...... 1 oz
+  Surface finish ..... ENIG  (REQUESTED - see note in Section 6)
+  Min track/space .... ~0.20 mm / 0.15 mm (standard)
+  Min hole ........... 0.30 mm
+  Drill files ........ PTH and NPTH provided SEPARATELY.
+                       The 2x non-plated 0.65 mm holes are USB-C locating
+                       pegs and MUST remain non-plated (see NPTH drill file).
+
+--------------------------------------------------------------------------------
+2. ASSEMBLY SCOPE  (READ FIRST - MIXED TECHNOLOGY)
+--------------------------------------------------------------------------------
+  This board is MIXED-TECHNOLOGY. Quote/assemble BOTH processes:
+
+  A) SMT (reflow), TOP side:
+       ESP1, U1, J8 (signal pads), LED1,
+       C17, C18, C37, C38, C39, C40,
+       R30, R31, R35, R36, R37, R38, R39
+
+  B) THROUGH-HOLE (hand or selective solder) - DO NOT SKIP:
+       J1, J2  ... 20-pin pin headers, mounted on the BOTTOM side
+       S1, S2  ... Omron B3F tactile switches
+       J8      ... USB-C is HYBRID: SMD signal pads (top) PLUS through-hole
+                   shield/ground posts. Solder the THT shield posts.
+
+  NOTE: A default "SMT only" quote will MISS the through-hole parts.
+        Please include through-hole soldering in the quote.
+
+--------------------------------------------------------------------------------
+3. SIDE ASSIGNMENT
+--------------------------------------------------------------------------------
+  TOP  .... all SMD components (see 2A)
+  BOTTOM .. J1 and J2 pin headers (pins protrude downward for breadboard use)
+            >> Do NOT flip J1/J2 to the top side. <<
+
+--------------------------------------------------------------------------------
+4. CRITICAL PARTS - NO SUBSTITUTION
+--------------------------------------------------------------------------------
+  Do NOT substitute the following. If unavailable, CONTACT US before building.
+
+  Ref   MPN                          Mfr            Reason
+  ----  ---------------------------  -------------  --------------------------
+  ESP1  ESP32-S3-WROOM-1U-N16R8      Espressif      Exact variant required:
+                                                    16 MB flash, 8 MB OCTAL
+                                                    PSRAM, U.FL antenna (-1U).
+                                                    DO NOT substitute with
+                                                    N8R2, N16R16V (1.8V PSRAM),
+                                                    or WROOM-1 (PCB antenna).
+  J8    USB4105-GF-A                 GCT            Footprint-specific USB-C.
+  U1    USBLC6-2SC6                  STMicro        Exact ESD device.
+  C37   C0805C105K3RACTU (1uF)       KEMET          25V X7R minimum.
+  C39   C0805C105K3RACTU (1uF)       KEMET          25V X7R minimum.
+  C38   C1206C106K3RACTU (10uF)      KEMET          25V X7R minimum.
+  C40   C0805C475M3RACTU (4.7uF)     KEMET          25V X7R minimum.
+  C17   C0402C104K3RACTU (0.1uF)     KEMET          25V X7R.
+  C18   C0402C104K3RACTU (0.1uF)     KEMET          25V X7R.
+
+  CAPACITOR RULE: All capacitors must be 25V-rated, X7R dielectric (or better).
+  Do NOT substitute Y5V / Z5U dielectrics at any value.
+
+--------------------------------------------------------------------------------
+5. SUBSTITUTION ALLOWED (equivalent parts OK)
+--------------------------------------------------------------------------------
+  Resistors (thick/thin film, 1% tolerance, SAME 0402 package):
+     R30, R31, R35, R36 ... 10 kohm
+     R37, R38 ............. 5.1 kohm
+     R39 ................. 1 kohm
+  LED1 ... Green LED, 0603, same footprint/polarity (LTST-C191KGKT or equiv.)
+  Switches S1, S2 ... Omron B3F-1000 or mechanically/electrically equivalent.
+
+--------------------------------------------------------------------------------
+6. ORIENTATION / POLARITY - VERIFY THESE
+--------------------------------------------------------------------------------
+  Confirm pin-1 / polarity / keying for:
+     ESP1 .... module pin 1 orientation
+     U1 ...... USBLC6-2SC6 pin 1 (SOT-23-6)
+     LED1 .... cathode / polarity
+     J8 ...... USB-C connector orientation / keying
+
+  Refer to the centroid/pick-and-place file and (if provided) the assembly
+  drawing for placement and rotation.
+
+--------------------------------------------------------------------------------
+7. SPECIAL PROCESS NOTES
+--------------------------------------------------------------------------------
+  - ESP1 has an exposed thermal pad (EP / pad 41) on its underside, with a
+    via array to the bottom ground plane. Apply correct paste volume; ensure
+    good EP reflow without bridging to adjacent perimeter pads.
+  - USB-C (J8) signal pads are 0.5 mm pitch (fine pitch). ENIG finish is
+    requested to improve coplanarity and assembly yield.
+  - There are NO do-not-populate (DNP) parts. Populate all references.
+
+--------------------------------------------------------------------------------
+8. FILES PROVIDED
+--------------------------------------------------------------------------------
+  - Gerbers (RS-274X): F.Cu, B.Cu, F/B Mask, F/B Silk, F/B Paste, Edge.Cuts
+  - Drill: *-PTH.drl and *-NPTH.drl (separate)
+  - Drill maps: *-drl_map.pdf
+  - Centroid / pick-and-place: *-centroid.csv
+  - Assembly BOM: (provided separately)
+
+--------------------------------------------------------------------------------
+9. DFM / QUESTIONS
+--------------------------------------------------------------------------------
+  Please send any DFM findings or proposed part substitutions for written
+  approval BEFORE starting assembly. Do not substitute Section 4 parts.
+
+================================================================================
+ END OF ASSEMBLY INSTRUCTIONS
+================================================================================

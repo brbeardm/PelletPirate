@@ -1,0 +1,1360 @@
+===== PAGE 1 (1475 chars) =====
+September 2007
+  Rev 9
+1/12
+12
+BTA12, BTB12, T12xx
+12 A Snubberless™, logic level and standard triacs
+Features
+■
+Medium current triac
+■
+Low thermal resistance with clip bonding
+■
+Low thermal resistance insulation ceramic for 
+insulated BTA
+■
+High commutation (4Q) or very high 
+commutation (3Q) capability
+■
+BTA series UL1557 certified (File ref: 81734)
+■
+Packages are RoHS ( 2002/95/EC) compliant
+Applications
+ON/OFF or phase angle function in applications 
+such as static relays, light dimmers and appliance 
+motors speed controllers.
+The snubberless versions (BTA/BTB...W and T12 
+series) are especially recommended for use on 
+inductive loads, because of their high 
+commutation performances. The BTA series 
+provides an insulated tab (rated at 2500 V RMS).
+Description
+Available either in through-hole or surface-mount 
+packages, the BTA12, BTB12 and T12xx triac 
+series is suitable for general purpose mains 
+power AC switching.
+Order code
+See Ordering information on page 11
+TM: Snubberless is a trademark of STMicroelectronics
+A2
+A1
+G
+A2
+A2
+A1
+G
+G
+A2
+A2
+A1
+G
+A2
+A1
+G
+A2
+A2
+A1
+D2PAK
+(T12-G)
+TO-220AB Insulated
+(BTA12)
+TO-220AB
+(BTB12)
+I2PAK
+(T12-R)
+Table 1.
+Device summary
+Symbol
+Parameter
+T12xx
+BTA12 (1)
+BTB12
+IT(RMS)
+RMS on-state current
+12
+12
+12
+VDRM/VRRM
+Repetitive peak off-state voltage
+600/800
+600/800
+600/800
+IGT (Snubberless)
+Triggering gate current
+10/35/50
+5/10/35/50
+5/10/35/50
+IGT (Standard)
+Triggering gate current
+-
+35/50
+35/50
+1.
+Insulated
+www.st.com
+
+===== PAGE 2 (1688 chars) =====
+Characteristics
+BTA12, BTB12, T12xx
+2/12
+  
+1 
+Characteristics
+         
+         
+Table 2.
+Absolute maximum ratings
+Symbol
+Parameter
+Value
+Unit
+IT(RMS)
+RMS on-state current
+(full sine wave)
+I2PAK / D2PAK /
+TO-220AB
+Tc = 105° C
+12
+A
+TO-220AB Ins.
+Tc = 90° C
+ITSM
+Non repetitive surge peak on-state 
+current  (full cycle, Tj initial = 25° C)
+F = 50 Hz
+t = 20 ms
+120
+A
+F = 60 Hz
+t = 16.7 ms
+126
+I2t
+I2t Value for fusing
+tp = 10 ms
+78
+A²s
+dI/dt
+Critical rate of rise of on-state current 
+IG = 2 x IGT , tr ≤ 100 ns
+F = 120 Hz
+Tj = 125° C
+50
+A/µs
+VDSM/VRSM
+Non repetitive surge peak off-state 
+voltage
+tp = 10 ms
+Tj = 25° C
+VDRM/VRRM
++ 100
+V
+IGM
+Peak gate current
+tp = 20 µs
+Tj = 125° C
+4
+A
+PG(AV)
+Average gate power dissipation
+Tj = 125° C
+1
+W
+Tstg
+Tj
+Storage junction temperature range
+Operating junction temperature range
+- 40 to + 150
+- 40 to + 125
+°C
+Table 3.
+Electrical characteristics (Tj = 25°C, unless otherwise specified)
+Snubberless and logic level (3 quadrants)
+Symbol
+Test conditions
+Quadrant
+T12xx
+BTA12 / BTB12
+Unit
+T1210
+T1235
+T1250
+TW
+SW
+CW
+BW
+IGT (1)
+1.
+Minimum IGT is guaranted at 5% of IGT max
+VD = 12 V   
+RL = 30 Ω
+I - II - III
+MAX.
+10
+35
+50
+5
+10
+35
+50
+mA
+VGT
+I - II - III
+MAX.
+1.3
+V
+VGD
+VD = VDRM   
+RL = 3.3 kΩ
+Tj = 125° C
+I - II - III
+MIN.
+0.2
+V
+IH (2)
+2.
+for both polarities of A2 referenced to A1
+IT = 100 mA
+MAX.
+15
+35
+50
+10
+15
+35
+50
+mA
+IL
+IG = 1.2 IGT
+I - III
+MAX.
+25
+50
+70
+10
+25
+50
+70
+mA
+II
+30
+60
+80
+15
+30
+60
+80
+dV/dt (2)
+VD =  67 %VDRM  gate open
+Tj = 125° C
+MIN.
+40
+500
+1000
+20
+40
+500
+1000
+V/µs
+(dI/dt)c (2)
+(dV/dt)c = 0.1 V/µs   
+Tj = 125° C
+MIN.
+6.5
+3.5
+6.5
+A/ms
+(dV/dt)c = 10 V/µs     
+Tj = 125° C
+2.9
+1
+2.9
+Without snubber        
+Tj= 125° C
+6.5
+12
+6.5
+12
+
+===== PAGE 3 (1280 chars) =====
+BTA12, BTB12, T12xx
+Characteristics
+ 
+3/12
+         
+         
+         
+Table 4.
+Electrical characteristics (Tj = 25°C, unless otherwise specified)
+standard (4 quadrants)
+Symbol
+Test Conditions
+Quadrant
+BTA12 / BTB12
+Unit
+C
+B
+IGT 
+(1)
+1.
+Minimum IGT is guaranted at 5% of IGT max.
+VD = 12 V       RL = 30 Ω
+I - II - III
+IV
+MAX.
+25
+50
+50
+100
+mA
+VGT
+ALL
+MAX.
+1.3
+V
+VGD
+VD = VDRM   RL = 3.3 kΩ   Tj = 125° C
+ALL
+MIN.
+0.2
+V
+IH (2)
+2.
+for both polarities of A2 referenced to A1.
+IT = 500 mA
+MAX.
+25
+50
+mA
+IL
+IG = 1.2 IGT
+I - III - IV
+MAX.
+40
+50
+mA
+II
+80
+100
+dV/dt (2)
+VD =  67% VDRM  gate open Tj = 125° C
+MIN.
+200
+400
+V/µs
+(dV/dt)c (2)
+(dI/dt)c = 5.3 A/ms 
+Tj = 125° C
+MIN.
+5
+10
+V/µs
+Table 5.
+Static characteristics
+Symbol
+Test conditions
+Value
+Unit
+VT (1)
+1.
+for both polarities of A2 referenced to A1
+ITM = 17 A        tp = 380 µs
+Tj = 25° C
+MAX.
+1.55
+V
+Vt0 
+(1)
+Threshold voltage
+Tj = 125° C
+MAX.
+0.85
+V
+Rd (1)
+Dynamic resistance
+Tj = 125° C
+MAX.
+35
+mΩ
+IDRM
+IRRM
+VDRM = VRRM
+Tj = 25° C
+MAX.
+5
+µA
+Tj= 125° C
+1
+mA
+Table 6.
+Thermal resistance
+Symbol
+Parameter
+Value
+Unit
+Rth(j-c)
+Junction to case (AC)
+I2PAK / D2PAK / TO-220AB
+1.4
+°C/W
+TO-220AB insulated
+2.3
+Rth(j-a)
+Junction to ambient
+S(1) = 1 cm2
+1.
+Copper surface under tab.
+D2PAK
+45
+°C/W
+TO-220AB / I2PAK
+TO-220AB insulated
+60
+
+===== PAGE 4 (1164 chars) =====
+Characteristics
+BTA12, BTB12, T12xx
+4/12
+  
+         
+         
+         
+Figure 1.
+Maximum power dissipation versus 
+RMS on-state current (full cycle)
+Figure 2.
+RMS on-state current versus case 
+temperature (full cycle)
+P(W)
+I
+(A)
+T(RMS)
+16
+14
+12
+10
+8
+6
+4
+2
+0
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+I
+(A)
+T(RMS)
+0
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+25
+50
+75
+100
+125
+T (°C)
+C
+BTA
+BTB / T12
+Figure 3.
+RMS on-state current versus 
+ambient temperature (printed 
+circuit board FR4, copper 
+thickness: 35µm) (full cycle)
+Figure 4.
+Relative variation of thermal 
+impedance versus pulse duration
+0
+25
+50
+75
+100
+125
+0.0
+0.5
+1.0
+1.5
+2.0
+2.5
+3.0
+3.5
+I
+(A)
+T(RMS)
+T (°C)
+C
+D PAK
+(S=1cm )
+2
+2
+1E-3
+1E-2
+1E-1
+1E+0
+1E+1
+1E+2
+5E+2
+1E-2
+1E-1
+1E+0
+K=[Z
+/R
+th
+th]
+t (s)
+p
+Zth(j-c)
+Zth(j-a)
+Figure 5.
+On-state characteristics (maximum 
+values)
+Figure 6.
+Surge peak on-state current versus 
+number of cycles
+0.5
+1.0
+1.5
+2.0
+2.5
+3.0
+3.5
+4.0
+4.5
+5.0
+1
+10
+100
+I
+(A)
+TM
+V
+(V)
+TM
+T max.
+V
+= 0.85V
+R = 35 m
+j
+to
+d
+Ω
+T =
+j
+T max.
+j
+T = 25°C
+j
+.
+1
+10
+100
+1000
+0
+10
+20
+30
+40
+50
+60
+70
+80
+90
+100
+110
+120
+130
+I
+(A)
+TSM
+Number of cycles
+t=20ms
+One cycle
+Non repetitive
+T initial=25°C
+j
+Repetitive
+T =90°C
+C
+
+===== PAGE 5 (1534 chars) =====
+BTA12, BTB12, T12xx
+Characteristics
+ 
+5/12
+         
+         
+         
+Figure 7.
+Non-repetitive surge peak on-state 
+current for a sinusoidal pulse with 
+width tp < 10 ms and corresponding 
+value of I2t
+Figure 8.
+Figure 8: Relative variation of gate 
+trigger current, holding current and 
+latching current versus junction 
+temperature (typical values)
+0.01
+0.10
+1.00
+10.00
+10
+100
+1000
+I
+(A), I t (A s)
+TSM
+2
+2
+t (ms)
+p
+T initial=25°C
+j
+ITSM
+dI/dt limitation:
+50A/µs
+I t
+2
+-40
+-20
+0
+20
+40
+60
+80
+100
+120
+140
+0.0
+0.5
+1.0
+1.5
+2.0
+2.5
+T (°C)
+j
+I
+,I ,I [T ] /
+GT H L
+j
+I
+,I ,I [T =25°C]
+GT H L
+j
+IGT
+IH & IL
+Figure 9.
+Relative variation of critical rate of 
+decrease of main current versus 
+(dV/dt)c (typical values) 
+(BW/CW/T1210/T1235)
+Figure 10.
+Relative variation of critical rate of 
+decrease of main current versus 
+(dV/dt)c (typical values) (TW)
+0.1
+1.0
+10.0
+100.0
+0.0
+0.4
+0.8
+1.2
+1.6
+2.0
+2.4
+2.8
+T1210/SW
+(dV/dt)c (V/µs)
+(dI/dt)c [(dV/dt)c] / Specified (dI/dt)c
+T1235/T1250/CW/BW
+C
+B
+0.1
+5.0
+4.5
+4.0
+3.5
+3.0
+2.5
+2.0
+1.5
+1.0
+0.5
+0.0
+1.0
+10.0
+100.0
+(dV/dt)c (V/µs)
+(dI/dt)c [(dV/dt)c] / Specified (dI/dt)c
+TW
+Figure 11.
+Relative variation of critical rate of 
+decrease of main current versus 
+junction temperature
+Figure 12.
+D2PAK thermal resistance junction 
+to ambient versus copper surface 
+under tab (printed circuit board 
+FR4, copper thickness: 35 µm)
+0
+25
+50
+75
+100
+125
+0
+1
+2
+3
+4
+5
+6
+(dI/dt)c [T ] /
+pecified]
+j
+(dI/dt)c [T s
+j
+T (°C)
+j
+0
+4
+8
+12
+16
+20
+24
+28
+32
+36
+40
+0
+10
+20
+30
+40
+50
+60
+70
+80
+S(cm²)
+R
+(°C/W)
+th(j-a)
+D PAK
+2
+
+===== PAGE 6 (661 chars) =====
+Ordering information scheme
+BTA12, BTB12, T12xx
+6/12
+  
+2 
+Ordering information scheme
+Figure 13.
+BTA12 and BTB12 series
+Figure 14.
+T12xx series
+BT   A   12  -  600   BW   RG
+Triac series
+Insulation
+Current
+Voltage
+Sensitivity and type
+Packing mode
+A = insulated
+B = non insulated
+12 = 12A
+600 = 600V
+800 = 800V
+B = 50mA Standard
+BW = 50mA Snubberless
+C = 25mA Standard
+CW = 35mA
+RG = Tube
+Snubberless
+SW = 10mA Logic Level
+TW = 5mA Logic Level
+T   12   35  -  600   G   (-TR)
+Triac series
+Sensitivity
+Voltage
+Package
+Packing mode
+Current
+12 = 12 A
+50 = 50 mA
+35 = 35 mA
+10 = 10 mA
+600 = 600 V
+800 = 800 V
+G = D PAK
+R = I PAK
+Blank = Tube
+-TR = Tape & Reel
+2
+2
+
+===== PAGE 7 (635 chars) =====
+BTA12, BTB12, T12xx
+Ordering information scheme
+ 
+7/12
+         Table 7.
+Product selector
+Order code(1)
+1.
+BTB: non insulated TO-220AB package
+Voltage (xxx)
+Sensitivity
+Type
+Package
+600 V
+800 V
+BTA/BTB12-xxxBRG
+X
+X
+50 mA
+Standard
+TO-220AB
+BTA/BTB12-xxxBWRG
+X
+X
+50 mA
+Snubberless
+TO-220AB
+BTA/BTB12-xxxCRG
+X
+X
+25 mA
+Standard
+TO-220AB
+BTA/BTB12-xxxCWRG
+X
+X
+35 mA
+Snubberless
+TO-220AB
+BTA/BTB12-xxxSWRG
+X
+X
+10 mA
+Logic Level
+TO-220AB
+BTA/BTB12-xxxTWRG
+X
+X
+5 mA
+Logic Level
+TO-220AB
+T1210-800G
+-
+X
+10 mA
+Logic Level
+D2PAK
+T1235-xxxG
+X
+X
+35 mA
+Snubberless
+D2PAK
+T1235-xxxR
+X
+X
+35 mA
+Snubberless
+I2PAK
+T1250-600G
+X
+-
+50 mA
+Snubberless
+D2PAK
+
+===== PAGE 8 (1142 chars) =====
+Packaging information
+BTA12, BTB12, T12xx
+8/12
+  
+3 
+Packaging information
+●
+Epoxy meets UL94, V0
+In order to meet environmental requirements, ST offers these devices in ECOPACK® 
+packages. These packages have a lead-free second level interconnect. The category of 
+second level interconnect is marked on the package and on the inner box label, in 
+compliance with JEDEC Standard JESD97. The maximum ratings related to soldering 
+conditions are also marked on the inner box label. ECOPACK is an ST trademark. 
+ECOPACK specifications are available at: www.st.com.
+         
+Figure 15.
+Footprint (dimensions in mm)
+Table 8.
+D2PAK dimensions
+Ref.
+Dimensions
+Millimeters
+Inches
+Min.
+Typ.
+Max.
+Min.
+Typ.
+Max.
+A
+4.30
+4.60
+0.169
+0.181
+A1
+2.49
+2.69
+0.098
+0.106
+A2
+0.03
+0.23
+0.001
+0.009
+B
+0.70
+0.93
+0.027
+0.037
+B2
+1.25
+1.40
+0.048 0.055
+C
+0.45
+0.60
+0.017
+0.024
+C2
+1.21
+1.36
+0.047
+0.054
+D
+8.95
+9.35
+0.352
+0.368
+E
+10.00
+10.28 0.393
+0.405
+G
+4.88
+5.28
+0.192
+0.208
+L
+15.00
+15.85 0.590
+0.624
+L2
+1.27
+1.40
+0.050
+0.055
+L3
+1.40
+1.75
+0.055
+0.069
+R
+0.40
+0.016
+V2
+0°
+8°
+0°
+8°
+G
+L
+L3
+L2
+B
+B2
+E
+2mm min.
+FLAT ZONE
+A
+C2
+D
+R
+A2
+V2
+C
+A1
+16.90
+10.30
+8.90
+3.70
+5.08
+1.30
+
+===== PAGE 9 (521 chars) =====
+BTA12, BTB12, T12xx
+Packaging information
+ 
+9/12
+         Table 9.
+I2PAK dimensions
+Ref.
+Dimensions
+Millimeters
+Inches
+Min.
+Typ.
+Max.
+Min.
+Typ.
+Max.
+A
+4.30
+4.60
+0.169
+0.181
+A1
+2.49
+2.69
+0.098
+0.106
+b
+0.70
+0.93
+0.028
+0.037
+b1
+1.20
+1.38
+0.047
+0.054
+b2
+1.25
+1.40
+0.049 0.055
+c
+0.45
+0.60
+0.018
+0.024
+c2
+1.21
+1.36
+0.048
+0.054
+D
+8.95
+9.35
+0.352
+0.368
+e
+2.44
+2.64
+0.096
+0.104
+E
+10.00
+10.28 0.394
+0.405
+L
+13.10
+13.60 0.516
+0.535
+L1
+3.75
+0.148
+L2
+1.27
+1.40
+0.050
+0.055
+V
+5°
+5°
+V4
+45°
+45°
+E
+L2
+L1
+b1
+b2
+D
+A1
+c
+c2
+V
+V
+V4
+A
+b
+e
+V4
+L
+
+===== PAGE 10 (647 chars) =====
+Packaging information
+BTA12, BTB12, T12xx
+10/12
+  
+         Table 10.
+TO-220AB dimensions (insulated and non-insulated)
+Ref.
+Dimensions
+Millimeters
+Inches
+Min.
+Typ.
+Max.
+Min.
+Typ.
+Max.
+A
+15.20
+15.90 0.598
+0.625
+a1
+3.75
+0.147
+a2
+13.00
+14.00 0.511
+0.551
+B
+10.00
+10.40 0.393
+0.409
+b1
+0.61
+0.88
+0.024
+0.034
+b2
+1.23
+1.32
+0.048
+0.051
+C
+4.40
+4.60
+0.173
+0.181
+c1
+0.49
+0.70
+0.019
+0.027
+c2
+2.40
+2.72
+0.094
+0.107
+e
+2.40
+2.70
+0.094
+0.106
+F
+6.20
+6.60
+0.244
+0.259
+ ØI
+3.75
+3.85
+0.147
+0.151
+I4
+15.80 16.40 16.80 0.622 0.646 0.661
+L
+2.65
+2.95
+0.104
+0.116
+l2
+1.14
+1.70
+0.044
+0.066
+l3
+1.14
+1.70
+0.044
+0.066
+M
+2.60
+0.102
+C
+b2
+c2
+F
+Ø I
+L
+A
+a1
+a2
+B
+e
+b1
+I4
+l3
+l2
+c1
+M
+
+===== PAGE 11 (797 chars) =====
+BTA12, BTB12, T12xx
+Ordering information
+ 
+11/12
+4 
+Ordering information
+         
+5 
+Revision history
+         
+Table 11.
+Ordering information
+Order code
+Marking
+Package
+Weight
+Base qty
+Delivery 
+mode
+BTA/BTB12-xxxyzRG
+BTA/BTB12-xxxyz
+TO-220AB
+2.3 g
+50
+Tube
+T1210-xxxG-TR
+T1210-xxxG
+D2PAK
+1.5 g
+1000
+Tape and reel
+T1235-xxxG
+T1235xxxG
+D2PAK
+1.5 g
+50
+Tube
+T1235-xxxG-TR
+T1235xxxG
+1000
+Tape and reel
+T1235-xxxR
+T1235-xxxR
+I2PAK
+1.5 g
+50
+Tube
+T1250-xxxG-TR
+T1250xxxG
+D2PAK
+1.5 g
+1000
+Tape and reel
+Note:   xxx = voltage, y = sensitivity,  z = type
+Table 12.
+Revision history
+Date
+Revision
+Changes
+Sep-2002
+6A
+Last update.
+25-Mar-2005
+7
+1. I2PAK package added.
+2. TO-220AB delivery mode changed from bulk to tube.
+27-May-2005
+8
+T1210 added
+28-Sep-2007
+9
+Reformatted to current standards. T1250 added
+
+===== PAGE 12 (3005 chars) =====
+BTA12, BTB12, T12xx
+12/12
+  
+ 
+Please Read Carefully:
+Information in this document is provided solely in connection with ST products. STMicroelectronics NV and its subsidiaries (“ST”) reserve the
+right to make changes, corrections, modifications or improvements, to this document, and the products and services described herein at any
+time, without notice.
+All ST products are sold pursuant to ST’s terms and conditions of sale.
+Purchasers are solely responsible for the choice, selection and use of the ST products and services described herein, and ST assumes no
+liability whatsoever relating to the choice, selection or use of the ST products and services described herein.
+No license, express or implied, by estoppel or otherwise, to any intellectual property rights is granted under this document. If any part of this
+document refers to any third party products or services it shall not be deemed a license grant by ST for the use of such third party products
+or services, or any intellectual property contained therein or considered as a warranty covering the use in any manner whatsoever of such
+third party products or services or any intellectual property contained therein.
+UNLESS OTHERWISE SET FORTH IN ST’S TERMS AND CONDITIONS OF SALE ST DISCLAIMS ANY EXPRESS OR IMPLIED
+WARRANTY WITH RESPECT TO THE USE AND/OR SALE OF ST PRODUCTS INCLUDING WITHOUT LIMITATION IMPLIED
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE (AND THEIR EQUIVALENTS UNDER THE LAWS
+OF ANY JURISDICTION), OR INFRINGEMENT OF ANY PATENT, COPYRIGHT OR OTHER INTELLECTUAL PROPERTY RIGHT.
+UNLESS EXPRESSLY APPROVED IN WRITING BY AN AUTHORIZED ST REPRESENTATIVE, ST PRODUCTS ARE NOT
+RECOMMENDED, AUTHORIZED OR WARRANTED FOR USE IN MILITARY, AIR CRAFT, SPACE, LIFE SAVING, OR LIFE SUSTAINING
+APPLICATIONS, NOR IN PRODUCTS OR SYSTEMS WHERE FAILURE OR MALFUNCTION MAY RESULT IN PERSONAL INJURY,
+DEATH, OR SEVERE PROPERTY OR ENVIRONMENTAL DAMAGE. ST PRODUCTS WHICH ARE NOT SPECIFIED AS "AUTOMOTIVE
+GRADE" MAY ONLY BE USED IN AUTOMOTIVE APPLICATIONS AT USER’S OWN RISK.
+Resale of ST products with provisions different from the statements and/or technical features set forth in this document shall immediately void
+any warranty granted by ST for the ST product or service described herein and shall not create or extend in any manner whatsoever, any
+liability of ST.
+ST and the ST logo are trademarks or registered trademarks of ST in various countries.
+Information in this document supersedes and replaces all information previously supplied.
+The ST logo is a registered trademark of STMicroelectronics. All other names are the property of their respective owners.
+© 2007 STMicroelectronics - All rights reserved
+STMicroelectronics group of companies
+Australia - Belgium - Brazil - Canada - China - Czech Republic - Finland - France - Germany - Hong Kong - India - Israel - Italy - Japan - 
+Malaysia - Malta - Morocco - Singapore - Spain - Sweden - Switzerland - United Kingdom - United States of America
+www.st.com
+
+===== PAGE 13 (486 chars) =====
+Mouser Electronics
+  
+Authorized Distributor
+ 
+  
+Click to View Pricing, Inventory, Delivery & Lifecycle Information:
+ 
+ 
+ 
+ STMicroelectronics:  
+ 
+  T1235-600G  BTB12-600BWRG  BTB12-600TWRG  BTB12-600CRG  BTA12-800SWRG  T1235-600G-TR  BTA12-
+800BWRG  BTB12-600BRG  BTA12-600BRG  BTB12-600SWRG  BTB12-600CWRG  BTA12-600TWRG  BTA12-
+800CWRG  BTA12-800BRG  BTB12-800BRG  BTA12-600BWRG  BTA12-600CWRG  BTA12-600SWRG  BTB12-
+800CWRG  T1235-800G-TR  BTA12-600CRG  T1235-600R  T1210-800G-TR
+

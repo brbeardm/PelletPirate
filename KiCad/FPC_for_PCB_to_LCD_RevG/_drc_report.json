@@ -1,0 +1,4964 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-08-16T20:25:17",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint attributes don't match symbol",
+            "key": "footprint_symbol_mismatch"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.5",
+    "schematic_parity": [],
+    "source": "PCB_to_LCD_FPC_REV_G.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+        {
+            "description": "Board has malformed outline (not a closed shape)",
+            "items": [
+                {
+                    "description": "Segment on Edge.Cuts",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "11806fc2-e328-438b-8b49-030a2df8cc3f"
+                },
+                {
+                    "description": "Segment of J2 on Edge.Cuts",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.9
+                    },
+                    "uuid": "b217978c-9b83-4f49-b59a-a420048f3ab8"
+                }
+            ],
+            "severity": "error",
+            "type": "invalid_outline"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 9 [Net-(J2-Pin_9)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 98.4
+                    },
+                    "uuid": "53e176d0-d51e-47cc-a3e2-6eb02e84ddec"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 11 [Net-(J2-Pin_11)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 99.0
+                    },
+                    "uuid": "d6f323ca-0bbc-4de7-87a2-3101fc983a07"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 17 [Net-(J2-Pin_17)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 100.8
+                    },
+                    "uuid": "25495e33-d46b-49ba-b1aa-0cd69617f26b"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 33 [Net-(J2-Pin_33)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 105.6
+                    },
+                    "uuid": "fa42143a-eaa7-4370-98db-2e31c42f9bed"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 25 [Net-(J2-Pin_25)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 103.2
+                    },
+                    "uuid": "f8e003d8-fc14-44fc-aa6b-3c993a291c24"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 12 [Net-(J2-Pin_12)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 99.3
+                    },
+                    "uuid": "5a7c74d9-2271-40c5-8ffa-34317fe7266c"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 18 [Net-(J2-Pin_18)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 101.1
+                    },
+                    "uuid": "b96b43d1-c302-4b68-8620-b6a4f4ea049d"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 34 [Net-(J2-Pin_34)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 105.9
+                    },
+                    "uuid": "2e97973c-939d-4828-a506-021011923449"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 13 [Net-(J2-Pin_13)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 99.6
+                    },
+                    "uuid": "5dedbd04-b648-44b6-a784-0f7aa0ab22cf"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 19 [Net-(J2-Pin_19)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 101.4
+                    },
+                    "uuid": "a355e199-3ee6-47e3-9ffc-f14cef5efe08"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 26 [Net-(J2-Pin_26)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 103.5
+                    },
+                    "uuid": "98479013-6146-40a6-aedf-84b9f64a4c00"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 35 [Net-(J2-Pin_35)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 106.2
+                    },
+                    "uuid": "50554250-a7fb-43b2-bf09-10703d16f5d5"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 14 [Net-(J2-Pin_14)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 99.9
+                    },
+                    "uuid": "a40dfc31-d96c-40ef-b819-2069138611fd"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 20 [Net-(J2-Pin_20)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 101.7
+                    },
+                    "uuid": "fe44d87b-6d04-40c5-b823-2c4ce256c9fe"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 27 [Net-(J2-Pin_27)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 103.8
+                    },
+                    "uuid": "256a72bd-e99c-4768-aa94-02b915f88d91"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 36 [Net-(J2-Pin_36)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 106.5
+                    },
+                    "uuid": "96d2251f-5aab-46db-b748-026034252ff4"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 15 [Net-(J2-Pin_15)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 100.2
+                    },
+                    "uuid": "9dabca37-57c3-4061-b6e7-034ef31960f2"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 21 [Net-(J2-Pin_21)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 102.0
+                    },
+                    "uuid": "3c4667ba-d882-46a6-a9be-9142b59aa711"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 28 [Net-(J2-Pin_28)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 104.1
+                    },
+                    "uuid": "c8fab6cf-9c9a-4e25-82fa-399346b9ead0"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 16 [Net-(J2-Pin_16)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 100.5
+                    },
+                    "uuid": "2616b569-331e-49a2-befe-85936ff6fc74"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 37 [Net-(J2-Pin_37)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 106.8
+                    },
+                    "uuid": "47294c35-b0ef-4dff-8ac0-4fe65bf37cbb"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 22 [Net-(J2-Pin_22)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 102.3
+                    },
+                    "uuid": "2cf614d1-90ca-40b0-8b15-0d6f4f8ce3d8"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 23 [Net-(J2-Pin_23)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 102.6
+                    },
+                    "uuid": "bb9bf598-b33f-4287-9837-d56a34cba63c"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 38 [Net-(J2-Pin_38)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 107.1
+                    },
+                    "uuid": "6bda2697-5e8c-4af7-b34e-0f43254e74ce"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 29 [Net-(J2-Pin_29)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 104.4
+                    },
+                    "uuid": "ef22e3bb-3c69-4f9c-80d3-b422b32e68c5"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 24 [Net-(J2-Pin_24)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 102.9
+                    },
+                    "uuid": "db1b70b0-2432-4612-8a1e-b18c2e2bff1e"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 39 [Net-(J2-Pin_39)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 107.4
+                    },
+                    "uuid": "633f9beb-f429-45ff-b04d-8775faf49404"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 30 [Net-(J2-Pin_30)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 104.7
+                    },
+                    "uuid": "4fea0f08-e763-47f8-8086-5624ef53f862"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 1 [Net-(J2-Pin_1)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 96.0
+                    },
+                    "uuid": "502109e7-d6a6-4651-8b86-fe3529fd5073"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 31 [Net-(J2-Pin_31)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 105.0
+                    },
+                    "uuid": "3160da9b-b2a4-4f5b-8f4e-ed6fdfcb992e"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 2 [Net-(J2-Pin_2)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 96.3
+                    },
+                    "uuid": "456401c0-6727-4287-bbd1-e191d07ae21e"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 32 [Net-(J2-Pin_32)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 105.3
+                    },
+                    "uuid": "31af8c59-d87c-460c-9bab-055cf4ca5f1d"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 3 [Net-(J2-Pin_3)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 96.6
+                    },
+                    "uuid": "ba999f37-b98c-427f-b7ce-f63f8611ef40"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 4 [Net-(J2-Pin_4)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 96.9
+                    },
+                    "uuid": "b4ddac79-f81d-4c42-a844-7d7515600ecb"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 5 [Net-(J2-Pin_5)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 97.2
+                    },
+                    "uuid": "fb2d5129-d56f-48e6-a32d-9b5e68fce488"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 6 [Net-(J2-Pin_6)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 97.5
+                    },
+                    "uuid": "7a71ba8d-2346-4f03-a0e6-73a821fce81d"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 7 [Net-(J2-Pin_7)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 97.8
+                    },
+                    "uuid": "f1b97da4-0040-42f4-8db9-4a51bf3a2256"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 8 [Net-(J2-Pin_8)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 98.1
+                    },
+                    "uuid": "cea1b5f5-4eca-47ab-9a9b-b3bdb64300bf"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 9 [Net-(J2-Pin_9)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 98.4
+                    },
+                    "uuid": "53e176d0-d51e-47cc-a3e2-6eb02e84ddec"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 17 [Net-(J2-Pin_17)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 100.8
+                    },
+                    "uuid": "25495e33-d46b-49ba-b1aa-0cd69617f26b"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 33 [Net-(J2-Pin_33)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 105.6
+                    },
+                    "uuid": "fa42143a-eaa7-4370-98db-2e31c42f9bed"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 25 [Net-(J2-Pin_25)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 103.2
+                    },
+                    "uuid": "f8e003d8-fc14-44fc-aa6b-3c993a291c24"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 12 [Net-(J2-Pin_12)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 99.3
+                    },
+                    "uuid": "5a7c74d9-2271-40c5-8ffa-34317fe7266c"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 18 [Net-(J2-Pin_18)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 101.1
+                    },
+                    "uuid": "b96b43d1-c302-4b68-8620-b6a4f4ea049d"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 34 [Net-(J2-Pin_34)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 105.9
+                    },
+                    "uuid": "2e97973c-939d-4828-a506-021011923449"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 13 [Net-(J2-Pin_13)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 99.6
+                    },
+                    "uuid": "5dedbd04-b648-44b6-a784-0f7aa0ab22cf"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 19 [Net-(J2-Pin_19)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 101.4
+                    },
+                    "uuid": "a355e199-3ee6-47e3-9ffc-f14cef5efe08"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 26 [Net-(J2-Pin_26)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 103.5
+                    },
+                    "uuid": "98479013-6146-40a6-aedf-84b9f64a4c00"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 35 [Net-(J2-Pin_35)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 106.2
+                    },
+                    "uuid": "50554250-a7fb-43b2-bf09-10703d16f5d5"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 14 [Net-(J2-Pin_14)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 99.9
+                    },
+                    "uuid": "a40dfc31-d96c-40ef-b819-2069138611fd"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 20 [Net-(J2-Pin_20)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 101.7
+                    },
+                    "uuid": "fe44d87b-6d04-40c5-b823-2c4ce256c9fe"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 27 [Net-(J2-Pin_27)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 103.8
+                    },
+                    "uuid": "256a72bd-e99c-4768-aa94-02b915f88d91"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 36 [Net-(J2-Pin_36)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 106.5
+                    },
+                    "uuid": "96d2251f-5aab-46db-b748-026034252ff4"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 15 [Net-(J2-Pin_15)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 100.2
+                    },
+                    "uuid": "9dabca37-57c3-4061-b6e7-034ef31960f2"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 21 [Net-(J2-Pin_21)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 102.0
+                    },
+                    "uuid": "3c4667ba-d882-46a6-a9be-9142b59aa711"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 28 [Net-(J2-Pin_28)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 104.1
+                    },
+                    "uuid": "c8fab6cf-9c9a-4e25-82fa-399346b9ead0"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 16 [Net-(J2-Pin_16)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 100.5
+                    },
+                    "uuid": "2616b569-331e-49a2-befe-85936ff6fc74"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 37 [Net-(J2-Pin_37)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 106.8
+                    },
+                    "uuid": "47294c35-b0ef-4dff-8ac0-4fe65bf37cbb"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 22 [Net-(J2-Pin_22)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 102.3
+                    },
+                    "uuid": "2cf614d1-90ca-40b0-8b15-0d6f4f8ce3d8"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 23 [Net-(J2-Pin_23)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 102.6
+                    },
+                    "uuid": "bb9bf598-b33f-4287-9837-d56a34cba63c"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 38 [Net-(J2-Pin_38)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 107.1
+                    },
+                    "uuid": "6bda2697-5e8c-4af7-b34e-0f43254e74ce"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 29 [Net-(J2-Pin_29)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 104.4
+                    },
+                    "uuid": "ef22e3bb-3c69-4f9c-80d3-b422b32e68c5"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 24 [Net-(J2-Pin_24)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 102.9
+                    },
+                    "uuid": "db1b70b0-2432-4612-8a1e-b18c2e2bff1e"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 39 [Net-(J2-Pin_39)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 107.4
+                    },
+                    "uuid": "633f9beb-f429-45ff-b04d-8775faf49404"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 30 [Net-(J2-Pin_30)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 104.7
+                    },
+                    "uuid": "4fea0f08-e763-47f8-8086-5624ef53f862"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 1 [Net-(J2-Pin_1)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 96.0
+                    },
+                    "uuid": "502109e7-d6a6-4651-8b86-fe3529fd5073"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 31 [Net-(J2-Pin_31)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 105.0
+                    },
+                    "uuid": "3160da9b-b2a4-4f5b-8f4e-ed6fdfcb992e"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 2 [Net-(J2-Pin_2)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 96.3
+                    },
+                    "uuid": "456401c0-6727-4287-bbd1-e191d07ae21e"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 32 [Net-(J2-Pin_32)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 105.3
+                    },
+                    "uuid": "31af8c59-d87c-460c-9bab-055cf4ca5f1d"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 3 [Net-(J2-Pin_3)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 96.6
+                    },
+                    "uuid": "ba999f37-b98c-427f-b7ce-f63f8611ef40"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 4 [Net-(J2-Pin_4)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 96.9
+                    },
+                    "uuid": "b4ddac79-f81d-4c42-a844-7d7515600ecb"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 5 [Net-(J2-Pin_5)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 97.2
+                    },
+                    "uuid": "fb2d5129-d56f-48e6-a32d-9b5e68fce488"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 6 [Net-(J2-Pin_6)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 97.5
+                    },
+                    "uuid": "7a71ba8d-2346-4f03-a0e6-73a821fce81d"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 7 [Net-(J2-Pin_7)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 97.8
+                    },
+                    "uuid": "f1b97da4-0040-42f4-8db9-4a51bf3a2256"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 8 [Net-(J2-Pin_8)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 98.1
+                    },
+                    "uuid": "cea1b5f5-4eca-47ab-9a9b-b3bdb64300bf"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 9 [Net-(J2-Pin_9)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 98.4
+                    },
+                    "uuid": "53e176d0-d51e-47cc-a3e2-6eb02e84ddec"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 33 [Net-(J2-Pin_33)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 105.6
+                    },
+                    "uuid": "fa42143a-eaa7-4370-98db-2e31c42f9bed"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 25 [Net-(J2-Pin_25)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 103.2
+                    },
+                    "uuid": "f8e003d8-fc14-44fc-aa6b-3c993a291c24"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 12 [Net-(J2-Pin_12)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 99.3
+                    },
+                    "uuid": "5a7c74d9-2271-40c5-8ffa-34317fe7266c"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 18 [Net-(J2-Pin_18)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 101.1
+                    },
+                    "uuid": "b96b43d1-c302-4b68-8620-b6a4f4ea049d"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 34 [Net-(J2-Pin_34)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 105.9
+                    },
+                    "uuid": "2e97973c-939d-4828-a506-021011923449"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 13 [Net-(J2-Pin_13)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 99.6
+                    },
+                    "uuid": "5dedbd04-b648-44b6-a784-0f7aa0ab22cf"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 19 [Net-(J2-Pin_19)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 101.4
+                    },
+                    "uuid": "a355e199-3ee6-47e3-9ffc-f14cef5efe08"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 26 [Net-(J2-Pin_26)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 103.5
+                    },
+                    "uuid": "98479013-6146-40a6-aedf-84b9f64a4c00"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 35 [Net-(J2-Pin_35)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 106.2
+                    },
+                    "uuid": "50554250-a7fb-43b2-bf09-10703d16f5d5"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 14 [Net-(J2-Pin_14)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 99.9
+                    },
+                    "uuid": "a40dfc31-d96c-40ef-b819-2069138611fd"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 20 [Net-(J2-Pin_20)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 101.7
+                    },
+                    "uuid": "fe44d87b-6d04-40c5-b823-2c4ce256c9fe"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 27 [Net-(J2-Pin_27)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 103.8
+                    },
+                    "uuid": "256a72bd-e99c-4768-aa94-02b915f88d91"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 36 [Net-(J2-Pin_36)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 106.5
+                    },
+                    "uuid": "96d2251f-5aab-46db-b748-026034252ff4"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 15 [Net-(J2-Pin_15)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 100.2
+                    },
+                    "uuid": "9dabca37-57c3-4061-b6e7-034ef31960f2"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 21 [Net-(J2-Pin_21)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 102.0
+                    },
+                    "uuid": "3c4667ba-d882-46a6-a9be-9142b59aa711"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 28 [Net-(J2-Pin_28)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 104.1
+                    },
+                    "uuid": "c8fab6cf-9c9a-4e25-82fa-399346b9ead0"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 16 [Net-(J2-Pin_16)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 100.5
+                    },
+                    "uuid": "2616b569-331e-49a2-befe-85936ff6fc74"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 37 [Net-(J2-Pin_37)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 106.8
+                    },
+                    "uuid": "47294c35-b0ef-4dff-8ac0-4fe65bf37cbb"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 22 [Net-(J2-Pin_22)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 102.3
+                    },
+                    "uuid": "2cf614d1-90ca-40b0-8b15-0d6f4f8ce3d8"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 23 [Net-(J2-Pin_23)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 102.6
+                    },
+                    "uuid": "bb9bf598-b33f-4287-9837-d56a34cba63c"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 38 [Net-(J2-Pin_38)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 107.1
+                    },
+                    "uuid": "6bda2697-5e8c-4af7-b34e-0f43254e74ce"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 29 [Net-(J2-Pin_29)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 104.4
+                    },
+                    "uuid": "ef22e3bb-3c69-4f9c-80d3-b422b32e68c5"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 24 [Net-(J2-Pin_24)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 102.9
+                    },
+                    "uuid": "db1b70b0-2432-4612-8a1e-b18c2e2bff1e"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 39 [Net-(J2-Pin_39)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 107.4
+                    },
+                    "uuid": "633f9beb-f429-45ff-b04d-8775faf49404"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 30 [Net-(J2-Pin_30)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 104.7
+                    },
+                    "uuid": "4fea0f08-e763-47f8-8086-5624ef53f862"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 1 [Net-(J2-Pin_1)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 96.0
+                    },
+                    "uuid": "502109e7-d6a6-4651-8b86-fe3529fd5073"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 31 [Net-(J2-Pin_31)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 105.0
+                    },
+                    "uuid": "3160da9b-b2a4-4f5b-8f4e-ed6fdfcb992e"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 2 [Net-(J2-Pin_2)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 96.3
+                    },
+                    "uuid": "456401c0-6727-4287-bbd1-e191d07ae21e"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 32 [Net-(J2-Pin_32)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 105.3
+                    },
+                    "uuid": "31af8c59-d87c-460c-9bab-055cf4ca5f1d"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 3 [Net-(J2-Pin_3)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 96.6
+                    },
+                    "uuid": "ba999f37-b98c-427f-b7ce-f63f8611ef40"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 4 [Net-(J2-Pin_4)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 96.9
+                    },
+                    "uuid": "b4ddac79-f81d-4c42-a844-7d7515600ecb"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 5 [Net-(J2-Pin_5)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 97.2
+                    },
+                    "uuid": "fb2d5129-d56f-48e6-a32d-9b5e68fce488"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 6 [Net-(J2-Pin_6)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 97.5
+                    },
+                    "uuid": "7a71ba8d-2346-4f03-a0e6-73a821fce81d"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 7 [Net-(J2-Pin_7)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 97.8
+                    },
+                    "uuid": "f1b97da4-0040-42f4-8db9-4a51bf3a2256"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 8 [Net-(J2-Pin_8)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 98.1
+                    },
+                    "uuid": "cea1b5f5-4eca-47ab-9a9b-b3bdb64300bf"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 9 [Net-(J2-Pin_9)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 98.4
+                    },
+                    "uuid": "53e176d0-d51e-47cc-a3e2-6eb02e84ddec"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 25 [Net-(J2-Pin_25)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 103.2
+                    },
+                    "uuid": "f8e003d8-fc14-44fc-aa6b-3c993a291c24"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 12 [Net-(J2-Pin_12)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 99.3
+                    },
+                    "uuid": "5a7c74d9-2271-40c5-8ffa-34317fe7266c"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 18 [Net-(J2-Pin_18)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 101.1
+                    },
+                    "uuid": "b96b43d1-c302-4b68-8620-b6a4f4ea049d"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 34 [Net-(J2-Pin_34)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 105.9
+                    },
+                    "uuid": "2e97973c-939d-4828-a506-021011923449"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 13 [Net-(J2-Pin_13)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 99.6
+                    },
+                    "uuid": "5dedbd04-b648-44b6-a784-0f7aa0ab22cf"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 19 [Net-(J2-Pin_19)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 101.4
+                    },
+                    "uuid": "a355e199-3ee6-47e3-9ffc-f14cef5efe08"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 26 [Net-(J2-Pin_26)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 103.5
+                    },
+                    "uuid": "98479013-6146-40a6-aedf-84b9f64a4c00"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 35 [Net-(J2-Pin_35)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 106.2
+                    },
+                    "uuid": "50554250-a7fb-43b2-bf09-10703d16f5d5"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 14 [Net-(J2-Pin_14)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 99.9
+                    },
+                    "uuid": "a40dfc31-d96c-40ef-b819-2069138611fd"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 20 [Net-(J2-Pin_20)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 101.7
+                    },
+                    "uuid": "fe44d87b-6d04-40c5-b823-2c4ce256c9fe"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 27 [Net-(J2-Pin_27)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 103.8
+                    },
+                    "uuid": "256a72bd-e99c-4768-aa94-02b915f88d91"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 36 [Net-(J2-Pin_36)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 106.5
+                    },
+                    "uuid": "96d2251f-5aab-46db-b748-026034252ff4"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 15 [Net-(J2-Pin_15)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 100.2
+                    },
+                    "uuid": "9dabca37-57c3-4061-b6e7-034ef31960f2"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 21 [Net-(J2-Pin_21)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 102.0
+                    },
+                    "uuid": "3c4667ba-d882-46a6-a9be-9142b59aa711"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 28 [Net-(J2-Pin_28)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 104.1
+                    },
+                    "uuid": "c8fab6cf-9c9a-4e25-82fa-399346b9ead0"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 16 [Net-(J2-Pin_16)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 100.5
+                    },
+                    "uuid": "2616b569-331e-49a2-befe-85936ff6fc74"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 37 [Net-(J2-Pin_37)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 106.8
+                    },
+                    "uuid": "47294c35-b0ef-4dff-8ac0-4fe65bf37cbb"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 22 [Net-(J2-Pin_22)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 102.3
+                    },
+                    "uuid": "2cf614d1-90ca-40b0-8b15-0d6f4f8ce3d8"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 23 [Net-(J2-Pin_23)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 102.6
+                    },
+                    "uuid": "bb9bf598-b33f-4287-9837-d56a34cba63c"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 38 [Net-(J2-Pin_38)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 107.1
+                    },
+                    "uuid": "6bda2697-5e8c-4af7-b34e-0f43254e74ce"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 29 [Net-(J2-Pin_29)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 104.4
+                    },
+                    "uuid": "ef22e3bb-3c69-4f9c-80d3-b422b32e68c5"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 24 [Net-(J2-Pin_24)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 102.9
+                    },
+                    "uuid": "db1b70b0-2432-4612-8a1e-b18c2e2bff1e"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 39 [Net-(J2-Pin_39)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 107.4
+                    },
+                    "uuid": "633f9beb-f429-45ff-b04d-8775faf49404"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 30 [Net-(J2-Pin_30)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 104.7
+                    },
+                    "uuid": "4fea0f08-e763-47f8-8086-5624ef53f862"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 1 [Net-(J2-Pin_1)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 96.0
+                    },
+                    "uuid": "502109e7-d6a6-4651-8b86-fe3529fd5073"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 31 [Net-(J2-Pin_31)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 105.0
+                    },
+                    "uuid": "3160da9b-b2a4-4f5b-8f4e-ed6fdfcb992e"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 2 [Net-(J2-Pin_2)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 96.3
+                    },
+                    "uuid": "456401c0-6727-4287-bbd1-e191d07ae21e"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 32 [Net-(J2-Pin_32)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 105.3
+                    },
+                    "uuid": "31af8c59-d87c-460c-9bab-055cf4ca5f1d"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 3 [Net-(J2-Pin_3)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 96.6
+                    },
+                    "uuid": "ba999f37-b98c-427f-b7ce-f63f8611ef40"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 4 [Net-(J2-Pin_4)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 96.9
+                    },
+                    "uuid": "b4ddac79-f81d-4c42-a844-7d7515600ecb"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 5 [Net-(J2-Pin_5)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 97.2
+                    },
+                    "uuid": "fb2d5129-d56f-48e6-a32d-9b5e68fce488"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 6 [Net-(J2-Pin_6)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 97.5
+                    },
+                    "uuid": "7a71ba8d-2346-4f03-a0e6-73a821fce81d"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 7 [Net-(J2-Pin_7)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 97.8
+                    },
+                    "uuid": "f1b97da4-0040-42f4-8db9-4a51bf3a2256"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 8 [Net-(J2-Pin_8)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 98.1
+                    },
+                    "uuid": "cea1b5f5-4eca-47ab-9a9b-b3bdb64300bf"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 9 [Net-(J2-Pin_9)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 98.4
+                    },
+                    "uuid": "53e176d0-d51e-47cc-a3e2-6eb02e84ddec"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 25 [Net-(J2-Pin_25)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 103.2
+                    },
+                    "uuid": "f8e003d8-fc14-44fc-aa6b-3c993a291c24"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 18 [Net-(J2-Pin_18)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 101.1
+                    },
+                    "uuid": "b96b43d1-c302-4b68-8620-b6a4f4ea049d"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 34 [Net-(J2-Pin_34)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 105.9
+                    },
+                    "uuid": "2e97973c-939d-4828-a506-021011923449"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 13 [Net-(J2-Pin_13)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 99.6
+                    },
+                    "uuid": "5dedbd04-b648-44b6-a784-0f7aa0ab22cf"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 19 [Net-(J2-Pin_19)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 101.4
+                    },
+                    "uuid": "a355e199-3ee6-47e3-9ffc-f14cef5efe08"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 26 [Net-(J2-Pin_26)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 103.5
+                    },
+                    "uuid": "98479013-6146-40a6-aedf-84b9f64a4c00"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 35 [Net-(J2-Pin_35)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 106.2
+                    },
+                    "uuid": "50554250-a7fb-43b2-bf09-10703d16f5d5"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 14 [Net-(J2-Pin_14)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 99.9
+                    },
+                    "uuid": "a40dfc31-d96c-40ef-b819-2069138611fd"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 20 [Net-(J2-Pin_20)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 101.7
+                    },
+                    "uuid": "fe44d87b-6d04-40c5-b823-2c4ce256c9fe"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 27 [Net-(J2-Pin_27)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 103.8
+                    },
+                    "uuid": "256a72bd-e99c-4768-aa94-02b915f88d91"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 36 [Net-(J2-Pin_36)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 106.5
+                    },
+                    "uuid": "96d2251f-5aab-46db-b748-026034252ff4"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 15 [Net-(J2-Pin_15)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 100.2
+                    },
+                    "uuid": "9dabca37-57c3-4061-b6e7-034ef31960f2"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 21 [Net-(J2-Pin_21)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 102.0
+                    },
+                    "uuid": "3c4667ba-d882-46a6-a9be-9142b59aa711"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 28 [Net-(J2-Pin_28)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 104.1
+                    },
+                    "uuid": "c8fab6cf-9c9a-4e25-82fa-399346b9ead0"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 16 [Net-(J2-Pin_16)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 100.5
+                    },
+                    "uuid": "2616b569-331e-49a2-befe-85936ff6fc74"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 37 [Net-(J2-Pin_37)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 106.8
+                    },
+                    "uuid": "47294c35-b0ef-4dff-8ac0-4fe65bf37cbb"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 22 [Net-(J2-Pin_22)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 102.3
+                    },
+                    "uuid": "2cf614d1-90ca-40b0-8b15-0d6f4f8ce3d8"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 23 [Net-(J2-Pin_23)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 102.6
+                    },
+                    "uuid": "bb9bf598-b33f-4287-9837-d56a34cba63c"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 38 [Net-(J2-Pin_38)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 107.1
+                    },
+                    "uuid": "6bda2697-5e8c-4af7-b34e-0f43254e74ce"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 29 [Net-(J2-Pin_29)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 104.4
+                    },
+                    "uuid": "ef22e3bb-3c69-4f9c-80d3-b422b32e68c5"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 24 [Net-(J2-Pin_24)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 102.9
+                    },
+                    "uuid": "db1b70b0-2432-4612-8a1e-b18c2e2bff1e"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 39 [Net-(J2-Pin_39)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 107.4
+                    },
+                    "uuid": "633f9beb-f429-45ff-b04d-8775faf49404"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 30 [Net-(J2-Pin_30)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 104.7
+                    },
+                    "uuid": "4fea0f08-e763-47f8-8086-5624ef53f862"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 1 [Net-(J2-Pin_1)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 96.0
+                    },
+                    "uuid": "502109e7-d6a6-4651-8b86-fe3529fd5073"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 31 [Net-(J2-Pin_31)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 105.0
+                    },
+                    "uuid": "3160da9b-b2a4-4f5b-8f4e-ed6fdfcb992e"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 2 [Net-(J2-Pin_2)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 96.3
+                    },
+                    "uuid": "456401c0-6727-4287-bbd1-e191d07ae21e"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 32 [Net-(J2-Pin_32)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 105.3
+                    },
+                    "uuid": "31af8c59-d87c-460c-9bab-055cf4ca5f1d"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 3 [Net-(J2-Pin_3)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 96.6
+                    },
+                    "uuid": "ba999f37-b98c-427f-b7ce-f63f8611ef40"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 4 [Net-(J2-Pin_4)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 96.9
+                    },
+                    "uuid": "b4ddac79-f81d-4c42-a844-7d7515600ecb"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 5 [Net-(J2-Pin_5)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 97.2
+                    },
+                    "uuid": "fb2d5129-d56f-48e6-a32d-9b5e68fce488"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 6 [Net-(J2-Pin_6)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 97.5
+                    },
+                    "uuid": "7a71ba8d-2346-4f03-a0e6-73a821fce81d"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 7 [Net-(J2-Pin_7)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 97.8
+                    },
+                    "uuid": "f1b97da4-0040-42f4-8db9-4a51bf3a2256"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 8 [Net-(J2-Pin_8)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 98.1
+                    },
+                    "uuid": "cea1b5f5-4eca-47ab-9a9b-b3bdb64300bf"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 9 [Net-(J2-Pin_9)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 98.4
+                    },
+                    "uuid": "53e176d0-d51e-47cc-a3e2-6eb02e84ddec"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 18 [Net-(J2-Pin_18)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 101.1
+                    },
+                    "uuid": "b96b43d1-c302-4b68-8620-b6a4f4ea049d"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 34 [Net-(J2-Pin_34)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 105.9
+                    },
+                    "uuid": "2e97973c-939d-4828-a506-021011923449"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 13 [Net-(J2-Pin_13)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 99.6
+                    },
+                    "uuid": "5dedbd04-b648-44b6-a784-0f7aa0ab22cf"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 19 [Net-(J2-Pin_19)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 101.4
+                    },
+                    "uuid": "a355e199-3ee6-47e3-9ffc-f14cef5efe08"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 26 [Net-(J2-Pin_26)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 103.5
+                    },
+                    "uuid": "98479013-6146-40a6-aedf-84b9f64a4c00"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 35 [Net-(J2-Pin_35)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 106.2
+                    },
+                    "uuid": "50554250-a7fb-43b2-bf09-10703d16f5d5"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 14 [Net-(J2-Pin_14)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 99.9
+                    },
+                    "uuid": "a40dfc31-d96c-40ef-b819-2069138611fd"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 20 [Net-(J2-Pin_20)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 101.7
+                    },
+                    "uuid": "fe44d87b-6d04-40c5-b823-2c4ce256c9fe"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 27 [Net-(J2-Pin_27)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 103.8
+                    },
+                    "uuid": "256a72bd-e99c-4768-aa94-02b915f88d91"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 36 [Net-(J2-Pin_36)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 106.5
+                    },
+                    "uuid": "96d2251f-5aab-46db-b748-026034252ff4"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 15 [Net-(J2-Pin_15)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 100.2
+                    },
+                    "uuid": "9dabca37-57c3-4061-b6e7-034ef31960f2"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 21 [Net-(J2-Pin_21)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 102.0
+                    },
+                    "uuid": "3c4667ba-d882-46a6-a9be-9142b59aa711"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 28 [Net-(J2-Pin_28)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 104.1
+                    },
+                    "uuid": "c8fab6cf-9c9a-4e25-82fa-399346b9ead0"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 16 [Net-(J2-Pin_16)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 100.5
+                    },
+                    "uuid": "2616b569-331e-49a2-befe-85936ff6fc74"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 37 [Net-(J2-Pin_37)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 106.8
+                    },
+                    "uuid": "47294c35-b0ef-4dff-8ac0-4fe65bf37cbb"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 22 [Net-(J2-Pin_22)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 102.3
+                    },
+                    "uuid": "2cf614d1-90ca-40b0-8b15-0d6f4f8ce3d8"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 23 [Net-(J2-Pin_23)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 102.6
+                    },
+                    "uuid": "bb9bf598-b33f-4287-9837-d56a34cba63c"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 38 [Net-(J2-Pin_38)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 107.1
+                    },
+                    "uuid": "6bda2697-5e8c-4af7-b34e-0f43254e74ce"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 29 [Net-(J2-Pin_29)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 104.4
+                    },
+                    "uuid": "ef22e3bb-3c69-4f9c-80d3-b422b32e68c5"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 24 [Net-(J2-Pin_24)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 102.9
+                    },
+                    "uuid": "db1b70b0-2432-4612-8a1e-b18c2e2bff1e"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 39 [Net-(J2-Pin_39)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 107.4
+                    },
+                    "uuid": "633f9beb-f429-45ff-b04d-8775faf49404"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 30 [Net-(J2-Pin_30)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 104.7
+                    },
+                    "uuid": "4fea0f08-e763-47f8-8086-5624ef53f862"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 1 [Net-(J2-Pin_1)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 96.0
+                    },
+                    "uuid": "502109e7-d6a6-4651-8b86-fe3529fd5073"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 31 [Net-(J2-Pin_31)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 105.0
+                    },
+                    "uuid": "3160da9b-b2a4-4f5b-8f4e-ed6fdfcb992e"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 2 [Net-(J2-Pin_2)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 96.3
+                    },
+                    "uuid": "456401c0-6727-4287-bbd1-e191d07ae21e"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 32 [Net-(J2-Pin_32)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 105.3
+                    },
+                    "uuid": "31af8c59-d87c-460c-9bab-055cf4ca5f1d"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 3 [Net-(J2-Pin_3)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 96.6
+                    },
+                    "uuid": "ba999f37-b98c-427f-b7ce-f63f8611ef40"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 4 [Net-(J2-Pin_4)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 96.9
+                    },
+                    "uuid": "b4ddac79-f81d-4c42-a844-7d7515600ecb"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 5 [Net-(J2-Pin_5)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 97.2
+                    },
+                    "uuid": "fb2d5129-d56f-48e6-a32d-9b5e68fce488"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 6 [Net-(J2-Pin_6)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 97.5
+                    },
+                    "uuid": "7a71ba8d-2346-4f03-a0e6-73a821fce81d"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 7 [Net-(J2-Pin_7)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 97.8
+                    },
+                    "uuid": "f1b97da4-0040-42f4-8db9-4a51bf3a2256"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of J2 on B.Mask",
+                    "pos": {
+                        "x": 179.8,
+                        "y": 95.7
+                    },
+                    "uuid": "d289c8a9-ed59-4912-9b78-37c79bc3c3fb"
+                },
+                {
+                    "description": "Pad 8 [Net-(J2-Pin_8)] of J2 on B.Cu",
+                    "pos": {
+                        "x": 176.9,
+                        "y": 98.1
+                    },
+                    "uuid": "cea1b5f5-4eca-47ab-9a9b-b3bdb64300bf"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        }
+    ]
+}

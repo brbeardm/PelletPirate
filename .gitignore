@@ -1,9 +1,13 @@
 # ESP-IDF build artifacts
 pelletpirate_ESP/build/
+esp_breadboard_test_fw/build/
+pelletpirate_ESP/build_s3/
 pelletpirate_ESP/managed_components/
 pelletpirate_ESP/dependencies.lock
 pelletpirate_ESP/sdkconfig
 pelletpirate_ESP/sdkconfig.old
+pelletpirate_ESP/sdkconfig.s3
+pelletpirate_ESP/sdkconfig.s3.old
 
 # Claude Code
 .claude/
@@ -17,6 +21,11 @@ desktop.ini
 .vscode/
 .idea/
 *.code-workspace
+
+# Too large for GitHub (100MB hard limit) - redundant local archives
+gen_channels.zip
+KiCad/PelletPirate_V3.zip
+BACKUP_ZIPS/
 
 # Compiled binaries
 *.bin

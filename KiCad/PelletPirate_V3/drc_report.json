@@ -1,0 +1,1368 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-06-30T20:13:59",
+    "ignored_checks": [
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.1",
+    "schematic_parity": [],
+    "source": "PelletPirate_V3.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Track [/ALL_SDI] on F.Cu, length 10.7300 mm",
+                    "pos": {
+                        "x": 171.53,
+                        "y": 95.39
+                    },
+                    "uuid": "0a7f6e79-beb0-4be6-abe5-1368cdf865a8"
+                },
+                {
+                    "description": "Track [/ALL_SDI] on F.Cu, length 0.3000 mm",
+                    "pos": {
+                        "x": 171.23,
+                        "y": 84.36
+                    },
+                    "uuid": "72440816-2e10-48b8-baf4-59ca9c8f2815"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Clearance violation (zone clearance 0.5000 mm; actual 0.2999 mm)",
+            "items": [
+                {
+                    "description": "Track [+3.3V] on F.Cu, length 0.3715 mm",
+                    "pos": {
+                        "x": 173.22,
+                        "y": 84.0
+                    },
+                    "uuid": "fe1984d4-9283-4ef1-8181-07e775c6e6cc"
+                },
+                {
+                    "description": "Zone 'GND_net' [GND] on F.Cu and B.Cu, priority 0",
+                    "pos": {
+                        "x": 118.8,
+                        "y": 38.8
+                    },
+                    "uuid": "3845a8fe-0efa-4d95-94cd-8c4586c9fa6b"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation (zone clearance 0.5000 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "Track [+3.3V] on B.Cu, length 0.4971 mm",
+                    "pos": {
+                        "x": 181.908529,
+                        "y": 84.66
+                    },
+                    "uuid": "c1050434-a033-4a20-bb11-5199998adde9"
+                },
+                {
+                    "description": "Zone 'GND_net' [GND] on F.Cu and B.Cu, priority 0",
+                    "pos": {
+                        "x": 118.8,
+                        "y": 38.8
+                    },
+                    "uuid": "3845a8fe-0efa-4d95-94cd-8c4586c9fa6b"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation (zone clearance 0.5000 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "Via [+3.3V] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 180.2,
+                        "y": 90.3
+                    },
+                    "uuid": "2ee9c7e5-1a3c-4360-ab48-ca0f12ea8831"
+                },
+                {
+                    "description": "Zone 'GND_net' [GND] on F.Cu and B.Cu, priority 0",
+                    "pos": {
+                        "x": 118.8,
+                        "y": 38.8
+                    },
+                    "uuid": "3845a8fe-0efa-4d95-94cd-8c4586c9fa6b"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.1750 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "Via [+3.3V] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 180.2,
+                        "y": 90.3
+                    },
+                    "uuid": "2ee9c7e5-1a3c-4360-ab48-ca0f12ea8831"
+                },
+                {
+                    "description": "Zone 'GND_net' [GND] on F.Cu and B.Cu, priority 0",
+                    "pos": {
+                        "x": 118.8,
+                        "y": 38.8
+                    },
+                    "uuid": "3845a8fe-0efa-4d95-94cd-8c4586c9fa6b"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Clearance violation (zone clearance 0.5000 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "Track [+3.3V] on B.Cu, length 1.5685 mm",
+                    "pos": {
+                        "x": 180.34,
+                        "y": 84.66
+                    },
+                    "uuid": "e1c8d696-96b7-496c-bc70-296fa0b6d46d"
+                },
+                {
+                    "description": "Zone 'GND_net' [GND] on F.Cu and B.Cu, priority 0",
+                    "pos": {
+                        "x": 118.8,
+                        "y": 38.8
+                    },
+                    "uuid": "3845a8fe-0efa-4d95-94cd-8c4586c9fa6b"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation (zone clearance 0.5000 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "Via [+3.3V] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 174.5,
+                        "y": 85.6
+                    },
+                    "uuid": "d703ed31-b19a-4db9-9636-d24808723504"
+                },
+                {
+                    "description": "Zone 'GND_net' [GND] on F.Cu and B.Cu, priority 0",
+                    "pos": {
+                        "x": 118.8,
+                        "y": 38.8
+                    },
+                    "uuid": "3845a8fe-0efa-4d95-94cd-8c4586c9fa6b"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.1750 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "Via [+3.3V] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 174.5,
+                        "y": 85.6
+                    },
+                    "uuid": "d703ed31-b19a-4db9-9636-d24808723504"
+                },
+                {
+                    "description": "Zone 'GND_net' [GND] on F.Cu and B.Cu, priority 0",
+                    "pos": {
+                        "x": 118.8,
+                        "y": 38.8
+                    },
+                    "uuid": "3845a8fe-0efa-4d95-94cd-8c4586c9fa6b"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Clearance violation (zone clearance 0.5000 mm; actual 0.2328 mm)",
+            "items": [
+                {
+                    "description": "Track [+3.3V] on F.Cu, length 1.7374 mm",
+                    "pos": {
+                        "x": 173.271471,
+                        "y": 84.371471
+                    },
+                    "uuid": "17074731-c45d-4bf0-9d51-928687ff8a84"
+                },
+                {
+                    "description": "Zone 'GND_net' [GND] on F.Cu and B.Cu, priority 0",
+                    "pos": {
+                        "x": 118.8,
+                        "y": 38.8
+                    },
+                    "uuid": "3845a8fe-0efa-4d95-94cd-8c4586c9fa6b"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation (zone clearance 0.5000 mm; actual 0.2999 mm)",
+            "items": [
+                {
+                    "description": "Track [+3.3V] on F.Cu, length 0.0515 mm",
+                    "pos": {
+                        "x": 173.22,
+                        "y": 84.371471
+                    },
+                    "uuid": "46887cbc-79ed-4e8e-a266-d9de55036979"
+                },
+                {
+                    "description": "Zone 'GND_net' [GND] on F.Cu and B.Cu, priority 0",
+                    "pos": {
+                        "x": 118.8,
+                        "y": 38.8
+                    },
+                    "uuid": "3845a8fe-0efa-4d95-94cd-8c4586c9fa6b"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation (zone clearance 0.5000 mm; actual 0.1862 mm)",
+            "items": [
+                {
+                    "description": "Track [+3.3V] on B.Cu, length 1.5556 mm",
+                    "pos": {
+                        "x": 123.0,
+                        "y": 142.3
+                    },
+                    "uuid": "41d0d1c4-53f6-4350-a505-4b6254ee91a5"
+                },
+                {
+                    "description": "Zone 'GND_net' [GND] on F.Cu and B.Cu, priority 0",
+                    "pos": {
+                        "x": 118.8,
+                        "y": 38.8
+                    },
+                    "uuid": "3845a8fe-0efa-4d95-94cd-8c4586c9fa6b"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation (zone clearance 0.5000 mm; actual 0.1862 mm)",
+            "items": [
+                {
+                    "description": "Track [+3.3V] on B.Cu, length 1.1000 mm",
+                    "pos": {
+                        "x": 121.9,
+                        "y": 141.2
+                    },
+                    "uuid": "43622b16-f11c-49b1-a025-86022e128473"
+                },
+                {
+                    "description": "Zone 'GND_net' [GND] on F.Cu and B.Cu, priority 0",
+                    "pos": {
+                        "x": 118.8,
+                        "y": 38.8
+                    },
+                    "uuid": "3845a8fe-0efa-4d95-94cd-8c4586c9fa6b"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation (zone clearance 0.5000 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "Track [+3.3V] on B.Cu, length 1.8285 mm",
+                    "pos": {
+                        "x": 182.26,
+                        "y": 85.011471
+                    },
+                    "uuid": "52c159a5-78b2-4e10-b988-ae3126ed730b"
+                },
+                {
+                    "description": "Zone 'GND_net' [GND] on F.Cu and B.Cu, priority 0",
+                    "pos": {
+                        "x": 118.8,
+                        "y": 38.8
+                    },
+                    "uuid": "3845a8fe-0efa-4d95-94cd-8c4586c9fa6b"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation (zone clearance 0.5000 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "Track [+3.3V] on B.Cu, length 1.4000 mm",
+                    "pos": {
+                        "x": 180.2,
+                        "y": 88.9
+                    },
+                    "uuid": "5b1bc6e2-ed98-464a-8e30-7801a54fe557"
+                },
+                {
+                    "description": "Zone 'GND_net' [GND] on F.Cu and B.Cu, priority 0",
+                    "pos": {
+                        "x": 118.8,
+                        "y": 38.8
+                    },
+                    "uuid": "3845a8fe-0efa-4d95-94cd-8c4586c9fa6b"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation (zone clearance 0.5000 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "Track [+3.3V] on B.Cu, length 4.9000 mm",
+                    "pos": {
+                        "x": 174.5,
+                        "y": 85.6
+                    },
+                    "uuid": "6928ac5c-c914-4f8f-acde-4c7a1358c15a"
+                },
+                {
+                    "description": "Zone 'GND_net' [GND] on F.Cu and B.Cu, priority 0",
+                    "pos": {
+                        "x": 118.8,
+                        "y": 38.8
+                    },
+                    "uuid": "3845a8fe-0efa-4d95-94cd-8c4586c9fa6b"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation (zone clearance 0.5000 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "Track [+3.3V] on B.Cu, length 2.9133 mm",
+                    "pos": {
+                        "x": 182.26,
+                        "y": 86.84
+                    },
+                    "uuid": "7e156aff-6197-42bd-a4ca-be33ac6bf40d"
+                },
+                {
+                    "description": "Zone 'GND_net' [GND] on F.Cu and B.Cu, priority 0",
+                    "pos": {
+                        "x": 118.8,
+                        "y": 38.8
+                    },
+                    "uuid": "3845a8fe-0efa-4d95-94cd-8c4586c9fa6b"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation (zone clearance 0.5000 mm; actual 0.1862 mm)",
+            "items": [
+                {
+                    "description": "Track [+3.3V] on B.Cu, length 1.1000 mm",
+                    "pos": {
+                        "x": 124.1,
+                        "y": 142.3
+                    },
+                    "uuid": "8edc6eef-6506-435d-b396-f665086a533b"
+                },
+                {
+                    "description": "Zone 'GND_net' [GND] on F.Cu and B.Cu, priority 0",
+                    "pos": {
+                        "x": 118.8,
+                        "y": 38.8
+                    },
+                    "uuid": "3845a8fe-0efa-4d95-94cd-8c4586c9fa6b"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation (zone clearance 0.5000 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "Track [+3.3V] on B.Cu, length 1.3294 mm",
+                    "pos": {
+                        "x": 179.4,
+                        "y": 85.6
+                    },
+                    "uuid": "9f0597c5-86b0-43fa-90f6-4ed20975e423"
+                },
+                {
+                    "description": "Zone 'GND_net' [GND] on F.Cu and B.Cu, priority 0",
+                    "pos": {
+                        "x": 118.8,
+                        "y": 38.8
+                    },
+                    "uuid": "3845a8fe-0efa-4d95-94cd-8c4586c9fa6b"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation (zone clearance 0.5000 mm; actual 0.2968 mm)",
+            "items": [
+                {
+                    "description": "Pad 1 [/LED_PWM] of R16 on B.Cu",
+                    "pos": {
+                        "x": 146.5,
+                        "y": 54.9
+                    },
+                    "uuid": "09d0db87-12fd-4bd7-ab0d-7f388b0e897b"
+                },
+                {
+                    "description": "Zone 'GND_net' [GND] on F.Cu and B.Cu, priority 0",
+                    "pos": {
+                        "x": 118.8,
+                        "y": 38.8
+                    },
+                    "uuid": "3845a8fe-0efa-4d95-94cd-8c4586c9fa6b"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Thermal relief connection to zone incomplete (layer F.Cu; zone min spoke count 2; actual 1)",
+            "items": [
+                {
+                    "description": "Zone 'GND_net' [GND] on F.Cu and B.Cu, priority 0",
+                    "pos": {
+                        "x": 118.8,
+                        "y": 38.8
+                    },
+                    "uuid": "3845a8fe-0efa-4d95-94cd-8c4586c9fa6b"
+                },
+                {
+                    "description": "Pad 2 [GND] of R35 on F.Cu",
+                    "pos": {
+                        "x": 146.7,
+                        "y": 93.52
+                    },
+                    "uuid": "025ae119-3887-430b-9f7d-76c6f6fce9cf"
+                }
+            ],
+            "severity": "error",
+            "type": "starved_thermal"
+        },
+        {
+            "description": "Thermal relief connection to zone incomplete (layer F.Cu; zone min spoke count 2; actual 1)",
+            "items": [
+                {
+                    "description": "Zone 'GND_net' [GND] on F.Cu and B.Cu, priority 0",
+                    "pos": {
+                        "x": 118.8,
+                        "y": 38.8
+                    },
+                    "uuid": "3845a8fe-0efa-4d95-94cd-8c4586c9fa6b"
+                },
+                {
+                    "description": "Pad 1 [GND] of C39 on F.Cu",
+                    "pos": {
+                        "x": 178.06,
+                        "y": 69.72
+                    },
+                    "uuid": "4cb1714f-1c41-423d-9062-927a6293140c"
+                }
+            ],
+            "severity": "error",
+            "type": "starved_thermal"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Polygon of PS1 on B.Mask",
+                    "pos": {
+                        "x": 166.0,
+                        "y": 104.09
+                    },
+                    "uuid": "1accc99a-4f17-4ca5-a3d8-0e6fea5100e8"
+                },
+                {
+                    "description": "Track [GND] on B.Cu, length 0.9000 mm",
+                    "pos": {
+                        "x": 164.6,
+                        "y": 102.9
+                    },
+                    "uuid": "6b59a2d4-9805-4965-9524-d702576b4fb0"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Isolated copper fill",
+            "items": [
+                {
+                    "description": "Zone 'GND_net' [GND] on F.Cu and B.Cu, priority 0",
+                    "pos": {
+                        "x": 118.8,
+                        "y": 38.8
+                    },
+                    "uuid": "3845a8fe-0efa-4d95-94cd-8c4586c9fa6b"
+                }
+            ],
+            "severity": "warning",
+            "type": "isolated_copper"
+        },
+        {
+            "description": "Footprint has no courtyard defined",
+            "items": [
+                {
+                    "description": "Footprint LF1",
+                    "pos": {
+                        "x": 158.6,
+                        "y": 121.3
+                    },
+                    "uuid": "edb7f3bd-d500-4b1d-8c5a-7cccae06fd5f"
+                }
+            ],
+            "severity": "warning",
+            "type": "missing_courtyard"
+        },
+        {
+            "description": "Footprint has no courtyard defined",
+            "items": [
+                {
+                    "description": "Footprint L3",
+                    "pos": {
+                        "x": 150.65,
+                        "y": 62.3
+                    },
+                    "uuid": "05bdb935-daaa-422b-82bc-9928a74bab6d"
+                }
+            ],
+            "severity": "warning",
+            "type": "missing_courtyard"
+        },
+        {
+            "description": "Footprint has no courtyard defined",
+            "items": [
+                {
+                    "description": "Footprint D2",
+                    "pos": {
+                        "x": 148.64,
+                        "y": 58.4
+                    },
+                    "uuid": "1158a7d4-c204-4af9-9030-d0fa19ca5345"
+                }
+            ],
+            "severity": "warning",
+            "type": "missing_courtyard"
+        },
+        {
+            "comment": "",
+            "description": "Items shorting two nets (nets GND and )",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "Track [GND] on B.Cu, length 1.9799 mm",
+                    "pos": {
+                        "x": 163.2,
+                        "y": 101.5
+                    },
+                    "uuid": "1b56c65d-ff2b-48f6-8b80-bae3a8980a87"
+                },
+                {
+                    "description": "Polygon [<no net>] of PS1 on B.Cu",
+                    "pos": {
+                        "x": 166.1,
+                        "y": 103.1
+                    },
+                    "uuid": "da551594-f68a-44e6-8bc9-5614e8c50b39"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "comment": "",
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.1950 mm)",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "Track [/USB-C_D-] on F.Cu, length 1.1150 mm",
+                    "pos": {
+                        "x": 127.335,
+                        "y": 82.82
+                    },
+                    "uuid": "3ad99284-5669-4327-b6e0-bb692c7e16eb"
+                },
+                {
+                    "description": "Pad A5 [Net-(J8-CC1)] of J8 on F.Cu",
+                    "pos": {
+                        "x": 127.525,
+                        "y": 82.325
+                    },
+                    "uuid": "cc7e319f-7184-4703-844d-e07ee50cb95c"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "comment": "",
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.1950 mm)",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "Track [/USB-C_D-] on F.Cu, length 1.0750 mm",
+                    "pos": {
+                        "x": 128.41,
+                        "y": 83.82
+                    },
+                    "uuid": "6871ac77-8f03-4a4e-b344-fc11a58f3788"
+                },
+                {
+                    "description": "Pad A6 [/USB-C_D+] of J8 on F.Cu",
+                    "pos": {
+                        "x": 127.525,
+                        "y": 83.325
+                    },
+                    "uuid": "883f10e9-bbea-451f-98c1-a5952a21b7a8"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "comment": "",
+            "description": "Items shorting two nets (nets GND and )",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "Track [GND] on B.Cu, length 4.1000 mm",
+                    "pos": {
+                        "x": 165.4,
+                        "y": 102.9
+                    },
+                    "uuid": "d85c3484-85c8-4d90-9b1d-2832282ea787"
+                },
+                {
+                    "description": "Polygon [<no net>] of PS1 on B.Cu",
+                    "pos": {
+                        "x": 166.1,
+                        "y": 103.1
+                    },
+                    "uuid": "da551594-f68a-44e6-8bc9-5614e8c50b39"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "comment": "",
+            "description": "Items shorting two nets (nets GND and )",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "Track [GND] on F.Cu, length 0.7000 mm",
+                    "pos": {
+                        "x": 166.1,
+                        "y": 102.9
+                    },
+                    "uuid": "2ddde379-ccc6-4475-93a4-7348a177e08c"
+                },
+                {
+                    "description": "Polygon [<no net>] of PS1 on F.Cu",
+                    "pos": {
+                        "x": 166.1,
+                        "y": 103.1
+                    },
+                    "uuid": "de2e6eff-bf77-499f-9cd8-a7de5591a002"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "comment": "",
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.1950 mm)",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "Track [Net-(J8-CC2)] on F.Cu, length 0.9250 mm",
+                    "pos": {
+                        "x": 126.41,
+                        "y": 85.32
+                    },
+                    "uuid": "581aa67e-efec-4b88-926b-f135b96da0f9"
+                },
+                {
+                    "description": "Pad A8 [unconnected-(J8-SBU1-PadA8)] of J8 on F.Cu",
+                    "pos": {
+                        "x": 127.525,
+                        "y": 84.825
+                    },
+                    "uuid": "f703aa8b-3510-41a1-b041-d63d8ee93349"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "comment": "",
+            "description": "Items shorting two nets (nets GND and )",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "Track [GND] on B.Cu, length 0.9000 mm",
+                    "pos": {
+                        "x": 164.6,
+                        "y": 102.9
+                    },
+                    "uuid": "6b59a2d4-9805-4965-9524-d702576b4fb0"
+                },
+                {
+                    "description": "Polygon [<no net>] of PS1 on B.Cu",
+                    "pos": {
+                        "x": 166.1,
+                        "y": 103.1
+                    },
+                    "uuid": "da551594-f68a-44e6-8bc9-5614e8c50b39"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "comment": "",
+            "description": "Items shorting two nets (nets  and Net-(PS1--V(CAP)))",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "Polygon [<no net>] of PS1 on F.Cu",
+                    "pos": {
+                        "x": 164.7,
+                        "y": 111.7
+                    },
+                    "uuid": "7f47e8f6-7804-45d8-89b7-bc44d8fb775d"
+                },
+                {
+                    "description": "Track [Net-(PS1--V(CAP))] on F.Cu, length 2.9400 mm",
+                    "pos": {
+                        "x": 168.34,
+                        "y": 112.06
+                    },
+                    "uuid": "df5cc80c-e05f-4650-abad-023787efff27"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "comment": "",
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.1950 mm)",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "Pad B8 [unconnected-(J8-SBU2-PadB8)] of J8 on F.Cu",
+                    "pos": {
+                        "x": 127.525,
+                        "y": 81.825
+                    },
+                    "uuid": "37cb4ac0-12e2-4c8c-b44a-4a5c355c2f18"
+                },
+                {
+                    "description": "Track [Net-(J8-CC1)] on F.Cu, length 0.8350 mm",
+                    "pos": {
+                        "x": 126.5,
+                        "y": 82.32
+                    },
+                    "uuid": "5ba25be3-5e1a-442f-9eda-1fc625508ae4"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "comment": "",
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.1950 mm)",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "Pad B7 [/USB-C_D-] of J8 on F.Cu",
+                    "pos": {
+                        "x": 127.525,
+                        "y": 82.825
+                    },
+                    "uuid": "14e4fa20-a6cd-4104-9d62-20587efdf845"
+                },
+                {
+                    "description": "Track [/USB-C_D+] on F.Cu, length 0.9850 mm",
+                    "pos": {
+                        "x": 126.35,
+                        "y": 83.32
+                    },
+                    "uuid": "6d3740fc-4586-44df-9f4a-b6c96ac8939f"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "comment": "",
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.1950 mm)",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "Pad A7 [/USB-C_D-] of J8 on F.Cu",
+                    "pos": {
+                        "x": 127.525,
+                        "y": 83.825
+                    },
+                    "uuid": "b40c528f-5872-44d6-84f5-07fde9c37669"
+                },
+                {
+                    "description": "Track [/USB-C_D+] on F.Cu, length 2.1400 mm",
+                    "pos": {
+                        "x": 128.46,
+                        "y": 84.32
+                    },
+                    "uuid": "df0fb91f-5f49-4d08-a367-6876f9e43995"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "comment": "",
+            "description": "Items shorting two nets (nets Net-(PS1--V(CAP)) and )",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "PTH pad 4 [Net-(PS1--V(CAP))] of PS1",
+                    "pos": {
+                        "x": 165.4,
+                        "y": 111.7
+                    },
+                    "uuid": "1d5484c4-1d32-449a-ad4a-89feb4e5cdc2"
+                },
+                {
+                    "description": "Polygon [<no net>] of PS1 on F.Cu",
+                    "pos": {
+                        "x": 164.7,
+                        "y": 111.7
+                    },
+                    "uuid": "7f47e8f6-7804-45d8-89b7-bc44d8fb775d"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "comment": "",
+            "description": "Items shorting two nets (nets GND and )",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "PTH pad 5 [GND] of PS1",
+                    "pos": {
+                        "x": 165.4,
+                        "y": 103.1
+                    },
+                    "uuid": "27377a98-2f0b-41b7-86d3-951b1af85464"
+                },
+                {
+                    "description": "Polygon [<no net>] of PS1 on F.Cu",
+                    "pos": {
+                        "x": 166.1,
+                        "y": 103.1
+                    },
+                    "uuid": "de2e6eff-bf77-499f-9cd8-a7de5591a002"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "comment": "",
+            "description": "Items shorting two nets (nets Net-(PS1--V(CAP)) and )",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "PTH pad 4 [Net-(PS1--V(CAP))] of PS1",
+                    "pos": {
+                        "x": 165.4,
+                        "y": 111.7
+                    },
+                    "uuid": "1d5484c4-1d32-449a-ad4a-89feb4e5cdc2"
+                },
+                {
+                    "description": "Polygon [<no net>] of PS1 on B.Cu",
+                    "pos": {
+                        "x": 164.7,
+                        "y": 111.7
+                    },
+                    "uuid": "7d96adbc-e33b-4c4d-9afb-f13c3361abfe"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "comment": "",
+            "description": "Items shorting two nets (nets GND and )",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "PTH pad 5 [GND] of PS1",
+                    "pos": {
+                        "x": 165.4,
+                        "y": 103.1
+                    },
+                    "uuid": "27377a98-2f0b-41b7-86d3-951b1af85464"
+                },
+                {
+                    "description": "Polygon [<no net>] of PS1 on B.Cu",
+                    "pos": {
+                        "x": 166.1,
+                        "y": 103.1
+                    },
+                    "uuid": "da551594-f68a-44e6-8bc9-5614e8c50b39"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "comment": "",
+            "description": "Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.0000 mm)",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "Arc of PS1 on Edge.Cuts",
+                    "pos": {
+                        "x": 165.4,
+                        "y": 103.1
+                    },
+                    "uuid": "09da7205-9308-4625-90d9-45313f971957"
+                },
+                {
+                    "description": "Track [GND] on F.Cu, length 0.7000 mm",
+                    "pos": {
+                        "x": 166.1,
+                        "y": 102.9
+                    },
+                    "uuid": "2ddde379-ccc6-4475-93a4-7348a177e08c"
+                }
+            ],
+            "severity": "error",
+            "type": "copper_edge_clearance"
+        },
+        {
+            "comment": "",
+            "description": "Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.0000 mm)",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "Segment of PS1 on Edge.Cuts",
+                    "pos": {
+                        "x": 164.7,
+                        "y": 103.7
+                    },
+                    "uuid": "65e47786-5d04-4370-9086-307cf7aa4a22"
+                },
+                {
+                    "description": "Track [GND] on B.Cu, length 1.9799 mm",
+                    "pos": {
+                        "x": 163.2,
+                        "y": 101.5
+                    },
+                    "uuid": "1b56c65d-ff2b-48f6-8b80-bae3a8980a87"
+                }
+            ],
+            "severity": "error",
+            "type": "copper_edge_clearance"
+        },
+        {
+            "comment": "",
+            "description": "Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.2264 mm)",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "Arc of PS1 on Edge.Cuts",
+                    "pos": {
+                        "x": 165.4,
+                        "y": 103.1
+                    },
+                    "uuid": "09da7205-9308-4625-90d9-45313f971957"
+                },
+                {
+                    "description": "Track [GND] on B.Cu, length 0.9000 mm",
+                    "pos": {
+                        "x": 164.6,
+                        "y": 102.9
+                    },
+                    "uuid": "6b59a2d4-9805-4965-9524-d702576b4fb0"
+                }
+            ],
+            "severity": "error",
+            "type": "copper_edge_clearance"
+        },
+        {
+            "comment": "",
+            "description": "Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.0000 mm)",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "Arc of PS1 on Edge.Cuts",
+                    "pos": {
+                        "x": 165.4,
+                        "y": 103.1
+                    },
+                    "uuid": "09da7205-9308-4625-90d9-45313f971957"
+                },
+                {
+                    "description": "Track [GND] on B.Cu, length 4.1000 mm",
+                    "pos": {
+                        "x": 165.4,
+                        "y": 102.9
+                    },
+                    "uuid": "d85c3484-85c8-4d90-9b1d-2832282ea787"
+                }
+            ],
+            "severity": "error",
+            "type": "copper_edge_clearance"
+        },
+        {
+            "comment": "",
+            "description": "Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.0371 mm)",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "Segment of PS1 on Edge.Cuts",
+                    "pos": {
+                        "x": 164.7,
+                        "y": 111.7
+                    },
+                    "uuid": "34934cbf-654b-457b-a24e-a9c6be72cb4d"
+                },
+                {
+                    "description": "Track [Net-(PS1--V(CAP))] on F.Cu, length 2.9400 mm",
+                    "pos": {
+                        "x": 168.34,
+                        "y": 112.06
+                    },
+                    "uuid": "df5cc80c-e05f-4650-abad-023787efff27"
+                }
+            ],
+            "severity": "error",
+            "type": "copper_edge_clearance"
+        },
+        {
+            "comment": "",
+            "description": "Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.4750 mm)",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "Arc of PS1 on Edge.Cuts",
+                    "pos": {
+                        "x": 166.765,
+                        "y": 110.31
+                    },
+                    "uuid": "c3c6ba5d-9eaa-4a5b-9fa7-e4c475ecebdd"
+                },
+                {
+                    "description": "PTH pad 4 [Net-(PS1--V(CAP))] of PS1",
+                    "pos": {
+                        "x": 165.4,
+                        "y": 111.7
+                    },
+                    "uuid": "1d5484c4-1d32-449a-ad4a-89feb4e5cdc2"
+                }
+            ],
+            "severity": "error",
+            "type": "copper_edge_clearance"
+        },
+        {
+            "comment": "",
+            "description": "Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.1900 mm)",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "Arc of PS1 on Edge.Cuts",
+                    "pos": {
+                        "x": 165.4,
+                        "y": 103.1
+                    },
+                    "uuid": "09da7205-9308-4625-90d9-45313f971957"
+                },
+                {
+                    "description": "PTH pad 5 [GND] of PS1",
+                    "pos": {
+                        "x": 165.4,
+                        "y": 103.1
+                    },
+                    "uuid": "27377a98-2f0b-41b7-86d3-951b1af85464"
+                }
+            ],
+            "severity": "error",
+            "type": "copper_edge_clearance"
+        },
+        {
+            "comment": "",
+            "description": "Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.0000 mm)",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "Arc of PS1 on Edge.Cuts",
+                    "pos": {
+                        "x": 166.765,
+                        "y": 110.31
+                    },
+                    "uuid": "c3c6ba5d-9eaa-4a5b-9fa7-e4c475ecebdd"
+                },
+                {
+                    "description": "Polygon [<no net>] of PS1 on F.Cu",
+                    "pos": {
+                        "x": 164.7,
+                        "y": 111.7
+                    },
+                    "uuid": "7f47e8f6-7804-45d8-89b7-bc44d8fb775d"
+                }
+            ],
+            "severity": "error",
+            "type": "copper_edge_clearance"
+        },
+        {
+            "comment": "",
+            "description": "Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.0000 mm)",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "Arc of PS1 on Edge.Cuts",
+                    "pos": {
+                        "x": 165.4,
+                        "y": 103.1
+                    },
+                    "uuid": "09da7205-9308-4625-90d9-45313f971957"
+                },
+                {
+                    "description": "Polygon [<no net>] of PS1 on F.Cu",
+                    "pos": {
+                        "x": 166.1,
+                        "y": 103.1
+                    },
+                    "uuid": "de2e6eff-bf77-499f-9cd8-a7de5591a002"
+                }
+            ],
+            "severity": "error",
+            "type": "copper_edge_clearance"
+        },
+        {
+            "comment": "",
+            "description": "Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.0000 mm)",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "Arc of PS1 on Edge.Cuts",
+                    "pos": {
+                        "x": 166.765,
+                        "y": 110.31
+                    },
+                    "uuid": "c3c6ba5d-9eaa-4a5b-9fa7-e4c475ecebdd"
+                },
+                {
+                    "description": "Polygon [<no net>] of PS1 on B.Cu",
+                    "pos": {
+                        "x": 164.7,
+                        "y": 111.7
+                    },
+                    "uuid": "7d96adbc-e33b-4c4d-9afb-f13c3361abfe"
+                }
+            ],
+            "severity": "error",
+            "type": "copper_edge_clearance"
+        },
+        {
+            "comment": "",
+            "description": "Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.0000 mm)",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "Arc of PS1 on Edge.Cuts",
+                    "pos": {
+                        "x": 165.4,
+                        "y": 103.1
+                    },
+                    "uuid": "09da7205-9308-4625-90d9-45313f971957"
+                },
+                {
+                    "description": "Polygon [<no net>] of PS1 on B.Cu",
+                    "pos": {
+                        "x": 166.1,
+                        "y": 103.1
+                    },
+                    "uuid": "da551594-f68a-44e6-8bc9-5614e8c50b39"
+                }
+            ],
+            "severity": "error",
+            "type": "copper_edge_clearance"
+        },
+        {
+            "comment": "",
+            "description": "Front solder mask aperture bridges items with different nets",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "Polygon of PS1 on F.Mask",
+                    "pos": {
+                        "x": 164.8,
+                        "y": 110.71
+                    },
+                    "uuid": "131d35d2-ff67-4193-86ad-c0fd9837ca37"
+                },
+                {
+                    "description": "Track [Net-(PS1--V(CAP))] on F.Cu, length 0.0032 mm",
+                    "pos": {
+                        "x": 165.496837,
+                        "y": 111.603163
+                    },
+                    "uuid": "9ccb88b9-2ab0-4fe3-8694-bcba8ab7dee9"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "comment": "",
+            "description": "Front solder mask aperture bridges items with different nets",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "Polygon of PS1 on F.Mask",
+                    "pos": {
+                        "x": 164.8,
+                        "y": 110.71
+                    },
+                    "uuid": "131d35d2-ff67-4193-86ad-c0fd9837ca37"
+                },
+                {
+                    "description": "PTH pad 4 [Net-(PS1--V(CAP))] of PS1",
+                    "pos": {
+                        "x": 165.4,
+                        "y": 111.7
+                    },
+                    "uuid": "1d5484c4-1d32-449a-ad4a-89feb4e5cdc2"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "comment": "",
+            "description": "Front solder mask aperture bridges items with different nets",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "Polygon of PS1 on F.Mask",
+                    "pos": {
+                        "x": 166.0,
+                        "y": 104.09
+                    },
+                    "uuid": "0a7699c7-78a1-42f2-98cf-d9168ecb488e"
+                },
+                {
+                    "description": "Track [GND] on F.Cu, length 0.7000 mm",
+                    "pos": {
+                        "x": 166.1,
+                        "y": 102.9
+                    },
+                    "uuid": "2ddde379-ccc6-4475-93a4-7348a177e08c"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "comment": "",
+            "description": "Front solder mask aperture bridges items with different nets",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "Polygon of PS1 on F.Mask",
+                    "pos": {
+                        "x": 166.0,
+                        "y": 104.09
+                    },
+                    "uuid": "0a7699c7-78a1-42f2-98cf-d9168ecb488e"
+                },
+                {
+                    "description": "PTH pad 5 [GND] of PS1",
+                    "pos": {
+                        "x": 165.4,
+                        "y": 103.1
+                    },
+                    "uuid": "27377a98-2f0b-41b7-86d3-951b1af85464"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "comment": "",
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "excluded": true,
+            "items": [
+                {
+                    "description": "Polygon of PS1 on B.Mask",
+                    "pos": {
+                        "x": 166.0,
+                        "y": 104.09
+                    },
+                    "uuid": "1accc99a-4f17-4ca5-a3d8-0e6fea5100e8"
+                },
+                {
+                    "description": "PTH pad 5 [GND] of PS1",
+                    "pos": {
+                        "x": 165.4,
+                        "y": 103.1
+                    },
+                    "uuid": "27377a98-2f0b-41b7-86d3-951b1af85464"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        }
+    ]
+}

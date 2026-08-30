@@ -27,4 +27,5 @@
 	(lib (name "3.3uH_Inductor") (type "KiCad") (uri "${KIPRJMOD}/3.3uH_Inductor") (options "") (descr ""))
 	(lib (name "3.3uH_Inductor_Murata") (type "KiCad") (uri "${KIPRJMOD}/3.3uH_Inductor_Murata") (options "") (descr ""))
 	(lib (name "ESP32-Footprint-PelletPirate-02x19x2=39") (type "KiCad") (uri "${KIPRJMOD}/ESP32-Footprint-PelletPirate-02x19x2=39.pretty") (options "") (descr ""))
+	(lib (name "NewPBO-5F-12-try") (type "KiCad") (uri "${KIPRJMOD}/NewPBO-5F-12-try") (options "") (descr ""))
 )

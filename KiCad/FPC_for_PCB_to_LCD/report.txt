@@ -1,0 +1,11 @@
+Info: Backing up file 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD\sym-lib-table' to 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD\rescue-backup\sym-lib-table-2026-08-13-15-40-40'.
+Info: Backing up file '' to 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD\rescue-backup\-2026-08-13-15-40-40'.
+Info: Backing up file 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD\PCB_to_LCD_FPC.sch' to 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD\rescue-backup\PCB_to_LCD_FPC-2026-08-13-15-40-40.sch'.
+Info: Backing up file 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD\PCB_to_LCD_FPC.kicad_pro' to 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD\rescue-backup\PCB_to_LCD_FPC-2026-08-13-15-40-40.kicad_pro'.
+Info: Backing up file 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD\PCB_to_LCD_FPC-cache.lib' to 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD\rescue-backup\PCB_to_LCD_FPC-cache-2026-08-13-15-40-40.lib'.
+Info: Backing up file 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD\PCB_to_LCD_FPC.cache.lib' to 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD\rescue-backup\PCB_to_LCD_FPC.cache-2026-08-13-15-40-40.lib'.
+Info: Backing up file 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD\PCB_to_LCD_FPC-rescue.lib' to 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD\rescue-backup\PCB_to_LCD_FPC-rescue-2026-08-13-15-40-40.lib'.
+Info: Backing up file 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD\PCB_to_LCD_FPC-rescue.dcm' to 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD\rescue-backup\PCB_to_LCD_FPC-rescue-2026-08-13-15-40-40.dcm'.
+Symbol CONN_01X39 mapped to symbol library 'PCB_to_LCD_FPC-rescue'.
+Symbol CONN_01X39 mapped to symbol library 'PCB_to_LCD_FPC-rescue'.
+Info: Symbol library table mapping complete!

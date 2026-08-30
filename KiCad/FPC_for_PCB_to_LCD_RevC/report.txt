@@ -1,0 +1,14 @@
+Info: Backing up file 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD_RevC\sym-lib-table' to 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD_RevC\rescue-backup\sym-lib-table-2026-08-14-10-58-39'.
+Info: Backing up file '' to 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD_RevC\rescue-backup\-2026-08-14-10-58-39'.
+Info: Backing up file 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD_RevC\PCB_to_LCD_FPC.sch' to 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD_RevC\rescue-backup\PCB_to_LCD_FPC-2026-08-14-10-58-39.sch'.
+Info: Backing up file 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD_RevC\PCB_to_LCD_FPC.kicad_pro' to 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD_RevC\rescue-backup\PCB_to_LCD_FPC-2026-08-14-10-58-39.kicad_pro'.
+Info: Backing up file 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD_RevC\PCB_to_LCD_FPC-cache.lib' to 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD_RevC\rescue-backup\PCB_to_LCD_FPC-cache-2026-08-14-10-58-39.lib'.
+Info: Backing up file 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD_RevC\PCB_to_LCD_FPC.cache.lib' to 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD_RevC\rescue-backup\PCB_to_LCD_FPC.cache-2026-08-14-10-58-39.lib'.
+Info: Backing up file 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD_RevC\PCB_to_LCD_FPC-rescue.lib' to 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD_RevC\rescue-backup\PCB_to_LCD_FPC-rescue-2026-08-14-10-58-39.lib'.
+Info: Backing up file 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD_RevC\PCB_to_LCD_FPC-rescue.dcm' to 'C:\DEVELOPMENT\pelletpirate\KiCad\FPC_for_PCB_to_LCD_RevC\rescue-backup\PCB_to_LCD_FPC-rescue-2026-08-14-10-58-39.dcm'.
+Info: Adding library 'PCB_to_LCD_FPC-rescue', file '${KIPRJMOD}/PCB_to_LCD_FPC-rescue.lib' to project symbol library table.
+Symbol CONN_01X39 mapped to symbol library 'PCB_to_LCD_FPC-rescue'.
+Symbol CONN_01X39 mapped to symbol library 'PCB_to_LCD_FPC-rescue'.
+Info: Symbol library table mapping complete!
+Info: Created project symbol library table.
+

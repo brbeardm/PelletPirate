@@ -1,0 +1,189 @@
+EESchema Schematic File Version 4
+LIBS:PCB_to_LCD_FPC-cache
+EELAYER 29 0
+EELAYER END
+$Descr A4 11693 8268
+Sheet 1 1
+Title "PCB to LCD FPC Extension"
+Comment1 "39 pin 0.30 mm straight-through extension"
+Comment2 "PRE-DFM"
+$EndDescr
+$Comp
+L CONN_01X39 J1
+U 1 1 0C67AB17
+P 3000 3900
+F 0 "J1" H 3000 5950 50  0000 C CNN
+F 1 "FH26W-39S-0.3SHW(60)" H 3000 1850 50  0000 C CNN
+	1    3000 3900
+	1 0 0 -1
+$EndComp
+$Comp
+L CONN_01X39 J2
+U 1 1 A6D688CD
+P 7000 3900
+F 0 "J2" H 7000 5950 50  0000 C CNN
+F 1 "INTEGRAL_MALE_FPC_39P_0.30" H 7000 1850 50  0000 C CNN
+	1    7000 3900
+	-1 0 0 -1
+$EndComp
+Wire Wire Line
+	3100 2000 6900 2000
+Text Label 4800 2000 0    35   ~ 0
+PIN_1
+Wire Wire Line
+	3100 2100 6900 2100
+Text Label 4800 2100 0    35   ~ 0
+PIN_2
+Wire Wire Line
+	3100 2200 6900 2200
+Text Label 4800 2200 0    35   ~ 0
+PIN_3
+Wire Wire Line
+	3100 2300 6900 2300
+Text Label 4800 2300 0    35   ~ 0
+PIN_4
+Wire Wire Line
+	3100 2400 6900 2400
+Text Label 4800 2400 0    35   ~ 0
+PIN_5
+Wire Wire Line
+	3100 2500 6900 2500
+Text Label 4800 2500 0    35   ~ 0
+PIN_6
+Wire Wire Line
+	3100 2600 6900 2600
+Text Label 4800 2600 0    35   ~ 0
+PIN_7
+Wire Wire Line
+	3100 2700 6900 2700
+Text Label 4800 2700 0    35   ~ 0
+PIN_8
+Wire Wire Line
+	3100 2800 6900 2800
+Text Label 4800 2800 0    35   ~ 0
+PIN_9
+Wire Wire Line
+	3100 2900 6900 2900
+Text Label 4800 2900 0    35   ~ 0
+PIN_10
+Wire Wire Line
+	3100 3000 6900 3000
+Text Label 4800 3000 0    35   ~ 0
+PIN_11
+Wire Wire Line
+	3100 3100 6900 3100
+Text Label 4800 3100 0    35   ~ 0
+PIN_12
+Wire Wire Line
+	3100 3200 6900 3200
+Text Label 4800 3200 0    35   ~ 0
+PIN_13
+Wire Wire Line
+	3100 3300 6900 3300
+Text Label 4800 3300 0    35   ~ 0
+PIN_14
+Wire Wire Line
+	3100 3400 6900 3400
+Text Label 4800 3400 0    35   ~ 0
+PIN_15
+Wire Wire Line
+	3100 3500 6900 3500
+Text Label 4800 3500 0    35   ~ 0
+PIN_16
+Wire Wire Line
+	3100 3600 6900 3600
+Text Label 4800 3600 0    35   ~ 0
+PIN_17
+Wire Wire Line
+	3100 3700 6900 3700
+Text Label 4800 3700 0    35   ~ 0
+PIN_18
+Wire Wire Line
+	3100 3800 6900 3800
+Text Label 4800 3800 0    35   ~ 0
+PIN_19
+Wire Wire Line
+	3100 3900 6900 3900
+Text Label 4800 3900 0    35   ~ 0
+PIN_20
+Wire Wire Line
+	3100 4000 6900 4000
+Text Label 4800 4000 0    35   ~ 0
+PIN_21
+Wire Wire Line
+	3100 4100 6900 4100
+Text Label 4800 4100 0    35   ~ 0
+PIN_22
+Wire Wire Line
+	3100 4200 6900 4200
+Text Label 4800 4200 0    35   ~ 0
+PIN_23
+Wire Wire Line
+	3100 4300 6900 4300
+Text Label 4800 4300 0    35   ~ 0
+PIN_24
+Wire Wire Line
+	3100 4400 6900 4400
+Text Label 4800 4400 0    35   ~ 0
+PIN_25
+Wire Wire Line
+	3100 4500 6900 4500
+Text Label 4800 4500 0    35   ~ 0
+PIN_26
+Wire Wire Line
+	3100 4600 6900 4600
+Text Label 4800 4600 0    35   ~ 0
+PIN_27
+Wire Wire Line
+	3100 4700 6900 4700
+Text Label 4800 4700 0    35   ~ 0
+PIN_28
+Wire Wire Line
+	3100 4800 6900 4800
+Text Label 4800 4800 0    35   ~ 0
+PIN_29
+Wire Wire Line
+	3100 4900 6900 4900
+Text Label 4800 4900 0    35   ~ 0
+PIN_30
+Wire Wire Line
+	3100 5000 6900 5000
+Text Label 4800 5000 0    35   ~ 0
+PIN_31
+Wire Wire Line
+	3100 5100 6900 5100
+Text Label 4800 5100 0    35   ~ 0
+PIN_32
+Wire Wire Line
+	3100 5200 6900 5200
+Text Label 4800 5200 0    35   ~ 0
+PIN_33
+Wire Wire Line
+	3100 5300 6900 5300
+Text Label 4800 5300 0    35   ~ 0
+PIN_34
+Wire Wire Line
+	3100 5400 6900 5400
+Text Label 4800 5400 0    35   ~ 0
+PIN_35
+Wire Wire Line
+	3100 5500 6900 5500
+Text Label 4800 5500 0    35   ~ 0
+PIN_36
+Wire Wire Line
+	3100 5600 6900 5600
+Text Label 4800 5600 0    35   ~ 0
+PIN_37
+Wire Wire Line
+	3100 5700 6900 5700
+Text Label 4800 5700 0    35   ~ 0
+PIN_38
+Wire Wire Line
+	3100 5800 6900 5800
+Text Label 4800 5800 0    35   ~ 0
+PIN_39
+Text Notes 2750 1300 0    60   ~ 12
+LCD MALE -> J1 FEMALE ZIF -> FLEX -> J2 MALE -> PCB V4 FEMALE ZIF
+Text Notes 2750 1450 0    50   ~ 0
+Electrical intent: Pin 1->1 through Pin 39->39. Verify physical contact-side orientation during DFM.
+$EndSCHEMATC

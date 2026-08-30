@@ -1,0 +1,41 @@
+(version 1)
+
+  # ---- fine-pitch / edge / manufacturer-footprint keeps (unchanged) ----
+  (rule "FPC1-internal-fine-pitch"
+  (condition "A.memberOfFootprint('FPC1') && B.memberOfFootprint('FPC1')")
+  (constraint clearance (min 0.13mm)))
+
+  (rule "PS1-edge"
+  (condition "A.memberOfFootprint('PS1') || B.memberOfFootprint('PS1')")
+  (constraint edge_clearance (min 0.25mm)))
+
+  (rule "PS1 internal manufacturer footprint"
+  (condition "A.memberOfFootprint('PS1') && B.memberOfFootprint('PS1')")
+  (constraint clearance)
+  (severity ignore))
+
+  # ================= BASE: 2.5 mm mains-domain <-> SELV / GND =================
+  # NOTE: Net-(U3-IN2) is listed by NAME because it is currently stuck in the
+  # Default netclass. Once you move it to MAINS_SENSE you can delete the two
+  # "|| A.NetName=='Net-(U3-IN2)'" clauses below.
+  (rule "MAINS-to-SELV-fwd"
+  (condition "(A.NetClass=='MAINS_INPUT' || A.NetClass=='MAINS_GATE' || A.NetClass=='MAINS_SENSE' || A.NetClass=='AC_LOAD_SHARED' || A.NetClass=='AC_LOAD_IGNITER' || A.NetClass=='AC_LOAD_LOW' || A.NetName=='Net-(U3-IN2)') && (B.NetClass=='SELV_12V' || B.NetClass=='SELV_3V3' || B.NetClass=='SELV_SIGNAL' || B.NetClass=='RTD_ANALOG' || B.NetClass=='LED_BACKLIGHT' || B.NetClass=='LCD_FPC' || B.NetClass=='USB' || B.NetName=='GND')")
+  (constraint clearance (min 2.5mm)))
+
+  (rule "MAINS-to-SELV-rev"
+  (condition "(B.NetClass=='MAINS_INPUT' || B.NetClass=='MAINS_GATE' || B.NetClass=='MAINS_SENSE' || B.NetClass=='AC_LOAD_SHARED' || B.NetClass=='AC_LOAD_IGNITER' || B.NetClass=='AC_LOAD_LOW' || B.NetName=='Net-(U3-IN2)') && (A.NetClass=='SELV_12V' || A.NetClass=='SELV_3V3' || A.NetClass=='SELV_SIGNAL' || A.NetClass=='RTD_ANALOG' || A.NetClass=='LED_BACKLIGHT' || A.NetClass=='LCD_FPC' || A.NetClass=='USB' || A.NetName=='GND')")
+  (constraint clearance (min 2.5mm)))
+
+  # ========== EXEMPTION 1: pad-to-pad INSIDE a barrier package ==========
+  # (these are later than the base rule, so they win for intra-package pins)
+  (rule "barrier-internal-exempt"
+  (condition "(A.memberOfFootprint('MOC1') && B.memberOfFootprint('MOC1')) || (A.memberOfFootprint('MOC2') && B.memberOfFootprint('MOC2')) || (A.memberOfFootprint('MOC3') && B.memberOfFootprint('MOC3')) || (A.memberOfFootprint('U3') && B.memberOfFootprint('U3')) || (A.memberOfFootprint('T1') && B.memberOfFootprint('T1')) || (A.memberOfFootprint('T2') && B.memberOfFootprint('T2')) || (A.memberOfFootprint('T3') && B.memberOfFootprint('T3'))")
+  (constraint clearance (min 0.25mm)))
+
+  # ===== EXEMPTION 2: any item crossing a barrier component courtyard =====
+  # This is the piece footprint-internal rules can't do: a SELV TRACE approaching
+  # the opto is not a "member" of the footprint, but it IS inside the courtyard.
+  # The optocoupler's internal 7500 V barrier provides isolation here, not copper gap.
+  (rule "barrier-courtyard-exempt"
+  (condition "((A.NetClass=='MAINS_INPUT' || A.NetClass=='MAINS_GATE' || A.NetClass=='MAINS_SENSE' || A.NetClass=='AC_LOAD_SHARED' || A.NetClass=='AC_LOAD_IGNITER' || A.NetClass=='AC_LOAD_LOW' || A.NetName=='Net-(U3-IN2)') && (B.NetClass=='SELV_12V' || B.NetClass=='SELV_3V3' || B.NetClass=='SELV_SIGNAL' || B.NetClass=='RTD_ANALOG' || B.NetClass=='LED_BACKLIGHT' || B.NetClass=='LCD_FPC' || B.NetClass=='USB' || B.NetName=='GND')) && (A.intersectsCourtyard('MOC1') || B.intersectsCourtyard('MOC1') || A.intersectsCourtyard('MOC2') || B.intersectsCourtyard('MOC2') || A.intersectsCourtyard('MOC3') || B.intersectsCourtyard('MOC3') || A.intersectsCourtyard('U3') || B.intersectsCourtyard('U3') || A.intersectsCourtyard('PS1') || B.intersectsCourtyard('PS1') || A.intersectsCourtyard('T1') || B.intersectsCourtyard('T1') || A.intersectsCourtyard('T2') || B.intersectsCourtyard('T2') || A.intersectsCourtyard('T3') || B.intersectsCourtyard('T3'))")
+  (constraint clearance (min 0.4mm)))

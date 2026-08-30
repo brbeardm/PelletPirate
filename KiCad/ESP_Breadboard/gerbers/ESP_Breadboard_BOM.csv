@@ -1,0 +1,16 @@
+Reference,Qty,Value,Footprint,MF,MP,Description,#,LINK
+"C17,C18",2,0.1µF 25V,Capacitor_SMD:C_0402_1005Metric,KEMET,C0402C104K3RACTU,Unpolarized capacitor,1,https://www.digikey.com/en/products/detail/kemet/C0402C104K3RACTU/6697176
+"C37,C39",2,1µF 25V,Capacitor_SMD:C_0805_2012Metric,KEMET,C0805C105K3RACTU,Unpolarized capacitor,2,https://www.digikey.com/en/products/detail/kemet/C0805C105K3RACTU/2211765
+C38,1,10µF 25V,Capacitor_SMD:C_1206_3216Metric,KEMET,C1206C106K3RACTU,Unpolarized capacitor,3,https://www.digikey.com/en/products/detail/kemet/C1206C106K3RACTU/3317648
+C40,1,4.7µF 25V,Capacitor_SMD:C_0805_2012Metric,KEMET,C0805C475M3RACTU,Unpolarized capacitor,4,https://www.digikey.com/en/products/detail/kemet/C0805C475M3RACTU/12701193
+ESP1,1,ESP32-S3-WROOM-1U-N16R8-flyman,Expressif_S3_N16R8_Chip_N1U:ESP32-S3-WROOM-1U-flyman,Espressif Systems,ESP32-S3-WROOM-1U-N16R8,"Bluetooth, WiFi 802.11b/g/n, Bluetooth v5.0 Transceiver Module 2.4GHz Antenna Not Included, U.FL Surface Mount",5,https://www.digikey.com/en/products/detail/espressif-systems/ESP32-S3-WROOM-1U-N16R8/16162641
+J1,1,Conn_01x20_ESPP,Connector_PinHeader_2.54mm:PinHeader_1x20_P2.54mm_Vertical,Same Sky,SSK01-MPH-254-A20,"Generic connector, single row, 01x20, script generated (kicad-library-utils/schlib/autogen/connector/)",6,https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/SSK01-MPH-254-A20/28772188
+J2,1,Conn_21x40_ESPP,ESP32-Footprint-PelletPirate-02x19x2=39:PinHeader_21x40_P2.54mm_Vertical-J2,Same Sky,SSK01-MPH-254-A20,"Generic connector, single row, 21x40",7,https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/SSK01-MPH-254-A20/28772188
+J8,1,USB4105-GF-A_fly,USB_try2:GCT_USB4105-GF-A_flyman,GCT,USB4105-GF-A,"USB-C (USB TYPE-C) USB 2.0 Receptacle Connector 24 (16+8 Dummy) Position Surface Mount, Right Angle; Through Hole",8,https://www.digikey.com/en/products/detail/gct/USB4105-GF-A/11198441
+LED1,1,LTST-C191KGKT_flyman,LED_SMD:LED_0603_1608Metric,LiteOn,LTST-C191KGKT,Green 571nm LED Indication - Discrete 2V 0603 (1608 Metric),9,https://www.digikey.com/en/products/detail/liteon/LTST-C191KGKT/386835
+"R30,R31,R35,R36",4,10K_ohm,Resistor_SMD:R_0402_1005Metric,YAGEO,RC0402FR-0710KL,"Pulldown Resistor for LCD,Pullup for EN pin",10,https://www.digikey.com/en/products/detail/yageo/RC0402FR-0710KL/726523
+"R37,R38",2,5.1K_ohm,Resistor_SMD:R_0402_1005Metric,Panasonic,ERJ-2RKF5101X,"Pulldown Resistor for LCD,Pulldown Resistor for USB",11,https://www.digikey.com/en/products/detail/panasonic-industry/ERJ-2RKF5101X/1746242
+R39,1,1K_ohm,Resistor_SMD:R_0402_1005Metric,Stackpole Electronics,RNCP0402FTD1K00,Power LED Resistor,12,https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RNCP0402FTD1K00/6273058
+S1,1,RESET,Switch_B3F_1000:SW_B3F-1000,Omron,B3F-1000,Tactile Switch SPST-NO Top Actuated Through Hole,13,https://www.digikey.com/en/products/detail/omron-electronics-inc-emc-div/B3F-1000/33150
+S2,1,BOOT,Switch_B3F_1000:SW_B3F-1000,Omron,B3F-1000,Tactile Switch SPST-NO Top Actuated Through Hole,14,https://www.digikey.com/en/products/detail/omron-electronics-inc-emc-div/B3F-1000/33150
+U1,1,USBLC6-2SC6,USBC6-2SC6:SOT95P280X145-6N,STMicroelectronics,USBLC6-2SC6,17V Clamp 5A (8/20Âµs) Ipp Tvs Diode Surface Mount SOT-23-6,15,https://www.digikey.com/en/products/detail/stmicroelectronics/USBLC6-2SC6/1040559

@@ -1,0 +1,8 @@
+(fp_lib_table
+	(version 7)
+	(lib (name "Switch_B3F_1000") (type "KiCad") (uri "${KIPRJMOD}/Switch_B3F_1000") (options "") (descr ""))
+	(lib (name "ESP32-Footprint-PelletPirate-02x19x2=39") (type "KiCad") (uri "${KIPRJMOD}/ESP32-Footprint-PelletPirate-02x19x2=39.pretty") (options "") (descr ""))
+	(lib (name "USB_try2") (type "KiCad") (uri "${KIPRJMOD}/USB_try2") (options "") (descr ""))
+	(lib (name "Expressif_S3_N16R8_Chip_N1U") (type "KiCad") (uri "${KIPRJMOD}/Expressif_S3_N16R8_Chip_N1U") (options "") (descr ""))
+	(lib (name "USBC6-2SC6") (type "KiCad") (uri "${KIPRJMOD}/USBC6-2SC6") (options "") (descr ""))
+)

@@ -1,0 +1,10 @@
+(version 1)
+(rule "FPC_finger_copper_clearance"
+      (condition "A.intersectsCourtyard('J2') && B.intersectsCourtyard('J2')")
+      (constraint clearance (min 0.07mm))
+)
+
+(rule "FPC_finger_edge_clearance"
+      (condition "A.intersectsCourtyard('J2')")
+      (constraint edge_clearance (min 0.10mm))
+)

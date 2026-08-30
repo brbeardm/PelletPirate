@@ -1,0 +1,9 @@
+Feature,Value,Note
+Overall length,75 mm,nominal
+Body width,14 mm,nominal
+Tongue F,12.0 mm,+/-0.05
+C,11.4 mm,+/-0.03
+B,10.8 mm,+/-0.03
+Pitch,0.30 mm,39 positions
+Finished tongue thickness,0.20 mm,+/-0.03
+Copper transition,39 plated vias,0.20 mm drill shown; supplier DFM to approve

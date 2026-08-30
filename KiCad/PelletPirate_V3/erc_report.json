@@ -1,0 +1,118 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-06-30T20:13:55",
+    "ignored_checks": [
+        {
+            "description": "Assigned footprint doesn't match footprint filters",
+            "key": "footprint_filter"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.1",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/0182ac56-03c6-4c14-8ead-12e31828f094",
+            "violations": [
+                {
+                    "description": "Four items connected at 1651000, 1358900",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0635 mm",
+                            "pos": {
+                                "x": 1.651,
+                                "y": 1.4224
+                            },
+                            "uuid": "2d26f3f4-25b4-492f-8207-2fdaa10439b2"
+                        },
+                        {
+                            "description": "Horizontal Wire, length 0.0635 mm",
+                            "pos": {
+                                "x": 1.651,
+                                "y": 1.3589
+                            },
+                            "uuid": "d470d52b-983a-45c4-a786-0d8bc1f31cb3"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "four_way_junction"
+                },
+                {
+                    "description": "Four items connected at 1854200, 1358900",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.2032 mm",
+                            "pos": {
+                                "x": 1.8542,
+                                "y": 1.3589
+                            },
+                            "uuid": "8965f60f-91cc-4dd2-a4c3-671aeae095f8"
+                        },
+                        {
+                            "description": "Horizontal Wire, length 0.0635 mm",
+                            "pos": {
+                                "x": 1.7907,
+                                "y": 1.3589
+                            },
+                            "uuid": "c772b968-46c9-439e-a403-c7a727db1ea4"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "four_way_junction"
+                },
+                {
+                    "description": "Four items connected at 2768600, 876300",
+                    "items": [
+                        {
+                            "description": "Horizontal Wire, length 0.0635 mm",
+                            "pos": {
+                                "x": 2.7051,
+                                "y": 0.8763
+                            },
+                            "uuid": "7fdb3927-c98c-499b-a70a-b406ab14ef98"
+                        },
+                        {
+                            "description": "Vertical Wire, length 0.0254 mm",
+                            "pos": {
+                                "x": 2.7686,
+                                "y": 0.8763
+                            },
+                            "uuid": "b6d52d0e-62fc-406e-aa9e-60e4eabcf896"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "four_way_junction"
+                },
+                {
+                    "description": "Four items connected at 2844800, 3365500",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0254 mm",
+                            "pos": {
+                                "x": 2.8448,
+                                "y": 3.3401
+                            },
+                            "uuid": "1293f987-1d83-462f-bcdf-bfdee5775d9d"
+                        },
+                        {
+                            "description": "Horizontal Wire, length 0.0254 mm",
+                            "pos": {
+                                "x": 2.8448,
+                                "y": 3.3655
+                            },
+                            "uuid": "a83039b6-124a-4881-b295-b6091d709f3b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "four_way_junction"
+                }
+            ]
+        }
+    ],
+    "source": "PelletPirate_V3.kicad_sch"
+}
