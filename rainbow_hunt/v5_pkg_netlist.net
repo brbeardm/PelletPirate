@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "C:\\development\\pelletpirate\\kicad\\pelletpirate_V5\\PelletPirate_V5.kicad_sch")
-		(date "2026-08-30T13:42:56")
+		(date "2026-08-30T14:17:09")
 		(tool "Eeschema 10.0.5")
 		(sheet
 			(number "1")
@@ -5790,40 +5790,64 @@
 		)
 		(comp
 			(ref "L5")
-			(value "BLM31PG391SN1L")
-			(footprint "Ferrite_Bead_12V:IND_BLM31PG391SN1L_MUR")
-			(datasheet "BLM31PG601SN1L")
-			(description "FERRITE BEAD 600 OHM 1206 1LN")
+			(value "BLM31PG601SN1L")
+			(footprint "Ferrite_Bead_12V_Flyman:BEADC3216X130N_flyman")
+			(description "600 Ohms @ 100 MHz 1 Power Line Ferrite Bead 1206 (3216 Metric) 1.5A 80mOhm")
 			(fields
-				(field
-					(name "LINK") "https://www.digikey.com/en/products/detail/murata-electronics/BLM31PG601SN1L/584266")
 				(field
 					(name "MF") "Murata")
 				(field
+					(name "Package") "3216 Murata")
+				(field
+					(name "Price") "None")
+				(field
+					(name "SnapEDA_Link") "https://www.snapeda.com/parts/BLM31PG601SN1L/Murata/view-part/?ref=snap")
+				(field
 					(name "MP") "BLM31PG601SN1L")
 				(field
-					(name "Footprint") "Ferrite_Bead_12V:IND_BLM31PG391SN1L_MUR")
+					(name "Availability") "In Stock")
 				(field
-					(name "Datasheet") "BLM31PG601SN1L")
+					(name "Check_prices") "https://www.snapeda.com/parts/BLM31PG601SN1L/Murata/view-part/?ref=eda")
 				(field
-					(name "Description") "FERRITE BEAD 600 OHM 1206 1LN")
+					(name "Footprint") "Ferrite_Bead_12V_Flyman:BEADC3216X130N_flyman")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "600 Ohms @ 100 MHz 1 Power Line Ferrite Bead 1206 (3216 Metric) 1.5A 80mOhm")
 			)
 			(libsource
-				(lib "IND_BLM31PG391SN1L_MUR")
-				(part "IND_BLM31PG391SN1L_MUR")
-				(description "")
-			)
-			(property
-				(name "LINK")
-				(value "https://www.digikey.com/en/products/detail/murata-electronics/BLM31PG601SN1L/584266")
+				(lib "BLM31PG601SN1L_flyman")
+				(part "BLM31PG601SN1L")
+				(description "600 Ohms @ 100 MHz 1 Power Line Ferrite Bead 1206 (3216 Metric) 1.5A 80mOhm")
 			)
 			(property
 				(name "MF")
 				(value "Murata")
 			)
 			(property
+				(name "Package")
+				(value "3216 Murata")
+			)
+			(property
+				(name "Price")
+				(value "None")
+			)
+			(property
+				(name "SnapEDA_Link")
+				(value "https://www.snapeda.com/parts/BLM31PG601SN1L/Murata/view-part/?ref=snap")
+			)
+			(property
 				(name "MP")
 				(value "BLM31PG601SN1L")
+			)
+			(property
+				(name "Availability")
+				(value "In Stock")
+			)
+			(property
+				(name "Check_prices")
+				(value "https://www.snapeda.com/parts/BLM31PG601SN1L/Murata/view-part/?ref=eda")
 			)
 			(property
 				(name "Sheetname")
@@ -5833,19 +5857,11 @@
 				(name "Sheetfile")
 				(value "PelletPirate_V5.kicad_sch")
 			)
-			(property
-				(name "ki_keywords")
-				(value "BLM31PG601SN1L")
-			)
-			(property
-				(name "ki_fp_filters")
-				(value "IND_BLM31PG391SN1L_MUR IND_BLM31PG391SN1L_MUR-M IND_BLM31PG391SN1L_MUR-L")
-			)
 			(sheetpath
 				(names "/")
 				(tstamps "/")
 			)
-			(tstamps "c86d38cc-0658-4f5e-9c6a-19235206eb14")
+			(tstamps "137fa857-5d18-471c-93d5-dd40d8336232")
 			(units
 				(unit
 					(name "A")
@@ -11956,6 +11972,50 @@
 			)
 		)
 		(libpart
+			(lib "BLM31PG601SN1L_flyman")
+			(part "BLM31PG601SN1L")
+			(description "600 Ohms @ 100 MHz 1 Power Line Ferrite Bead 1206 (3216 Metric) 1.5A 80mOhm")
+			(fields
+				(field
+					(name "Reference") "FL")
+				(field
+					(name "Value") "BLM31PG601SN1L")
+				(field
+					(name "Footprint") "BLM31PG601SN1L:BEADC3216X130N")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "600 Ohms @ 100 MHz 1 Power Line Ferrite Bead 1206 (3216 Metric) 1.5A 80mOhm")
+				(field
+					(name "MF") "Murata Electronics")
+				(field
+					(name "Package") "3216 Murata")
+				(field
+					(name "Price") "None")
+				(field
+					(name "SnapEDA_Link") "https://www.snapeda.com/parts/BLM31PG601SN1L/Murata/view-part/?ref=snap")
+				(field
+					(name "MP") "BLM31PG601SN1L")
+				(field
+					(name "Availability") "In Stock")
+				(field
+					(name "Check_prices") "https://www.snapeda.com/parts/BLM31PG601SN1L/Murata/view-part/?ref=eda")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
 			(lib "BTA12-600BWRG")
 			(part "BTA12-600BW-PelletPirate")
 			(description "12A RMS, 600V Off-State Voltage, 50mA Sensitivity, Snubberless, Insulated, Triac, TO-220")
@@ -12938,41 +12998,6 @@
 				(pin
 					(num "6")
 					(name "B")
-					(type "passive")
-				)
-			)
-		)
-		(libpart
-			(lib "IND_BLM31PG391SN1L_MUR")
-			(part "IND_BLM31PG391SN1L_MUR")
-			(docs "BLM31PG601SN1L")
-			(footprints
-				(fp "IND_BLM31PG391SN1L_MUR")
-				(fp "IND_BLM31PG391SN1L_MUR-M")
-				(fp "IND_BLM31PG391SN1L_MUR-L")
-			)
-			(fields
-				(field
-					(name "Reference") "L4")
-				(field
-					(name "Value") "IND_BLM31PG391SN1L_MUR")
-				(field
-					(name "Footprint") "Ferrite_Bead_12V:IND_BLM31PG391SN1L_MUR")
-				(field
-					(name "Datasheet") "BLM31PG601SN1L")
-				(field
-					(name "Description")
-				)
-			)
-			(pins
-				(pin
-					(num "1")
-					(name "1")
-					(type "passive")
-				)
-				(pin
-					(num "2")
-					(name "2")
 					(type "passive")
 				)
 			)
@@ -13987,6 +14012,10 @@
 			(uri "C:/DEVELOPMENT/pelletpirate/KiCad/PelletPirate_V5/Ferrite_Bead/BLM21PG221SN1D.kicad_sym")
 		)
 		(library
+			(logical "BLM31PG601SN1L_flyman")
+			(uri "C:/DEVELOPMENT/pelletpirate/KiCad/PelletPirate_V5/Ferrite_Bead_12V_Flyman/BLM31PG601SN1L_flyman.kicad_sym")
+		)
+		(library
 			(logical "BTA12-600BWRG")
 			(uri "${KIPRJMOD}/BTA12-600BWRG/BTA12-600BWRG.kicad_sym")
 		)
@@ -14017,10 +14046,6 @@
 		(library
 			(logical "H11AA1M_Opto_FanPulse")
 			(uri "${KIPRJMOD}/LED_light/H11AA1M_Opto_FanPulse.kicad_sym")
-		)
-		(library
-			(logical "IND_BLM31PG391SN1L_MUR")
-			(uri "C:/DEVELOPMENT/pelletpirate/KiCad/PelletPirate_V5/Ferrite_Bead_12V/IND_BLM31PG391SN1L_MUR.kicad_sym")
 		)
 		(library
 			(logical "KMR221GLFS")
@@ -14349,7 +14374,6 @@
 			(node
 				(ref "L5")
 				(pin "2")
-				(pinfunction "2_2")
 				(pintype "passive")
 			)
 			(node
@@ -15884,7 +15908,6 @@
 			(node
 				(ref "L5")
 				(pin "1")
-				(pinfunction "1_1")
 				(pintype "passive")
 			)
 		)

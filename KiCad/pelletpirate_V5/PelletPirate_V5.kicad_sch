@@ -957,6 +957,364 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "BLM31PG601SN1L_flyman:BLM31PG601SN1L"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "FL"
+				(at -12.7044 5.0815 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left bottom)
+				)
+			)
+			(property "Value" "BLM31PG601SN1L"
+				(at -12.71 -5.0866 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left bottom)
+				)
+			)
+			(property "Footprint" "BLM31PG601SN1L:BEADC3216X130N"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify bottom)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "600 Ohms @ 100 MHz 1 Power Line Ferrite Bead 1206 (3216 Metric) 1.5A 80mOhm"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify bottom)
+				)
+			)
+			(property "MF" "Murata Electronics"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify bottom)
+				)
+			)
+			(property "Package" "3216 Murata"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify bottom)
+				)
+			)
+			(property "Price" "None"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify bottom)
+				)
+			)
+			(property "SnapEDA_Link" "https://www.snapeda.com/parts/BLM31PG601SN1L/Murata/view-part/?ref=snap"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify bottom)
+				)
+			)
+			(property "MP" "BLM31PG601SN1L"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify bottom)
+				)
+			)
+			(property "Availability" "In Stock"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify bottom)
+				)
+			)
+			(property "Check_prices" "https://www.snapeda.com/parts/BLM31PG601SN1L/Murata/view-part/?ref=eda"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify bottom)
+				)
+			)
+			(symbol "BLM31PG601SN1L_0_0"
+				(arc
+					(start -12.7 0)
+					(mid -11.43 1.2645)
+					(end -10.16 0)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start -10.16 0)
+					(mid -8.89 1.2645)
+					(end -7.62 0)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start -7.62 0)
+					(mid -6.35 1.2645)
+					(end -5.08 0)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start -5.08 0)
+					(mid -3.81 1.2645)
+					(end -2.54 0)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy -2.54 0)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 0.635 1.905)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.635 1.905) (xy 1.905 -1.905)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.905 -1.905) (xy 3.175 1.905)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 3.175 1.905) (xy 4.445 -1.905)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 4.445 -1.905) (xy 5.715 1.905)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 5.715 1.905) (xy 6.985 -1.905)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 6.985 -1.905) (xy 8.255 1.905)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 8.255 1.905) (xy 9.525 -1.905)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 9.525 -1.905) (xy 10.16 0)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at -15.24 0 0)
+					(length 2.54)
+					(name ""
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 12.7 0 180)
+					(length 2.54)
+					(name ""
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.016 1.016)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "BTA12-600BWRG:BTA12-600BW-PelletPirate"
 			(pin_names
 				(offset 0)
@@ -5515,397 +5873,6 @@
 						(effects
 							(font
 								(size 1.016 1.016)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
-		(symbol "IND_BLM31PG391SN1L_MUR:IND_BLM31PG391SN1L_MUR"
-			(body_styles demorgan)
-			(pin_names
-				(offset 0.254)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(in_pos_files yes)
-			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "L4"
-				(at 7.62 7.62 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.524 1.524)
-					)
-				)
-			)
-			(property "Value" "IND_BLM31PG391SN1L_MUR"
-				(at 7.62 5.08 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.524 1.524)
-					)
-				)
-			)
-			(property "Footprint" "Ferrite_Bead_12V:IND_BLM31PG391SN1L_MUR"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-						(italic yes)
-					)
-				)
-			)
-			(property "Datasheet" "BLM31PG601SN1L"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-						(italic yes)
-					)
-				)
-			)
-			(property "Description" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_locked" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_keywords" "BLM31PG601SN1L"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_fp_filters" "IND_BLM31PG391SN1L_MUR IND_BLM31PG391SN1L_MUR-M IND_BLM31PG391SN1L_MUR-L"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(symbol "IND_BLM31PG391SN1L_MUR_1_1"
-				(polyline
-					(pts
-						(xy 2.54 0) (xy 2.54 1.27)
-					)
-					(stroke
-						(width 0.2032)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(arc
-					(start 2.54 1.27)
-					(mid 3.81 2.5344)
-					(end 5.08 1.27)
-					(stroke
-						(width 0.2032)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 5.08 0) (xy 5.08 1.27)
-					)
-					(stroke
-						(width 0.2032)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(arc
-					(start 5.08 1.27)
-					(mid 6.35 2.5344)
-					(end 7.62 1.27)
-					(stroke
-						(width 0.2032)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 7.62 0) (xy 7.62 1.27)
-					)
-					(stroke
-						(width 0.2032)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(arc
-					(start 7.62 1.27)
-					(mid 8.89 2.5344)
-					(end 10.16 1.27)
-					(stroke
-						(width 0.2032)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 10.16 0) (xy 10.16 1.27)
-					)
-					(stroke
-						(width 0.2032)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(arc
-					(start 10.16 1.27)
-					(mid 11.43 2.5344)
-					(end 12.7 1.27)
-					(stroke
-						(width 0.2032)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 12.7 0) (xy 12.7 1.27)
-					)
-					(stroke
-						(width 0.2032)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(pin passive line
-					(at 15.24 0 180)
-					(length 2.54)
-					(name "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 0 0 0)
-					(length 2.54)
-					(name "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(symbol "IND_BLM31PG391SN1L_MUR_1_2"
-				(arc
-					(start -1.27 10.16)
-					(mid -2.5344 11.43)
-					(end -1.27 12.7)
-					(stroke
-						(width 0.2032)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(arc
-					(start -1.27 7.62)
-					(mid -2.5344 8.89)
-					(end -1.27 10.16)
-					(stroke
-						(width 0.2032)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(arc
-					(start -1.27 5.08)
-					(mid -2.5344 6.35)
-					(end -1.27 7.62)
-					(stroke
-						(width 0.2032)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(arc
-					(start -1.27 2.54)
-					(mid -2.5344 3.81)
-					(end -1.27 5.08)
-					(stroke
-						(width 0.2032)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 12.7) (xy -1.27 12.7)
-					)
-					(stroke
-						(width 0.2032)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 10.16) (xy -1.27 10.16)
-					)
-					(stroke
-						(width 0.2032)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 7.62) (xy -1.27 7.62)
-					)
-					(stroke
-						(width 0.2032)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 5.08) (xy -1.27 5.08)
-					)
-					(stroke
-						(width 0.2032)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 2.54) (xy -1.27 2.54)
-					)
-					(stroke
-						(width 0.2032)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(pin unspecified line
-					(at 0 15.24 270)
-					(length 2.54)
-					(name "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin unspecified line
-					(at 0 0 90)
-					(length 2.54)
-					(name "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
 							)
 						)
 					)
@@ -12711,12 +12678,6 @@
 		(uuid "05a83f64-4e33-4fb3-bb55-471fb252e08a")
 	)
 	(junction
-		(at 283.21 34.29)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "061b3be9-8cf5-46a3-8485-058625f65c9d")
-	)
-	(junction
 		(at 452.12 129.54)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -12727,6 +12688,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "078d5c03-cca5-47e6-96d3-010ba943ff17")
+	)
+	(junction
+		(at 283.21 34.29)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "07a72efd-2670-4aef-83f9-991c03c75ff2")
 	)
 	(junction
 		(at 298.45 222.25)
@@ -19220,7 +19187,7 @@
 	)
 	(wire
 		(pts
-			(xy 275.59 34.29) (xy 283.21 34.29)
+			(xy 280.67 34.29) (xy 283.21 34.29)
 		)
 		(stroke
 			(width 0.381)
@@ -19250,7 +19217,7 @@
 	)
 	(wire
 		(pts
-			(xy 250.19 34.29) (xy 260.35 34.29)
+			(xy 250.19 34.29) (xy 252.73 34.29)
 		)
 		(stroke
 			(width 0.381)
@@ -23710,6 +23677,172 @@
 			(project "PelletPirate_V5"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "R40")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "BLM31PG601SN1L_flyman:BLM31PG601SN1L")
+		(at 267.97 34.29 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "137fa857-5d18-471c-93d5-dd40d8336232")
+		(property "Reference" "L5"
+			(at 266.7 27.94 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "BLM31PG601SN1L"
+			(at 266.7 30.48 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Ferrite_Bead_12V_Flyman:BEADC3216X130N_flyman"
+			(at 267.97 34.29 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "Datasheet" ""
+			(at 267.97 34.29 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "600 Ohms @ 100 MHz 1 Power Line Ferrite Bead 1206 (3216 Metric) 1.5A 80mOhm"
+			(at 267.97 34.29 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "MF" "Murata"
+			(at 267.97 34.29 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "Package" "3216 Murata"
+			(at 267.97 34.29 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "Price" "None"
+			(at 267.97 34.29 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "SnapEDA_Link" "https://www.snapeda.com/parts/BLM31PG601SN1L/Murata/view-part/?ref=snap"
+			(at 267.97 34.29 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "MP" "BLM31PG601SN1L"
+			(at 267.97 34.29 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "Availability" "In Stock"
+			(at 267.97 34.29 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(property "Check_prices" "https://www.snapeda.com/parts/BLM31PG601SN1L/Murata/view-part/?ref=eda"
+			(at 267.97 34.29 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+			)
+		)
+		(pin "2"
+			(uuid "ec3afcdc-aadc-4f11-9175-d34d72961d61")
+		)
+		(pin "1"
+			(uuid "52a88ec4-ddb2-43ac-bab2-617e97d4532e")
+		)
+		(instances
+			(project "PelletPirate_V5"
+				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
+					(reference "L5")
 					(unit 1)
 				)
 			)
@@ -40643,121 +40776,6 @@
 			(project "PelletPirate_V5"
 				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
 					(reference "PS1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "IND_BLM31PG391SN1L_MUR:IND_BLM31PG391SN1L_MUR")
-		(at 275.59 34.29 0)
-		(mirror y)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "c86d38cc-0658-4f5e-9c6a-19235206eb14")
-		(property "Reference" "L5"
-			(at 267.97 28.448 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "IND_BLM31PG391SN1L_MUR"
-			(at 267.97 30.734 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Ferrite_Bead_12V:IND_BLM31PG391SN1L_MUR"
-			(at 275.59 34.29 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-			)
-		)
-		(property "Datasheet" "BLM31PG601SN1L"
-			(at 275.59 34.29 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-			)
-		)
-		(property "Description" "FERRITE BEAD 600 OHM 1206 1LN"
-			(at 275.59 34.29 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LINK" "https://www.digikey.com/en/products/detail/murata-electronics/BLM31PG601SN1L/584266"
-			(at 275.59 34.29 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MF" "Murata"
-			(at 275.59 34.29 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MP" "BLM31PG601SN1L"
-			(at 275.59 34.29 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "5ead1bcc-450c-489d-92fd-2ed0138457fa")
-		)
-		(pin "2"
-			(uuid "b52ae381-b8a2-4ce9-8a98-371f57514f1b")
-		)
-		(instances
-			(project "PelletPirate_V5"
-				(path "/0182ac56-03c6-4c14-8ead-12e31828f094"
-					(reference "L5")
 					(unit 1)
 				)
 			)
