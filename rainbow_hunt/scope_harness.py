@@ -13,7 +13,7 @@ Commands:
 """
 import socket, sys, os, time, struct
 
-IP, PORT = '192.168.1.188', 5555
+IP, PORT = os.environ.get('PP_SCOPE_IP', '192.168.1.188'), 5555  # DHO814 default; set PP_SCOPE_IP for MHO954
 CAP = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'captures')
 os.makedirs(CAP, exist_ok=True)
 

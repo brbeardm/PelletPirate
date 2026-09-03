@@ -1,10 +1,11 @@
 """Runt-trigger sentinel on SCLK: arm, wait for malformed pulse, capture, re-arm.
-Usage: python runt_sentinel.py <minutes>"""
+Usage: python runt_sentinel.py <minutes> [capture-prefix]"""
 import sys, time
 sys.path.insert(0, r'C:\development\pelletpirate\rainbow_hunt')
 from scope_harness import Scope, shot
 
 minutes = float(sys.argv[1]) if len(sys.argv) > 1 else 5
+prefix = sys.argv[2] if len(sys.argv) > 2 else 'runt_catch'
 sc = Scope()
 
 def err():
@@ -32,7 +33,7 @@ while time.time() - t0 < minutes * 60:
         catches += 1
         ts = time.time() - t0
         print(f'*** CATCH #{catches} at t=+{ts:.0f}s')
-        shot(sc, f'runt_catch_{catches}')
+        shot(sc, f'{prefix}_{catches}')
         sc.cmd(':SINGle')      # re-arm
 print(f'done: {catches} runt catches in {minutes} min')
 sc.cmd(':TRIGger:MODE EDGE'); sc.cmd(':TRIGger:SWEep AUTO'); sc.cmd(':RUN')
