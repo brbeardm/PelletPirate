@@ -11,9 +11,9 @@ remains the reference design; make changes HERE only.
 2. **TP2 relocation (optional):** move TP2 (GND) to within ~5mm of TP1 (ZC_DET) so a scope spring-ground
    reaches both. Currently ~13mm apart — usable with wire loops, not with a spring tip.
 3. **Silkscreen version text:** update board silk from V5 to V5.1 before any fab (user edit in KiCad).
-4. **PLACEHOLDER — rainbow-hunt findings:** pending the DHO814 scope sessions on V4 (and V2 comparison),
-   fold any confirmed root-cause fix into this rev (candidates parked: LC filtering on 12V into PS2/panel
-   path; panel-rail decoupling changes). Do not speculate in copper before the scope verdict.
+4. **PLACEHOLDER — rainbow-hunt findings:** ✅ RESOLVED 2026-08-30 — the raft revision (C44/C45 bulk,
+   33Ω SPI series R, /3V3_LCD ferrite island, L5/C48) was folded into V5 itself before the order; this
+   clone inherits it. Nothing further pending from the hunt except item 6 below.
 
 ## State inherited from V5 (all verified at clone time)
 - ERC 0 / DRC 0 / parity 0, run from THIS directory (proves self-containment).
@@ -28,6 +28,15 @@ remains the reference design; make changes HERE only.
 - Regenerate everything from THIS project (gerbers/positions/BOM/DNS notes) — do not reuse V5's PCBWay/ files.
 - BOM DNS list carries forward unchanged unless the rainbow verdict adds parts.
 - USB4145 stake variant remains -0170 (1.6mm board).
+
+## Added 2026-09-03 (scope cross-cal session fallout)
+6. **SCLK test point (user edit in KiCad):** V5 has probe access for 12V/3.3V/GND/LED+ (J7) and ZC
+   (TP1/TP2) but NO test point on SCLK — the single most-probed net of the entire rainbow saga, which
+   required soldering a tail onto ESP pad 33 on V4 board 2. Add a TP on SCLK (near the ESP SPI pads,
+   with a GND spring-tip landing within ~5mm — same lesson as item 2). This is the measurement node for
+   the V5 acceptance criteria themselves (runt sentinel + idle-peak <300mV on the MHO954), so until V5.1,
+   any V5 board that needs the full acceptance check gets a soldered tail; rail-level screening via J7
+   comes first and may suffice. Consider TPs on SDI/CS too while in there — cheap now, priceless later.
 
 ## Added 2026-08-28 (C9/R20 package-mismatch fallout)
 5. **C9 footprint shrink (user request "smaller"):** C9 (0.1uF 25V, PS3 area) is 0805 by V2 heritage.
