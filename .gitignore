@@ -38,3 +38,9 @@ BACKUP_ZIPS/
 *.d
 *.a
 vc140.pdb
+
+# secrets - never commit
+**/pelletpirate-firebase.json
+*service-account*.json
+.env
+.env.*
