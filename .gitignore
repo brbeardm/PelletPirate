@@ -1,0 +1,6 @@
+﻿
+# secrets - never commit
+**/pelletpirate-firebase.json
+*service-account*.json
+.env
+.env.*
