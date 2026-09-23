@@ -8,6 +8,8 @@ pelletpirate_ESP/sdkconfig
 pelletpirate_ESP/sdkconfig.old
 pelletpirate_ESP/sdkconfig.s3
 pelletpirate_ESP/sdkconfig.s3.old
+esp_breadboard_test_fw/sdkconfig
+esp_breadboard_test_fw/sdkconfig.old
 
 # Claude Code
 .claude/

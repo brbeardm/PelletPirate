@@ -1,0 +1,17 @@
+menu "ESP_Breadboard Sharp/ADC2 test"
+
+    config PELLETPIRATE_WIFI_SSID
+        string "WiFi SSID"
+        default "your-ssid"
+        help
+            SSID of the local WiFi network. Set the real value in
+            sdkconfig (gitignored) — do not commit credentials.
+
+    config PELLETPIRATE_WIFI_PASSWORD
+        string "WiFi password"
+        default "your-password"
+        help
+            Password of the local WiFi network. Set the real value in
+            sdkconfig (gitignored) — do not commit credentials.
+
+endmenu
