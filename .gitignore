@@ -46,3 +46,4 @@ vc140.pdb
 *service-account*.json
 .env
 .env.*
+pelletpirate_ESP/build_s5/

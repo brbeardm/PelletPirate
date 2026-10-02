@@ -1,0 +1,22 @@
+menu "PelletPirate board selection"
+
+    choice PELLETPIRATE_S3_BOARD
+        prompt "S3 board revision"
+        depends on IDF_TARGET_ESP32S3
+        default PELLETPIRATE_BOARD_V4
+        help
+            Which S3-based PelletPirate board this build targets. V4 and V5
+            share the ESP32-S3-WROOM-1U-N16R8 module and most of the pin map
+            but differ in MAX31865 chip-select wiring, front-panel jack
+            order, and LCD orientation. V2 (plain esp32 target) is not
+            affected by this choice.
+
+        config PELLETPIRATE_BOARD_V4
+            bool "V4 (PCBWay turnkey 2026-07; P1=J5 enclosure reversal)"
+
+        config PELLETPIRATE_BOARD_V5
+            bool "V5 (PCBWay turnkey 2026-09; jacks front-panel ordered P1=J1)"
+
+    endchoice
+
+endmenu
