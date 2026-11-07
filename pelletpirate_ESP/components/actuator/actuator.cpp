@@ -40,6 +40,7 @@ extern "C" {
 #include "esp_task_wdt.h"
 #include "grill_state.h"
 #include "cooklog.h"
+#include "fanphase.h"
 }
 #include "pid.h"
 
@@ -229,6 +230,7 @@ static void actuator_task(void *arg)
         s_prev_target = target;
 
         bool fan = false, aug = false, ign = false;
+        double fan_level = -1.0;  // V5 phase level; -1 = follow fan on/off
         grill_mode_t new_mode = mode;
         bool fault_shutdown = false;
 
@@ -312,13 +314,20 @@ static void actuator_task(void *arg)
             aug = burst_cycle(&s_auger, now, PID_CYCLE_SEC, s_u);
             ign = (temp > 0 && temp < IGNITE_DISABLE_TEMP);  // flame-out recovery
 
-            // Fan burst modulation once temp settles into the band;
-            // air scales with fuel (duty tied to PID output)
+            // Fan modulation once temp settles into the band; air scales
+            // with fuel (duty tied to PID output).
             if (temp > 0 && (temp > target - FAN_BAND_F) && (temp < target + FAN_BAND_F)) {
                 double fduty = 2.0 * s_u;
                 if (fduty < FAN_MIN_DUTY) fduty = FAN_MIN_DUTY;
                 if (fduty > 1.0) fduty = 1.0;
+#if CONFIG_PELLETPIRATE_BOARD_V5
+                // V5: continuous AC phase level (power fraction) instead of
+                // the 2s burst chop — same duty number, smooth delivery.
+                fan = true;
+                fan_level = fduty;
+#else
                 fan = burst_cycle(&s_fan, now, FAN_CYCLE_SEC, fduty);
+#endif
             } else {
                 fan = true;
             }
@@ -422,7 +431,20 @@ static void actuator_task(void *arg)
             s_igniter_on_since = 0;
         }
 
+#if CONFIG_PELLETPIRATE_BOARD_V5
+        // V5: the fanphase engine owns the fan pin (MOC3053 phase control).
+        // Interlock/stagger/shutdown produce on/off; the COOK band sets a
+        // continuous level. fanphase logs level changes itself.
+        fanphase_set_level(!fan ? 0.0f
+                           : (fan_level >= 0.0 ? (float)fan_level : 1.0f));
+        if (fan != s_pin_fan) {
+            s_pin_fan = fan;
+            ESP_LOGI(TAG, "FAN %s (mode=%s temp=%.0fF u=%.2f)",
+                     fan ? "ON" : "off", grill_mode_name(mode), temp, s_u);
+        }
+#else
         apply_pin(ACTUATOR_FAN_GPIO, fan, &s_pin_fan, "FAN", mode, temp);
+#endif
         apply_pin(ACTUATOR_AUGER_GPIO, aug, &s_pin_aug, "AUGER", mode, temp);
         apply_pin(ACTUATOR_IGNITER_GPIO, ign, &s_pin_ign, "IGNITER", mode, temp);
 

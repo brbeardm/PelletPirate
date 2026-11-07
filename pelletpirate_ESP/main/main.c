@@ -20,6 +20,7 @@
 #include "grill_state.h"
 #include "max31865.h"
 #include "actuator.h"
+#include "fanphase.h"
 #include "webui.h"
 #include "cooklog.h"
 #include "cookprog.h"
@@ -299,6 +300,12 @@ void app_main(void)
 
     // Fan/auger/igniter control (reads grill_state, drives the triac outputs)
     actuator_init();
+
+#if CONFIG_PELLETPIRATE_BOARD_V5
+    // V5 fan phase control: ZC-timed MOC3053 firing. Takes over the fan
+    // pin from actuator's plain GPIO drive — see fanphase.h.
+    fanphase_init();
+#endif
 
     // Power-loss cook resume (one-shot; deletes itself when decided)
     xTaskCreate(resume_task, "resume", 3072, NULL, 3, NULL);
