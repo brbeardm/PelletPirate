@@ -24,6 +24,7 @@
 #include "cookprog.h"
 #include "nvs.h"
 #include "esp_timer.h"
+#include "esp_heap_caps.h"
 #include "sdkconfig.h"
 
 static const char *TAG = "webui";
@@ -973,6 +974,13 @@ static void ap_check_cb(void *arg)
     bool up = grill_state_get()->wifi_connected;
     grill_state_unlock();
     if (!up) start_softap();
+    // Self-heal: AP beaconing with no server behind it (httpd_start hit a
+    // transient failure) — retry on every tick until it sticks
+    if (s_ap_active && !s_server) start_webserver();
+    // Slow STA retry while in setup mode: one scan per tick keeps the AP
+    // beacon stable enough for phones while still auto-recovering if the
+    // real network comes back
+    if (s_ap_active && !up) esp_wifi_connect();
 }
 
 // Apply new credentials shortly after replying so the HTTP response gets
@@ -1154,11 +1162,19 @@ static void start_webserver(void)
     config.max_uri_handlers = 28;  // default 8 silently drops extras; we register 26
     config.stack_size = 8192;      // default 4k overflows in the wifi-scan handler
 
-    if (httpd_start(&s_server, &config) != ESP_OK) {
-        ESP_LOGE(TAG, "httpd_start failed");
+    esp_err_t err = httpd_start(&s_server, &config);
+    if (err != ESP_OK) {
+        // ap_check_cb retries while the setup AP is up with no server
+        ESP_LOGE(TAG, "httpd_start failed: %s (internal free %u, largest block %u)",
+                 esp_err_to_name(err),
+                 (unsigned)heap_caps_get_free_size(MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT),
+                 (unsigned)heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT));
         s_server = NULL;
         return;
     }
+    ESP_LOGI(TAG, "web server up (internal free %u, largest block %u)",
+             (unsigned)heap_caps_get_free_size(MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT),
+             (unsigned)heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT));
 
     const httpd_uri_t root = {
         .uri = "/", .method = HTTP_GET, .handler = root_get_handler,
@@ -1286,7 +1302,10 @@ static void wifi_event_handler(void *arg, esp_event_base_t base,
         }
         // Keep retrying forever — the grill must never depend on WiFi,
         // but WiFi should recover on its own when the network returns.
-        esp_wifi_connect();
+        // Exception: while the setup AP is up, every connect attempt drags
+        // the softAP beacon across channels during its scan and phones
+        // can't see the SSID — ap_check_cb owns the slow retry cadence.
+        if (!s_ap_active) esp_wifi_connect();
     } else if (base == IP_EVENT && id == IP_EVENT_STA_GOT_IP) {
         ip_event_got_ip_t *event = (ip_event_got_ip_t *)data;
         s_retry_count = 0;
@@ -1479,14 +1498,16 @@ void webui_init(void)
     ntfy_load();
     xTaskCreate(push_task, "ntfy_push", 4096, NULL, 3, NULL);
 
-    // Raise the setup AP if we haven't connected within 25s of boot
+    // Raise the setup AP if we haven't connected within 25s of boot.
+    // Periodic (not one-shot) so a failed httpd_start gets retried —
+    // board 1 hit exactly that once and the provisioning page was dead.
     const esp_timer_create_args_t ap_timer_args = {
         .callback = ap_check_cb,
         .name = "ap_check",
     };
     esp_timer_handle_t ap_timer;
     if (esp_timer_create(&ap_timer_args, &ap_timer) == ESP_OK) {
-        esp_timer_start_once(ap_timer, 25 * 1000000ULL);
+        esp_timer_start_periodic(ap_timer, 25 * 1000000ULL);
     }
 
     ESP_LOGI(TAG, "WiFi station starting, SSID '%s'", (const char *)wifi_config.sta.ssid);
