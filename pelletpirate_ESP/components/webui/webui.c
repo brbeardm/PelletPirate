@@ -26,6 +26,10 @@
 #include "esp_timer.h"
 #include "esp_heap_caps.h"
 #include "sdkconfig.h"
+#if CONFIG_IDF_TARGET_ESP32S3
+#include "esp_http_client.h"
+#include "esp_crt_bundle.h"
+#endif
 
 static const char *TAG = "webui";
 
@@ -683,6 +687,108 @@ static void ntfy_send(const char *msg)
     close(s);
 }
 
+#if CONFIG_IDF_TARGET_ESP32S3
+// --- Pushover (https://pushover.net) ---
+// Real iOS/Android alerting: emergency priority repeats the siren every
+// 30s until acknowledged on the phone and bypasses silent mode — ntfy
+// can't do any of that on iPhone. Needs TLS, which only the S3 targets
+// have flash room for; V2 stays on plain-HTTP ntfy.
+
+#define PO_USER_NVS_KEY  "po_user"
+#define PO_TOKEN_NVS_KEY "po_token"
+
+static char s_po_user[36] = "";
+static char s_po_token[36] = "";
+
+static void pushover_load(void)
+{
+    nvs_handle_t h;
+    if (nvs_open("pelletpirate", NVS_READONLY, &h) == ESP_OK) {
+        size_t len = sizeof(s_po_user);
+        if (nvs_get_str(h, PO_USER_NVS_KEY, s_po_user, &len) != ESP_OK)
+            s_po_user[0] = '\0';
+        len = sizeof(s_po_token);
+        if (nvs_get_str(h, PO_TOKEN_NVS_KEY, s_po_token, &len) != ESP_OK)
+            s_po_token[0] = '\0';
+        nvs_close(h);
+    }
+}
+
+// Form-urlencode src into dst (message text rides in a form body)
+static void form_escape(char *dst, int len, const char *src)
+{
+    static const char hex[] = "0123456789ABCDEF";
+    int n = 0;
+    for (; *src && n < len - 4; src++) {
+        unsigned char c = (unsigned char)*src;
+        if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
+            (c >= '0' && c <= '9') || c == '-' || c == '_' || c == '.') {
+            dst[n++] = c;
+        } else if (c == ' ') {
+            dst[n++] = '+';
+        } else {
+            dst[n++] = '%'; dst[n++] = hex[c >> 4]; dst[n++] = hex[c & 0xF];
+        }
+    }
+    dst[n] = '\0';
+}
+
+// pri 2 = emergency (siren repeats every 30s until acknowledged, 1h max),
+// 1 = high (breaks through quiet hours), 0 = normal
+static void pushover_send(const char *msg, int pri)
+{
+    if (s_po_user[0] == '\0' || s_po_token[0] == '\0') return;
+
+    char esc[256];
+    form_escape(esc, sizeof(esc), msg);
+    char body[448];
+    int n = snprintf(body, sizeof(body),
+                     "token=%s&user=%s&title=PelletPirate&message=%s&priority=%d%s",
+                     s_po_token, s_po_user, esc, pri,
+                     pri >= 2 ? "&retry=30&expire=3600&sound=siren" : "");
+    if (n <= 0 || n >= (int)sizeof(body)) return;
+
+    esp_http_client_config_t cfg = {
+        .url = "https://api.pushover.net/1/messages.json",
+        .method = HTTP_METHOD_POST,
+        .crt_bundle_attach = esp_crt_bundle_attach,
+        .timeout_ms = 10000,
+    };
+    esp_http_client_handle_t cli = esp_http_client_init(&cfg);
+    if (!cli) return;
+    esp_http_client_set_header(cli, "Content-Type",
+                               "application/x-www-form-urlencoded");
+    esp_http_client_set_post_field(cli, body, n);
+    esp_err_t err = esp_http_client_perform(cli);
+    if (err == ESP_OK) {
+        ESP_LOGI(TAG, "pushover push (pri %d, HTTP %d): %s",
+                 pri, esp_http_client_get_status_code(cli), msg);
+    } else {
+        ESP_LOGW(TAG, "pushover: %s", esp_err_to_name(err));
+    }
+    esp_http_client_cleanup(cli);
+}
+#endif // CONFIG_IDF_TARGET_ESP32S3
+
+// Route an alarm to whichever service is configured; Pushover wins
+// because it is the one that can actually wake the user up.
+static void push_send(const char *msg, int pri)
+{
+#if CONFIG_IDF_TARGET_ESP32S3
+    if (s_po_user[0] && s_po_token[0]) { pushover_send(msg, pri); return; }
+#endif
+    (void)pri;   // ntfy path has no priority support (plain default push)
+    ntfy_send(msg);
+}
+
+static bool push_configured(void)
+{
+#if CONFIG_IDF_TARGET_ESP32S3
+    if (s_po_user[0] && s_po_token[0]) return true;
+#endif
+    return s_ntfy_topic[0] != '\0';
+}
+
 // Watch every alarm source for →ACTIVE transitions and push each one
 // individually (the aggregate banner can mask a second alarm firing
 // while a first is still up).
@@ -695,7 +801,7 @@ static void push_task(void *arg)
 
     while (1) {
         vTaskDelay(pdMS_TO_TICKS(1000));
-        if (s_ntfy_topic[0] == '\0') continue;
+        if (!push_configured()) continue;
 
         alarm_state_t probe[NUM_MEAT_PROBES], goal[NUM_MEAT_PROBES];
         alarm_state_t grill_a, sensor_a, pellet_a, prog_a;
@@ -723,37 +829,38 @@ static void push_task(void *arg)
         grill_state_unlock();
 
         char msg[128];
+        // Safety alarms = emergency priority: the cook is at stake
         if (sensor_a == ALARM_ACTIVE && pv_sensor != ALARM_ACTIVE) {
-            ntfy_send("GRILL SENSOR FAULT - forced shutdown burn-off");
+            push_send("GRILL SENSOR FAULT - forced shutdown burn-off", 2);
         }
         if (pellet_a == ALARM_ACTIVE && pv_pellet != ALARM_ACTIVE) {
             snprintf(msg, sizeof(msg), "CHECK PELLETS - auger max, temp falling (%dF)",
                      (int)gtemp);
-            ntfy_send(msg);
+            push_send(msg, 2);
         }
         if (grill_a == ALARM_ACTIVE && pv_grill != ALARM_ACTIVE) {
             snprintf(msg, sizeof(msg), "Grill temp drop: %dF (target %dF) - fire out?",
                      (int)gtemp, gtarget);
-            ntfy_send(msg);
+            push_send(msg, 2);
         }
         for (int i = 0; i < NUM_MEAT_PROBES; i++) {
             if (probe[i] == ALARM_ACTIVE && pv_probe[i] != ALARM_ACTIVE) {
                 snprintf(msg, sizeof(msg), "P%d %.15s %dF - %.15s!", i + 1,
                          food[i][0] ? food[i] : "probe", (int)ptemp[i],
                          atype[i][0] ? atype[i] : "alarm");
-                ntfy_send(msg);
+                push_send(msg, 1);   // 4 AM wrap alarm: break quiet hours
             }
             if (goal[i] == ALARM_ACTIVE && pv_goal[i] != ALARM_ACTIVE) {
                 snprintf(msg, sizeof(msg), "%.15s DONE! P%d at %dF",
                          food[i][0] ? food[i] : "Probe", i + 1, (int)ptemp[i]);
-                ntfy_send(msg);
+                push_send(msg, 1);
             }
             pv_probe[i] = probe[i];
             pv_goal[i] = goal[i];
         }
         if (prog_a == ALARM_ACTIVE && pv_prog != ALARM_ACTIVE) {
             snprintf(msg, sizeof(msg), "%.47s", progtxt);   // gates + completions
-            ntfy_send(msg);
+            push_send(msg, 1);
         }
         pv_grill = grill_a;
         pv_sensor = sensor_a;
@@ -804,6 +911,65 @@ static esp_err_t ntfy_post_handler(httpd_req_t *req)
     if (s_ntfy_topic[0]) ntfy_send("Notifications enabled - you're connected!");
     return ntfy_get_handler(req);
 }
+
+#if CONFIG_IDF_TARGET_ESP32S3
+// GET /api/pushover — stored keys; POST — "userkey\ntoken" (empty body
+// disables) saved to NVS, then a test push
+static esp_err_t pushover_get_handler(httpd_req_t *req)
+{
+    char buf[128];
+    snprintf(buf, sizeof(buf), "{\"u\":\"%s\",\"k\":\"%s\"}", s_po_user, s_po_token);
+    httpd_resp_set_type(req, "application/json");
+    return httpd_resp_send(req, buf, HTTPD_RESP_USE_STRLEN);
+}
+
+static esp_err_t pushover_post_handler(httpd_req_t *req)
+{
+    char body[96] = { 0 };
+    int recv_len = req->content_len < (int)sizeof(body) - 1
+                       ? req->content_len : (int)sizeof(body) - 1;
+    int r = httpd_req_recv(req, body, recv_len);
+    if (r < 0) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "bad body");
+        return ESP_FAIL;
+    }
+    char user[36] = "", token[36] = "";
+    char *nl = strchr(body, '\n');
+    if (nl) {
+        *nl = '\0';
+        strlcpy(user, body, sizeof(user));
+        strlcpy(token, nl + 1, sizeof(token));
+    }
+    if ((user[0] == '\0') != (token[0] == '\0')) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST,
+                            "need both user key and app token");
+        return ESP_FAIL;
+    }
+    // Pushover keys are strictly alphanumeric, 30 chars
+    for (int i = 0; i < 2; i++) {
+        for (const char *c = i ? token : user; *c; c++) {
+            if (!((*c >= 'a' && *c <= 'z') || (*c >= 'A' && *c <= 'Z') ||
+                  (*c >= '0' && *c <= '9'))) {
+                httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST,
+                                    "keys: letters and digits only");
+                return ESP_FAIL;
+            }
+        }
+    }
+    strlcpy(s_po_user, user, sizeof(s_po_user));
+    strlcpy(s_po_token, token, sizeof(s_po_token));
+    nvs_handle_t h;
+    if (nvs_open("pelletpirate", NVS_READWRITE, &h) == ESP_OK) {
+        nvs_set_str(h, PO_USER_NVS_KEY, s_po_user);
+        nvs_set_str(h, PO_TOKEN_NVS_KEY, s_po_token);
+        nvs_commit(h);
+        nvs_close(h);
+    }
+    ESP_LOGI(TAG, "pushover %s", s_po_user[0] ? "keys set" : "disabled");
+    if (s_po_user[0]) pushover_send("Notifications enabled - you're connected!", 0);
+    return pushover_get_handler(req);
+}
+#endif // CONFIG_IDF_TARGET_ESP32S3
 
 // --- OTA firmware update ---
 // POST /api/ota with the raw .bin as the body writes the next app slot and
@@ -1159,7 +1325,7 @@ static void start_webserver(void)
 
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
     config.lru_purge_enable = true;
-    config.max_uri_handlers = 28;  // default 8 silently drops extras; we register 26
+    config.max_uri_handlers = 30;  // default 8 silently drops extras; we register up to 28
     config.stack_size = 8192;      // default 4k overflows in the wifi-scan handler
 
     esp_err_t err = httpd_start(&s_server, &config);
@@ -1275,13 +1441,23 @@ static void start_webserver(void)
     httpd_register_uri_handler(s_server, &update);
     httpd_register_uri_handler(s_server, &ntfy_g);
     httpd_register_uri_handler(s_server, &ntfy_p);
+#if CONFIG_IDF_TARGET_ESP32S3
+    const httpd_uri_t po_g = {
+        .uri = "/api/pushover", .method = HTTP_GET, .handler = pushover_get_handler,
+    };
+    const httpd_uri_t po_p = {
+        .uri = "/api/pushover", .method = HTTP_POST, .handler = pushover_post_handler,
+    };
+    httpd_register_uri_handler(s_server, &po_g);
+    httpd_register_uri_handler(s_server, &po_p);
+#endif
     httpd_register_uri_handler(s_server, &prog_ls);
     httpd_register_uri_handler(s_server, &prog_gt);
     httpd_register_uri_handler(s_server, &prog_pt);
     httpd_register_uri_handler(s_server, &prog_rn);
     httpd_register_uri_handler(s_server, &prog_sp);
     httpd_register_uri_handler(s_server, &prog_rs);
-    ESP_LOGI(TAG, "HTTP server started (REST + WS + OTA + push + programs), 26/28 routes");
+    ESP_LOGI(TAG, "HTTP server started (REST + WS + OTA + push + programs)");
 }
 
 // --- WiFi events ---
@@ -1496,7 +1672,13 @@ void webui_init(void)
 
     // Phone push notifications on alarm transitions
     ntfy_load();
+#if CONFIG_IDF_TARGET_ESP32S3
+    pushover_load();
+    // TLS handshake runs in this task — needs the extra stack
+    xTaskCreate(push_task, "push", 8192, NULL, 3, NULL);
+#else
     xTaskCreate(push_task, "ntfy_push", 4096, NULL, 3, NULL);
+#endif
 
     // Raise the setup AP if we haven't connected within 25s of boot.
     // Periodic (not one-shot) so a failed httpd_start gets retried —

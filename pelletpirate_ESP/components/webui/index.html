@@ -111,6 +111,19 @@ select{background:#111;color:#eee;border:2px solid #555;border-radius:8px;font-s
 <div class="lbl" style="margin-top:18px">COOK LOGS</div>
 <div id="logs" style="margin-top:6px"></div>
 <div class="lbl" style="margin-top:18px">PHONE ALERTS</div>
+<div id="podiv" style="display:none">
+<div style="color:#888;font-size:.75rem;margin:4px auto;max-width:400px">Install the <b>Pushover</b> app and paste your keys from pushover.net — safety alarms <b>siren until acknowledged</b>, even on silent</div>
+<div style="margin:6px 0">
+  <input id="pouser" type="text" autocomplete="off" autocapitalize="off" placeholder="user key"
+    style="background:#111;color:#eee;border:2px solid #555;border-radius:8px;font-size:.95rem;padding:9px;width:280px">
+</div>
+<div style="margin:6px 0">
+  <input id="potok" type="text" autocomplete="off" autocapitalize="off" placeholder="app API token"
+    style="background:#111;color:#eee;border:2px solid #555;border-radius:8px;font-size:.95rem;padding:9px;width:280px">
+  <button class="sm" style="height:42px" onclick="poSave()">SAVE &amp; TEST</button>
+</div>
+<div id="pomsg" style="color:#00D4AA;font-size:.8rem;min-height:1.1em"></div>
+</div>
 <div style="color:#888;font-size:.75rem;margin:4px auto;max-width:400px">Install the free <b>ntfy</b> app, subscribe to a topic name, enter the same topic here — every alarm buzzes your phone (even at 4 AM)</div>
 <div style="margin:6px 0">
   <input id="ntopic" type="text" autocomplete="off" autocapitalize="off" placeholder="topic e.g. pirate-grill-4711"
@@ -745,7 +758,27 @@ async function pgSave(){
   }catch(e){ m.textContent = 'save failed'; }
 }
 
-// --- Phone alerts (ntfy) ---
+// --- Phone alerts: Pushover (V4/V5 boards) + ntfy fallback ---
+async function poLoad(){
+  try{
+    var r = await fetch('/api/pushover');
+    if (!r.ok) return;                 // V2 board: no Pushover support
+    document.getElementById('podiv').style.display = '';
+    var d = await r.json();
+    document.getElementById('pouser').value = d.u || '';
+    document.getElementById('potok').value = d.k || '';
+  }catch(e){}
+}
+async function poSave(){
+  var u = document.getElementById('pouser').value.trim();
+  var k = document.getElementById('potok').value.trim();
+  var m = document.getElementById('pomsg');
+  try{
+    var r = await fetch('/api/pushover', { method:'POST', body: u + '\n' + k });
+    if (r.ok) m.textContent = u ? 'Saved — test push sent, check your phone' : 'Pushover disabled';
+    else m.textContent = await r.text();
+  }catch(e){ m.textContent = 'Save failed — try again'; }
+}
 async function ntLoad(){
   try{
     var r = await fetch('/api/ntfy');
@@ -814,6 +847,7 @@ loadLogs();
 loadProfiles();
 loadGraph();
 ntLoad();
+poLoad();
 pgList();
 setInterval(loadLogs, 60000);
 setInterval(loadGraph, 30000);
