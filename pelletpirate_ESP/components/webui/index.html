@@ -69,6 +69,7 @@ select{background:#111;color:#eee;border:2px solid #555;border-radius:8px;font-s
   <button id="up">+5</button>
 </div>
 <div class="mode off" id="mode">connecting&hellip;</div>
+<div class="et" id="pel" style="display:none"></div>
 <div class="et" id="et"></div>
 <div class="et" id="ng" style="color:#00D4AA"></div>
 <div class="acts">
@@ -131,6 +132,21 @@ select{background:#111;color:#eee;border:2px solid #555;border-radius:8px;font-s
   <button class="sm" style="height:42px" onclick="ntSave()">SAVE &amp; TEST</button>
 </div>
 <div id="ntmsg" style="color:#00D4AA;font-size:.8rem;min-height:1.1em"></div>
+<div id="hopdiv" style="display:none">
+<div class="lbl" style="margin-top:18px">PELLET HOPPER</div>
+<div id="hoplive" style="color:#888;font-size:.85rem;margin:6px 0">--</div>
+<div style="margin:6px 0">
+  <input id="hopdepth" type="number" min="6" max="18" step="0.5" placeholder="depth (in)"
+    style="background:#111;color:#eee;border:2px solid #555;border-radius:8px;font-size:.95rem;padding:9px;width:130px">
+  <button class="sm" style="height:42px" onclick="hpDepth()">SAVE DEPTH</button>
+</div>
+<div style="margin:6px 0">
+  <button class="sm" onclick="hpCmd('capture=empty')">SET EMPTY</button>
+  <button class="sm" onclick="hpCmd('capture=full')">SET FULL</button>
+  <button class="sm" onclick="hpCmd('clear')">CLEAR CAL</button>
+</div>
+<div id="hopmsg" style="color:#00D4AA;font-size:.8rem;min-height:1.1em"></div>
+</div>
 <div class="lbl" style="margin-top:18px">WI-FI</div>
 <div id="wifist" style="color:#888;font-size:.85rem;margin:6px 0">--</div>
 <div><button class="sm" style="min-width:200px" onclick="wOpen()">CHANGE WI-FI</button></div>
@@ -286,6 +302,13 @@ function render(s){
   var m = document.getElementById('mode');
   m.textContent = 'Mode: ' + s.mode;
   m.className = 'mode' + (s.mode === 'Off' ? ' off' : '');
+  var pe = document.getElementById('pel');
+  if (s.pel !== undefined) {   // field exists on V5 boards only
+    pe.style.display = '';
+    pe.textContent = 'Pellets: ' + (s.pel < 0 ? '--' : s.pel + '%');
+    pe.style.color = s.pel < 0 ? '#777' : s.pel <= 10 ? '#FF5252'
+                   : s.pel <= 20 ? '#FFC107' : '#8BC34A';
+  }
   if (s.mode !== curMode) { curMode = s.mode; renderModes(s.mode); }
 
   // ET + the cook's fixed start timestamp (survives mode changes and,
@@ -758,6 +781,45 @@ async function pgSave(){
   }catch(e){ m.textContent = 'save failed'; }
 }
 
+// --- Pellet hopper gauge (V5 boards; hidden elsewhere via 404 probe) ---
+function hpShow(d){
+  document.getElementById('hoplive').textContent =
+    'Live: ' + (d.pct < 0 ? '--' : d.pct + '%') + ' (' + d.mv + ' mV) · cal: ' +
+    (d.emv >= 0 && d.fmv >= 0 ? 'captured ' + d.emv + '/' + d.fmv + ' mV'
+     : d.depth > 0 ? 'depth curve ' + (d.depth/10) + '"' : 'NOT SET');
+  var inp = document.getElementById('hopdepth');
+  if (d.depth > 0 && !inp.value) inp.value = d.depth / 10;
+}
+async function hpLoad(){
+  try{
+    var r = await fetch('/api/hopper');
+    if (!r.ok) return;
+    document.getElementById('hopdiv').style.display = '';
+    hpShow(await r.json());
+    setInterval(async function(){
+      try{ hpShow(await (await fetch('/api/hopper')).json()); }catch(e){}
+    }, 3000);
+  }catch(e){}
+}
+async function hpDepth(){
+  var v = parseFloat(document.getElementById('hopdepth').value);
+  var m = document.getElementById('hopmsg');
+  if (!(v >= 6 && v <= 18)) { m.textContent = 'Depth must be 6-18 inches'; return; }
+  try{
+    var r = await fetch('/api/hopper', { method:'POST', body:'depth=' + Math.round(v*10) });
+    m.textContent = r.ok ? 'Depth saved' : await r.text();
+    if (r.ok) hpShow(await r.json());
+  }catch(e){ m.textContent = 'Save failed'; }
+}
+async function hpCmd(c){
+  var m = document.getElementById('hopmsg');
+  try{
+    var r = await fetch('/api/hopper', { method:'POST', body:c });
+    m.textContent = r.ok ? 'OK' : await r.text();
+    if (r.ok) hpShow(await r.json());
+  }catch(e){ m.textContent = 'Failed'; }
+}
+
 // --- Phone alerts: Pushover (V4/V5 boards) + ntfy fallback ---
 async function poLoad(){
   try{
@@ -848,6 +910,7 @@ loadProfiles();
 loadGraph();
 ntLoad();
 poLoad();
+hpLoad();
 pgList();
 setInterval(loadLogs, 60000);
 setInterval(loadGraph, 30000);

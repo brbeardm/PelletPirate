@@ -19,6 +19,7 @@ static const char *TAG = "ui_dash";
 
 static lv_obj_t *s_screen;
 static lv_obj_t *s_lbl_mode;
+static lv_obj_t *s_lbl_pellets;
 static lv_obj_t *s_lbl_act[3];      // FAN/AUG/IGN status, top-right
 static lv_obj_t *s_lbl_current;
 static lv_obj_t *s_lbl_target;
@@ -196,6 +197,13 @@ lv_obj_t *ui_dashboard_create(void)
         lv_obj_set_style_text_color(s_lbl_act[i], UI_COLOR_TEXT_DIM, 0);
         lv_obj_align(s_lbl_act[i], LV_ALIGN_TOP_RIGHT, -8 - (2 - i) * 46, y);
     }
+
+    // Pellet hopper gauge, same row left of the actuator pills
+    s_lbl_pellets = lv_label_create(s_screen);
+    lv_obj_set_style_text_font(s_lbl_pellets, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_color(s_lbl_pellets, UI_COLOR_TEXT_DIM, 0);
+    lv_label_set_text(s_lbl_pellets, "");
+    lv_obj_align(s_lbl_pellets, LV_ALIGN_TOP_RIGHT, -8 - 3 * 46, y);
     y += 20;
 
     // CURRENT
@@ -356,7 +364,19 @@ void ui_dashboard_update(void)
     grill_state_lock();
     grill_state_t *gs = grill_state_get();
 
-    lv_label_set_text_fmt(s_lbl_mode, "Cook Mode: %s", grill_mode_name(gs->mode));
+    lv_label_set_text_fmt(s_lbl_mode, "Mode: %s", grill_mode_name(gs->mode));
+
+    // Pellet gauge: -- when no sensor, color ladder green/yellow/red
+    if (gs->hopper_pct < 0) {
+        lv_label_set_text(s_lbl_pellets, "Pellets: --");
+        lv_obj_set_style_text_color(s_lbl_pellets, UI_COLOR_TEXT_DIM, 0);
+    } else {
+        lv_label_set_text_fmt(s_lbl_pellets, "Pellets: %d%%", gs->hopper_pct);
+        lv_obj_set_style_text_color(s_lbl_pellets,
+            gs->hopper_pct <= 10 ? UI_COLOR_RED :
+            gs->hopper_pct <= 20 ? UI_COLOR_YELLOW : UI_COLOR_GREEN, 0);
+    }
+    lv_obj_align(s_lbl_pellets, LV_ALIGN_TOP_RIGHT, -8 - 3 * 46, 2);
 
     char buf[48];
 

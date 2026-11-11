@@ -25,6 +25,7 @@ static const char *TAG = "ui_menu";
 
 static lv_obj_t *s_screen;
 static lv_obj_t *s_lbl_mode;
+static lv_obj_t *s_lbl_pellets;
 static lv_obj_t *s_lbl_current;
 
 // Target temp display — 3 separate digit labels for in-place editing
@@ -254,11 +255,18 @@ lv_obj_t *ui_main_menu_create(void)
     s_editing = false;
     int y = 4;
 
-    // Cook Mode status — same font as menu items
+    // Mode status — same font as menu items
     s_lbl_mode = lv_label_create(s_screen);
     lv_obj_set_style_text_font(s_lbl_mode, &lv_font_montserrat_20, 0);
     lv_obj_set_style_text_color(s_lbl_mode, UI_COLOR_ACCENT, 0);
     lv_obj_set_pos(s_lbl_mode, 8, y);
+
+    // Pellet hopper gauge, same row right-justified
+    s_lbl_pellets = lv_label_create(s_screen);
+    lv_obj_set_style_text_font(s_lbl_pellets, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_color(s_lbl_pellets, UI_COLOR_TEXT_DIM, 0);
+    lv_label_set_text(s_lbl_pellets, "");
+    lv_obj_align(s_lbl_pellets, LV_ALIGN_TOP_RIGHT, -8, y);
     y += 26;
 
     // CURRENT
@@ -384,7 +392,20 @@ void ui_main_menu_update(void)
     grill_state_lock();
     grill_state_t *gs = grill_state_get();
 
-    lv_label_set_text_fmt(s_lbl_mode, "Cook Mode: %s", grill_mode_name(gs->mode));
+    lv_label_set_text_fmt(s_lbl_mode, "Mode: %s", grill_mode_name(gs->mode));
+
+    // Pellet gauge: -- when no sensor, color ladder green/yellow/red
+    if (gs->hopper_pct < 0) {
+        lv_label_set_text(s_lbl_pellets, "Pellets: --");
+        lv_obj_set_style_text_color(s_lbl_pellets, UI_COLOR_TEXT_DIM, 0);
+    } else {
+        lv_label_set_text_fmt(s_lbl_pellets, "Pellets: %d%%", gs->hopper_pct);
+        lv_obj_set_style_text_color(s_lbl_pellets,
+            gs->hopper_pct <= 10 ? UI_COLOR_RED :
+            gs->hopper_pct <= 20 ? UI_COLOR_YELLOW : UI_COLOR_GREEN, 0);
+    }
+    lv_obj_align(s_lbl_pellets, LV_ALIGN_TOP_RIGHT, -8, 4);
+
     char tbuf[16];
     snprintf(tbuf, sizeof(tbuf), "%.0f\xC2\xB0""F", gs->grill_temp);  // LVGL fmt has no %f
     lv_label_set_text(s_lbl_current, tbuf);

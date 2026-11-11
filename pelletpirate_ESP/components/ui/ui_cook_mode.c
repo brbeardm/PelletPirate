@@ -97,7 +97,7 @@ lv_obj_t *ui_cook_mode_create(void)
 
     // Cook Mode status — same font as menu items
     lv_obj_t *lbl = lv_label_create(s_screen);
-    lv_label_set_text_fmt(lbl, "Cook Mode: %s", grill_mode_name(active));
+    lv_label_set_text_fmt(lbl, "Mode: %s", grill_mode_name(active));
     lv_obj_set_style_text_font(lbl, &lv_font_montserrat_20, 0);
     lv_obj_set_style_text_color(lbl, UI_COLOR_ACCENT, 0);
     lv_obj_set_pos(lbl, 8, y);

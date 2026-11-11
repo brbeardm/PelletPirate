@@ -21,6 +21,7 @@
 #include "max31865.h"
 #include "actuator.h"
 #include "fanphase.h"
+#include "hopper.h"
 #include "webui.h"
 #include "cooklog.h"
 #include "cookprog.h"
@@ -306,6 +307,9 @@ void app_main(void)
     // pin from actuator's plain GPIO drive — see fanphase.h.
     fanphase_init();
 #endif
+
+    // Pellet hopper gauge (no-op on V2/V4; sensor-absent-safe on V5)
+    hopper_init();
 
     // Power-loss cook resume (one-shot; deletes itself when decided)
     xTaskCreate(resume_task, "resume", 3072, NULL, 3, NULL);

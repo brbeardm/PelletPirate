@@ -168,7 +168,7 @@ lv_obj_t *ui_set_target_create(void)
 
     // Cook Mode status
     s_lbl_mode = lv_label_create(s_screen);
-    lv_label_set_text_fmt(s_lbl_mode, "Cook Mode: %s", grill_mode_name(cur_mode));
+    lv_label_set_text_fmt(s_lbl_mode, "Mode: %s", grill_mode_name(cur_mode));
     lv_obj_set_style_text_font(s_lbl_mode, &lv_font_montserrat_14, 0);
     lv_obj_set_style_text_color(s_lbl_mode, UI_COLOR_ACCENT, 0);
     lv_obj_set_pos(s_lbl_mode, 8, y);

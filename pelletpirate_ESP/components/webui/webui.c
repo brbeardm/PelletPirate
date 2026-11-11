@@ -25,6 +25,7 @@
 #include "nvs.h"
 #include "esp_timer.h"
 #include "esp_heap_caps.h"
+#include "hopper.h"
 #include "sdkconfig.h"
 #if CONFIG_IDF_TARGET_ESP32S3
 #include "esp_http_client.h"
@@ -76,6 +77,9 @@ static int build_status_json(char *buf, int len)
                      "{\"gt\":%.1f,\"tgt\":%d,\"mode\":\"%s\",\"rssi\":%d,"
                      "\"et\":%d,\"cs\":%lld,\"f\":%d,\"a\":%d,\"ig\":%d,"
                      "\"al\":%d,\"alc\":%d,\"alt\":\"%s\",\"pv\":%lu,"
+#if CONFIG_PELLETPIRATE_BOARD_V5
+                     "\"pel\":%d,"
+#endif
                      "\"ssid\":\"%s\",\"p\":[",
                      gs->grill_temp, gs->grill_target,
                      grill_mode_name(gs->mode), rssi,
@@ -84,7 +88,11 @@ static int build_status_json(char *buf, int len)
                      gs->fan_on ? 1 : 0, gs->auger_on ? 1 : 0,
                      gs->igniter_on ? 1 : 0,
                      alarm ? 1 : 0, alarm_class, alarm_txt,
-                     (unsigned long)profiles_revision(), ssid_esc);
+                     (unsigned long)profiles_revision(),
+#if CONFIG_PELLETPIRATE_BOARD_V5
+                     gs->hopper_pct,
+#endif
+                     ssid_esc);
     for (int i = 0; i < NUM_MEAT_PROBES && n < len; i++) {
         probe_state_t *p = &gs->probes[i];
         n += snprintf(buf + n, len - n,
@@ -798,6 +806,9 @@ static void push_task(void *arg)
     alarm_state_t pv_goal[NUM_MEAT_PROBES] = { ALARM_IDLE };
     alarm_state_t pv_grill = ALARM_IDLE, pv_sensor = ALARM_IDLE, pv_pellet = ALARM_IDLE;
     alarm_state_t pv_prog = ALARM_IDLE;
+#if CONFIG_PELLETPIRATE_BOARD_V5
+    int pv_hop_sev = 0;   // hopper tier severity: 0 none, 1 low, 2 critical
+#endif
 
     while (1) {
         vTaskDelay(pdMS_TO_TICKS(1000));
@@ -826,6 +837,11 @@ static void push_task(void *arg)
         strlcpy(progtxt, gs->prog_alarm_text, sizeof(progtxt));
         gtemp = gs->grill_temp;
         gtarget = gs->grill_target;
+#if CONFIG_PELLETPIRATE_BOARD_V5
+        grill_mode_t gmode = gs->mode;
+        int hop_alert = gs->hopper_alert;
+        int hop_pct = gs->hopper_pct;
+#endif
         grill_state_unlock();
 
         char msg[128];
@@ -862,6 +878,23 @@ static void push_task(void *arg)
             snprintf(msg, sizeof(msg), "%.47s", progtxt);   // gates + completions
             push_send(msg, 1);
         }
+#if CONFIG_PELLETPIRATE_BOARD_V5
+        // Hopper gauge ladder: push on tier WORSENING, during a cook only
+        // (dashboard % is always live; hysteresis/re-arm lives in hopper.c)
+        {
+            int sev = (hop_alert == 10) ? 2 : (hop_alert == 20) ? 1 : 0;
+            bool cooking = (gmode != GRILL_MODE_OFF &&
+                            gmode != GRILL_MODE_SHUTDOWN);
+            if (sev > pv_hop_sev && cooking) {
+                snprintf(msg, sizeof(msg),
+                         sev == 2 ? "PELLETS CRITICAL: %d%% - refill now"
+                                  : "PELLETS LOW: %d%% - top up soon",
+                         hop_pct);
+                push_send(msg, 1);
+            }
+            pv_hop_sev = sev;
+        }
+#endif
         pv_grill = grill_a;
         pv_sensor = sensor_a;
         pv_pellet = pellet_a;
@@ -970,6 +1003,60 @@ static esp_err_t pushover_post_handler(httpd_req_t *req)
     return pushover_get_handler(req);
 }
 #endif // CONFIG_IDF_TARGET_ESP32S3
+
+#if CONFIG_PELLETPIRATE_BOARD_V5
+// GET /api/hopper — live gauge reading + calibration state.
+// POST /api/hopper — one command per request:
+//   "depth=NNN"      hopper depth in tenths of an inch (60-180, 0 clears)
+//   "capture=empty"  capture live mV as the EMPTY endpoint
+//   "capture=full"   capture live mV as the FULL endpoint
+//   "clear"          drop captured endpoints (back to depth curve)
+static esp_err_t hopper_get_handler(httpd_req_t *req)
+{
+    int mv, pct, depth, emv, fmv;
+    hopper_get_info(&mv, &pct, &depth, &emv, &fmv);
+    char buf[112];
+    snprintf(buf, sizeof(buf),
+             "{\"mv\":%d,\"pct\":%d,\"depth\":%d,\"emv\":%d,\"fmv\":%d}",
+             mv, pct, depth, emv, fmv);
+    httpd_resp_set_type(req, "application/json");
+    return httpd_resp_send(req, buf, HTTPD_RESP_USE_STRLEN);
+}
+
+static esp_err_t hopper_post_handler(httpd_req_t *req)
+{
+    char body[24] = { 0 };
+    int recv_len = req->content_len < (int)sizeof(body) - 1
+                       ? req->content_len : (int)sizeof(body) - 1;
+    if (httpd_req_recv(req, body, recv_len) < 0) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "bad body");
+        return ESP_FAIL;
+    }
+    esp_err_t err;
+    if (strncmp(body, "depth=", 6) == 0) {
+        err = hopper_set_depth(atoi(body + 6));
+        if (err != ESP_OK) {
+            httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST,
+                                "depth: 6.0-18.0 inches");
+            return ESP_FAIL;
+        }
+    } else if (strcmp(body, "capture=empty") == 0 ||
+               strcmp(body, "capture=full") == 0) {
+        err = hopper_capture(body[8] == 'f');
+        if (err != ESP_OK) {
+            httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST,
+                                "no sensor reading - is the Sharp plugged in?");
+            return ESP_FAIL;
+        }
+    } else if (strcmp(body, "clear") == 0) {
+        hopper_clear_capture();
+    } else {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "unknown command");
+        return ESP_FAIL;
+    }
+    return hopper_get_handler(req);
+}
+#endif // CONFIG_PELLETPIRATE_BOARD_V5
 
 // --- OTA firmware update ---
 // POST /api/ota with the raw .bin as the body writes the next app slot and
@@ -1325,7 +1412,7 @@ static void start_webserver(void)
 
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
     config.lru_purge_enable = true;
-    config.max_uri_handlers = 30;  // default 8 silently drops extras; we register up to 28
+    config.max_uri_handlers = 32;  // default 8 silently drops extras; we register up to 30
     config.stack_size = 8192;      // default 4k overflows in the wifi-scan handler
 
     esp_err_t err = httpd_start(&s_server, &config);
@@ -1450,6 +1537,16 @@ static void start_webserver(void)
     };
     httpd_register_uri_handler(s_server, &po_g);
     httpd_register_uri_handler(s_server, &po_p);
+#endif
+#if CONFIG_PELLETPIRATE_BOARD_V5
+    const httpd_uri_t hop_g = {
+        .uri = "/api/hopper", .method = HTTP_GET, .handler = hopper_get_handler,
+    };
+    const httpd_uri_t hop_p = {
+        .uri = "/api/hopper", .method = HTTP_POST, .handler = hopper_post_handler,
+    };
+    httpd_register_uri_handler(s_server, &hop_g);
+    httpd_register_uri_handler(s_server, &hop_p);
 #endif
     httpd_register_uri_handler(s_server, &prog_ls);
     httpd_register_uri_handler(s_server, &prog_gt);

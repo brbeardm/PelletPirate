@@ -126,6 +126,11 @@ typedef struct {
     int graph_index;
     uint32_t last_graph_time;
 
+    // Pellet hopper gauge (V5 Sharp sensor; see components/hopper)
+    int hopper_pct;         // 0-100 smoothed level; -1 = no sensor / no cal
+    int hopper_mv;          // smoothed sensor millivolts (cal + diagnostics)
+    int hopper_alert;       // active alert tier: 0 none, 20 low, 10 critical
+
     // WiFi
     bool wifi_connected;
     bool wifi_ap_active;    // SoftAP setup mode ("PelletPirate-Setup") is up

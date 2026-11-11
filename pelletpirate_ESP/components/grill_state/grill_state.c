@@ -49,6 +49,8 @@ void grill_state_init(void)
     s_state.mode = GRILL_MODE_OFF;
     s_state.grill_temp = 87.0f;
     s_state.grill_target = 225;
+    s_state.hopper_pct = -1;   // no sensor until the hopper task says so
+    s_state.hopper_mv = -1;
 
     // Try to load saved settings from NVS
     grill_state_load_from_nvs();
