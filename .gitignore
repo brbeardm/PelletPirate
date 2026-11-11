@@ -50,3 +50,4 @@ pelletpirate_ESP/build_s5/
 
 # KiCad designs now live in their own repo: brbeardm/PelletPirate-KiCad
 /KiCad/
+__pycache__/
